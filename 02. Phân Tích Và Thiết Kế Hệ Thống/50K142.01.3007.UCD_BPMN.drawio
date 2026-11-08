@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" pages="13">
+<mxfile host="Electron" pages="13">
   <diagram id="VbovjhWofP52kQfg6I86" name="BPMN_ToBe_QLBán Hàng">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -2901,7 +2901,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="VDU17u1IP6Hg2OEW1IzF" name="UCD_Bán hàng">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1269" dy="1453" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2911,7 +2911,7 @@
           </mxCell>
         </object>
         <mxCell id="9TLzn6EvHgkkXtDWoDC_-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="12. Thực hiện bán hàng" vertex="1">
-          <mxGeometry height="70" width="140" x="505" y="344" as="geometry" />
+          <mxGeometry height="70" width="140" x="515" y="345" as="geometry" />
         </mxCell>
         <mxCell id="9TLzn6EvHgkkXtDWoDC_-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&amp;nbsp;Tạo hóa đơn bán hàng" vertex="1">
           <mxGeometry height="40" width="110" x="645" y="550" as="geometry" />
@@ -3004,7 +3004,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="3FIujIps7CQYxZx4NMq_-20" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Hoàn tiền" vertex="1">
-          <mxGeometry height="40" width="110" x="515" y="600" as="geometry" />
+          <mxGeometry height="40" width="110" x="530" y="620" as="geometry" />
         </mxCell>
         <mxCell id="3FIujIps7CQYxZx4NMq_-21" edge="1" parent="1" source="3FIujIps7CQYxZx4NMq_-20" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="9TLzn6EvHgkkXtDWoDC_-5" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -3106,7 +3106,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="eGk2YEkfcZXotMsmIgoN" name="UCD_Quản lý khách hàng và công nợ">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1692" dy="1662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -3162,10 +3162,10 @@
           <mxGeometry height="47" width="110" x="570" y="553" as="geometry" />
         </mxCell>
         <mxCell id="z1ePbQBynZcHd7KKuyH1-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Khóa quyền mua nợ" vertex="1">
-          <mxGeometry height="47" width="110" x="420" y="-160" as="geometry" />
+          <mxGeometry height="47" width="110" x="420" y="-220" as="geometry" />
         </mxCell>
         <mxCell id="z1ePbQBynZcHd7KKuyH1-6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Xóa con nợ" vertex="1">
-          <mxGeometry height="47" width="110" x="590" y="-90" as="geometry" />
+          <mxGeometry height="47" width="110" x="740" y="-153" as="geometry" />
         </mxCell>
         <mxCell id="z1ePbQBynZcHd7KKuyH1-7" edge="1" parent="1" source="z1ePbQBynZcHd7KKuyH1-3" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" target="z1ePbQBynZcHd7KKuyH1-1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -3197,12 +3197,6 @@
             <mxPoint x="565" y="-129.99999999999977" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="z1ePbQBynZcHd7KKuyH1-27" edge="1" parent="1" source="z1ePbQBynZcHd7KKuyH1-24" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;">
-          <mxGeometry relative="1" width="160" as="geometry">
-            <mxPoint x="620" y="30" as="sourcePoint" />
-            <mxPoint x="565" y="-129.99999999999977" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="z1ePbQBynZcHd7KKuyH1-28" edge="1" parent="1" source="z1ePbQBynZcHd7KKuyH1-24" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" target="tcRY-_7s2Zvd2c5q_PgB-2" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;">
           <mxGeometry relative="1" width="160" as="geometry">
             <mxPoint x="620" y="30" as="sourcePoint" />
@@ -3231,7 +3225,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="I7UqTqAevBVCU4iU5UkX-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Thêm con nợ" vertex="1">
-          <mxGeometry height="47" width="110" x="310" y="-110" as="geometry" />
+          <mxGeometry height="47" width="110" x="270" y="-173" as="geometry" />
         </mxCell>
         <mxCell id="I7UqTqAevBVCU4iU5UkX-2" edge="1" parent="1" source="I7UqTqAevBVCU4iU5UkX-1" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" target="tcRY-_7s2Zvd2c5q_PgB-2" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;">
           <mxGeometry relative="1" width="160" as="geometry">
@@ -3306,7 +3300,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="z1ePbQBynZcHd7KKuyH1-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Sửa con nợ (thông tin hạn mức)" vertex="1">
-          <mxGeometry height="47" width="110" x="540" y="-153" as="geometry" />
+          <mxGeometry height="47" width="110" x="590" y="-210" as="geometry" />
         </mxCell>
         <mxCell id="gqc6q7NOkSOswjBlHaG0-2" edge="1" parent="1" source="I7UqTqAevBVCU4iU5UkX-11" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="z1ePbQBynZcHd7KKuyH1-29" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;">
           <mxGeometry relative="1" width="160" as="geometry">
