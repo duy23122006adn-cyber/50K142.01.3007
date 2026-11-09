@@ -1,0 +1,27 @@
+HỆ THỐNG QUẢN LÝ BÁN HÀNG TẠP HÓA XÓM NHỎ
+Môn học: Phân Tích & Thiết Kế Hệ Thống Thông Tin (Nhóm 1 - 50K14.2)
+================================================================
+
+1. CÁCH CHẠY WEBSITE:
+- Nhấp đúp chuột vào file: index.html (hoặc code.html) để mở trên trình duyệt (Chrome, Edge, Cốc Cốc).
+- Không cần cài server hay database gì cả!
+
+2. TÀI KHOẢN ĐĂNG NHẬP:
+- Chủ quán: admin / 123 (Có sẵn nút bấm "⚡ Chủ Quán" trên màn hình)
+- Nhân viên: nhanvien1 / 123 (Có sẵn nút bấm "⚡ Nhân Viên" trên màn hình)
+
+3. CÁC FILE CHÍNH TRONG DỰ ÁN:
+- index.html: Màn hình Đăng nhập (có khóa tài khoản khi sai 10 lần, xác thực OTP qua SĐT chủ quán).
+- dashboard.html: Toàn bộ hệ thống quản lý bán hàng (POS, Kho, Sổ nợ, Đổi trả, Kết ca, Báo cáo, Nhân viên).
+- code.html: File chuyển hướng tự động sang index.html.
+- HUONG_DAN_SU_DUNG.md: Bản hướng dẫn chi tiết từng bước dùng để thuyết trình trước giảng viên.
+- css/style.css: Giao diện hiện đại tông xanh Emerald của quán tạp hóa.
+- js/data.js: Cơ sở dữ liệu mẫu phong phú lưu trong LocalStorage.
+- js/auth.js: Logic đăng nhập, phân quyền, đếm số lần sai, OTP.
+- js/app.js: Toàn bộ nghiệp vụ bán hàng POS, quét mã vạch, thanh toán QR, kết ca, vẽ biểu đồ báo cáo.
+
+4. MẸO KHI THUYẾT TRÌNH VỚI GIẢNG VIÊN:
+- Thử bấm nút "🔄 Đổi vai trò" ở thanh trên cùng để chứng minh phân quyền: Nhân viên sẽ bị ẩn Báo cáo doanh thu & Quản lý nhân viên.
+- Bấm "📷 Quét Barcode" để thử máy quét mã vạch tít tít thêm hàng vào giỏ.
+- Bấm "📲 Chuyển khoản QR" để hiện mã VietQR và nghe âm thanh ting ting nhận tiền.
+- Bấm "Thanh toán" để hiện hóa đơn nhiệt bán lẻ và in thử bằng Ctrl + P.

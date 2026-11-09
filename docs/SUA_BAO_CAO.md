@@ -1,0 +1,338 @@
+# Danh sách chỉnh sửa báo cáo `NHÓM_1_PTTKHTTT.docx`
+
+> Mục đích: sửa báo cáo cho khớp với 28 quyết định đã chốt ([KE_HOACH.md](../KE_HOACH.md)) và thiết kế CSDL phiên bản 2 ([THIET_KE_DB_V2.md](THIET_KE_DB_V2.md)).
+> Cách dùng: tìm đoạn "Hiện tại" trong file Word (Ctrl+F), thay bằng đoạn "Sửa thành". Cột "Lý do" ghi số câu quyết định (Qn) hoặc lỗi tìm thấy.
+> Tôi không sửa trực tiếp file Word. Bạn tự sửa trong Word.
+
+**Mức ưu tiên:**
+
+| Ký hiệu | Ý nghĩa |
+|---|---|
+| 🔴 | Mâu thuẫn trực tiếp với code sẽ viết. Nên sửa. |
+| 🟡 | Chưa rõ hoặc sai lệch nhỏ. Nên sửa. |
+| 🟢 | Lỗi chính tả hoặc đánh số. |
+
+---
+
+## 1. Chương OVERVIEW
+
+### 1.1. 🟢 Mục tiêu kinh doanh: lỗi ký tự
+- **Vị trí:** Business objectives → Mục tiêu kinh doanh → đoạn "Mục tiêu cuối cùng…"
+- **Hiện tại:** "…việc kiểm soát ttiề11iề1 n, hàng và quyền truy cập…"
+- **Sửa thành:** "…việc kiểm soát tiền, hàng và quyền truy cập…"
+
+### 1.2. 🟡 Mục tiêu thứ năm: khuyến mãi
+- **Vị trí:** Mục tiêu kinh doanh → đoạn "Mục tiêu thứ năm là quản lý khuyến mãi…"
+- **Sửa thành:** giữ nguyên đoạn cũ, thêm vào cuối câu: "(Nội dung này thuộc giai đoạn phát triển sau. Phiên bản hiện tại áp dụng giá bán đã tính sẵn mức giảm của từng sản phẩm, xem UC_6.5 BR7.)"
+- **Lý do:** Q4. Không có UC hay bảng nào cho khuyến mãi.
+
+### 1.3. 🔴 User Scope: Chủ quán
+- **Hiện tại:** "Chủ quán: có toàn quyền trên hệ thống, bao gồm xem báo cáo doanh thu và lợi nhuận, thiết lập giá, thiết lập hạn mức nợ và khuyến mãi, phân quyền, cấp và khóa tài khoản, cũng như quyết định các khoản hoàn tiền vượt mức cho phép."
+- **Sửa thành:** "Chủ quán: có toàn quyền trên hệ thống, bao gồm xem báo cáo doanh thu và lợi nhuận, quản lý hàng hóa và thiết lập giá, quản lý lô hàng và điều chỉnh tồn kho, cấp và khóa tài khoản nhân viên, quản lý khách quen, hủy hóa đơn và duyệt phiếu đổi trả."
+- **Lý do:** Q4, Q9, Q22. Hạn mức nợ cố định; mọi khoản hoàn tiền đều qua bước duyệt.
+
+### 1.4. 🔴 User Scope: Người nhà
+- **Hiện tại:** "Người nhà: dùng chung một tài khoản đăng nhập bằng mật khẩu để thay phiên nhau trông quán khi có việc bận."
+- **Sửa thành:** "Người nhà: được cấp một tài khoản thuộc nhóm Nhân viên, dùng chung để thay phiên nhau trông quán khi có việc bận, với quyền hạn như Nhân viên."
+- **Lý do:** Q8.
+
+### 1.5. 🔴 User Scope: Nhân viên
+- **Hiện tại:** "…Nhóm này chỉ được bán hàng, xem tồn kho, tạo hóa đơn nợ trong hạn mức cho phép, xử lý đổi trả và hoàn tiền trong mức cho phép…"
+- **Sửa thành:** "…Nhóm này chỉ được bán hàng, tạo hóa đơn nợ trong hạn mức cho phép, thu nợ, tra cứu tồn kho, quản lý thông tin khách hàng, lập phiếu đổi trả (hoàn tiền sau khi Chủ quán duyệt) và kết ca…"
+- **Lý do:** Q7, Q9.
+
+### 1.6. 🔴 Out of scope: thời hạn đổi trả
+- **Hiện tại:** "…hoặc đơn hàng đã quá 3–7 ngày kể từ ngày mua."
+- **Sửa thành:** "…hoặc đơn hàng đã quá 7 ngày kể từ ngày lập hóa đơn (ngày lập hóa đơn tính là ngày thứ nhất)."
+- **Lý do:** Q17, UC_6.2 BR01.
+
+### 1.7. 🟡 Out of scope: thêm các mục đã loại
+- **Sửa thành:** thêm 3 dòng:
+  - "Hệ thống không quản lý nhà cung cấp và đơn nhập hàng; hàng nhập được ghi nhận dưới dạng lô hàng (UC_10.1)."
+  - "Hệ thống không đối soát tiền mặt cuối ca; biên bản kết ca chỉ đối soát hàng hóa."
+  - "Hệ thống không quản lý chương trình khuyến mãi trong phiên bản hiện tại."
+- **Lý do:** Q4, Q6, Q12.
+
+---
+
+## 2. Chương OVERALL DESCRIPTION
+
+### 2.1. 🟡 Business requirements: giám sát doanh số
+- **Hiện tại:** "Giám sát doanh số: Cung cấp thông tin doanh số bán và tổng tiền thực thu theo từng nhân viên trong ca làm việc để chủ dễ theo dõi và đối soát"
+- **Sửa thành:** "Giám sát giao dịch: Mỗi hóa đơn ghi nhận người bán và ca làm việc, giúp chủ quán truy vết khi có chênh lệch về tiền hoặc hàng."
+- **Lý do:** Q12. Không có UC đối soát tiền; UC_9.2 BR04 không hiển thị tiền.
+
+### 2.2. 🟡 Stakeholder requirements
+- **Hiện tại (Chủ tiệm):** "Quản lý hoạt động nhập hàng, bán hàng, thanh toán và đổi trả hàng." / "Quản lý tài khoản, phân quyền và thiết lập ca làm việc cho nhân viên."
+- **Sửa thành:** "Quản lý lô hàng nhập, bán hàng, thanh toán và đổi trả hàng." / "Quản lý tài khoản nhân viên."
+- **Hiện tại (Nhân viên):** "Hỗ trợ tiếp nhận, kiểm tra hàng nhập và xử lý đổi trả theo quyền được cấp." / "Xem lịch làm việc, kiểm tra hàng hóa và thực hiện bàn giao ca."
+- **Sửa thành:** "Lập phiếu đổi trả theo quyền được cấp." / "Kiểm kê hàng hóa cuối ca và lập biên bản kết ca."
+- **Lý do:** Không có UC nào cho nhập hàng, thiết lập ca hay lịch làm việc (Q6, Q10).
+
+---
+
+## 3. Chương FUNCTIONAL REQUIREMENTS
+
+### 3.1. 🟡 UC_1 Đăng nhập: cách xác nhận OTP
+- **Hiện tại (Exception 5.c.3):** "Chủ quán xác nhận mã qua điện thoại trong vòng 5 phút"
+- **Sửa thành:** "Chủ quán đồng ý mở khóa và cung cấp mã xác nhận cho người dùng; người dùng nhập mã xác nhận trên màn hình đăng nhập trong vòng 5 phút"
+- **Hiện tại (5.d):** "Chủ quán từ chối xác nhận (tại bước 5.c.3)"
+- **Sửa thành:** "Chủ quán từ chối cung cấp mã (tại bước 5.c.3)"
+- **Hiện tại (BR03):** "…Chủ quán phải phản hồi trong vòng 5 phút, nếu từ chối hoặc quá thời hạn thì tài khoản vẫn bị khóa"
+- **Sửa thành:** "…Mã có hiệu lực 5 phút; nếu Chủ quán không cung cấp mã hoặc mã hết hạn thì tài khoản vẫn bị khóa"
+- **Lý do:** Q25. Khớp với màn hình 1.4 (người dùng nhập OTP).
+
+### 3.2. 🔴 UC_2.2 Sửa nhân viên: không sửa trạng thái
+- **Hiện tại (Main flow bước 4):** "…gồm: họ tên, ngày sinh, số điện thoại, email và trạng thái làm việc."
+- **Sửa thành:** "…gồm: họ tên, ngày sinh, số điện thoại, email; trạng thái làm việc chỉ hiển thị, không cho sửa."
+- **Hiện tại (BR05):** "Các thông tin được phép chỉnh sửa gồm họ tên, ngày sinh, số điện thoại, email và trạng thái làm việc."
+- **Sửa thành:** "Các thông tin được phép chỉnh sửa gồm họ tên, ngày sinh, số điện thoại và email. Việc ngừng hoạt động tài khoản được thực hiện qua UC_2.4."
+- **Lý do:** Q26. Khớp với màn hình sửa nhân viên (trạng thái ở chế độ chỉ đọc).
+
+### 3.2b. 🟡 UC_2.3 Đổi mật khẩu: bổ sung quy tắc đã có trên màn hình
+- **Vị trí:** UC_2.3 → Business rules, Exception flows
+- **Hiện tại:** UC không có quy tắc khóa, nhưng đặc tả màn hình 2.4.9 và 2.4.10 có: "Bạn đã nhập sai mật khẩu 5 lần liên tiếp. Chức năng đổi mật khẩu bị khóa trong 15 phút".
+- **Thêm BR08:** "Nếu người dùng nhập sai mật khẩu hiện tại 5 lần liên tiếp, chức năng đổi mật khẩu của tài khoản bị khóa trong 15 phút. Số lần sai được đặt lại khi nhập đúng mật khẩu hiện tại."
+- **Thêm Exception 4b4:** "Nếu đây là lần nhập sai thứ 5 liên tiếp, hệ thống hiển thị thông báo "Bạn đã nhập sai mật khẩu 5 lần liên tiếp. Chức năng đổi mật khẩu bị khóa trong 15 phút" và UC kết thúc."
+- **Lý do:** Code làm theo đặc tả màn hình (chi tiết hơn); UC cần ghi thêm cho khớp.
+
+### 3.3. 🟡 UC_2.4 Xóa tài khoản: làm rõ "ca chưa đối soát"
+- **Hiện tại (BR03):** "Không được xóa hoặc ngừng hoạt động tài khoản nhân viên còn ca chưa được đối soát tồn kho."
+- **Sửa thành:** "Không được xóa hoặc ngừng hoạt động tài khoản nhân viên đang phụ trách ca chưa ở trạng thái "Đã kết thúc"."
+- **Lý do:** Q10. Trạng thái ca theo UC_9.1.
+
+### 3.4. 🔴 UC_3.2 Xem cảnh báo tồn kho: quy tắc đóng cảnh báo
+- **Hiện tại (BR05):** "…Nếu cảnh báo cùng loại của lô đs đã tồn tại…"
+- **Sửa thành:** "…Nếu cảnh báo cùng loại của lô đó đã tồn tại…" 🟢
+- **Hiện tại (BR06):** ba gạch đầu dòng hiện có.
+- **Sửa thành:**
+  - "Cảnh báo "Sắp hết hàng" và "Hết hàng" của một lô chuyển sang "Đã xử lý" khi Chủ quán thêm lô mới cho cùng mặt hàng (UC_10.1), hoặc khi số lượng tồn của lô được điều chỉnh lớn hơn ngưỡng cảnh báo hết hàng (UC_3.3)."
+  - "Cảnh báo "Sắp hết hạn" và "Hết hạn" của một lô chuyển sang "Đã xử lý" khi Chủ quán thêm lô mới cho cùng mặt hàng có hạn sử dụng muộn hơn lô đó."
+- **Lý do:** Q13. Bỏ câu "lô hàng tương ứng đã được xử lý Sắp hết hàng" vì đó là định nghĩa vòng lặp.
+
+### 3.5. 🔴 UC_3.3 Điều chỉnh tồn kho: chỉ Chủ quán
+- **Hiện tại:** Description "Là chủ quán/nhân viên…"; Actors "Chủ quán, Nhân viên"
+- **Sửa thành:** Description "Là chủ quán, tôi muốn điều chỉnh tồn kho của từng lô hàng"; Actors "Chủ quán"
+- **Lý do:** Q7.
+
+### 3.6. 🟡 UC_4.1 Thêm hàng hóa: mã vạch và thời điểm cấp mã
+- **Hiện tại (Main flow bước 2–3):** "…Mã hàng hóa, tên hàng hóa, danh mục, đơn vị tính, giá nhập, giá bán, ngưỡng cảnh báo hết hạn, ngưỡng cảnh báo hết hàng…"
+- **Sửa thành:** thêm "mã vạch (không bắt buộc)" vào cả bước 2 và bước 3.
+- **Hiện tại (BR04):** "Khi hệ thống hiển thị biểu mẫu tại bước 2 thì hệ thống tự cấp mã hóa đơn theo định dạng HH-xxxx…"
+- **Sửa thành:** "Khi hiển thị biểu mẫu tại bước 2, hệ thống hiển thị mã hàng hóa dự kiến theo định dạng HH-xxxx, trong đó xxxx là số thứ tự bắt đầu từ 0001. Mã chỉ được ghi nhận khi lưu thành công. Mã hàng hóa là duy nhất và không cấp lại, kể cả khi hàng đã xóa hoặc ngừng kinh doanh."
+- **Thêm BR07:** "Mã vạch không bắt buộc; nếu nhập thì không được trùng với hàng hóa khác."
+- **Lý do:** Q15, Q16. Sửa luôn lỗi "mã hóa đơn" thành "mã hàng hóa".
+
+### 3.7. 🟡 UC_4.2 Sửa hàng hóa
+- **Hiện tại (Exception 5f):** "Chủ quán nhập "Ngưỡng cảnh báo hết hàng" là số âm hoặc không phải số"
+- **Sửa thành:** "…nhỏ hơn hoặc bằng 0 hoặc không phải số"
+- **Thêm:** "mã vạch" vào danh sách trường được sửa (bước 3), và BR07 giống UC_4.1.
+- **Lý do:** Mâu thuẫn với BR03 (phải > 0); Q15.
+
+### 3.8. 🟢 UC_4.4 Tìm kiếm hàng hóa
+- **Sửa thành:** thêm "Mã vạch" vào danh sách thông tin chi tiết ở bước 7.
+- **Lý do:** Q15.
+
+### 3.9. 🔴 UC_5.1 Xem báo cáo lợi nhuận
+- **Hiện tại (BR01):** "Kỳ báo cáo bắt buộc phải có ngày bắt đầu < hoặc = ngày kết thúc"
+- **Sửa thành:** "Kỳ báo cáo bắt buộc phải có ngày bắt đầu nhỏ hơn hoặc bằng ngày kết thúc và không vượt quá ngày hiện tại."
+- **Hiện tại (BR03):** "Chỉ tính các đơn hàng đã hoàn tất và ghi nợ. Các đơn đã hủy và trả hàng không được tính"
+- **Sửa thành:** "Chỉ tính các hóa đơn ở trạng thái "Đã thanh toán" và "Còn nợ"; hóa đơn "Đã hủy" không được tính. Giá trị hàng trả và chênh lệch đổi hàng của phiếu đổi trả đã hoàn tất được trừ vào kỳ chứa ngày duyệt phiếu (UC_6.2 BR06)."
+- **Thêm BR09:** "Giá vốn của mỗi dòng hóa đơn là giá nhập của hàng hóa tại thời điểm bán, được lưu cùng hóa đơn."
+- **Lý do:** Q19, Q20, Q21.
+
+### 3.10. 🔴 UC_5.2 Xem báo cáo doanh thu
+- **Hiện tại (BR01):** "Kỳ báo cáo bắt buộc phải có ngày bắt đầu nhỏ hơn ngày kết thúc và không được vượt quá ngày hiện tại."
+- **Sửa thành:** "…ngày bắt đầu nhỏ hơn hoặc bằng ngày kết thúc…"
+- **Hiện tại (BR02):** "Doanh thu là tổng giá trị các đơn hàng đã hoàn tất trong kỳ, các đơn hàng đã hủy và trả hàng không được tính."
+- **Sửa thành:** "Doanh thu là tổng giá trị các hóa đơn ở trạng thái "Đã thanh toán" và "Còn nợ" lập trong kỳ, trừ giá trị hàng trả và chênh lệch đổi hàng của các phiếu đổi trả hoàn tất có ngày duyệt trong kỳ. Hóa đơn "Đã hủy" không được tính."
+- **Lý do:** Q19, Q21.
+
+### 3.11. 🔴 UC_5.3 Xem báo cáo số lượng bán ra
+- **Hiện tại (BR01):** "…ngày bắt đầu nhỏ hơn ngày kết thúc…"
+- **Sửa thành:** "…ngày bắt đầu nhỏ hơn hoặc bằng ngày kết thúc…"
+- **Hiện tại (BR02):** "…chỉ tính số lượng của các đơn hàng đã hoàn tất, đơn đã hủy không được tính"
+- **Sửa thành:** "…chỉ tính số lượng trên các hóa đơn "Đã thanh toán" và "Còn nợ", trừ số lượng hàng trả của các phiếu đổi trả hoàn tất có ngày duyệt trong kỳ; hóa đơn "Đã hủy" không được tính"
+- **Hiện tại (Exception 3a.1 và 4a.1):** "…và quay lại bước 5" 🟢
+- **Sửa thành:** "…và quay lại bước 3"
+- **Lý do:** Q19, Q21. Bước quay lại bị sai.
+
+### 3.12. 🔴 UC_5.4 Xem báo cáo tồn kho
+- **Hiện tại (BR02):**
+  - "“Sắp hết hàng” khi số lượng tồn > 0 và ≤ mức tồn tối thiểu do chủ quy định"
+  - "“Hết hạn” khi ngày hiện tại > hoặc = ngày hết hạn của sản phẩm và số lượng tồn >0"
+- **Sửa thành:**
+  - "“Sắp hết hàng” khi số lượng tồn của lô > 0 và ≤ ngưỡng cảnh báo hết hàng của mặt hàng"
+  - "“Hết hàng” khi số lượng tồn của lô = 0"
+  - "“Hết hạn” khi hạn sử dụng của lô nhỏ hơn ngày hiện tại và số lượng tồn > 0"
+- **Hiện tại (Main flow bước 6):** "…tên sản phẩm, đơn vị tính, số lượng tồn, hạn sử dụng và trạng thái của từng sản phẩm"
+- **Sửa thành:** "…mã lô, tên sản phẩm, đơn vị tính, số lượng tồn, hạn sử dụng và trạng thái của từng lô hàng"
+- **Lý do:** Q13, Q14. Thống nhất với UC_3.2.
+
+### 3.13. 🔴 UC_6.2 Xử lý đổi trả
+- **Hiện tại (Pre-conditions):** "Nhân viên đã đăng nhập vào hệ thống."
+- **Sửa thành:** "Nhân viên hoặc Chủ quán đã đăng nhập vào hệ thống."
+- **Hiện tại (BR07):** "Phiếu đổi trả có các trạng thái: Chờ duyệt, Đã duyệt, Bị từ chối, Không hoàn tất."
+- **Sửa thành:** "…Chờ duyệt, Đã duyệt, Từ chối, Không hoàn tất."
+- **Hiện tại (BR08):** "Hóa đơn ở trạng thái nợ, không được đổi trả"
+- **Sửa thành:** "Hóa đơn ở trạng thái "Còn nợ" không được đổi trả. Hóa đơn nợ đã được thanh toán đủ (trạng thái "Đã thanh toán") được đổi trả như hóa đơn thanh toán ngay."
+- **Hiện tại (BR09):** "Thông tin trong phiếu đổi trả" (đang bỏ trống nội dung)
+- **Sửa thành:** "Thông tin trong phiếu đổi trả gồm: mã phiếu, mã hóa đơn gốc, tên khách hàng, loại phiếu, các mặt hàng và số lượng đổi/trả, lý do đổi trả, tình trạng hàng, mô tả lỗi (nếu có), mặt hàng và số lượng đổi sang (nếu là đổi hàng), số tiền hoàn hoặc chênh lệch, người lập và thời gian lập."
+- **Lý do:** Q9, Q18, thống nhất tên trạng thái; BR09 đang thiếu nội dung.
+
+### 3.14. 🔴 UC_6.3 Hủy hóa đơn bán hàng
+- **Hiện tại (BR01):** "Đang ở trạng thái Đã thanh toán hoặc “đã có hóa đơn nợ”"
+- **Sửa thành:** "Đang ở trạng thái "Đã thanh toán" hoặc "Còn nợ""
+- **Hiện tại (BR09):** "…Hệ thống không tự động mở khóa quyền mua nợ của khách, việc này do Chủ quán thực hiện riêng."
+- **Sửa thành:** "…Sau khi hủy, quyền mua nợ của khách được hệ thống xác định lại theo UC_7.3 BR05."
+- **Hiện tại (Post-condition 5):** "…và hệ thống ngừng nhắc nợ cho hóa đơn đó."
+- **Sửa thành:** giữ nguyên câu, thêm: "Quyền mua nợ được xác định lại theo UC_7.3 BR05."
+- **Đánh số BR:** đang nhảy từ BR09 sang BR11, cần đánh lại. 🟢
+- **Lý do:** Q23. Không cần thêm UC khóa/mở quyền mua nợ thủ công.
+
+### 3.15. 🟡 UC_6.4 Duyệt phiếu đổi trả
+- **Hiện tại (BR01):** "Chỉ chủ quán mới có quyền duyệt hoặc từ chối phiếu đổi/trả. Nhân viên không được duyệt phiếu do mình lập."
+- **Sửa thành:** "Chỉ Chủ quán mới có quyền duyệt hoặc từ chối phiếu đổi/trả. Phiếu do Chủ quán lập được Chủ quán tự duyệt."
+- **Đánh số BR:** đang thiếu BR03, cần đánh lại. 🟢
+- **Lý do:** Q9.
+
+### 3.16. 🟡 UC_6.5 Tạo hóa đơn bán hàng: lô xuất, giá vốn, ca
+- **Thêm BR12:** "Mỗi phần số lượng bán được ghi nhận kèm lô xuất và giá vốn (giá nhập tại thời điểm bán). Hóa đơn được gắn với ca làm việc đang mở và người bán."
+- **Lý do:** Q10, Q20. Cần để hoàn đúng lô khi hủy hoặc đổi trả, và để tính lợi nhuận.
+
+### 3.17. 🟢 UC_7.1 Tạo hóa đơn nợ
+- **Hiện tại (BR05):** "Khi tạo hóa đơn nợ tại bước 10…"
+- **Sửa thành:** "Khi tạo hóa đơn nợ tại bước 12…"
+- **Thêm vào cuối BR03:** "Khách hàng có khoản nợ quá hạn bị khóa quyền mua nợ cho đến khi không còn khoản nợ quá hạn (UC_7.3 BR05)." 🟡
+- **Lý do:** Bước bị sai; Q23.
+
+### 3.18. 🟡 UC_7.3 Tạo phiếu thanh toán nợ
+- **Hiện tại (BR03):** "Hóa đơn nợ được thanh toán đủ sẽ được đóng và cập nhật trạng thái không nợ"
+- **Sửa thành:** "Hóa đơn nợ được thanh toán đủ chuyển sang trạng thái "Đã thanh toán"."
+- **Hiện tại (BR05):** "Quyền mua nợ được mở khóa khi khách không còn khoản nợ quá hạn"
+- **Sửa thành:** "Quyền mua nợ được hệ thống tự mở khóa khi khách không còn khoản nợ quá hạn, kể cả khi khoản nợ được giảm do hủy hóa đơn (UC_6.3)."
+- **Lý do:** Q18, Q23.
+
+### 3.19. 🟢 UC_7.4 Sửa khách quen
+- **Hiện tại (BR03):** "CCCD gồm 12 chữ số và không được trùng với khách hàng khác đang hoạt động"
+- **Sửa thành:** "…không được trùng với khách quen khác đang hoạt động"
+- **Lý do:** Thống nhất với UC_7.5 BR03.
+
+### 3.20. 🟡 UC_7.6 Xóa khách quen
+- **Thêm BR04:** "Xóa khách quen là chuyển trạng thái khách quen sang "Đã xóa"; hồ sơ khách hàng vẫn được giữ. Khi thêm lại khách hàng này làm khách quen (UC_7.5), hệ thống dùng lại hồ sơ cũ."
+- **Lý do:** Q24. Giữ lịch sử hóa đơn nợ theo BR03.
+
+### 3.21. 🟢 UC_8.2 Sửa thông tin khách hàng
+- **Hiện tại (Main flow bước 1):** "Chủ quán tìm khách hàng cần sửa (UC_7.2)"
+- **Sửa thành:** "Người dùng tìm khách hàng cần sửa (UC_8.3)"
+- **Hiện tại (BR04):** "…hệ thống xem là trùng và báo lỗi theo luồng 7a."
+- **Sửa thành:** "…báo lỗi theo luồng 6d."
+
+### 3.22. 🔴 UC_9.1 Lưu biên bản: mở ca và phân bổ vào lô
+- **Hiện tại (BR05):** "…theo định dạng BB - ngày làm việc (dd/mm/yyyy) . số thứ tự trong ngày gồm 3 chữ số (VD: BB-25072016-001)…"
+- **Sửa thành:** "…theo định dạng BB-ddmmyyyy-nnn, trong đó ddmmyyyy là ngày làm việc và nnn là số thứ tự trong ngày (VD: BB-25072016-001)…" 🟢
+- **Hiện tại (BR07):** "Khi ca ở "Đang kết ca", hệ thống không cho phát sinh giao dịch nhập, xuất, bán, hủy."
+- **Sửa thành:** "Khi ca ở "Đang kết ca", hệ thống không cho phát sinh giao dịch nhập, xuất, bán, hủy trên toàn cửa hàng."
+- **Thêm BR11 (mở ca):** "Tại mỗi thời điểm cửa hàng chỉ có một ca ở trạng thái "Đang hoạt động" hoặc "Đang kết ca". Khi người dùng đăng nhập mà chưa có ca nào đang mở, hệ thống tự mở ca mới với người phụ trách là người vừa đăng nhập, giờ bắt đầu là thời điểm đăng nhập. Người dùng đăng nhập khi đã có ca đang mở thì giao dịch được ghi vào ca đó, kèm người thực hiện. Người dùng chọn "Kết ca" để chuyển ca sang "Đang kết ca" và nhập số lượng kiểm kê thực tế."
+- **Thêm BR12 (phân bổ vào lô):** "Khi cập nhật tồn kho theo kết quả kiểm kê: nếu thiếu hàng, hệ thống trừ dần từ lô có hạn sử dụng gần nhất; nếu thừa hàng, hệ thống cộng vào lô có hạn sử dụng xa nhất của mặt hàng đó."
+- **Lý do:** Q10, Q11. Báo cáo chưa mô tả việc mở ca, trong khi mọi hóa đơn đều phải gắn với một ca.
+
+### 3.23. 🟢 UC_10.1 Thêm lô hàng
+- **Hiện tại (BR08):** "…hệ thống tự cấp mã hóa đơn theo định dạng LO-xxxxxx…"
+- **Sửa thành:** "…hệ thống hiển thị mã lô dự kiến theo định dạng LO-xxxxxx…; mã chỉ được ghi nhận khi lưu thành công…"
+- **Đánh số BR:** đang thiếu BR06, cần đánh lại.
+- **Main flow:** bước 7 "…và kết thúc" đứng trước bước 8–9. Chuyển chữ "kết thúc" xuống bước cuối.
+- **Lý do:** Q16, lỗi đánh máy.
+
+---
+
+## 4. Chương NON-FUNCTIONAL REQUIREMENTS
+
+### 4.1. 🟡 Availability NFR-02
+- **Hiện tại:** "Hỗ trợ chế độ Offline: vẫn bán hàng và ghi nhận hóa đơn bình thường khi mất mạng/mất điện…"
+- **Sửa thành:** "Hỗ trợ chế độ Offline (giai đoạn sau): vẫn bán hàng và ghi nhận hóa đơn khi mất kết nối mạng…"
+- **Lý do:** Q3. Khi mất điện, máy tính tắt nên không thể bán hàng.
+
+### 4.2. 🔴 Security NFR-01
+- **Hiện tại:** "…Nhân viên chỉ có quyền bán hàng, xem tồn kho và tạo hóa đơn nợ."
+- **Sửa thành:** "…Nhân viên có quyền bán hàng, tạo hóa đơn nợ, thu nợ, tra cứu tồn kho, quản lý thông tin khách hàng, lập phiếu đổi trả và kết ca."
+- **Lý do:** Q7. Khớp với danh sách UC.
+
+### 4.3. 🔴 Security NFR-03
+- **Hiện tại:** "Nhân viên chỉ được hoàn tiền ở mức cho phép (đơn hàng/mặt hàng giá trị rất nhỏ, không cần chủ quán phê duyệt). Vượt mức đó phải do Chủ quán quyết định."
+- **Sửa thành:** "Mọi khoản hoàn tiền cho khách qua phiếu đổi trả chỉ được thực hiện sau khi Chủ quán duyệt phiếu (UC_6.4)."
+- **Lý do:** Q9.
+
+### 4.4. 🟡 Security NFR-04 (đã xác nhận)
+- **Hiện tại:** "Nhân viên và Chủ quán được xem lịch sử đổi trả trong ca. Ngoài giờ làm việc chỉ Chủ quán được xem."
+- **Sửa thành:** "Nhân viên chỉ xem được lịch sử đổi trả khi cửa hàng có ca đang mở; Chủ quán được xem mọi lúc."
+- **Lý do:** Bạn đã xác nhận đề xuất này khi duyệt Giai đoạn 0. Dựa vào Q10.
+
+### 4.5. 🟡 Backup NFR-02
+- **Hiện tại:** "Hỗ trợ khôi phục dữ liệu nhanh chóng thông qua số điện thoại đăng ký khi thay đổi máy tính/điện thoại."
+- **Sửa thành:** "Dữ liệu được lưu tập trung trên máy chủ; khi thay đổi máy tính/điện thoại, người dùng chỉ cần đăng nhập lại để tiếp tục sử dụng."
+- **Lý do:** Q27.
+
+### 4.6. 🟢 Supportability NFR-03: nói rõ cách làm
+- **Thêm vào cuối:** "Khi hai thao tác cùng sửa một dữ liệu, thao tác của Chủ quán được ghi nhận; Nhân viên nhận thông báo dữ liệu đã thay đổi và tải lại."
+
+---
+
+## 5. Chương THIẾT KẾ KIẾN TRÚC HỆ THỐNG (đang trống)
+
+Đề xuất nội dung để điền:
+
+- **Mô tả hệ thống:** Website gồm phần giao diện (React, TypeScript) chạy trên trình duyệt, gọi đến dịch vụ máy chủ (ASP.NET Core Web API, C#). Máy chủ lưu dữ liệu trong Microsoft SQL Server, truy cập qua Entity Framework Core.
+- **Kiến trúc:** client–server ba lớp: giao diện, xử lý nghiệp vụ, dữ liệu. Phía máy chủ chia module theo nhóm chức năng: Tài khoản, Hàng hóa, Tồn kho, Bán hàng, Công nợ, Khách hàng, Kết ca, Báo cáo.
+- **Ràng buộc phần mềm:**
+  - Trình duyệt Chrome, Edge hoặc Cốc Cốc phiên bản mới.
+  - Máy chủ chạy .NET 10 và SQL Server.
+  - Máy quét mã vạch loại giả lập bàn phím (cắm USB là dùng được).
+
+---
+
+## 6. Chương PHÂN TÍCH SƠ ĐỒ LỚP và MÔ TẢ CƠ SỞ DỮ LIỆU
+
+| # | Vị trí | Sửa |
+|---|---|---|
+| 6.1 🔴 | Thiết kế vật lý (toàn bộ) | Thay bằng nội dung [THIET_KE_DB_V2.md](THIET_KE_DB_V2.md) mục 3 |
+| 6.2 🟡 | Thiết kế logic và Chuẩn hóa | Đổi tên cho thống nhất: ChiTietBienBan `SoLuongHeThong` → `SoLuongLyThuyet`; PhieuDieuChinhTon `SoLuongTon` → `SoLuongThucTe`; HoaDonNo và PhieuThanhToan dùng `MaKQ`; PhanBoThanhToan dùng `MaHDNo`. Thêm 7 bảng mới và các cột mới. |
+| 6.3 🟡 | Sơ đồ CSDL (ERD) | Khóa chính KhachQuen là `MaKH` (không phải `MaKQ`); CaLamViec nối với NguoiDung (không phải NhanVien); thêm các cột và bảng mới |
+| 6.4 🟡 | Sơ đồ lớp | HoaDon thêm quan hệ "lập" (người bán) đã có; ChiTietHoaDon thêm quan hệ với LoHang; CaLamViec thêm phương thức mở ca |
+| 6.5 🟡 | Ước lượng dung lượng | Tính lại với cột mã VARCHAR(20) và các bảng mới |
+
+---
+
+## 7. Phần GIAO DIỆN
+
+| # | Vị trí | Hiện tại | Sửa thành |
+|---|---|---|---|
+| 7.1 🔴 | Danh sách màn hình U10 "Điều chỉnh tồn kho" | Chủ quán, Nhân viên | Chủ quán |
+| 7.2 🔴 | U14 "Xem chi tiết hàng hóa", U15 "Tìm kiếm hàng hóa" | Chủ quán, Nhân viên | Chủ quán |
+| 7.3 🟢 | Đặc tả màn hình Kết ca: mã hàng ví dụ | HH-000004, HH-000005 | HH-0004, HH-0005 |
+| 7.4 🟡 | Màn hình Thêm/Sửa hàng hóa | — | Thêm ô "Mã vạch" |
+| 7.5 🟡 | Màn hình Báo cáo tồn kho | Cột theo sản phẩm | Thêm cột "Mã lô" |
+
+---
+
+## 8. Danh sách UC và sơ đồ use case
+
+| # | Vị trí | Hiện tại | Sửa thành |
+|---|---|---|---|
+| 8.1 🟢 | Bảng danh sách use case, dòng 33 | Mã "10" | "10.1" |
+| 8.2 🟡 | Sơ đồ use case | Không có "Quản lý lô hàng"; "10. Đăng xuất" | Thêm "10. Quản lý lô hàng"; đổi thành "11. Đăng xuất" |
+| 8.3 🟢 | Bảng ánh xạ UC – màn hình (nhóm U20–U37) | Có dòng 1.1 và 1.2 | Xóa 2 dòng này (không có UC_1.1, UC_1.2) |
+| 8.4 🟢 | Tiêu đề mục 3.6 | "Tạo hóa đơn nợ" | "Quản lý công nợ" (khớp Functional Scope) |
+
+---
+
+## Thống kê
+
+Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
+
+| Mức | Số mục |
+|---|---|
+| 🔴 Mâu thuẫn với code | 19 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 23 |
+| 🟢 Chính tả, đánh số | 11 |
+| Chương Kiến trúc (điền mới) | 1 |
