@@ -1,0 +1,73 @@
+# Hệ thống quản lý bán hàng tạp hóa Xóm Nhỏ
+
+Đồ án Phân tích & Thiết kế HTTT – Nhóm 1, lớp 50K14.2. Yêu cầu gốc: `NHÓM_1_PTTKHTTT.docx`.
+
+| Tài liệu | Nội dung |
+|---|---|
+| [KE_HOACH.md](KE_HOACH.md) | 28 quyết định đã chốt, các giai đoạn, tiến độ |
+| [docs/THIET_KE_DB_V2.md](docs/THIET_KE_DB_V2.md) | Thiết kế cơ sở dữ liệu phiên bản 2 |
+| [docs/SUA_BAO_CAO.md](docs/SUA_BAO_CAO.md) | Những chỗ cần sửa trong báo cáo cho khớp với code |
+
+## Cấu trúc
+
+```
+backend/
+  src/XomNho.Api/        ASP.NET Core Web API (.NET 10, C#)
+    Domain/              Thực thể – tên trùng tên bảng trong báo cáo
+    Data/                DbContext, cấu hình bảng, migration, dữ liệu khởi tạo
+    Common/              Quy tắc dùng chung, sinh mã, đồng hồ giờ VN, xử lý lỗi
+    XacThuc/             UC_1 Đăng nhập, UC_2.3 Đổi mật khẩu, UC_11 Đăng xuất
+    TichHop/             Tích hợp ngoài (OTP – đang giả lập)
+  tests/XomNho.Tests/    Unit test (xUnit)
+frontend/                React 19 + TypeScript (Vite)
+docs/                    Tài liệu thiết kế
+```
+
+## Yêu cầu
+
+- .NET SDK 10
+- Node.js 24 LTS
+- SQL Server (bản Developer/Express), đăng nhập bằng tài khoản Windows
+
+## Chạy lần đầu
+
+```powershell
+# 1. Tạo database XomNho (chỉ cần chạy một lần, hoặc khi có migration mới)
+cd backend
+$env:ASPNETCORE_ENVIRONMENT = "Development"
+dotnet tool restore
+dotnet tool run dotnet-ef database update --project src/XomNho.Api
+
+# 2. Chạy backend – http://localhost:5103
+dotnet run --project src/XomNho.Api --launch-profile http
+
+# 3. Chạy frontend (cửa sổ khác) – http://localhost:5173
+cd frontend
+npm install
+npm run dev
+```
+
+Mở trình duyệt tại **http://localhost:5173**.
+
+## Tài khoản mẫu (chỉ ở môi trường Development)
+
+| Vai trò | Tên đăng nhập | Mật khẩu |
+|---|---|---|
+| Chủ quán | `chuquan` | `ChuQuan2026` |
+| Nhân viên | `nhanvien1` | `NhanVien2026` |
+
+Tài khoản được tạo tự động khi backend khởi động lần đầu (cấu hình `KhoiTao` trong `appsettings.Development.json`).
+
+**Thử khóa tài khoản (UC_1):** nhập sai mật khẩu `nhanvien1` 10 lần. Màn hình chuyển sang "Nhập OTP", và ở môi trường Development, mã OTP giả lập hiện ngay trên màn hình thay cho tin nhắn SMS gửi Chủ quán.
+
+## Kiểm thử
+
+```powershell
+cd backend
+dotnet test
+```
+
+## Lưu ý bảo mật
+
+- `appsettings.Development.json` chứa khóa JWT và mật khẩu mẫu **chỉ dùng cho máy phát triển**.
+- Khi triển khai thật: đặt `Jwt__Key` bằng biến môi trường, không dùng mật khẩu mẫu, và để `TichHop:HienOtpGiaLap = false`.

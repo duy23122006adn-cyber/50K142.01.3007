@@ -1,0 +1,29 @@
+@host = http://localhost:5103
+
+### UC_1 Đăng nhập (Chủ quán – tài khoản khởi tạo ở môi trường Development)
+POST {{host}}/api/auth/dang-nhap
+Content-Type: application/json
+
+{ "tenDangNhap": "chuquan", "matKhau": "ChuQuan2026" }
+
+### UC_1 5.a – bỏ trống
+POST {{host}}/api/auth/dang-nhap
+Content-Type: application/json
+
+{ "tenDangNhap": "", "matKhau": "" }
+
+### Thông tin tài khoản (dán accessToken vào đây)
+@token =
+GET {{host}}/api/tai-khoan/toi
+Authorization: Bearer {{token}}
+
+### UC_2.3 Đổi mật khẩu
+POST {{host}}/api/tai-khoan/doi-mat-khau
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "matKhauHienTai": "ChuQuan2026", "matKhauMoi": "MatKhauMoi1", "xacNhanMatKhauMoi": "MatKhauMoi1" }
+
+### UC_11 Đăng xuất
+POST {{host}}/api/auth/dang-xuat
+Authorization: Bearer {{token}}
