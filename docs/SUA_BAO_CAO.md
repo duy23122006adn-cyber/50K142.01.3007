@@ -326,6 +326,21 @@
 
 ---
 
+## 9. Bổ sung phát sinh khi code Giai đoạn 2
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 9.1 | UC_2.1 BR02 + màn hình 2.2.5 | Màn hình có lỗi "Họ và tên không hợp lệ", BR không nêu quy tắc | Thêm vào BR02: "Họ và tên chỉ gồm chữ cái (kể cả tiếng Việt có dấu) và khoảng trắng, tối đa 100 ký tự." | 🟡 |
+| 9.2 | UC_2.1 BR02 + màn hình 2.2.6 | Màn hình có lỗi "Ngày sinh không hợp lệ" (ví dụ năm 2015), BR không nêu quy tắc | Thêm vào BR02: "Ngày sinh phải trước ngày hiện tại và nhân viên đủ 15 tuổi." (*đề xuất: tuổi lao động tối thiểu*) | 🟡 |
+| 9.3 | UC_2.1 luồng 6e | "Mật khẩu không đủ mạnh" | "Mật khẩu không đúng quy tắc" (khớp màn hình 2.2.10 và UC_2.3) | 🟢 |
+| 9.4 | UC_2.1 luồng 8a | "Không thể lưu tài khoản, vui lòng thử lại sau" | "Thêm tài khoản không thành công. Vui lòng thử lại sau" (khớp màn hình 2.2.14) | 🟢 |
+| 9.5 | UC_4.1 BR01, BR03 | BR03 ghi các ngưỡng "phải > 0", nhưng luồng 5a không bắt buộc nhập ngưỡng | Ghi rõ: "Ngưỡng cảnh báo không bắt buộc; nếu nhập thì phải > 0. Để trống thì mặt hàng không sinh cảnh báo tương ứng." | 🟡 |
+| 9.6 | UC_4.3 BR01 và luồng 5b, màn hình 4.5.3 | BR01: hàng đã có giao dịch thì chuyển "Ngừng kinh doanh"; 5b và 4.5.3: "không được phép xóa" | Gộp lại: "Hàng đã phát sinh giao dịch (đã nhập lô hoặc đã bán) thì không được xóa vĩnh viễn. Hệ thống thông báo và, khi Chủ quán đồng ý, chuyển hàng sang “Ngừng kinh doanh”." | 🔴 |
+| 9.7 | Màn hình 10.1, 10.2 | Mã lô ví dụ `LH-000001` | `LO-000001` (theo UC_10.1 BR08) | 🟢 |
+| 9.8 | UC_3.2 BR02, BR03 | Không nói rõ lô đã hết hàng có sinh cảnh báo hạn hay không | Thêm: "Cảnh báo “Sắp hết hạn” và “Hết hạn” chỉ sinh cho lô còn hàng (số lượng tồn > 0)", thống nhất với UC_5.4 BR02 | 🟡 |
+| 9.9 | UC_3.2 BR04 | "kiểm tra định kỳ mỗi ngày" | Ghi rõ giờ: "kiểm tra định kỳ lúc 00:05 mỗi ngày và khi khởi động hệ thống" | 🟢 |
+| 9.10 | UC_3.2 main flow | Không nói danh sách có gồm cảnh báo đã xử lý không | Mặc định chỉ hiện cảnh báo "Chưa xử lý"; có tùy chọn hiện cả cảnh báo đã xử lý | 🟢 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.

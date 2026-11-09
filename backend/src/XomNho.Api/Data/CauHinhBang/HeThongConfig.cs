@@ -35,6 +35,9 @@ public class BoDemMaConfig : IEntityTypeConfiguration<BoDemMa>
         b.Property(x => x.TienTo).HasColumnType("varchar(10)");
         b.Property(x => x.Ky).HasColumnType("char(8)");
         b.Property(x => x.SoHienTai).HasDefaultValue(0);
+
+        // Bộ đếm danh mục: đã nạp sẵn 11 mã DM01–DM11 (DanhMucConfig).
+        b.HasData(new BoDemMa { TienTo = "DM", Ky = Common.DinhDangMa.KyToanCuc, SoHienTai = DanhSachCoDinh.DanhMuc.Length });
     }
 }
 

@@ -5,7 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using XomNho.Api.Common;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
+using XomNho.Api.HangHoaQL;
+using XomNho.Api.NhanVienQL;
 using XomNho.Api.TichHop;
+using XomNho.Api.TonKho;
 using XomNho.Api.XacThuc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +28,14 @@ builder.Services.AddDbContext<XomNhoDbContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("XomNho")));
 builder.Services.AddScoped<ISinhMa, SinhMaSqlServer>();
 builder.Services.AddScoped<IThamSoHeThong, ThamSoHeThong>();
+
+// ------------------------------------------------------------------ Nghiệp vụ (Giai đoạn 2)
+builder.Services.AddScoped<IRangBuocNhanVien, RangBuocNhanVienGiaiDoan2>();
+builder.Services.AddScoped<DichVuNhanVien>();
+builder.Services.AddScoped<DichVuHangHoa>();
+builder.Services.AddScoped<DichVuCanhBao>();
+builder.Services.AddScoped<DichVuTonKho>();
+builder.Services.AddHostedService<QuetCanhBaoNen>();
 
 // ------------------------------------------------------------------ Tích hợp (giả lập trong MVP)
 builder.Services.AddSingleton<IGuiOtp, GuiOtpGiaLap>();

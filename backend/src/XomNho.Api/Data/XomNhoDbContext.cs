@@ -21,6 +21,14 @@ public class XomNhoDbContext(
     public DbSet<BoDemMa> BoDemMa => Set<BoDemMa>();
     public DbSet<CauHinh> CauHinh => Set<CauHinh>();
 
+    // Giai đoạn 2
+    public DbSet<LichSuSuaNhanVien> LichSuSuaNhanVien => Set<LichSuSuaNhanVien>();
+    public DbSet<DanhMuc> DanhMuc => Set<DanhMuc>();
+    public DbSet<HangHoa> HangHoa => Set<HangHoa>();
+    public DbSet<LoHang> LoHang => Set<LoHang>();
+    public DbSet<CanhBaoTonKho> CanhBaoTonKho => Set<CanhBaoTonKho>();
+    public DbSet<PhieuDieuChinhTon> PhieuDieuChinhTon => Set<PhieuDieuChinhTon>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Không phân biệt hoa thường khi so sánh/tìm kiếm (THIET_KE_DB_V2.md mục 1).
@@ -32,7 +40,7 @@ public class XomNhoDbContext(
 
     /// <summary>Các bảng không tự ghi nhật ký (chứa dữ liệu bí mật hoặc là chính bảng nhật ký).</summary>
     private static readonly HashSet<Type> BangKhongGhiNhatKy =
-        [typeof(NhatKyThaoTac), typeof(PhienDangNhap), typeof(MaXacThuc), typeof(BoDemMa)];
+        [typeof(NhatKyThaoTac), typeof(PhienDangNhap), typeof(MaXacThuc), typeof(BoDemMa), typeof(CanhBaoTonKho)];
 
     private static readonly HashSet<string> CotBiMat = ["MatKhau", "MaBam", "RefreshTokenHash", "PhienBan"];
 

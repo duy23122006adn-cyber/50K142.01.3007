@@ -499,3 +499,272 @@ a {
   gap: 0.75rem;
   margin-top: 1rem;
 }
+
+/* ------------------------------------------------------------------ Giai đoạn 2: bảng, công cụ, menu con */
+.the + .the {
+  margin-top: 1.25rem;
+}
+
+.the--rong {
+  max-width: 1200px;
+}
+
+.the--vua {
+  max-width: 860px;
+}
+
+.thanh-cong-cu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.thanh-cong-cu h2 {
+  margin: 0;
+}
+
+.o-tim {
+  display: flex;
+  flex: 1 1 320px;
+  gap: 0.5rem;
+  max-width: 560px;
+  margin-bottom: 0.5rem;
+}
+
+.o-tim .truong__o {
+  min-height: 48px;
+}
+
+.tieu-de-bang {
+  margin-top: 1rem;
+}
+
+.bang-cuon {
+  overflow-x: auto;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+}
+
+.bang {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.bang th,
+.bang td {
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--mau-vien);
+  text-align: left;
+  vertical-align: top;
+}
+
+.bang th {
+  background: var(--mau-chinh-nhat);
+  color: var(--mau-chinh-dam);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.bang tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.bang tbody tr:hover {
+  background: #f8faf9;
+}
+
+.bang .so {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bang--thong-tin td:first-child {
+  width: 40%;
+  color: var(--mau-chu-phu);
+}
+
+.bang--thong-tin td:last-child {
+  font-weight: 600;
+}
+
+.o-hanh-dong {
+  display: flex;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.dong-mo td {
+  color: var(--mau-chu-phu);
+}
+
+.xuong-dong {
+  white-space: pre-line;
+}
+
+.chu-do {
+  color: var(--mau-do) !important;
+  font-weight: 700;
+}
+
+.dang-tai-mo {
+  opacity: 0.6;
+}
+
+.khung-loi {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mau-do);
+  border-radius: var(--bo-goc);
+  background: var(--mau-do-nhat);
+  color: var(--mau-do);
+  font-weight: 600;
+}
+
+.nhan {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nhan--xanh {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.nhan--xam {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.nhan--do {
+  background: var(--mau-do-nhat);
+  color: var(--mau-do);
+}
+
+.nhan--cam {
+  background: #fff3cd;
+  color: #92400e;
+}
+
+.nut--nho {
+  min-height: 40px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.95rem;
+}
+
+.nut--nguy-hiem {
+  border-color: #f1b5b5;
+  color: var(--mau-do);
+}
+
+.nut--nguy-hiem-dac {
+  border-color: var(--mau-do);
+  background: var(--mau-do);
+  color: #fff;
+}
+
+.nut--nguy-hiem-dac:hover {
+  background: #a31f1f;
+}
+
+.luoi-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .luoi-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.truong__o--chi-doc {
+  background: var(--mau-chinh-nhat);
+  color: var(--mau-chu);
+}
+
+.truong__o:disabled {
+  background: #eef1f0;
+  cursor: not-allowed;
+}
+
+select.truong__o {
+  cursor: pointer;
+}
+
+.thong-tin--chi-doc {
+  padding: 0.75rem 1rem;
+  border-radius: var(--bo-goc);
+  background: var(--mau-chinh-nhat);
+}
+
+.phan-trang {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+}
+
+.phan-trang__nhom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.phan-trang__cach {
+  color: var(--mau-chu-phu);
+}
+
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.o-chon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.o-chon input {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-trai__nhom {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-trai__con {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 0 6px 0.9rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--mau-vien);
+}
+
+.menu-trai__con a {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 860px) {
+  .menu-trai__con {
+    flex-direction: row;
+    margin: 0;
+    border-left: 0;
+  }
+}
