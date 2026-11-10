@@ -36,6 +36,15 @@ export function TaiKhoanCaNhan() {
         </button>
         {data?.biKhoa && <p className="thong-bao thong-bao--do">Chức năng đổi mật khẩu đang bị khóa trong 15 phút.</p>}
       </section>
+      {nguoiDung.vaiTro === 'ChuQuan' && (
+        <section className="the">
+          <h2>Dữ liệu cửa hàng</h2>
+          <p className="ghi-chu">Dữ liệu được sao lưu tự động mỗi cuối ngày. Bạn có thể xem các bản sao lưu hoặc sao lưu ngay.</p>
+          <button type="button" className="nut" onClick={() => navigate('/tai-khoan/sao-luu')}>
+            Sao lưu dữ liệu
+          </button>
+        </section>
+      )}
     </>
   )
 }

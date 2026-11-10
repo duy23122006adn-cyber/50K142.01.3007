@@ -20,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ------------------------------------------------------------------ Cấu hình
 builder.Services.Configure<TuyChonJwt>(builder.Configuration.GetSection("Jwt"));
 builder.Services.Configure<TuyChonTichHop>(builder.Configuration.GetSection("TichHop"));
+builder.Services.Configure<XomNho.Api.HeThongQL.TuyChonSaoLuu>(builder.Configuration.GetSection("SaoLuu"));
 var jwt = builder.Configuration.GetSection("Jwt").Get<TuyChonJwt>() ?? new TuyChonJwt();
 if (jwt.Key.Length < 32)
     throw new InvalidOperationException("Thiếu cấu hình Jwt:Key (tối thiểu 32 ký tự).");
@@ -48,6 +49,10 @@ builder.Services.AddScoped<DichVuHangHoa>();
 builder.Services.AddScoped<DichVuCanhBao>();
 builder.Services.AddScoped<DichVuTonKho>();
 builder.Services.AddHostedService<QuetCanhBaoNen>();
+
+// ------------------------------------------------------------------ Giai đoạn 8: sao lưu (Backup NFR-01)
+builder.Services.AddScoped<XomNho.Api.HeThongQL.DichVuSaoLuu>();
+builder.Services.AddHostedService<XomNho.Api.HeThongQL.SaoLuuNen>();
 
 // ------------------------------------------------------------------ Tích hợp (giả lập trong MVP)
 builder.Services.AddSingleton<IGuiOtp, GuiOtpGiaLap>();

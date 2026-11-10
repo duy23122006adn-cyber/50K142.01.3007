@@ -30,6 +30,7 @@ import { TimKiemHangHoa } from './pages/hangHoa/TimKiemHangHoa'
 import { DanhSachLoHang, ThemLoHang } from './pages/loHang/LoHang'
 import { DanhSachNhanVien } from './pages/nhanVien/DanhSachNhanVien'
 import { FormNhanVienTrang } from './pages/nhanVien/FormNhanVien'
+import { SaoLuu } from './pages/SaoLuu'
 import { TaiKhoanCaNhan } from './pages/TaiKhoanCaNhan'
 import { CanhBaoTonKho } from './pages/tonKho/CanhBaoTonKho'
 import { DieuChinhLo } from './pages/tonKho/DieuChinhLo'
@@ -64,6 +65,7 @@ export default function App() {
         <Route index element={<TrangChu />} />
         <Route path="tai-khoan" element={<TaiKhoanCaNhan />} />
         <Route path="tai-khoan/doi-mat-khau" element={<DoiMatKhau />} />
+        <Route path="tai-khoan/sao-luu" element={chiChuQuan(<SaoLuu />)} />
 
         {/* Giai đoạn 2 – Quản lý tài khoản (UC_2.1, 2.2, 2.4) */}
         <Route path="quan-ly-tai-khoan" element={chiChuQuan(<DanhSachNhanVien />)} />

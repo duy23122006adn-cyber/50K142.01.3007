@@ -109,6 +109,7 @@ export const chucNangCua = (vaiTro: VaiTro) => DANH_SACH_CHUC_NANG.filter((c) =>
 export const TEN_TRANG: Record<string, string> = {
   '/tai-khoan': 'Tài khoản cá nhân',
   '/tai-khoan/doi-mat-khau': 'Đổi mật khẩu',
+  '/tai-khoan/sao-luu': 'Sao lưu dữ liệu',
   '/quan-ly-tai-khoan/them': 'Thêm tài khoản',
   '/quan-ly-ton-kho/tim-kiem': 'Tìm kiếm tồn kho',
   '/quan-ly-ton-kho/canh-bao': 'Xem cảnh báo tồn kho',

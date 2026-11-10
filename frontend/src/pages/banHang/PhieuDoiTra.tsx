@@ -7,6 +7,8 @@ import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
 import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
 import { ngayGio, tien } from '../../lib/dinhDang'
+import { docTien } from '../../lib/docSo'
+import { docDaThu, docTo } from '../../lib/docTo'
 import { ChenhLech, MatHang, NhanTrangThaiPhieu, ThongTinPhieu } from './ThongTinPhieu'
 
 const GOC_DOI_TRA = '/quan-ly-ban-hang/doi-tra'
@@ -54,7 +56,11 @@ export function PhieuDoiTraTrang() {
   const xuLy = async (phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai') => {
     setDangXuLy(true)
     try {
-      capNhat(await doiTraApi.xuLy({ maPDT: p.maPDT, phuongThuc, ketQuaQrGiaLap }))
+      const moi = await doiTraApi.xuLy({ maPDT: p.maPDT, phuongThuc, ketQuaQrGiaLap })
+      // Usability NFR-02: đọc số tiền thu thêm / hoàn lại.
+      if (phuongThuc && moi.chenhLech > 0) docDaThu(phuongThuc, moi.chenhLech)
+      else if (moi.tienHoanKhach > 0) docTo(`Hoàn lại khách ${docTien(moi.tienHoanKhach)}`)
+      capNhat(moi)
       setBuocThu('chon')
     } catch (e) {
       if (e instanceof LoiApi && e.status === 402) setPopup({ loai: 'qrLoi' }) // 6.2.29

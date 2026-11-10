@@ -6,6 +6,7 @@ import { congNoApi, type KhachQuenDong, type PhieuThuNo } from '../../api/nghiep
 import { HopThoai } from '../../components/HopThoai'
 import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
 import { ngay, ngayGio, tien } from '../../lib/dinhDang'
+import { docDaThu } from '../../lib/docTo'
 import { NhanTrangThaiNo } from './CongNo'
 
 type Buoc = 'chon' | 'phuongThuc' | 'tienMat' | 'qr' | 'phieu' | 'gui'
@@ -149,6 +150,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
         tienKhachDua: phuongThuc === 'Tiền mặt' ? String(soTienDua) : undefined,
         ketQuaQrGiaLap: ketQuaQr,
       })
+      docDaThu(phuongThuc, p.tongTien, p.tienTraLai) // Usability NFR-02
       setPhieu(p)
       setSdtNhan(p.sdt)
       setPopup({ loai: 'ttXong' })

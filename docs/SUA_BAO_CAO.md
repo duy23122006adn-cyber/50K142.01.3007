@@ -418,6 +418,13 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 | 14.10 | Phần Giao diện, mục báo cáo doanh thu | Tiêu đề "5.3.3. Màn hình Báo cáo doanh thu: chọn xem theo quý" | "5.2.3. …" | 🟢 |
 | 14.11 | Màn hình 5.3.9, 5.3.11, 5.4.1 | Ví dụ "Gạo ST25 / Thực phẩm khô / Kg", "Mỳ tôm / Kg" | Dùng nhóm hàng và đơn vị tính trong danh sách cố định (UC_4.1 BR05, BR06), ví dụ "Gạo & Nông sản khô / gói", "Mì tôm / gói". Màn hình 5.4.1 thêm cột "Mã lô" (mục 3.12) | 🟢 |
 
+## 15. Bổ sung phát sinh khi code Giai đoạn 8
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 15.1 | NFR Usability-02, phần tích hợp "Bộ phát âm thanh (loa)" | "Tích hợp tính năng đọc to số tiền khi tính tiền" – không nói đọc lúc nào | "Hệ thống đọc to: tổng tiền cần thanh toán khi chuyển sang bước thanh toán; số tiền đã nhận và tiền trả lại khi thu tiền mặt; số tiền đã nhận khi chuyển khoản thành công (bán hàng, thu nợ, thu thêm khi đổi hàng); số tiền hoàn lại khách khi đổi trả. Người dùng bật/tắt đọc to trên từng máy." Dùng giọng đọc tiếng Việt có sẵn của trình duyệt | 🟡 |
+| 15.2 | NFR Backup and Recovery-01 | "Dữ liệu được sao lưu tự động hằng ngày (cuối ngày)" | Thêm: "Sao lưu lúc 23:30 hằng ngày (cấu hình được), giữ bản sao lưu 14 ngày gần nhất. Nếu máy chủ tắt vào giờ sao lưu thì hệ thống sao lưu bù ngay khi khởi động lại. Sao lưu thất bại thì Chủ quán nhận thông báo." *Đề xuất* thêm màn hình "Sao lưu dữ liệu" (chỉ Chủ quán, mở từ Tài khoản cá nhân): xem các bản sao lưu và nút "Sao lưu ngay". Báo cáo hiện chưa có màn hình này | 🟡 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
@@ -425,6 +432,6 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 41 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 43 |
 | 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

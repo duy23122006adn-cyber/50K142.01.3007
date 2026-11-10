@@ -10,7 +10,10 @@ import { ChonKhachHang } from '../../components/ChonKhachHang'
 import { HopThoai } from '../../components/HopThoai'
 import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
 import { XemHoaDon } from '../../components/XemHoaDon'
+import { NutDocTo } from '../../components/NutDocTo'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
+import { docTien } from '../../lib/docSo'
+import { docDaThu, docTongTien } from '../../lib/docTo'
 
 interface DongGio {
   maHH: string
@@ -168,6 +171,7 @@ export function BanHang() {
         tienKhachDua: phuongThuc === 'Tiền mặt' ? tienDua : undefined,
         ketQuaQrGiaLap: ketQuaQr,
       })
+      docDaThu(tt.phuongThuc, tt.soTien, tt.tienTraLai) // Usability NFR-02
       await taoHoaDon(tt.maPTT)
     } catch (e) {
       if (!(e instanceof LoiApi)) return setPopup({ loai: 'loi', thongBao: 'Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.' })
@@ -367,7 +371,15 @@ export function BanHang() {
               <dt>Cần thanh toán</dt>
               <dd className="so-lon">{tien(tong)}</dd>
             </dl>
-            <button type="button" className="nut nut--chinh nut--rong" disabled={gio.length === 0} onClick={() => setBuoc('thanhToan')}>
+            <button
+              type="button"
+              className="nut nut--chinh nut--rong"
+              disabled={gio.length === 0}
+              onClick={() => {
+                setBuoc('thanhToan')
+                docTongTien(tong)
+              }}
+            >
               Tiếp tục thanh toán
             </button>
           </aside>
@@ -412,6 +424,12 @@ export function BanHang() {
             {khungKhach}
             <p className="ghi-chu">Cần thanh toán</p>
             <p className="so-rat-lon">{tien(tong)}</p>
+            <div className="hang-nut hang-nut--trai">
+              <button type="button" className="nut nut--nho" onClick={() => docTongTien(tong)} title="Đọc lại số tiền">
+                🔊 Đọc số tiền
+              </button>
+              <NutDocTo cauThu={`Tổng tiền cần thanh toán ${docTien(tong)}`} />
+            </div>
             <h3>Hình thức thanh toán</h3>
             <p className="ghi-chu">Thanh toán trực tiếp</p>
             <div className="luoi-2">

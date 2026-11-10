@@ -655,3 +655,26 @@ export const baoCaoApi = {
     goiApi<KetQuaSoSanh>(`/bao-cao/so-sanh${q({ chiTieu, tuNgay, denNgay, tuNgaySoSanh, denNgaySoSanh })}`),
   tonKho: (trangThai: string) => goiApi<BaoCaoTonKho>(`/bao-cao/ton-kho${q({ trangThai })}`),
 }
+
+// ------------------------------------------------------------------ Sao lưu (Backup NFR-01)
+
+export interface BanSaoLuu {
+  thoiDiem: string
+  tepTin: string
+  dungLuongMB: number
+  tuDong: boolean
+}
+
+export interface ThongTinSaoLuu {
+  batTuDong: boolean
+  gioChay: string
+  soNgayGiu: number
+  thuMuc: string
+  lanKeTiep: string | null
+  cacBan: BanSaoLuu[]
+}
+
+export const saoLuuApi = {
+  thongTin: () => goiApi<ThongTinSaoLuu>('/sao-luu'),
+  saoLuuNgay: () => goiApi<BanSaoLuu>('/sao-luu', { method: 'POST' }),
+}

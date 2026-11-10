@@ -67,6 +67,31 @@ cd backend
 dotnet test
 ```
 
+## Sao lưu và khôi phục (Backup NFR-01, NFR-02)
+
+- Backend tự sao lưu toàn bộ CSDL mỗi ngày lúc `SaoLuu:GioChay` (mặc định 23:30). Nếu máy tắt đúng giờ đó, backend sao lưu bù khoảng 30 giây sau lần khởi động kế tiếp.
+- Tệp `.bak` nằm trên **máy chạy SQL Server**:
+  - mặc định: `<thư mục sao lưu của SQL Server>\XomNho`;
+  - đổi bằng `SaoLuu:ThuMuc`. Tài khoản dịch vụ SQL Server phải có quyền ghi vào thư mục đó.
+- Mỗi tệp được kiểm tra bằng `RESTORE VERIFYONLY`. Bản cũ hơn `SaoLuu:SoNgayGiu` ngày (mặc định 14) bị xóa.
+- Chủ quán xem các bản sao lưu và bấm "Sao lưu ngay" tại **Tài khoản cá nhân → Sao lưu dữ liệu**.
+- Nếu sao lưu tự động thất bại, Chủ quán nhận thông báo ở chuông trên thanh tiêu đề.
+- Nên chép thư mục sao lưu sang nơi khác (ổ ngoài, dịch vụ lưu trữ đám mây) để phòng hỏng máy chủ.
+- Azure SQL Database không hỗ trợ sao lưu ra tệp; khi dùng dịch vụ này, tắt `SaoLuu:BatTuDong` và dùng tính năng sao lưu sẵn có của Azure.
+
+**Khôi phục** (người quản trị máy chủ thực hiện):
+
+1. Dừng backend.
+2. Chạy lệnh sau (thay tên tệp):
+
+   ```powershell
+   sqlcmd -S . -E -Q "RESTORE DATABASE XomNho FROM DISK = N'C:\...\XomNho\XomNho_20261110_233000.bak' WITH REPLACE"
+   ```
+
+3. Chạy lại backend.
+
+Người dùng đổi máy tính hoặc điện thoại không cần khôi phục gì: dữ liệu nằm trên máy chủ, chỉ cần đăng nhập lại (Q27).
+
 ## Lưu ý bảo mật
 
 - `appsettings.Development.json` chứa khóa JWT và mật khẩu mẫu **chỉ dùng cho máy phát triển**.

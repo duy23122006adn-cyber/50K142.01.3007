@@ -3,7 +3,7 @@
 > Nguồn yêu cầu: `NHÓM_1_PTTKHTTT.docx` (SRS Nhóm 1, lớp 50K14.2).
 > Nguyên tắc: code phải khớp với báo cáo. Khi các phần của báo cáo mâu thuẫn nhau, ưu tiên use case chi tiết và đặc tả màn hình hơn phần tổng quan, và chọn phương án ít phải sửa báo cáo nhất.
 >
-> Trạng thái hiện tại: **Giai đoạn 7 đã xong** (hết phạm vi MVP), chờ duyệt trước khi sang Giai đoạn 8. Cách chạy: xem [README.md](README.md).
+> Trạng thái hiện tại: **Giai đoạn 8a đã xong**, chờ duyệt trước khi sang 8b. Cách chạy: xem [README.md](README.md).
 
 ---
 
@@ -88,7 +88,10 @@ Thứ tự phụ thuộc: Tài khoản → Hàng hóa → Lô/Tồn kho → Ca l
 | 5 | Hủy hóa đơn (hoàn kho, nhật ký kèm bản sao), đổi trả (trả hàng / đổi hàng, thu thêm hoặc hoàn chênh lệch), duyệt phiếu, thông báo kết quả duyệt | UC_6.3, 6.2, 6.4 | ✅ Xong (168 unit test, 43 bước E2E) |
 | 6 | Kết ca: bắt đầu kết ca (khóa giao dịch toàn quán), kiểm kê, lưu biên bản + phân chênh lệch vào lô + kết thúc ca trong một giao dịch, xem biên bản theo quyền | UC_9.1, 9.2 | ✅ Xong (176 unit test, 26 bước E2E) |
 | 7 | Báo cáo lợi nhuận, doanh thu (theo phương thức thanh toán), so sánh hai kỳ, số lượng bán ra + top bán chạy/chậm, tồn kho theo lô; đổi trả tính vào kỳ duyệt phiếu, giá vốn lưu lúc bán | UC_5.1–5.4 | ✅ Xong (188 unit test, 25 bước E2E) |
-| 8 | Sau MVP: QR ngân hàng thật, SMS/Zalo, OTP qua SMS, đọc to số tiền, sao lưu, offline, đồng bộ điện thoại | — | ☐ |
+| 8a | Đọc to số tiền (giọng đọc trình duyệt), sao lưu CSDL tự động hằng ngày + sao lưu bù + màn hình sao lưu cho Chủ quán | NFR Usability-02, Backup-01 | ✅ Xong (198 unit test, 9 bước E2E) |
+| 8b | Thông báo tức thời (SignalR) và giao diện cho điện thoại | Tích hợp "đồng bộ với thiết bị di động" | ☐ |
+| 8c | Bán hàng offline (lưu tạm trên máy, tự đồng bộ khi có mạng) | NFR Availability-02, 03 | ☐ |
+| 8d | QR ngân hàng thật, SMS/Zalo, OTP qua SMS – chưa làm, chờ chọn nhà cung cấp | — | ☐ |
 
 ---
 
