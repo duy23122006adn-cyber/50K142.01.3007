@@ -27,6 +27,13 @@ export function homNayISO(): string {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`
 }
 
+/** Thời điểm hiện tại dạng "yyyy-MM-ddTHH:mm:ss" theo giờ máy người dùng (dùng với ngayGio). */
+export function bayGioISO(): string {
+  const d = new Date()
+  const p = (n: number) => String(n).padStart(2, '0')
+  return `${homNayISO()}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`
+}
+
 /**
  * Gắn lỗi theo trường từ API vào form. Trả về thông báo chung nếu lỗi không thuộc trường nào.
  */

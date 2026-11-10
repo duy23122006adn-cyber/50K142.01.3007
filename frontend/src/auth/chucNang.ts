@@ -55,7 +55,15 @@ export const DANH_SACH_CHUC_NANG: ChucNang[] = [
       { duongDan: '/quan-ly-ban-hang/lich-su', ten: 'Lịch sử bán hàng', vaiTro: CA_HAI },
     ],
   },
-  { duongDan: '/quan-ly-cong-no', ten: 'Quản lý công nợ', moTa: 'Hóa đơn nợ, khách quen, thu nợ', vaiTro: CA_HAI, giaiDoan: 4, daTrienKhai: false },
+  {
+    duongDan: '/quan-ly-cong-no', ten: 'Quản lý công nợ', moTa: 'Khách quen, hóa đơn nợ, thu nợ',
+    vaiTro: CA_HAI, giaiDoan: 4, daTrienKhai: true,
+    con: [
+      { duongDan: '/quan-ly-cong-no/tim-kiem', ten: 'Tìm kiếm khách quen', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-cong-no/thu-no', ten: 'Tạo phiếu thanh toán nợ', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-cong-no/them', ten: 'Thêm khách quen', vaiTro: CHU_QUAN },
+    ],
+  },
   {
     duongDan: '/quan-ly-khach-hang', ten: 'Quản lý khách hàng', moTa: 'Thêm, sửa, tìm kiếm khách hàng',
     vaiTro: CA_HAI, giaiDoan: 3, daTrienKhai: true,
@@ -92,5 +100,9 @@ export const TEN_TRANG: Record<string, string> = {
   '/quan-ly-ban-hang/lich-su': 'Lịch sử bán hàng',
   '/quan-ly-ban-hang/hoa-don': 'Chi tiết hóa đơn',
   '/quan-ly-khach-hang/them': 'Thêm khách hàng',
+  '/quan-ly-cong-no/tim-kiem': 'Tìm kiếm khách quen',
+  '/quan-ly-cong-no/thu-no': 'Tạo phiếu thanh toán nợ',
+  '/quan-ly-cong-no/them': 'Thêm khách quen',
+  '/quan-ly-cong-no/khach-quen': 'Tìm kiếm khách quen',
   ...Object.fromEntries(DANH_SACH_CHUC_NANG.map((c) => [c.duongDan, c.ten])),
 }

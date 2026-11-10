@@ -133,6 +133,10 @@ public sealed class QuetCanhBaoNen(IServiceScopeFactory scopeFactory, IDongHo do
                     var dv = scope.ServiceProvider.GetRequiredService<DichVuCanhBao>();
                     var soThayDoi = await dv.QuetHangNgayAsync(stop);
                     log.LogInformation("Quét cảnh báo tồn kho hằng ngày: {SoThayDoi} thay đổi.", soThayDoi);
+                    // Q23: khách có khoản nợ quá hạn bị khóa quyền mua nợ (và mở lại khi hết quá hạn).
+                    var congNo = scope.ServiceProvider.GetRequiredService<CongNoQL.DichVuCongNo>();
+                    var soKhach = await congNo.CapNhatQuyenMuaNoAsync(null, stop);
+                    log.LogInformation("Cập nhật quyền mua nợ hằng ngày: {SoKhach} khách thay đổi.", soKhach);
                 }
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {

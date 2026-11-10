@@ -254,6 +254,7 @@ export interface ChiTietHoaDon {
   soTienDaTra: number
   phuongThuc: string
   soTienConNo: number
+  hanThanhToan: string | null
 }
 
 export interface HoaDonDong {
@@ -283,6 +284,10 @@ export const banHangApi = {
   }) => goiApi<{ maPTT: string; soTien: number; tienTraLai: number; phuongThuc: string }>('/ban-hang/thanh-toan', { method: 'POST', body: yc }),
   taoHoaDon: (yc: { maPTT: string; maKH: string | null; dong: DongGioHang[] }) =>
     goiApi<ChiTietHoaDon>('/ban-hang/hoa-don', { method: 'POST', body: yc }),
+  kiemTraGhiNo: (yc: { maKH: string; dong: DongGioHang[] }) =>
+    goiApi<KiemTraGhiNo>('/ban-hang/kiem-tra-ghi-no', { method: 'POST', body: yc }),
+  taoHoaDonNo: (yc: { maKH: string; dong: DongGioHang[] }) =>
+    goiApi<ChiTietHoaDon>('/ban-hang/hoa-don-no', { method: 'POST', body: yc }),
   guiHoaDon: (yc: { maHD: string; kenh: 'SMS' | 'Zalo'; sdt: string }) =>
     goiApi<ThongBao>('/ban-hang/gui-hoa-don', { method: 'POST', body: yc }),
 }
@@ -291,4 +296,92 @@ export const hoaDonApi = {
   timKiem: (dk: DieuKienTimHoaDon, trang: number, tatCa: boolean) =>
     goiApi<KetQuaTrang<HoaDonDong>>(`/hoa-don${q({ ...dk, trang, tatCa: tatCa || undefined })}`),
   chiTiet: (ma: string) => goiApi<ChiTietHoaDon>(`/hoa-don/chi-tiet${q({ ma })}`),
+}
+
+// ------------------------------------------------------------------ Công nợ, khách quen (UC_7.1–7.6)
+
+export interface KiemTraGhiNo {
+  maKH: string
+  tenKhach: string
+  sdt: string
+  noTruoc: number
+  donHienTai: number
+  tongNoSauDon: number
+  hanMuc: number
+  ngayNoCuNhat: string | null
+  hanThanhToan: string
+}
+
+export interface KhachQuenDong {
+  maKH: string
+  hoTen: string
+  sdt: string
+  trangThaiNo: string
+  duNo: number
+}
+
+export interface HoaDonNoDong {
+  maHD: string
+  ngayGioLap: string
+  soTien: number
+  hanThanhToan: string
+  trangThaiNo: string
+}
+
+export interface ChiTietKhachQuen {
+  maKH: string
+  hoTen: string
+  sdt: string
+  cccd: string
+  diaChi: string
+  trangThaiNo: string
+  duNo: number
+  hanThanhToanCuNhat: string | null
+  quyenMuaNo: boolean
+  hoaDonChuaTra: HoaDonNoDong[]
+}
+
+export interface FormKhachQuen {
+  hoTen: string
+  sdt: string
+  cccd: string
+  diaChi: string
+}
+
+export interface PhieuThuNo {
+  maPTT: string
+  tenCuaHang: string
+  ngayGio: string
+  maKH: string
+  tenKhach: string
+  sdt: string
+  maNguoiThu: string
+  nguoiThu: string
+  phuongThuc: string
+  hoaDon: HoaDonNoDong[]
+  tongTien: number
+  duNoConLai: number
+  tienTraLai: number
+}
+
+export const congNoApi = {
+  timKhachQuen: (tuKhoa: string, trangThai: string) =>
+    goiApi<KhachQuenDong[]>(`/cong-no/khach-quen${q({ tuKhoa, trangThai })}`),
+  chiTiet: (ma: string) => goiApi<ChiTietKhachQuen>(`/cong-no/khach-quen/${encodeURIComponent(ma)}`),
+  them: (f: FormKhachQuen) => goiApi<{ ma: string }>('/cong-no/khach-quen', { method: 'POST', body: f }),
+  sua: (ma: string, f: FormKhachQuen) =>
+    goiApi<ThongBao>(`/cong-no/khach-quen/${encodeURIComponent(ma)}`, { method: 'PUT', body: f }),
+  xoa: (ma: string) => goiApi<ThongBao>(`/cong-no/khach-quen/${encodeURIComponent(ma)}/xoa`, { method: 'POST' }),
+  khachCoNo: (tuKhoa: string) => goiApi<KhachQuenDong[]>(`/cong-no/khach-co-no${q({ tuKhoa })}`),
+  hoaDonChuaTra: (ma: string) => goiApi<HoaDonNoDong[]>(`/cong-no/khach-quen/${encodeURIComponent(ma)}/hoa-don-chua-tra`),
+  thuNo: (yc: {
+    maKH: string
+    maHoaDon: string[]
+    phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR'
+    tienKhachDua?: string
+    ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai'
+  }) => goiApi<PhieuThuNo>('/cong-no/thu-no', { method: 'POST', body: yc }),
+  phieu: (ma: string) => goiApi<PhieuThuNo>(`/cong-no/phieu${q({ ma })}`),
+  guiPhieu: (yc: { maPTT: string; kenh: 'SMS' | 'Zalo'; sdt: string }) =>
+    goiApi<ThongBao>('/cong-no/gui-phieu', { method: 'POST', body: yc }),
 }

@@ -19,6 +19,14 @@ public sealed class BanHangController(DichVuBanHang dichVu) : ControllerBase
     [HttpPost("hoa-don")]
     public Task<ChiTietHoaDonDto> TaoHoaDon(YeuCauTaoHoaDon yc, CancellationToken ct) => dichVu.TaoHoaDonAsync(yc, ct);
 
+    /// <summary>UC_7.1 bước 7–10: kiểm tra điều kiện ghi nợ, trả thông tin "Kiểm tra công nợ".</summary>
+    [HttpPost("kiem-tra-ghi-no")]
+    public Task<CongNoQL.KiemTraGhiNo> KiemTraGhiNo(YeuCauGhiNo yc, CancellationToken ct) => dichVu.KiemTraGhiNoAsync(yc, ct);
+
+    /// <summary>UC_7.1 bước 11–12: tạo hóa đơn nợ.</summary>
+    [HttpPost("hoa-don-no")]
+    public Task<ChiTietHoaDonDto> TaoHoaDonNo(YeuCauGhiNo yc, CancellationToken ct) => dichVu.TaoHoaDonNoAsync(yc, ct);
+
     [HttpPost("gui-hoa-don")]
     public async Task<PhanHoiThongBao> GuiHoaDon(YeuCauGuiHoaDon yc, CancellationToken ct)
     {

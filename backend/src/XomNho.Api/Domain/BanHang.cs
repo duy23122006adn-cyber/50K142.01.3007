@@ -39,6 +39,8 @@ public class HoaDon
     public string MaND { get; set; } = null!;
     public NguoiDung NguoiDung { get; set; } = null!;
     public HoaDonThanhToanNgay? ThanhToanNgay { get; set; }
+    /// <summary>Có giá trị nếu là hóa đơn "Ghi nợ" (Giai đoạn 4).</summary>
+    public HoaDonNo? GhiNo { get; set; }
     public List<ChiTietHoaDon> ChiTiet { get; set; } = [];
 }
 
@@ -85,6 +87,10 @@ public class PhieuThanhToan
     /// <summary>Gắn vào sau khi hóa đơn tạo xong (UC_6.5 14.a: khoản thu được giữ khi tạo hóa đơn lỗi).</summary>
     public string? MaHDTTN { get; set; }
     public HoaDonThanhToanNgay? HoaDonThanhToanNgay { get; set; }
+    /// <summary>Có giá trị khi thu nợ khách quen (Giai đoạn 4).</summary>
+    public string? MaKQ { get; set; }
+    public KhachQuen? KhachQuen { get; set; }
+    public List<PhanBoThanhToan> PhanBo { get; set; } = [];
 }
 
 /// <summary>Bảng NhatKyGuiChungTu – kết quả gửi hóa đơn / phiếu qua SMS, Zalo.</summary>

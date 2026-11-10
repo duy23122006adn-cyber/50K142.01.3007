@@ -38,12 +38,26 @@ public class XomNhoDbContext(
     public DbSet<PhieuThanhToan> PhieuThanhToan => Set<PhieuThanhToan>();
     public DbSet<NhatKyGuiChungTu> NhatKyGuiChungTu => Set<NhatKyGuiChungTu>();
 
+    // Giai đoạn 4
+    public DbSet<KhachQuen> KhachQuen => Set<KhachQuen>();
+    public DbSet<HoaDonNo> HoaDonNo => Set<HoaDonNo>();
+    public DbSet<PhanBoThanhToan> PhanBoThanhToan => Set<PhanBoThanhToan>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Không phân biệt hoa thường khi so sánh/tìm kiếm (THIET_KE_DB_V2.md mục 1).
         modelBuilder.UseCollation("Vietnamese_CI_AS");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(XomNhoDbContext).Assembly);
     }
+
+    /// <summary>
+    /// Transaction mức SERIALIZABLE trên SQL Server (chống hai thao tác đồng thời cùng đọc-rồi-ghi một khách hàng,
+    /// ví dụ kiểm tra hạn mức nợ). Provider không quan hệ (InMemory khi kiểm thử) dùng transaction thường.
+    /// </summary>
+    public Task<Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction> MoGiaoDichTuanTuAsync(CancellationToken ct) =>
+        Database.IsRelational()
+            ? Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable, ct)
+            : Database.BeginTransactionAsync(ct);
 
     // ---------------------------------------------------------------- Nhật ký thao tác
 

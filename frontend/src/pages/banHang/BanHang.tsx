@@ -1,12 +1,16 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { LoiApi } from '../../api/client'
-import { banHangApi, type ChiTietHoaDon, type KhachHangDong, type SanPhamBan } from '../../api/nghiepVu'
+import { useNavigate } from 'react-router-dom'
+import {
+  banHangApi, khachHangApi, type ChiTietHoaDon, type KhachHangDong, type KiemTraGhiNo, type SanPhamBan,
+} from '../../api/nghiepVu'
 import { useXacThuc } from '../../auth/AuthContext'
 import { ChonKhachHang } from '../../components/ChonKhachHang'
 import { HopThoai } from '../../components/HopThoai'
+import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
 import { XemHoaDon } from '../../components/XemHoaDon'
-import { so, tien } from '../../lib/dinhDang'
+import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
 
 interface DongGio {
   maHH: string
@@ -17,7 +21,7 @@ interface DongGio {
   soLuong: number
 }
 
-type Buoc = 'gio' | 'thanhToan' | 'tienMat' | 'qr' | 'ketThuc' | 'hoaDon' | 'hoanTat'
+type Buoc = 'gio' | 'thanhToan' | 'tienMat' | 'qr' | 'ghiNo' | 'ketThuc' | 'hoaDon' | 'hoanTat'
 
 type Popup =
   | null
@@ -28,6 +32,8 @@ type Popup =
   | { loai: 'guiLoi'; thongBao: string }
   | { loai: 'guiXong' }
   | { loai: 'loi'; thongBao: string }
+  | { loai: 'ghiNoLoi'; thongBao: string; maLoi: string; maKH: string }
+  | { loai: 'ghiNoXong' }
 
 const KHOA_GIO = 'xn_gio_hang'
 
@@ -42,8 +48,15 @@ function docGio(): { gio: DongGio[]; khach: KhachHangDong | null } {
 /** Màn hình 6.5 – Tạo hóa đơn bán hàng (UC_6.5). */
 export function BanHang() {
   const queryClient = useQueryClient()
-  const { datChuaLuu } = useXacThuc()
+  const navigate = useNavigate()
+  const { datChuaLuu, nguoiDung } = useXacThuc()
   const [buoc, setBuoc] = useState<Buoc>('gio')
+  // UC_7.1 – ghi nợ
+  const [oTimNo, setOTimNo] = useState('')
+  const [loiTimNo, setLoiTimNo] = useState<string | null>(null)
+  const [ketQuaTimNo, setKetQuaTimNo] = useState<KhachHangDong[] | null>(null)
+  const [kiemTraNo, setKiemTraNo] = useState<KiemTraGhiNo | null>(null)
+  const [thoiDiemXem, setThoiDiemXem] = useState('')
   const [gio, setGio] = useState<DongGio[]>(() => docGio().gio)
   const [khach, setKhach] = useState<KhachHangDong | null>(() => docGio().khach)
   const [oTim, setOTim] = useState('')
@@ -162,6 +175,62 @@ export function BanHang() {
       if (e.status === 409 && e.duLieu.maHH) return setPopup({ loai: 'khongDuHang', thongBao: e.message })
       if (e.loi.tienKhachDua) return setLoiTien(e.loi.tienKhachDua)
       setPopup({ loai: 'loi', thongBao: e.message })
+    } finally {
+      setDangXuLy(false)
+    }
+  }
+
+  // ------------------------------------------------------------------ UC_7.1 Ghi nợ (màn hình 6.6)
+
+  const batDauGhiNo = () => {
+    setKiemTraNo(null)
+    setKetQuaTimNo(null)
+    setLoiTimNo(null)
+    setOTimNo(khach?.hoTen ?? '')
+    setBuoc('ghiNo')
+    if (khach) void chonKhachGhiNo(khach)
+  }
+
+  const timKhachGhiNo = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoiTimNo(null)
+    setKiemTraNo(null)
+    if (!oTimNo.trim()) return setLoiTimNo('Không được để trống!') // 5.a
+    try {
+      setKetQuaTimNo((await khachHangApi.timKiem(oTimNo.trim())).danhSach)
+    } catch (err) {
+      setLoiTimNo(err instanceof LoiApi ? (err.loi.tuKhoa ?? err.message) : 'Tìm kiếm không thành công')
+    }
+  }
+
+  const chonKhachGhiNo = async (kh: KhachHangDong) => {
+    try {
+      const kt = await banHangApi.kiemTraGhiNo({ maKH: kh.maKH, dong: dongGui })
+      setKiemTraNo(kt)
+      setKhach(kh)
+      setThoiDiemXem(bayGioISO())
+    } catch (err) {
+      if (err instanceof LoiApi && typeof err.duLieu.maLoi === 'string')
+        setPopup({ loai: 'ghiNoLoi', thongBao: err.message, maLoi: err.duLieu.maLoi, maKH: kh.maKH })
+      else if (err instanceof LoiApi && err.duLieu.maHH) setPopup({ loai: 'khongDuHang', thongBao: err.message })
+      else setPopup({ loai: 'loi', thongBao: err instanceof LoiApi ? err.message : 'Đã xảy ra lỗi hệ thống.' })
+    }
+  }
+
+  const taoHoaDonNo = async () => {
+    if (!kiemTraNo) return
+    setDangXuLy(true)
+    try {
+      const hd = await banHangApi.taoHoaDonNo({ maKH: kiemTraNo.maKH, dong: dongGui })
+      setHoaDon(hd)
+      setSdtNhan(hd.sdtKhach ?? '')
+      setPopup({ loai: 'ghiNoXong' })
+      void queryClient.invalidateQueries({ queryKey: ['khach-quen'] })
+    } catch (err) {
+      if (err instanceof LoiApi && typeof err.duLieu.maLoi === 'string')
+        setPopup({ loai: 'ghiNoLoi', thongBao: err.message, maLoi: err.duLieu.maLoi, maKH: kiemTraNo.maKH })
+      else if (err instanceof LoiApi && err.duLieu.maHH) setPopup({ loai: 'khongDuHang', thongBao: err.message })
+      else setPopup({ loai: 'loi', thongBao: err instanceof LoiApi ? err.message : 'Chưa thể tạo hóa đơn nợ.' })
     } finally {
       setDangXuLy(false)
     }
@@ -354,8 +423,8 @@ export function BanHang() {
               </button>
             </div>
             <p className="ghi-chu">Khách hàng muốn ghi nợ?</p>
-            <button type="button" className="nut nut--rong" disabled title="Triển khai ở Giai đoạn 4">
-              Chuyển sang ghi nợ (Giai đoạn 4)
+            <button type="button" className="nut nut--rong" onClick={() => batDauGhiNo()}>
+              Chuyển sang ghi nợ
             </button>
           </aside>
         </div>
@@ -414,23 +483,157 @@ export function BanHang() {
           <button type="button" className="nut nut--rong" disabled>
             Đang chờ ngân hàng xác nhận…
           </button>
-          <div className="gia-lap">
-            <p>
-              <strong>[Giả lập ngân hàng]</strong> MVP chưa kết nối ngân hàng thật (Q5). Chọn kết quả để thử các luồng:
-            </p>
-            <div className="hang-nut hang-nut--giua">
-              <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => thanhToan('Chuyển khoản QR', 'ThanhCong')}>
-                Ngân hàng xác nhận
-              </button>
-              <button type="button" className="nut nut--nguy-hiem" disabled={dangXuLy} onClick={() => thanhToan('Chuyển khoản QR', 'ThatBai')}>
-                Thanh toán thất bại
-              </button>
-            </div>
-          </div>
+          <GiaLapNganHang dangXuLy={dangXuLy} onKetQua={(ok) => thanhToan('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai')} />
           <button type="button" className="nut nut--chu" onClick={() => setBuoc('thanhToan')}>
             Đổi phương thức thanh toán
           </button>
         </section>
+      )}
+
+      {buoc === 'ghiNo' && (
+        <div className="pos">
+          <section className="the pos__hang">
+            {!kiemTraNo ? (
+              <>
+                <h2>Tìm khách hàng theo tên hoặc số điện thoại</h2>
+                <form className="o-tim" onSubmit={timKhachGhiNo}>
+                  <input
+                    className={`truong__o ${loiTimNo ? 'truong__o--loi' : ''}`}
+                    placeholder="Nhập tên hoặc số điện thoại"
+                    value={oTimNo}
+                    onChange={(e) => setOTimNo(e.target.value)}
+                    aria-label="Tên hoặc số điện thoại khách hàng cần ghi nợ"
+                    autoFocus
+                  />
+                  <button type="submit" className="nut">Tìm kiếm</button>
+                </form>
+                {loiTimNo && <p className="truong__loi">{loiTimNo}</p>}
+                {ketQuaTimNo && ketQuaTimNo.length === 0 && <p className="thong-bao thong-bao--do canh-giua">Không tìm thấy khách hàng</p>}
+                {ketQuaTimNo && ketQuaTimNo.length > 0 && (
+                  <>
+                    <p className="ghi-chu">Kết quả tìm kiếm: {ketQuaTimNo.length} khách hàng</p>
+                    <table className="bang">
+                      <thead>
+                        <tr>
+                          <th>Mã KH</th>
+                          <th>Họ tên</th>
+                          <th>Số điện thoại</th>
+                          <th>Hành động</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ketQuaTimNo.map((kh) => (
+                          <tr key={kh.maKH}>
+                            <td>{kh.maKH}</td>
+                            <td>{kh.hoTen}</td>
+                            <td>{kh.sdt}</td>
+                            <td>
+                              <button type="button" className="nut nut--nho nut--chinh" onClick={() => chonKhachGhiNo(kh)}>
+                                Chọn
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+              </>
+            ) : (
+              /* 6.6.8 – hóa đơn nợ dự kiến (chưa cấp mã) */
+              <article className="hoa-don-in">
+                <header className="hoa-don-in__dau">
+                  <strong className="hoa-don-in__cua-hang">Hóa đơn bán hàng</strong>
+                  <span>HÓA ĐƠN BÁN HÀNG · Chưa cấp mã</span>
+                </header>
+                <dl className="thong-tin">
+                  <dt>Ngày lập</dt>
+                  <dd>{ngayGio(thoiDiemXem)}</dd>
+                  <dt>Khách</dt>
+                  <dd>{kiemTraNo.tenKhach}</dd>
+                  <dt>Người bán</dt>
+                  <dd>{nguoiDung?.hoTen}</dd>
+                  <dt>SĐT</dt>
+                  <dd>{kiemTraNo.sdt}</dd>
+                  <dt>Loại</dt>
+                  <dd>Ghi nợ</dd>
+                  <dt>Hạn thanh toán</dt>
+                  <dd>{ngay(kiemTraNo.hanThanhToan)}</dd>
+                </dl>
+                <table className="bang">
+                  <thead>
+                    <tr>
+                      <th>Sản phẩm / ĐVT</th>
+                      <th className="so">SL</th>
+                      <th className="so">Đơn giá</th>
+                      <th className="so">Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {gio.map((d) => (
+                      <tr key={d.maHH}>
+                        <td>
+                          {d.tenHH} — <span className="ghi-chu">{d.donViTinh}</span>
+                        </td>
+                        <td className="so">{d.soLuong}</td>
+                        <td className="so">{tien(d.giaBan)}</td>
+                        <td className="so">{tien(d.giaBan * d.soLuong)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <dl className="thong-tin thong-tin--tong">
+                  <dt>Tổng tiền hàng</dt>
+                  <dd>{tien(tong)}</dd>
+                  <dt>Tổng tiền thanh toán</dt>
+                  <dd className="so-lon">{tien(tong)}</dd>
+                  <dt>Số tiền đã trả</dt>
+                  <dd>{tien(0)}</dd>
+                </dl>
+              </article>
+            )}
+          </section>
+
+          <aside className="the pos__gio">
+            {kiemTraNo ? (
+              <>
+                <h2>Kiểm tra công nợ</h2>
+                <dl className="thong-tin">
+                  <dt>Khách quen</dt>
+                  <dd>{kiemTraNo.tenKhach}</dd>
+                  <dt>Nợ trước</dt>
+                  <dd>{tien(kiemTraNo.noTruoc)}</dd>
+                  <dt>Đơn hàng hiện tại</dt>
+                  <dd>{tien(kiemTraNo.donHienTai)}</dd>
+                  <dt>Tổng nợ sau đơn</dt>
+                  <dd className="so-lon">{tien(kiemTraNo.tongNoSauDon)}</dd>
+                  <dt>Hạn mức</dt>
+                  <dd>{tien(kiemTraNo.hanMuc)}</dd>
+                  <dt>Nợ cũ nhất</dt>
+                  <dd>{kiemTraNo.ngayNoCuNhat ? ngay(kiemTraNo.ngayNoCuNhat) : '—'}</dd>
+                </dl>
+                <p className="thong-bao thong-bao--xanh">✓ Chưa quá hạn 30 ngày · Trong hạn mức</p>
+                <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={taoHoaDonNo}>
+                  Tạo hóa đơn nợ
+                </button>
+                <button type="button" className="nut nut--rong" onClick={() => setKiemTraNo(null)}>
+                  Chọn khách khác
+                </button>
+              </>
+            ) : (
+              <>
+                <h2>Ghi nợ</h2>
+                <p>
+                  Giá trị đơn hàng: <strong className="so-lon">{tien(tong)}</strong>
+                </p>
+                <p className="ghi-chu">Chỉ khách quen được mua nợ; tổng nợ không quá hạn mức và không có khoản nợ quá 30 ngày.</p>
+              </>
+            )}
+            <button type="button" className="nut nut--chu nut--rong" onClick={() => setBuoc('thanhToan')}>
+              Đổi thanh toán
+            </button>
+          </aside>
+        </div>
       )}
 
       {buoc === 'ketThuc' && (
@@ -500,7 +703,7 @@ export function BanHang() {
             <dt>Hóa đơn</dt>
             <dd>{hoaDon?.maHD}</dd>
             <dt>Thanh toán</dt>
-            <dd>Đã thanh toán</dd>
+            <dd>{hoaDon?.trangThai === 'Còn nợ' ? `Ghi nợ – hạn thanh toán ${ngay(hoaDon.hanThanhToan ?? '')}` : 'Đã thanh toán'}</dd>
             <dt>Tồn kho</dt>
             <dd>Đã cập nhật</dd>
             <dt>Gửi hóa đơn</dt>
@@ -688,6 +891,61 @@ export function BanHang() {
         <p className="thong-bao thong-bao--xanh">Gửi hóa đơn thành công</p>
       </HopThoai>
 
+      {/* 6.6.5–6.6.7 Không ghi nợ được */}
+      <HopThoai
+        mo={popup?.loai === 'ghiNoLoi'}
+        kieu="loi"
+        onDong={() => setPopup(null)}
+        nut={
+          <>
+            {popup?.loai === 'ghiNoLoi' && popup.maLoi === 'QuaHan' && (
+              <button
+                type="button"
+                className="nut"
+                onClick={() => navigate(`/quan-ly-cong-no/thu-no?maKH=${encodeURIComponent(popup.maKH)}`)}
+              >
+                Thanh toán nợ cũ
+              </button>
+            )}
+            <button
+              type="button"
+              className="nut nut--chinh"
+              onClick={() => {
+                setPopup(null)
+                setKiemTraNo(null)
+                setBuoc('thanhToan')
+              }}
+            >
+              Đổi thanh toán
+            </button>
+          </>
+        }
+      >
+        <p className="thong-bao thong-bao--do">{popup?.loai === 'ghiNoLoi' ? popup.thongBao : ''}</p>
+      </HopThoai>
+
+      {/* 6.6.9 Tạo hóa đơn nợ thành công */}
+      <HopThoai
+        mo={popup?.loai === 'ghiNoXong'}
+        kieu="thanhCong"
+        nut={
+          <button
+            type="button"
+            className="nut nut--chinh"
+            onClick={() => {
+              setPopup(null)
+              setKiemTraNo(null)
+              setBuoc('hoaDon')
+            }}
+          >
+            Tiếp
+          </button>
+        }
+      >
+        <p className="thong-bao thong-bao--xanh">Tạo hóa đơn nợ thành công</p>
+        <p>Mã hóa đơn: {hoaDon?.maHD}</p>
+      </HopThoai>
+
       <HopThoai
         mo={popup?.loai === 'loi'}
         kieu="loi"
@@ -701,34 +959,5 @@ export function BanHang() {
         <p className="thong-bao thong-bao--do">{popup?.loai === 'loi' ? popup.thongBao : ''}</p>
       </HopThoai>
     </>
-  )
-}
-
-/** Mã QR minh họa (không quét được) – MVP chưa kết nối ngân hàng (Q5). */
-function MaQrGiaLap({ soTien }: { soTien: number }) {
-  // Họa tiết giả lập sinh từ số tiền để mỗi đơn trông khác nhau.
-  const o = Array.from({ length: 21 * 21 }, (_, i) => ((i * 7919 + soTien) % 11) < 5)
-  const goc = (x: number, y: number) => (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13)
-  return (
-    <svg className="ma-qr" viewBox="0 0 21 21" role="img" aria-label={`Mã QR giả lập ${tien(soTien)}`}>
-      <rect width="21" height="21" fill="#fff" />
-      {o.map((den, i) => {
-        const x = i % 21
-        const y = Math.floor(i / 21)
-        if (goc(x, y)) return null
-        return den ? <rect key={i} x={x} y={y} width="1" height="1" fill="#111" /> : null
-      })}
-      {[
-        [0, 0],
-        [14, 0],
-        [0, 14],
-      ].map(([x, y]) => (
-        <g key={`${x}-${y}`}>
-          <rect x={x} y={y} width="7" height="7" fill="#111" />
-          <rect x={x + 1} y={y + 1} width="5" height="5" fill="#fff" />
-          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#111" />
-        </g>
-      ))}
-    </svg>
   )
 }

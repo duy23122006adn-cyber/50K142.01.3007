@@ -1,5 +1,5 @@
 import type { ChiTietHoaDon } from '../api/nghiepVu'
-import { ngayGio, so, tien } from '../lib/dinhDang'
+import { ngay, ngayGio, so, tien } from '../lib/dinhDang'
 
 const MAU_TRANG_THAI: Record<string, string> = {
   'Đã thanh toán': 'xanh',
@@ -30,6 +30,12 @@ export function XemHoaDon({ hd }: { hd: ChiTietHoaDon }) {
         <dd>{hd.sdtKhach ?? '—'}</dd>
         <dt>Loại hóa đơn</dt>
         <dd>{hd.loaiHoaDon}</dd>
+        {hd.hanThanhToan && (
+          <>
+            <dt>Hạn thanh toán</dt>
+            <dd>{ngay(hd.hanThanhToan)}</dd>
+          </>
+        )}
         <dt>Trạng thái</dt>
         <dd>
           <NhanTrangThaiHoaDon trangThai={hd.trangThai} />

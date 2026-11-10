@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using XomNho.Api.CaLam;
 using XomNho.Api.Common;
+using XomNho.Api.CongNoQL;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
 using XomNho.Api.TichHop;
@@ -22,13 +23,14 @@ public sealed record KetQuaThanhToan(string MaPTT, decimal SoTien, decimal TienT
 
 public sealed record YeuCauTaoHoaDon(string? MaPTT, string? MaKH, IReadOnlyList<DongGioHang>? Dong);
 public sealed record YeuCauGuiHoaDon(string? MaHD, string? Kenh, string? SDT);
+public sealed record YeuCauGhiNo(string? MaKH, IReadOnlyList<DongGioHang>? Dong);
 
 public sealed record DongHoaDon(string MaHH, string TenHH, string DonViTinh, int SoLuong, decimal DonGia, decimal ThanhTien);
 public sealed record ChiTietHoaDonDto(
     string MaHD, string TenCuaHang, DateTime NgayGioLap, string MaNguoiBan, string NguoiBan,
     string? MaKH, string? TenKhach, string? SdtKhach, string LoaiHoaDon, string TrangThai,
     IReadOnlyList<DongHoaDon> Dong, decimal TongTienHang, decimal TongTienThanhToan, decimal SoTienDaTra,
-    string PhuongThuc, decimal SoTienConNo);
+    string PhuongThuc, decimal SoTienConNo, DateOnly? HanThanhToan);
 
 public sealed record HoaDonDong(string MaHD, DateTime NgayGioLap, string? TenKhach, decimal TongTien, string TrangThai);
 
@@ -48,7 +50,8 @@ public sealed partial class DichVuBanHang(
     IThamSoHeThong thamSo,
     DichVuCa dichVuCa,
     DichVuCanhBao canhBao,
-    IGuiChungTu guiChungTu)
+    IGuiChungTu guiChungTu,
+    DichVuCongNo congNo)
 {
     public const string GioRong = "Giỏ hàng chưa có sản phẩm";
     public const string QrThatBai = "Thanh toán chưa thành công. Vui lòng thanh toán lại hoặc hủy giao dịch.";
@@ -211,30 +214,7 @@ public sealed partial class DichVuBanHang(
                 ThanhToanNgay = new HoaDonThanhToanNgay { MaKH = QuyTac.Trong(yc.MaKH) ? null : yc.MaKH },
             };
 
-            // BR11 + Q20: xuất kho theo lô có HSD gần nhất, ghi lô và giá vốn từng phần.
-            var homNay = dongHo.HomNay;
-            foreach (var d in dong)
-            {
-                var cacLo = await db.LoHang
-                    .Where(l => l.MaHH == d.HangHoa.MaHH && l.HanSuDung >= homNay && l.SoLuongTon > 0)
-                    .OrderBy(l => l.HanSuDung).ThenBy(l => l.MaLo).ToListAsync(ct);
-                var canXuat = d.SoLuong;
-                foreach (var lo in cacLo)
-                {
-                    if (canXuat == 0) break;
-                    var lay = Math.Min(canXuat, lo.SoLuongTon);
-                    lo.SoLuongTon -= lay;
-                    canXuat -= lay;
-                    hd.ChiTiet.Add(new ChiTietHoaDon
-                    {
-                        MaHH = d.HangHoa.MaHH, MaLo = lo.MaLo, SoLuong = lay,
-                        DonGia = d.HangHoa.GiaBan, GiaVon = d.HangHoa.GiaNhap,
-                    });
-                    await canhBao.DanhGiaLoAsync(lo, d.HangHoa, xetHang: true, xetHan: false, capNhatNeuDaCo: true, ct);
-                }
-                if (canXuat > 0) throw LoiKhongDuHang(d.HangHoa, d.SoLuong - canXuat);
-            }
-
+            await XuatKhoAsync(hd, dong, ct);
             db.HoaDon.Add(hd);
             ptt.MaHDTTN = hd.MaHD;
             await db.SaveChangesAsync(ct);
@@ -252,6 +232,82 @@ public sealed partial class DichVuBanHang(
             db.ChangeTracker.Clear();
             throw new LoiNghiepVuException(StatusCodes.Status409Conflict, ChuaTheTaoHoaDon,
                 duLieuThem: new Dictionary<string, object?> { ["maPTT"] = yc.MaPTT });
+        }
+    }
+
+    /// <summary>BR11 + Q20: xuất kho theo lô có HSD gần nhất, ghi lô và giá vốn từng phần; đánh giá cảnh báo hết hàng.</summary>
+    private async Task XuatKhoAsync(HoaDon hd, List<DongDaTinh> dong, CancellationToken ct)
+    {
+        var homNay = dongHo.HomNay;
+        foreach (var d in dong)
+        {
+            var cacLo = await db.LoHang
+                .Where(l => l.MaHH == d.HangHoa.MaHH && l.HanSuDung >= homNay && l.SoLuongTon > 0)
+                .OrderBy(l => l.HanSuDung).ThenBy(l => l.MaLo).ToListAsync(ct);
+            var canXuat = d.SoLuong;
+            foreach (var lo in cacLo)
+            {
+                if (canXuat == 0) break;
+                var lay = Math.Min(canXuat, lo.SoLuongTon);
+                lo.SoLuongTon -= lay;
+                canXuat -= lay;
+                hd.ChiTiet.Add(new ChiTietHoaDon
+                {
+                    MaHH = d.HangHoa.MaHH, MaLo = lo.MaLo, SoLuong = lay,
+                    DonGia = d.HangHoa.GiaBan, GiaVon = d.HangHoa.GiaNhap,
+                });
+                await canhBao.DanhGiaLoAsync(lo, d.HangHoa, xetHang: true, xetHan: false, capNhatNeuDaCo: true, ct);
+            }
+            if (canXuat > 0) throw LoiKhongDuHang(d.HangHoa, d.SoLuong - canXuat);
+        }
+    }
+
+    // ================================================================ UC_7.1 Tạo hóa đơn nợ
+
+    /// <summary>Bước 7–10: kiểm tra khách quen, hạn mức, nợ quá hạn; trả thông tin "Kiểm tra công nợ".</summary>
+    public async Task<KiemTraGhiNo> KiemTraGhiNoAsync(YeuCauGhiNo yc, CancellationToken ct)
+    {
+        var (_, tong) = await TinhGioHangAsync(yc.Dong, ct);
+        return await congNo.KiemTraGhiNoAsync(yc.MaKH, tong, ct);
+    }
+
+    /// <summary>Bước 11–12: tạo hóa đơn "Còn nợ", ghi nhận công nợ, trừ kho – trong một giao dịch tuần tự.</summary>
+    public async Task<ChiTietHoaDonDto> TaoHoaDonNoAsync(YeuCauGhiNo yc, CancellationToken ct)
+    {
+        var maND = hienTai.MaND!;
+        try
+        {
+            await using var tx = await db.MoGiaoDichTuanTuAsync(ct);
+            var ca = await dichVuCa.CaChoGiaoDichAsync(maND, ct);
+            var (dong, tong) = await TinhGioHangAsync(yc.Dong, ct);
+            var kt = await congNo.KiemTraGhiNoAsync(yc.MaKH, tong, ct); // kiểm tra lại trong giao dịch
+
+            var hd = new HoaDon
+            {
+                MaHD = await sinhMa.SinhMaAsync(LoaiMa.HoaDon, ct), // BR05: chỉ cấp khi tạo thành công
+                NgayGioLap = dongHo.BayGio,
+                TongTien = tong,
+                SoTienDaTra = 0,
+                TrangThai = TrangThaiHoaDon.ConNo,
+                MaCa = ca.MaCa,
+                MaND = maND,
+                GhiNo = new HoaDonNo { MaKQ = kt.MaKH, HanThanhToan = kt.HanThanhToan }, // BR03: +30 ngày
+            };
+            await XuatKhoAsync(hd, dong, ct);
+            db.HoaDon.Add(hd);
+            await db.SaveChangesAsync(ct);
+            await tx.CommitAsync(ct);
+            return await ChiTietAsync(hd.MaHD, ct);
+        }
+        catch (LoiNghiepVuException)
+        {
+            db.ChangeTracker.Clear();
+            throw;
+        }
+        catch (DbUpdateException)
+        {
+            db.ChangeTracker.Clear();
+            throw new LoiNghiepVuException(StatusCodes.Status409Conflict, "Chưa thể tạo hóa đơn nợ, vui lòng thử lại.");
         }
     }
 
@@ -301,7 +357,8 @@ public sealed partial class DichVuBanHang(
         return await PhanTrang.LayTrangAsync(
             q.OrderByDescending(h => h.NgayGioLap).ThenByDescending(h => h.MaHD)
              .Select(h => new HoaDonDong(h.MaHD, h.NgayGioLap,
-                 h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null ? h.ThanhToanNgay.KhachHang.HoTen : null,
+                 h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null ? h.ThanhToanNgay.KhachHang.HoTen
+                 : h.GhiNo != null ? h.GhiNo.KhachQuen.KhachHang.HoTen : null,
                  h.TongTien, h.TrangThai)),
             trang, soDong, ct);
     }
@@ -341,13 +398,16 @@ public sealed partial class DichVuBanHang(
             // Ô tên/SĐT: chỉ gồm chữ số (bỏ khoảng trắng, gạch ngang) → tìm theo SĐT; ngược lại theo tên.
             var k = dk.Khach!.Trim();
             var chuSo = k.Replace(" ", "").Replace("-", "");
+            // Khách của hóa đơn thanh toán ngay hoặc của hóa đơn nợ (khách quen).
             if (chuSo.All(char.IsDigit))
-                q = q.Where(h => h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null && h.ThanhToanNgay.KhachHang.SDT.Contains(chuSo));
+                q = q.Where(h => (h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null && h.ThanhToanNgay.KhachHang.SDT.Contains(chuSo))
+                    || (h.GhiNo != null && h.GhiNo.KhachQuen.KhachHang.SDT.Contains(chuSo)));
             else
             {
                 var thuong = k.ToLower();
-                q = q.Where(h => h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null
-                    && h.ThanhToanNgay.KhachHang.HoTen.ToLower().Contains(thuong));
+                q = q.Where(h => (h.ThanhToanNgay != null && h.ThanhToanNgay.KhachHang != null
+                        && h.ThanhToanNgay.KhachHang.HoTen.ToLower().Contains(thuong))
+                    || (h.GhiNo != null && h.GhiNo.KhachQuen.KhachHang.HoTen.ToLower().Contains(thuong)));
             }
         }
         if (tu is not null)
@@ -372,6 +432,7 @@ public sealed partial class DichVuBanHang(
         var hd = await db.HoaDon.AsNoTracking()
             .Include(h => h.NguoiDung)
             .Include(h => h.ThanhToanNgay!).ThenInclude(t => t.KhachHang)
+            .Include(h => h.GhiNo!).ThenInclude(n => n.KhachQuen).ThenInclude(k => k.KhachHang)
             .Include(h => h.ChiTiet).ThenInclude(c => c.HangHoa)
             .FirstOrDefaultAsync(h => h.MaHD == maHD, ct)
             ?? throw new LoiNghiepVuException(StatusCodes.Status404NotFound, KhongTimThayHoaDon);
@@ -389,15 +450,16 @@ public sealed partial class DichVuBanHang(
                 g.Sum(c => c.SoLuong) * g.Key.DonGia))
             .OrderBy(d => d.TenHH).ToList();
 
-        var kh = hd.ThanhToanNgay?.KhachHang;
-        var laNo = hd.ThanhToanNgay is null;
+        var laNo = hd.GhiNo is not null;
+        var kh = hd.ThanhToanNgay?.KhachHang ?? hd.GhiNo?.KhachQuen.KhachHang;
         return new ChiTietHoaDonDto(
             hd.MaHD, tenCuaHang, hd.NgayGioLap, hd.MaND, hd.NguoiDung.HoTen,
             kh?.MaKH, kh?.HoTen, kh?.SDT.Trim(),
             laNo ? "Ghi nợ" : "Thanh toán ngay", hd.TrangThai, dong,
             dong.Sum(d => d.ThanhTien), hd.TongTien, hd.SoTienDaTra,
             laNo ? PhuongThucThanhToan.GhiNo : phuongThuc ?? "—",
-            hd.TrangThai == TrangThaiHoaDon.ConNo ? hd.TongTien - hd.SoTienDaTra : 0);
+            hd.TrangThai == TrangThaiHoaDon.ConNo ? hd.TongTien - hd.SoTienDaTra : 0,
+            hd.GhiNo?.HanThanhToan);
     }
 
     [GeneratedRegex(@"^HD-\d{2}/\d{2}/\d{4}\.\d{3,}$")]

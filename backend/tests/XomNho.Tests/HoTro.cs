@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using XomNho.Api.BanHangQL;
 using XomNho.Api.CaLam;
+using XomNho.Api.CongNoQL;
 using XomNho.Api.KhachHangQL;
 using XomNho.Api.Common;
 using XomNho.Api.Data;
@@ -130,8 +131,13 @@ public sealed class MoiTruongThu : IDisposable
     public DichVuCa DvCa() => new(Db, SinhMa, DongHo, NullLogger<DichVuCa>.Instance);
     public DichVuTonKho DvTonKho() => new(Db, SinhMa, DongHo, new ThamSoHeThong(Db), HienTai, DvCanhBao(), DvCa());
     public DichVuKhachHang DvKhachHang() => new(Db, SinhMa, new ThamSoHeThong(Db));
+    public DichVuCongNo DvCongNo() => new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), GuiChungTu);
     public DichVuBanHang DvBanHang() =>
-        new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu);
+        new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu, DvCongNo());
+
+    /// <summary>Tạo nhanh hóa đơn nợ cho khách quen.</summary>
+    public Task<ChiTietHoaDonDto> GhiNoAsync(string maKH, params (string MaHH, int SoLuong)[] dong) =>
+        DvBanHang().TaoHoaDonNoAsync(new YeuCauGhiNo(maKH, dong.Select(d => new DongGioHang(d.MaHH, d.SoLuong)).ToList()), default);
 
     /// <summary>Bán nhanh: thanh toán tiền mặt rồi tạo hóa đơn.</summary>
     public async Task<ChiTietHoaDonDto> BanAsync(string? maKH, params (string MaHH, int SoLuong)[] dong)

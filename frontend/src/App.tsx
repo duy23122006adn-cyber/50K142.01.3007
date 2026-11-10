@@ -6,6 +6,8 @@ import { DANH_SACH_CHUC_NANG } from './auth/chucNang'
 import { BoCuc } from './components/BoCuc'
 import { BanHang } from './pages/banHang/BanHang'
 import { ChiTietHoaDonTrang, LichSuBanHang } from './pages/banHang/LichSuBanHang'
+import { ChiTietKhachQuenTrang, FormKhachQuenTrang, TimKiemKhachQuen } from './pages/congNo/CongNo'
+import { ThuNo } from './pages/congNo/ThuNo'
 import { ChiTietKhachHangTrang, DanhSachKhachHang, FormKhachHang } from './pages/khachHang/KhachHang'
 import { ChuaTrienKhai, KhongCoQuyen } from './pages/ChuaTrienKhai'
 import { DangNhap } from './pages/DangNhap'
@@ -82,6 +84,15 @@ export default function App() {
         <Route path="quan-ly-khach-hang/them" element={<FormKhachHang cheDo="them" />} />
         <Route path="quan-ly-khach-hang/:maKH" element={<ChiTietKhachHangTrang />} />
         <Route path="quan-ly-khach-hang/:maKH/sua" element={<FormKhachHang cheDo="sua" />} />
+
+        {/* Giai đoạn 4 – Công nợ (UC_7.2, 7.3: cả hai vai trò; UC_7.4–7.6: Chủ quán) */}
+        <Route path="quan-ly-cong-no" element={<Navigate to="/quan-ly-cong-no/tim-kiem" replace />} />
+        <Route path="quan-ly-cong-no/tim-kiem" element={<TimKiemKhachQuen />} />
+        <Route path="quan-ly-cong-no/thu-no" element={<ThuNo />} />
+        <Route path="quan-ly-cong-no/them" element={chiChuQuan(<FormKhachQuenTrang cheDo="them" />)} />
+        <Route path="quan-ly-cong-no/khach-quen" element={<Navigate to="/quan-ly-cong-no/tim-kiem" replace />} />
+        <Route path="quan-ly-cong-no/khach-quen/:maKH" element={<ChiTietKhachQuenTrang />} />
+        <Route path="quan-ly-cong-no/khach-quen/:maKH/sua" element={chiChuQuan(<FormKhachQuenTrang cheDo="sua" />)} />
 
         {/* Chức năng thuộc giai đoạn sau */}
         {DANH_SACH_CHUC_NANG.filter((c) => !c.daTrienKhai).map((c) => (

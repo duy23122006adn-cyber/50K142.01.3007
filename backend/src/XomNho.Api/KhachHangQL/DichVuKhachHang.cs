@@ -55,7 +55,8 @@ public sealed partial class DichVuKhachHang(XomNhoDbContext db, ISinhMa sinhMa, 
             ?? throw new LoiNghiepVuException(StatusCodes.Status404NotFound, KhongTimThay);
 
         var thuongMua = await db.ChiTietHoaDon.AsNoTracking()
-            .Where(c => c.HoaDon.TrangThai != TrangThaiHoaDon.DaHuy && c.HoaDon.ThanhToanNgay!.MaKH == maKH)
+            .Where(c => c.HoaDon.TrangThai != TrangThaiHoaDon.DaHuy
+                && (c.HoaDon.ThanhToanNgay!.MaKH == maKH || c.HoaDon.GhiNo!.MaKQ == maKH))
             .GroupBy(c => new { c.MaHH, c.HangHoa.TenHH, c.HangHoa.DonViTinh })
             .Select(g => new { g.Key.MaHH, g.Key.TenHH, g.Key.DonViTinh, SoLuong = g.Sum(c => c.SoLuong) })
             .OrderByDescending(x => x.SoLuong).ThenBy(x => x.TenHH)

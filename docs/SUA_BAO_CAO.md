@@ -354,6 +354,21 @@
 | 10.7 | UC_6.5 bước 10–14 | Không quy định mã cho khoản thu bán hàng | Mỗi lần thu (kể cả QR thất bại) tạo một phiếu thanh toán mã `PTT-dd/mm/yyyy.nnn`; hóa đơn chỉ tạo khi phiếu "Thành công" | 🟢 |
 | 10.8 | UC_6.5 bước 6, 11.a | "Chính sách giảm giá" và "mã QR" | Giá bán đã gồm giảm giá (Q4). QR là bản giả lập: màn hình có nút chọn kết quả "Ngân hàng xác nhận / Thanh toán thất bại" (Q5) | 🟢 |
 
+## 11. Bổ sung phát sinh khi code Giai đoạn 4
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 11.1 | UC_7.5 BR (thêm khách quen) | Không nói trường hợp SĐT đã thuộc một khách hàng thường (UC_8.1) | Thêm: "Nếu SĐT đã thuộc một khách hàng chưa là khách quen, hệ thống nâng khách hàng đó thành khách quen và giữ nguyên mã KH. Nếu là khách quen đã xóa thì kích hoạt lại (Q24)." | 🟡 |
+| 11.2 | UC_7.2 BR – trạng thái nợ | "Còn hạn (0–22 ngày), Sắp hết hạn (23–30), Quá hạn (> 30)" chưa nói tính từ mốc nào | Ghi rõ: "Số ngày tính từ ngày lập hóa đơn nợ cũ nhất chưa thanh toán đến hôm nay. Không còn hóa đơn nợ → “Không nợ”." | 🟡 |
+| 11.3 | UC_7.1 bước 7–9, màn hình 6.6.5–6.6.7 | Không quy định thứ tự kiểm tra khi khách vi phạm nhiều điều kiện | Thứ tự: chưa là khách quen → vượt hạn mức → có nợ quá hạn; hiện thông báo của điều kiện đầu tiên vi phạm | 🟢 |
+| 11.4 | Màn hình 6.6.12, 6.6.13 (luồng hóa đơn nợ) | "Gửi phiếu thanh toán điện tử thành công / không thành công" | "Gửi hóa đơn điện tử thành công / không thành công" (đang gửi hóa đơn, không phải phiếu thanh toán) | 🟢 |
+| 11.5 | Màn hình 7.2.7 (luồng thu nợ) | Tiêu đề thẻ "Gửi hóa đơn điện tử" | "Gửi phiếu thanh toán điện tử" (code đang giữ đúng chữ của báo cáo) | 🟢 |
+| 11.6 | Màn hình 7.4.2 | Tiêu đề "Sửa thông tin khách quen" trên màn hình Thêm khách quen | "Thêm khách quen" | 🟢 |
+| 11.7 | Màn hình 7.3.1, 7.4.1, 7.4.2 | "Hiển thị cứng 4 quy tắc kiểm tra" nhưng không ghi nội dung | Điền 4 quy tắc: Họ tên (bắt buộc, chỉ chữ và khoảng trắng, ≤ 50 ký tự); SĐT (bắt buộc, 10 số, bắt đầu bằng 0, không trùng); CCCD (bắt buộc, 12 số, không trùng khách quen đang hoạt động); Địa chỉ (bắt buộc, ≤ 200 ký tự) | 🟢 |
+| 11.8 | Màn hình 7.1.1 | Chỉ có 4 tab trạng thái, không có "Tất cả" | Mở màn hình thì hiện tất cả khách quen; bấm một tab để lọc, bấm lại tab đó để bỏ lọc | 🟢 |
+| 11.9 | UC_7.3 bước 12.a (QR thất bại) | Không nói lần thu thất bại có lưu không | Lưu một phiếu thanh toán "Không thành công" với mã `PTT-…` thường; mã `PTTN-…` chỉ cấp cho phiếu thành công (BR06) | 🟢 |
+| 11.10 | Màn hình 6.6.4 | "Kết quả tìm kiếm: 1 khách quen" | "Kết quả tìm kiếm: 1 khách hàng" – ô tìm trả về mọi khách hàng, khách chưa là khách quen sẽ nhận thông báo 6.6.5 khi bấm "Chọn" | 🟢 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
@@ -361,6 +376,6 @@
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 23 |
-| 🟢 Chính tả, đánh số | 11 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 25 |
+| 🟢 Chính tả, đánh số | 19 |
 | Chương Kiến trúc (điền mới) | 1 |
