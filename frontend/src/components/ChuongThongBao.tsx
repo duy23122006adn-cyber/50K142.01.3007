@@ -4,13 +4,16 @@ import { useNavigate } from 'react-router-dom'
 import { thongBaoApi, type ThongBaoDong } from '../api/nghiepVu'
 import { ngayGio } from '../lib/dinhDang'
 
-/** Thông báo kết quả duyệt phiếu cho người lập phiếu (UC_6.4 BR08). Tự tải lại mỗi 30 giây. */
+/**
+ * Thông báo kết quả duyệt phiếu cho người lập phiếu (UC_6.4 BR08) và lỗi sao lưu.
+ * Cập nhật ngay qua kết nối thời gian thực (lib/suKien.ts); tự tải lại mỗi 2 phút để dự phòng.
+ */
 export function ChuongThongBao() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [mo, setMo] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { data } = useQuery({ queryKey: ['thong-bao'], queryFn: thongBaoApi.danhSach, refetchInterval: 30_000 })
+  const { data } = useQuery({ queryKey: ['thong-bao'], queryFn: thongBaoApi.danhSach, refetchInterval: 120_000 })
 
   useEffect(() => {
     if (!mo) return

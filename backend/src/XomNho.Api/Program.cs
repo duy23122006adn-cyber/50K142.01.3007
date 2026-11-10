@@ -29,8 +29,16 @@ if (jwt.Key.Length < 32)
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IDongHo, DongHoVietNam>();
 builder.Services.AddScoped<INguoiDungHienTai, NguoiDungHienTai>();
-builder.Services.AddDbContext<XomNhoDbContext>(o =>
-    o.UseSqlServer(builder.Configuration.GetConnectionString("XomNho")));
+// Giai đoạn 8b: gom thay đổi dữ liệu để phát sự kiện thời gian thực sau khi lưu / commit.
+builder.Services.AddSingleton<XomNho.Api.HeThongQL.IKenhSuKien, XomNho.Api.HeThongQL.KenhSuKienSignalR>();
+builder.Services.AddSingleton<XomNho.Api.HeThongQL.GomSuKien>();
+builder.Services.AddSingleton<XomNho.Api.HeThongQL.GomSuKienKhiLuu>();
+builder.Services.AddSingleton<XomNho.Api.HeThongQL.GomSuKienGiaoDich>();
+builder.Services.AddDbContext<XomNhoDbContext>((sp, o) => o
+    .UseSqlServer(builder.Configuration.GetConnectionString("XomNho"))
+    .AddInterceptors(
+        sp.GetRequiredService<XomNho.Api.HeThongQL.GomSuKienKhiLuu>(),
+        sp.GetRequiredService<XomNho.Api.HeThongQL.GomSuKienGiaoDich>()));
 builder.Services.AddScoped<ISinhMa, SinhMaSqlServer>();
 builder.Services.AddScoped<IThamSoHeThong, ThamSoHeThong>();
 
@@ -77,6 +85,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
         o.Events = new JwtBearerEvents
         {
+            // WebSocket của SignalR không gửi được header Authorization → token đi qua query string, chỉ cho đường dẫn hub.
+            OnMessageReceived = ctx =>
+            {
+                if (ctx.Request.Path.StartsWithSegments(XomNho.Api.HeThongQL.SuKienHub.DuongDan)
+                    && ctx.Request.Query["access_token"] is { Count: > 0 } token)
+                    ctx.Token = token;
+                return Task.CompletedTask;
+            },
             // Phiên đã đăng xuất / đổi mật khẩu / tài khoản bị khóa → token không còn dùng được.
             OnTokenValidated = async ctx =>
             {
@@ -99,6 +115,7 @@ builder.Services.AddControllers()
         // JSON sai định dạng → trả lỗi cùng khuôn { thongBao } bằng tiếng Việt thay vì ProblemDetails tiếng Anh.
         o.InvalidModelStateResponseFactory = _ => new Microsoft.AspNetCore.Mvc.BadRequestObjectResult(
             new { thongBao = "Dữ liệu gửi lên không hợp lệ." }));
+builder.Services.AddSignalR();
 builder.Services.AddExceptionHandler<XuLyLoiToanCuc>();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
@@ -118,6 +135,7 @@ else
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<XomNho.Api.HeThongQL.SuKienHub>(XomNho.Api.HeThongQL.SuKienHub.DuongDan);
 
 await KhoiTaoDuLieu.ChayAsync(app.Services);
 

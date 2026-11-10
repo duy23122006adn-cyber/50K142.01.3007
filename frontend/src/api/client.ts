@@ -42,6 +42,23 @@ export function datAccessToken(token: string | null) {
   accessToken = token
 }
 
+/** Còn dưới 30 giây hoặc không đọc được hạn → coi như sắp hết hạn. */
+function sapHetHan(token: string): boolean {
+  try {
+    const phan = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const { exp } = JSON.parse(atob(phan)) as { exp?: number }
+    return !exp || exp * 1000 - Date.now() < 30_000
+  } catch {
+    return true
+  }
+}
+
+/** Access token còn hiệu lực (tự làm mới nếu sắp hết hạn) – dùng cho kết nối thời gian thực. */
+export async function tokenConHieuLuc(): Promise<string> {
+  if (accessToken && !sapHetHan(accessToken)) return accessToken
+  return (await lamMoiToken())?.accessToken ?? ''
+}
+
 /** AuthContext đăng ký để cập nhật người dùng khi token được làm mới hoặc phiên hết hạn. */
 export function dangKyKhiLamMoi(fn: (kq: PhanHoiDangNhap | null) => void) {
   khiLamMoi = fn

@@ -4,6 +4,7 @@ import { caApi } from '../api/nghiepVu'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useXacThuc } from '../auth/AuthContext'
 import { TEN_TRANG, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
+import { useKetNoiTucThoi } from '../lib/suKien'
 import { ChuongThongBao } from './ChuongThongBao'
 import { HopThoai } from './HopThoai'
 
@@ -30,7 +31,7 @@ function Breadcrumb() {
 
 /** Ca đang mở của cửa hàng (Q10) – hiển thị trên thanh tiêu đề. */
 function ThongTinCa() {
-  const { data: ca } = useQuery({ queryKey: ['ca-hien-tai'], queryFn: caApi.hienTai, refetchInterval: 60_000 })
+  const { data: ca } = useQuery({ queryKey: ['ca-hien-tai'], queryFn: caApi.hienTai, refetchInterval: 120_000 })
   if (!ca) return <span className="the-ca the-ca--trong">Chưa mở ca</span>
   return (
     <span className="the-ca" title={`Người phụ trách: ${ca.hoTenPhuTrach}`}>
@@ -45,6 +46,8 @@ export function BoCuc() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [moMenu, setMoMenu] = useState(false)
+  const [moMenuChucNang, setMoMenuChucNang] = useState(false) // điện thoại: menu dạng ngăn kéo
+  const ketNoi = useKetNoiTucThoi(nguoiDung?.maND)
   const [hoiDangXuat, setHoiDangXuat] = useState<null | 'thuong' | 'chuaLuu'>(null)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -70,12 +73,28 @@ export function BoCuc() {
   return (
     <div className="bo-cuc">
       <header className="thanh-tieu-de">
+        <button
+          type="button"
+          className="nut-menu"
+          aria-label="Mở menu chức năng"
+          aria-expanded={moMenuChucNang}
+          onClick={() => setMoMenuChucNang((v) => !v)}
+        >
+          ☰
+        </button>
         <Link to="/" className="thuong-hieu">
           <span className="thuong-hieu__logo" aria-hidden>XN</span>
-          <span>Tạp hóa Xóm Nhỏ</span>
+          <span className="thuong-hieu__ten">Tạp hóa Xóm Nhỏ</span>
         </Link>
 
         <ThongTinCa />
+        <span
+          className={`den-ket-noi den-ket-noi--${ketNoi}`}
+          title={ketNoi === 'truc-tuyen' ? 'Đang đồng bộ thời gian thực' : ketNoi === 'mat-ket-noi' ? 'Mất kết nối máy chủ – đang thử kết nối lại' : 'Đang kết nối…'}
+        >
+          <span className="den-ket-noi__cham" aria-hidden />
+          <span className="den-ket-noi__chu">{ketNoi === 'truc-tuyen' ? 'Trực tuyến' : ketNoi === 'mat-ket-noi' ? 'Mất kết nối' : 'Đang kết nối'}</span>
+        </span>
         <ChuongThongBao />
 
         <div className="tai-khoan" ref={menuRef}>
@@ -120,7 +139,14 @@ export function BoCuc() {
       </header>
 
       <div className="bo-cuc__than">
-        <nav className="menu-trai" aria-label="Chức năng">
+        {moMenuChucNang && <div className="man-che" aria-hidden onClick={() => setMoMenuChucNang(false)} />}
+        <nav
+          className={`menu-trai ${moMenuChucNang ? 'menu-trai--mo' : ''}`}
+          aria-label="Chức năng"
+          onClick={(e) => {
+            if ((e.target as HTMLElement).closest('a')) setMoMenuChucNang(false)
+          }}
+        >
           <NavLink to="/" end>
             Trang chủ
           </NavLink>

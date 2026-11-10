@@ -100,6 +100,7 @@ a {
 
 .hang-nut {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.25rem;
@@ -394,24 +395,82 @@ a {
   font-size: 0.95rem;
 }
 
+/* Giai đoạn 8b – điện thoại: menu chức năng thành ngăn kéo mở bằng nút ☰. */
+.nut-menu {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--bo-goc);
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.nut-menu:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.man-che {
+  display: none;
+}
+
 @media (max-width: 860px) {
   .bo-cuc__than {
     grid-template-columns: 1fr;
   }
+  .nut-menu {
+    display: inline-grid;
+  }
   .menu-trai {
-    flex-direction: row;
-    overflow-x: auto;
-    border-right: 0;
-    border-bottom: 1px solid var(--mau-vien);
+    display: none;
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    width: min(300px, 85vw);
+    overflow-y: auto;
+    border-right: 1px solid var(--mau-vien);
+    box-shadow: var(--bong);
+  }
+  .menu-trai--mo {
+    display: flex;
+  }
+  .man-che {
+    display: block;
+    position: fixed;
+    inset: 64px 0 0 0;
+    z-index: 25;
+    background: rgb(0 0 0 / 0.35);
   }
   .menu-trai a {
-    white-space: nowrap;
+    min-height: 44px;
   }
   .noi-dung {
     padding: 1rem 16px 3rem;
   }
   .tai-khoan__ten {
     display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .thanh-tieu-de {
+    gap: 0.4rem;
+    padding: 0 8px;
+  }
+  .thuong-hieu__ten,
+  .den-ket-noi__chu {
+    display: none;
+  }
+  .the {
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 1.35rem;
   }
 }
 
@@ -761,14 +820,6 @@ select.truong__o {
   font-size: 0.95rem;
 }
 
-@media (max-width: 860px) {
-  .menu-trai__con {
-    flex-direction: row;
-    margin: 0;
-    border-left: 0;
-  }
-}
-
 /* ------------------------------------------------------------------ Giai đoạn 3: bán hàng, hóa đơn, ca */
 .the-ca {
   margin-left: auto;
@@ -783,6 +834,40 @@ select.truong__o {
 
 .the-ca--trong {
   opacity: 0.75;
+}
+
+@media (max-width: 560px) {
+  .the-ca {
+    margin-right: 0;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* Đèn trạng thái kết nối thời gian thực (Giai đoạn 8b). */
+.den-ket-noi {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.den-ket-noi__cham {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fbbf24;
+}
+
+.den-ket-noi--truc-tuyen .den-ket-noi__cham {
+  background: #86efac;
+}
+
+.den-ket-noi--mat-ket-noi .den-ket-noi__cham {
+  background: #fca5a5;
 }
 
 .pos {
