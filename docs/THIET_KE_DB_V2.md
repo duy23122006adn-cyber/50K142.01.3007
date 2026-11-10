@@ -54,7 +54,7 @@ Mã do hệ thống tự sinh qua bảng `BoDemMa`, không cấp lại và chỉ
 
 ## 2. Danh sách bảng
 
-Tổng cộng 31 bảng: 23 bảng có trong báo cáo (đã chỉnh), 7 bảng mới và bảng HoaDonTam thêm ở Giai đoạn 8c.
+Tổng cộng 32 bảng: 23 bảng có trong báo cáo (đã chỉnh), 7 bảng mới, HoaDonTam (Giai đoạn 8c) và GiaoDichNganHang (Giai đoạn 8d).
 
 | Nhóm | Bảng | Nguồn |
 |---|---|---|
@@ -67,6 +67,7 @@ Tổng cộng 31 bảng: 23 bảng có trong báo cáo (đã chỉnh), 7 bảng 
 | | HoaDonTam (bán offline) | 🆕 GĐ8c |
 | Đổi trả | PhieuDoiTra, ChiTietDoiTra | Báo cáo |
 | Thanh toán | PhieuThanhToan, PhanBoThanhToan | Báo cáo |
+| | GiaoDichNganHang (webhook ngân hàng) | 🆕 GĐ8d |
 | Hệ thống | BoDemMa, CauHinh, NhatKyThaoTac, ThongBao, NhatKyGuiChungTu | 🆕 |
 
 ---
@@ -552,6 +553,20 @@ Hóa đơn bán tiền mặt khi mất mạng, do máy bán gửi lên khi có m
 | 14 | PhienBan | ROWVERSION | | |
 
 **Ràng buộc:** `CHECK ((TrangThai = N'Đã ghi nhận' AND MaHD IS NOT NULL) OR (TrangThai <> N'Đã ghi nhận' AND MaHD IS NULL AND LyDo không rỗng))`.
+
+#### GiaoDichNganHang 🆕 GĐ8d (chuyển khoản QR có xác nhận tự động)
+
+Tiền vào tài khoản cửa hàng, do dịch vụ theo dõi số dư gửi qua webhook.
+
+| # | Cột | Kiểu | Ràng buộc | Ghi chú |
+|---|---|---|---|---|
+| 1 | MaGD | VARCHAR(100) | PK | Mã giao dịch của nhà cung cấp – nhận trùng thì bỏ qua |
+| 2 | SoTien | DECIMAL(15,0) | NOT NULL, `CHECK (SoTien > 0)` | |
+| 3 | NoiDung | NVARCHAR(500) | NOT NULL | Chứa mã tham chiếu `XN…` của giao dịch |
+| 4 | ThoiDiemNhan | DATETIME2(0) | NOT NULL | |
+| 5 | DuLieuGoc | NVARCHAR(MAX) | NOT NULL | JSON gốc, để đối soát |
+| 6 | MaPTT | VARCHAR(20) | NULL, FK → PhieuThanhToan, UNIQUE (lọc NOT NULL) | Phiếu thu đã dùng giao dịch này |
+| 7 | PhienBan | ROWVERSION | | Hai phiếu không dùng chung một giao dịch |
 
 ---
 

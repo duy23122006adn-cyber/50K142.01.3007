@@ -110,6 +110,44 @@ Người dùng đổi máy tính hoặc điện thoại không cần khôi phụ
   Bản build chạy tại http://localhost:4173 và gọi API qua proxy giống bản phát triển.
 - Phiên offline dùng người đăng nhập gần nhất trên máy. Có mạng lại thì hệ thống khôi phục phiên thật bằng cookie; cookie hết hạn thì phải đăng nhập lại để đồng bộ.
 
+## Tích hợp thật (Giai đoạn 8d – mặc định đang giả lập)
+
+Mọi tích hợp đều bật bằng cấu hình trong `appsettings.json`, mục `TichHop`. Khóa bí mật nên đặt bằng biến môi trường, ví dụ `TichHop__NganHang__Webhook__KhoaBiMat`.
+
+**Chuyển khoản QR có xác nhận tự động** (`TichHop:NganHang`):
+
+1. Điền tài khoản nhận tiền:
+   - `CheDo = "VietQR"`;
+   - `MaNganHang`: mã BIN, ví dụ `970436`, hoặc mã viết tắt, ví dụ `VCB`;
+   - `SoTaiKhoan`, `TenTaiKhoan`.
+
+   Màn hình thanh toán sẽ hiện ảnh VietQR thật kèm số tiền và nội dung `XN…`.
+2. Đăng ký một dịch vụ theo dõi biến động số dư (SePay, Casso, PayOS…).
+   - Trỏ webhook về `https://<tên-miền>/api/tich-hop/ngan-hang/webhook`. Máy chủ phải có HTTPS công khai.
+   - Đặt `Webhook:KhoaBiMat` bằng khóa của dịch vụ.
+3. Mặc định cấu hình đọc theo dạng của SePay (header `Authorization: Apikey <khóa>`, các trường `id` / `transferAmount` / `content`). Với Casso, sửa các mục sau:
+
+   | Mục | Giá trị |
+   |---|---|
+   | `TenHeader` | `secure-token` |
+   | `TienToToken` | `""` |
+   | `TruongDanhSach` | `data` |
+   | `TruongSoTien` | `amount` |
+   | `TruongNoiDung` | `description` |
+
+   Dịch vụ ký nội dung bằng HMAC thì đặt `KieuXacThuc = "HMAC"`.
+
+Khi có tiền vào, màn hình QR tự nhận biết và hoàn tất thanh toán. Máy chủ chỉ ghi nhận khi có giao dịch khớp mã tham chiếu, đủ số tiền và còn hạn `PhutHieuLuc`. Mỗi giao dịch chỉ dùng được cho một lần thanh toán.
+
+**SMS / Zalo / OTP** (`TichHop:TinNhan`):
+
+- Đặt `CheDo = "Http"`.
+- `Url`: API gửi tin của nhà cung cấp.
+- `TenHeaderKhoa` / `Khoa`: header xác thực.
+- `MauThan`: mẫu JSON của thân yêu cầu, có thể dùng các chỗ thay `{sdt}`, `{kenh}`, `{noiDung}`.
+
+Mỗi nhà cung cấp có định dạng riêng, nên chỉ cần sửa `MauThan` cho khớp. Gửi hóa đơn điện tử và OTP mở khóa dùng chung cấu hình này. Khi bật `Http` thì đặt `HienOtpGiaLap = false`.
+
 ## Lưu ý bảo mật
 
 - `appsettings.Development.json` chứa khóa JWT và mật khẩu mẫu **chỉ dùng cho máy phát triển**.

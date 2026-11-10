@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LoiApi } from '../../api/client'
 import { congNoApi, type KhachQuenDong, type PhieuThuNo } from '../../api/nghiepVu'
 import { HopThoai } from '../../components/HopThoai'
-import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
+import { KhungQr } from '../../components/KhungQr'
 import { ngay, ngayGio, tien } from '../../lib/dinhDang'
 import { docDaThu } from '../../lib/docTo'
 import { NhanTrangThaiNo } from './CongNo'
@@ -140,7 +140,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
     if (buoc === 'phuongThuc') setBuoc('chon')
   }
 
-  const thuNo = async (phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQr?: 'ThanhCong' | 'ThatBai') => {
+  const thuNo = async (phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQr?: 'ThanhCong' | 'ThatBai', maThamChieuQr?: string) => {
     setDangXuLy(true)
     try {
       const p = await congNoApi.thuNo({
@@ -149,6 +149,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
         phuongThuc,
         tienKhachDua: phuongThuc === 'Tiền mặt' ? String(soTienDua) : undefined,
         ketQuaQrGiaLap: ketQuaQr,
+        maThamChieuQr,
       })
       docDaThu(phuongThuc, p.tongTien, p.tienTraLai) // Usability NFR-02
       setPhieu(p)
@@ -501,10 +502,8 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
             <>
               <h2>Chuyển khoản QR</h2>
               <div className="canh-giua">
-                <MaQrGiaLap soTien={soTien} />
-                <p className="so-lon">{tien(soTien)}</p>
+                <KhungQr soTien={soTien} dangXuLy={dangXuLy} onKetQua={(ok, ma) => thuNo('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)} />
               </div>
-              <GiaLapNganHang dangXuLy={dangXuLy} onKetQua={(ok) => thuNo('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai')} />
               <button type="button" className="nut nut--chu nut--rong" onClick={() => setBuoc('phuongThuc')}>
                 Đổi phương thức
               </button>

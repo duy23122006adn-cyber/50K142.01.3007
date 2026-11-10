@@ -471,6 +471,50 @@ namespace XomNho.Api.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("XomNho.Api.Domain.GiaoDichNganHang", b =>
+                {
+                    b.Property<string>("MaGD")
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("DuLieuGoc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaPTT")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<byte[]>("PhienBan")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<decimal>("SoTien")
+                        .HasColumnType("decimal(15,0)");
+
+                    b.Property<DateTime>("ThoiDiemNhan")
+                        .HasColumnType("datetime2(0)");
+
+                    b.HasKey("MaGD");
+
+                    b.HasIndex("MaPTT")
+                        .IsUnique()
+                        .HasDatabaseName("UX_GDNH_MaPTT")
+                        .HasFilter("[MaPTT] IS NOT NULL");
+
+                    b.HasIndex("ThoiDiemNhan")
+                        .HasDatabaseName("IX_GDNH_ThoiDiemNhan");
+
+                    b.ToTable("GiaoDichNganHang", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_GDNH_SoTien", "[SoTien] > 0");
+                        });
+                });
+
             modelBuilder.Entity("XomNho.Api.Domain.HangHoa", b =>
                 {
                     b.Property<string>("MaHH")
@@ -1675,6 +1719,16 @@ namespace XomNho.Api.Data.Migrations
                     b.Navigation("HoaDon");
 
                     b.Navigation("LoHang");
+                });
+
+            modelBuilder.Entity("XomNho.Api.Domain.GiaoDichNganHang", b =>
+                {
+                    b.HasOne("XomNho.Api.Domain.PhieuThanhToan", "PhieuThanhToan")
+                        .WithMany()
+                        .HasForeignKey("MaPTT")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PhieuThanhToan");
                 });
 
             modelBuilder.Entity("XomNho.Api.Domain.HangHoa", b =>

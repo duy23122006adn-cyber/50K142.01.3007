@@ -96,6 +96,22 @@ public class PhieuThanhToan
     public PhieuDoiTra? PhieuDoiTra { get; set; }
 }
 
+/// <summary>
+/// Bảng GiaoDichNganHang – tiền vào tài khoản cửa hàng, do dịch vụ theo dõi số dư gửi qua webhook (Giai đoạn 8d).
+/// Một giao dịch chỉ xác nhận được cho một phiếu thanh toán (MaPTT).
+/// </summary>
+public class GiaoDichNganHang
+{
+    public string MaGD { get; set; } = null!;
+    public decimal SoTien { get; set; }
+    public string NoiDung { get; set; } = null!;
+    public DateTime ThoiDiemNhan { get; set; }
+    public string DuLieuGoc { get; set; } = null!;
+    public string? MaPTT { get; set; }
+    public PhieuThanhToan? PhieuThanhToan { get; set; }
+    public byte[] PhienBan { get; set; } = [];
+}
+
 /// <summary>Bảng NhatKyGuiChungTu – kết quả gửi hóa đơn / phiếu qua SMS, Zalo.</summary>
 public class NhatKyGuiChungTu
 {

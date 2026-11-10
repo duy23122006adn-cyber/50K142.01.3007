@@ -25,7 +25,8 @@ public sealed record KiemTraGhiNo(
     DateOnly? NgayNoCuNhat, DateOnly HanThanhToan);
 
 public sealed record YeuCauThuNo(
-    string? MaKH, IReadOnlyList<string>? MaHoaDon, string? PhuongThuc, string? TienKhachDua, string? KetQuaQrGiaLap);
+    string? MaKH, IReadOnlyList<string>? MaHoaDon, string? PhuongThuc, string? TienKhachDua, string? KetQuaQrGiaLap,
+    string? MaThamChieuQr = null);
 
 /// <summary>Màn hình 7.2.6 – Phiếu thanh toán.</summary>
 public sealed record PhieuThuNo(
@@ -45,7 +46,8 @@ public sealed class DichVuCongNo(
     IDongHo dongHo,
     INguoiDungHienTai hienTai,
     IThamSoHeThong thamSo,
-    IGuiChungTu guiChungTu)
+    IGuiChungTu guiChungTu,
+    DichVuQr qr)
 {
     public const string KhongDuocTrong = "Không được để trống!";
     public const string SdtSai = "Số điện thoại không hợp lệ!";
@@ -324,6 +326,7 @@ public sealed class DichVuCongNo(
         decimal tienTraLai = 0;
         var trangThai = TrangThaiPhieuThanhToan.ThanhCong;
         string? maGiaoDich = null;
+        KetQuaXacNhanQr? xacNhanQr = null;
         if (phuongThuc == PhuongThucThanhToan.TienMat)
         {
             if (!QuyTac.DocSoNguyen(yc.TienKhachDua, out var dua) || dua < tong)
@@ -332,8 +335,9 @@ public sealed class DichVuCongNo(
         }
         else
         {
-            maGiaoDich = $"QR{dongHo.BayGio:yyyyMMddHHmmss}{Random.Shared.Next(100, 999)}";
-            if (yc.KetQuaQrGiaLap != "ThanhCong") trangThai = TrangThaiPhieuThanhToan.KhongThanhCong;
+            xacNhanQr = await qr.XacNhanAsync(yc.KetQuaQrGiaLap, yc.MaThamChieuQr, tong, ct); // giả lập hoặc VietQR thật (8d)
+            maGiaoDich = xacNhanQr.MaGiaoDich;
+            if (!xacNhanQr.ThanhCong) trangThai = TrangThaiPhieuThanhToan.KhongThanhCong;
         }
 
         var bayGio = dongHo.BayGio;
@@ -352,6 +356,7 @@ public sealed class DichVuCongNo(
             MaKQ = kq.MaKH,
         };
         db.PhieuThanhToan.Add(ptt);
+        if (xacNhanQr?.GiaoDich is { } gd) gd.MaPTT = ptt.MaPTT;
 
         if (trangThai != TrangThaiPhieuThanhToan.ThanhCong)
         {

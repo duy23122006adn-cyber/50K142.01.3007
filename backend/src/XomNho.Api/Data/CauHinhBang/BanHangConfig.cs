@@ -79,6 +79,26 @@ public class HoaDonConfig : IEntityTypeConfiguration<HoaDon>
     }
 }
 
+/// <summary>Giai đoạn 8d – giao dịch tiền vào nhận qua webhook ngân hàng.</summary>
+public class GiaoDichNganHangConfig : IEntityTypeConfiguration<GiaoDichNganHang>
+{
+    public void Configure(EntityTypeBuilder<GiaoDichNganHang> b)
+    {
+        b.ToTable("GiaoDichNganHang", t => t.HasCheckConstraint("CK_GDNH_SoTien", "[SoTien] > 0"));
+        b.HasKey(x => x.MaGD);
+        b.Property(x => x.MaGD).HasColumnType("varchar(100)");
+        b.Property(x => x.SoTien).HasColumnType("decimal(15,0)");
+        b.Property(x => x.NoiDung).HasColumnType("nvarchar(500)").IsRequired();
+        b.Property(x => x.ThoiDiemNhan).HasColumnType("datetime2(0)");
+        b.Property(x => x.DuLieuGoc).HasColumnType("nvarchar(max)").IsRequired();
+        b.Property(x => x.MaPTT).HasColumnType("varchar(20)");
+        b.Property(x => x.PhienBan).IsRowVersion();
+        b.HasOne(x => x.PhieuThanhToan).WithMany().HasForeignKey(x => x.MaPTT).OnDelete(DeleteBehavior.Restrict);
+        b.HasIndex(x => x.MaPTT).IsUnique().HasFilter("[MaPTT] IS NOT NULL").HasDatabaseName("UX_GDNH_MaPTT");
+        b.HasIndex(x => x.ThoiDiemNhan).HasDatabaseName("IX_GDNH_ThoiDiemNhan");
+    }
+}
+
 /// <summary>Giai đoạn 8c – hóa đơn tạm bán offline.</summary>
 public class HoaDonTamConfig : IEntityTypeConfiguration<HoaDonTam>
 {

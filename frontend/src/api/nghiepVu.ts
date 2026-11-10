@@ -281,6 +281,7 @@ export const banHangApi = {
     phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR'
     tienKhachDua?: string
     ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai'
+    maThamChieuQr?: string
   }) => goiApi<{ maPTT: string; soTien: number; tienTraLai: number; phuongThuc: string }>('/ban-hang/thanh-toan', { method: 'POST', body: yc }),
   taoHoaDon: (yc: { maPTT: string; maKH: string | null; dong: DongGioHang[] }) =>
     goiApi<ChiTietHoaDon>('/ban-hang/hoa-don', { method: 'POST', body: yc }),
@@ -380,6 +381,7 @@ export const congNoApi = {
     phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR'
     tienKhachDua?: string
     ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai'
+    maThamChieuQr?: string
   }) => goiApi<PhieuThuNo>('/cong-no/thu-no', { method: 'POST', body: yc }),
   phieu: (ma: string) => goiApi<PhieuThuNo>(`/cong-no/phieu${q({ ma })}`),
   guiPhieu: (yc: { maPTT: string; kenh: 'SMS' | 'Zalo'; sdt: string }) =>
@@ -518,7 +520,7 @@ export const doiTraApi = {
   lapPhieu: (yc: YeuCauLapPhieu) => goiApi<PhieuDoiTra>('/doi-tra/phieu', { method: 'POST', body: yc }),
   phieu: (ma: string) => goiApi<PhieuDoiTra>(`/doi-tra/phieu${q({ ma })}`),
   dangXuLy: () => goiApi<PhieuDoiTraDong[]>('/doi-tra/dang-xu-ly'),
-  xuLy: (yc: { maPDT: string; phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR'; ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai' }) =>
+  xuLy: (yc: { maPDT: string; phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR'; ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai'; maThamChieuQr?: string }) =>
     goiApi<PhieuDoiTra>('/doi-tra/xu-ly', { method: 'POST', body: yc }),
   khongHoanTat: (maPDT: string) => goiApi<PhieuDoiTra>('/doi-tra/khong-hoan-tat', { method: 'POST', body: { maPDT } }),
 }

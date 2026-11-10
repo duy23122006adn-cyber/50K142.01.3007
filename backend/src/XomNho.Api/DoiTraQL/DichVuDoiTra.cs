@@ -42,7 +42,7 @@ public sealed record PhieuDoiTraDong(
     string MaPDT, string MaHD, string? TenKhach, string LoaiPhieu, string NguoiLap, string VaiTroNguoiLap, DateTime NgayGioLap,
     string TrangThai, string TrangThaiXuLy);
 
-public sealed record YeuCauXuLyPhieu(string? MaPDT, string? PhuongThuc, string? KetQuaQrGiaLap);
+public sealed record YeuCauXuLyPhieu(string? MaPDT, string? PhuongThuc, string? KetQuaQrGiaLap, string? MaThamChieuQr = null);
 public sealed record YeuCauTuChoi(string? MaPDT, string? LyDo);
 
 /// <summary>
@@ -56,9 +56,22 @@ public sealed class DichVuDoiTra(
     INguoiDungHienTai hienTai,
     DichVuBanHang banHang,
     DichVuCa dichVuCa,
-    DichVuCanhBao canhBao)
+    DichVuCanhBao canhBao,
+    TichHop.DichVuQr qr)
 {
     public const int SoNgayDoiTra = 7; // Q17
+    public const string NgoaiGioLamViec = "Ngoài giờ làm việc (cửa hàng chưa có ca đang mở), chỉ Chủ quán được xem lịch sử đổi trả.";
+
+    /// <summary>
+    /// NFR Security-04 (SUA_BAO_CAO 12.5): "giờ làm việc" = cửa hàng có ca đang hoạt động hoặc đang kết ca.
+    /// Ngoài giờ đó Nhân viên không xem được phiếu đổi trả; Chủ quán luôn xem được.
+    /// </summary>
+    public async Task KiemTraGioLamViecAsync(CancellationToken ct)
+    {
+        if (hienTai.VaiTro == VaiTroNguoiDung.ChuQuan) return;
+        if (!await db.CaLamViec.AnyAsync(c => c.TrangThai != TrangThaiCa.DaKetThuc, ct))
+            throw new LoiNghiepVuException(StatusCodes.Status403Forbidden, NgoaiGioLamViec);
+    }
     public const string HangKhongDuDieuKien = "Hàng không đủ điều kiện đổi trả.";
     public const string CapNhatKhongThanhCong = "Cập nhật không thành công";
     public static readonly string[] TinhTrangDat = ["Còn nguyên vẹn", "Chưa mở bao bì", "Chưa qua sử dụng"];
@@ -419,11 +432,14 @@ public sealed class DichVuDoiTra(
             var phuongThuc = yc.PhuongThuc?.Trim();
             if (phuongThuc is not (PhuongThucThanhToan.TienMat or PhuongThucThanhToan.ChuyenKhoanQr))
                 throw LoiNghiepVuException.KhongHopLe("Vui lòng chọn hình thức thu Tiền mặt hoặc Chuyển khoản QR."); // 14.a.5
-            var thanhCong = phuongThuc == PhuongThucThanhToan.TienMat || yc.KetQuaQrGiaLap == "ThanhCong";
             await using var txThu = await db.MoGiaoDichTuanTuAsync(ct); // sinh mã PTT cần transaction
             if (await DaThuThemAsync(p.MaPDT, ct)) // hai người cùng bấm: không thu hai lần
                 throw new LoiNghiepVuException(StatusCodes.Status409Conflict, "Khoản chênh lệch đã được thu. Vui lòng tải lại phiếu.");
-            db.PhieuThanhToan.Add(new PhieuThanhToan
+            // Giả lập theo kết quả người dùng chọn; VietQR thật (8d) phải có giao dịch tiền vào khớp mã tham chiếu.
+            var xacNhanQr = phuongThuc == PhuongThucThanhToan.ChuyenKhoanQr
+                ? await qr.XacNhanAsync(yc.KetQuaQrGiaLap, yc.MaThamChieuQr, p.ChenhLech, ct) : null;
+            var thanhCong = xacNhanQr?.ThanhCong ?? true;
+            var pttThu = new PhieuThanhToan
             {
                 MaPTT = await sinhMa.SinhMaAsync(LoaiMa.PhieuThanhToan, ct),
                 NgayGio = dongHo.BayGio,
@@ -432,11 +448,12 @@ public sealed class DichVuDoiTra(
                 SoTien = p.ChenhLech,
                 PhuongThuc = phuongThuc,
                 TrangThai = thanhCong ? TrangThaiPhieuThanhToan.ThanhCong : TrangThaiPhieuThanhToan.KhongThanhCong,
-                MaGiaoDichNganHang = phuongThuc == PhuongThucThanhToan.ChuyenKhoanQr
-                    ? $"QR{dongHo.BayGio:yyyyMMddHHmmss}{Random.Shared.Next(100, 999)}" : null,
+                MaGiaoDichNganHang = xacNhanQr?.MaGiaoDich,
                 MaND = maND,
                 MaPDT = p.MaPDT,
-            });
+            };
+            db.PhieuThanhToan.Add(pttThu);
+            if (xacNhanQr?.GiaoDich is { } gd) gd.MaPTT = pttThu.MaPTT;
             await db.SaveChangesAsync(ct);
             await txThu.CommitAsync(ct);
             if (!thanhCong) // 14.a.7.3.a.1

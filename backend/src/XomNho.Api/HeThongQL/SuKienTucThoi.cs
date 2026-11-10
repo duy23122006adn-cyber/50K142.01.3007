@@ -42,6 +42,8 @@ public static class NhomDuLieu
     public const string DoiTra = "doi-tra";
     public const string Khach = "khach";
     public const string KetCa = "ket-ca";
+    /// <summary>Tiền vào tài khoản (webhook) – màn hình QR kiểm tra ngay thay vì chờ lần hỏi kế tiếp.</summary>
+    public const string NganHang = "ngan-hang";
 
     private static readonly Dictionary<Type, string> TheoBang = new()
     {
@@ -56,6 +58,7 @@ public static class NhomDuLieu
         [typeof(PhieuThanhToan)] = HoaDon,
         [typeof(NhatKyHuy)] = HoaDon,
         [typeof(HoaDonTam)] = HoaDon,
+        [typeof(GiaoDichNganHang)] = NganHang,
         [typeof(PhieuDoiTra)] = DoiTra,
         [typeof(ChiTietDoiTra)] = DoiTra,
         [typeof(KhachHang)] = Khach,

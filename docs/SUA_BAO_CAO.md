@@ -376,8 +376,8 @@
 | 12.1 | UC_6.2 main flow, UC_6.4 bước 4 | UC_6.4 hiển thị "Lý do đổi trả" nhưng UC_6.2 không có bước nhập lý do | Thêm vào bước 9: "Nhân viên nhập lý do đổi trả (bắt buộc) và chọn hình thức xử lý." Màn hình 6.2.16 có thêm ô "Lý do đổi trả" | 🟡 |
 | 12.2 | UC_6.2 BR02 | "đã đổi trả", "đang xin đổi trả" chưa định nghĩa theo trạng thái phiếu | "Đã đổi trả" = tổng số lượng trên phiếu "Đã duyệt"; "đang xin" = phiếu "Chờ duyệt". Phiếu "Từ chối" và "Không hoàn tất" không giữ số lượng | 🟡 |
 | 12.3 | UC_6.3 BR01.3 | "Chưa có phiếu đổi trả, kể cả phiếu đang chờ duyệt" | Thêm: "Phiếu bị từ chối hoặc không hoàn tất không làm thay đổi hóa đơn nên không chặn việc hủy" | 🟡 |
-| 12.4 | UC_6.2 post-condition, màn hình 6.2.13 → 6.2.20 | Hàng lỗi do nhà sản xuất (ví dụ nắp chai rò dầu) vẫn được cộng lại vào tồn kho bán | Code đang làm đúng báo cáo (cộng lại). *Đề xuất*: hàng lỗi nhà sản xuất không cộng vào tồn kho bán mà ghi riêng để trả nhà cung cấp | 🟡 |
-| 12.5 | NFR-04 | "Ngoài giờ làm việc chỉ Chủ quán được xem lịch sử đổi trả" | Chưa áp dụng: ca tự mở khi có người đăng nhập (Q10) nên chưa có khái niệm "ngoài giờ làm việc". Cần định nghĩa giờ làm việc (ví dụ theo ca đang mở hoặc khung giờ cố định) | 🟡 |
+| 12.4 | UC_6.2 post-condition, màn hình 6.2.13 → 6.2.20 | Hàng lỗi do nhà sản xuất (ví dụ nắp chai rò dầu) vẫn được cộng lại vào tồn kho bán | **Đã chốt: giữ như báo cáo** – hàng trả, kể cả hàng lỗi nhà sản xuất, được cộng lại vào lô đã bán. Chủ quán điều chỉnh tồn (UC_3.3) khi trả hàng lỗi cho nhà cung cấp. Thêm câu này vào post-condition UC_6.2 cho rõ | 🟡 |
+| 12.5 | NFR-04 | "Ngoài giờ làm việc chỉ Chủ quán được xem lịch sử đổi trả" | **Đã chốt và đã làm (Giai đoạn 8d):** "giờ làm việc" = cửa hàng có ca ở trạng thái "Đang hoạt động" hoặc "Đang kết ca". Sửa NFR thành: "Nhân viên chỉ được xem phiếu đổi trả khi cửa hàng có ca đang mở; khi không có ca nào đang mở, chỉ Chủ quán được xem." | 🟡 |
 | 12.6 | Màn hình 6.2.17, 6.2.25, 6.2.33, 6.2.36 | Mã phiếu ví dụ `PT-03/11/2026.001`, `PD-03/11/2026.001` | `PDT-03/11/2026.001` (khớp màn hình 6.4 và thiết kế CSDL) | 🟢 |
 | 12.7 | Màn hình 6.2.8, 6.2.9 | 6.2.8 (hóa đơn còn nợ) có tiêu đề "Hóa đơn đã hủy · không được đổi trả"; 6.2.9 hiện thông báo "Hóa đơn đã bị hủy." | Tiêu đề "Hóa đơn còn nợ · không được đổi trả", thông báo "Hóa đơn nợ." | 🟢 |
 | 12.8 | Màn hình 6.3.22, 6.3.24 | "Không tự mở khóa mua nợ" / "Quyền mua nợ không tự mở khóa" | "Quyền mua nợ được hệ thống xác định lại" (theo Q23 và mục 3.14) | 🟢 |
@@ -431,6 +431,8 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 | 15.5 | NFR Concurrency ("ưu tiên dữ liệu Chủ quán khi xung đột"), UC_6.5 BR10 | Không nói xử lý thế nào khi hóa đơn bán offline không còn hợp lệ lúc đồng bộ | "Khi đồng bộ, nếu không đủ tồn (máy khác đã bán), giá bán đã đổi hoặc hàng đã ngừng kinh doanh, hóa đơn tạm chuyển sang “Chờ Chủ quán xử lý” và Chủ quán nhận thông báo. Chủ quán “Ghi nhận” (theo giá khách đã trả; điều chỉnh tồn trước nếu thiếu) hoặc “Hủy” kèm lý do." Hóa đơn tạm chỉ được đồng bộ bởi chính người bán hoặc Chủ quán | 🟡 |
 | 15.6 | UC_9.1 (kết ca) | Không nói về hàng bán offline chưa đồng bộ | Thêm: "Máy còn hóa đơn tạm chưa đồng bộ thì không lưu được biên bản kết ca trên máy đó." Hạn chế còn lại: máy khác không biết hóa đơn tạm của một máy đang mất mạng, nên kết ca ở máy khác có thể lệch đúng số hàng đó (ghi nguyên nhân trong biên bản) | 🟡 |
 
+| 15.7 | Phần tích hợp "Chuyển khoản QR qua ngân hàng", UC_6.5 bước 11 | Không nói cách hệ thống biết khách đã chuyển khoản | "Mã QR là VietQR của tài khoản cửa hàng, kèm số tiền và nội dung chuyển khoản là mã tham chiếu riêng của giao dịch. Dịch vụ theo dõi biến động số dư báo tiền vào cho hệ thống; hệ thống đối chiếu mã tham chiếu và số tiền rồi mới ghi nhận thanh toán. Mỗi giao dịch ngân hàng chỉ dùng cho một lần thanh toán." Bản hiện tại chạy giả lập cho tới khi cấu hình tài khoản thật (README) | 🟡 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
@@ -438,6 +440,6 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 47 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 48 |
 | 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

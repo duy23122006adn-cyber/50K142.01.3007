@@ -12,13 +12,15 @@ using XomNho.Api.TonKho;
 
 namespace XomNho.Api.BanHangQL;
 
+
 // ------------------------------------------------------------------ DTO
 
 public sealed record SanPhamBan(string MaHH, string TenHH, string? MaVach, string DonViTinh, decimal GiaBan, int TonBanDuoc, string MaDM, string TenDM);
 public sealed record DongGioHang(string? MaHH, int SoLuong);
 
 public sealed record YeuCauThanhToan(
-    string? MaKH, IReadOnlyList<DongGioHang>? Dong, string? PhuongThuc, string? TienKhachDua, string? KetQuaQrGiaLap);
+    string? MaKH, IReadOnlyList<DongGioHang>? Dong, string? PhuongThuc, string? TienKhachDua, string? KetQuaQrGiaLap,
+    string? MaThamChieuQr = null);
 public sealed record KetQuaThanhToan(string MaPTT, decimal SoTien, decimal TienTraLai, string PhuongThuc);
 
 public sealed record YeuCauTaoHoaDon(string? MaPTT, string? MaKH, IReadOnlyList<DongGioHang>? Dong);
@@ -51,7 +53,8 @@ public sealed partial class DichVuBanHang(
     DichVuCa dichVuCa,
     DichVuCanhBao canhBao,
     IGuiChungTu guiChungTu,
-    DichVuCongNo congNo)
+    DichVuCongNo congNo,
+    DichVuQr qr)
 {
     public const string GioRong = "Giỏ hàng chưa có sản phẩm";
     public const string QrThatBai = "Thanh toán chưa thành công. Vui lòng thanh toán lại hoặc hủy giao dịch.";
@@ -136,6 +139,7 @@ public sealed partial class DichVuBanHang(
         decimal tienTraLai = 0;
         string? maGiaoDich = null;
         string trangThai = TrangThaiPhieuThanhToan.ThanhCong;
+        KetQuaXacNhanQr? xacNhanQr = null;
 
         if (phuongThuc == PhuongThucThanhToan.TienMat)
         {
@@ -148,9 +152,10 @@ public sealed partial class DichVuBanHang(
         }
         else if (phuongThuc == PhuongThucThanhToan.ChuyenKhoanQr)
         {
-            // 11.a: QR giả lập (Q5) – kết quả "ngân hàng" do người dùng chọn trên màn hình demo.
-            maGiaoDich = $"QR{dongHo.BayGio:yyyyMMddHHmmss}{Random.Shared.Next(100, 999)}";
-            if (yc.KetQuaQrGiaLap != "ThanhCong") trangThai = TrangThaiPhieuThanhToan.KhongThanhCong;
+            // 11.a: giả lập (Q5) theo kết quả người dùng chọn; VietQR thật (8d) phải có giao dịch tiền vào khớp mã tham chiếu.
+            xacNhanQr = await qr.XacNhanAsync(yc.KetQuaQrGiaLap, yc.MaThamChieuQr, tong, ct);
+            maGiaoDich = xacNhanQr.MaGiaoDich;
+            if (!xacNhanQr.ThanhCong) trangThai = TrangThaiPhieuThanhToan.KhongThanhCong;
         }
         else
         {
@@ -171,6 +176,7 @@ public sealed partial class DichVuBanHang(
             MaND = maND,
         };
         db.PhieuThanhToan.Add(ptt);
+        if (xacNhanQr?.GiaoDich is { } gd) gd.MaPTT = ptt.MaPTT; // giao dịch ngân hàng chỉ dùng cho một phiếu
         await db.SaveChangesAsync(ct);
         await tx.CommitAsync(ct);
 

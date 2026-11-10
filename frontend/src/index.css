@@ -1368,6 +1368,22 @@ select.truong__o {
   text-align: center;
 }
 
+/* ------------------------------------------------------------------ Giai đoạn 8d: VietQR */
+.khung-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.anh-qr {
+  width: min(280px, 100%);
+  height: auto;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+  background: #fff;
+}
+
 /* ------------------------------------------------------------------ Giai đoạn 8c: bán offline */
 .bang-offline {
   margin: 0 0 1rem;

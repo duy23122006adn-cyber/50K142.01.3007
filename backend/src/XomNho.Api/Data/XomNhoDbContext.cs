@@ -38,6 +38,7 @@ public class XomNhoDbContext(
     public DbSet<PhieuThanhToan> PhieuThanhToan => Set<PhieuThanhToan>();
     public DbSet<NhatKyGuiChungTu> NhatKyGuiChungTu => Set<NhatKyGuiChungTu>();
     public DbSet<HoaDonTam> HoaDonTam => Set<HoaDonTam>();
+    public DbSet<GiaoDichNganHang> GiaoDichNganHang => Set<GiaoDichNganHang>();
 
     // Giai đoạn 4
     public DbSet<KhachQuen> KhachQuen => Set<KhachQuen>();

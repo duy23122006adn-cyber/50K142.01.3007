@@ -25,13 +25,21 @@ public sealed class DoiTraController(DichVuDoiTra dichVu, INguoiDungHienTai hien
     [HttpPost("phieu")]
     public Task<PhieuDoiTraDto> LapPhieu(YeuCauLapPhieu yc, CancellationToken ct) => dichVu.LapPhieuAsync(yc, ct);
 
+    /// <summary>NFR Security-04: Nhân viên chỉ xem phiếu đổi trả trong giờ làm việc (có ca đang mở).</summary>
     [HttpGet("phieu")]
-    public Task<PhieuDoiTraDto> Phieu([FromQuery] string ma, CancellationToken ct) => dichVu.PhieuAsync(ma, ct);
+    public async Task<PhieuDoiTraDto> Phieu([FromQuery] string ma, CancellationToken ct)
+    {
+        await dichVu.KiemTraGioLamViecAsync(ct);
+        return await dichVu.PhieuAsync(ma, ct);
+    }
 
-    /// <summary>Phiếu chờ duyệt hoặc đã duyệt chưa hoàn tất. Nhân viên chỉ thấy phiếu mình lập.</summary>
+    /// <summary>Phiếu chờ duyệt hoặc đã duyệt chưa hoàn tất. Nhân viên chỉ thấy phiếu mình lập, trong giờ làm việc.</summary>
     [HttpGet("dang-xu-ly")]
-    public Task<List<PhieuDoiTraDong>> DangXuLy(CancellationToken ct) =>
-        dichVu.DanhSachAsync(null, dangXuLy: true, chiCuaToi: hienTai.VaiTro != VaiTroNguoiDung.ChuQuan, ct);
+    public async Task<List<PhieuDoiTraDong>> DangXuLy(CancellationToken ct)
+    {
+        await dichVu.KiemTraGioLamViecAsync(ct);
+        return await dichVu.DanhSachAsync(null, dangXuLy: true, chiCuaToi: hienTai.VaiTro != VaiTroNguoiDung.ChuQuan, ct);
+    }
 
     [HttpPost("xu-ly")]
     public Task<PhieuDoiTraDto> XuLy(YeuCauXuLyPhieu yc, CancellationToken ct) => dichVu.XuLyAsync(yc, ct);

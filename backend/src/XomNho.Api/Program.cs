@@ -62,9 +62,23 @@ builder.Services.AddHostedService<QuetCanhBaoNen>();
 builder.Services.AddScoped<XomNho.Api.HeThongQL.DichVuSaoLuu>();
 builder.Services.AddHostedService<XomNho.Api.HeThongQL.SaoLuuNen>();
 
-// ------------------------------------------------------------------ Tích hợp (giả lập trong MVP)
-builder.Services.AddSingleton<IGuiOtp, GuiOtpGiaLap>();
-builder.Services.AddSingleton<IGuiChungTu, GuiChungTuGiaLap>();
+// ------------------------------------------------------------------ Tích hợp – mặc định giả lập (Q5); Giai đoạn 8d: bật bằng cấu hình
+builder.Services.Configure<TuyChonNganHang>(builder.Configuration.GetSection("TichHop:NganHang"));
+builder.Services.Configure<TuyChonTinNhan>(builder.Configuration.GetSection("TichHop:TinNhan"));
+builder.Services.AddScoped<DichVuQr>();
+var tinNhan = builder.Configuration.GetSection("TichHop:TinNhan").Get<TuyChonTinNhan>() ?? new TuyChonTinNhan();
+if (tinNhan.LaThat)
+{
+    builder.Services.AddHttpClient();
+    builder.Services.AddSingleton<GuiTinHttp>();
+    builder.Services.AddSingleton<IGuiOtp, GuiOtpHttp>();
+    builder.Services.AddSingleton<IGuiChungTu, GuiChungTuHttp>();
+}
+else
+{
+    builder.Services.AddSingleton<IGuiOtp, GuiOtpGiaLap>();
+    builder.Services.AddSingleton<IGuiChungTu, GuiChungTuGiaLap>();
+}
 
 // ------------------------------------------------------------------ Xác thực & phân quyền
 builder.Services.AddSingleton<DichVuToken>();

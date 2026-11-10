@@ -5,7 +5,7 @@ import { LoiApi } from '../../api/client'
 import { doiTraApi, duyetDoiTraApi, type PhieuDoiTra } from '../../api/nghiepVu'
 import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
-import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
+import { KhungQr } from '../../components/KhungQr'
 import { ngayGio, tien } from '../../lib/dinhDang'
 import { docTien } from '../../lib/docSo'
 import { docDaThu, docTo } from '../../lib/docTo'
@@ -53,10 +53,10 @@ export function PhieuDoiTraTrang() {
     void queryClient.invalidateQueries({ queryKey: ['ban-hang', 'san-pham'] })
   }
 
-  const xuLy = async (phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai') => {
+  const xuLy = async (phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai', maThamChieuQr?: string) => {
     setDangXuLy(true)
     try {
-      const moi = await doiTraApi.xuLy({ maPDT: p.maPDT, phuongThuc, ketQuaQrGiaLap })
+      const moi = await doiTraApi.xuLy({ maPDT: p.maPDT, phuongThuc, ketQuaQrGiaLap, maThamChieuQr })
       // Usability NFR-02: đọc số tiền thu thêm / hoàn lại.
       if (phuongThuc && moi.chenhLech > 0) docDaThu(phuongThuc, moi.chenhLech)
       else if (moi.tienHoanKhach > 0) docTo(`Hoàn lại khách ${docTien(moi.tienHoanKhach)}`)
@@ -192,13 +192,12 @@ export function PhieuDoiTraTrang() {
                 <>
                   <p className="ghi-chu">Chuyển khoản QR · Cần thanh toán {tien(p.canThuThem)}</p>
                   <div className="canh-giua">
-                    <MaQrGiaLap soTien={p.canThuThem} />
+                    <KhungQr
+                      soTien={p.canThuThem}
+                      dangXuLy={dangXuLy}
+                      onKetQua={(ok, ma) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)}
+                    />
                   </div>
-                  <p className="ghi-chu canh-giua">Đang chờ ngân hàng xác nhận</p>
-                  <GiaLapNganHang
-                    dangXuLy={dangXuLy}
-                    onKetQua={(ok) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai')}
-                  />
                 </>
               )}
               {buocThu !== 'chon' && (

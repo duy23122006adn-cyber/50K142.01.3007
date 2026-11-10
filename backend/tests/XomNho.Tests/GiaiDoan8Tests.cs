@@ -7,6 +7,7 @@ using XomNho.Api.Common;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
 using XomNho.Api.HeThongQL;
+using XomNho.Api.TichHop;
 
 namespace XomNho.Tests;
 
@@ -118,6 +119,114 @@ public class HoaDonTamTests
         using var mt = await CoHangAsync();
         await Assert.ThrowsAsync<LoiNghiepVuException>(() =>
             mt.DvBanHang().DongBoTamAsync(Tam(maTam, mt.DongHo.BayGio, soLuong) with { TienKhachDua = tienDua }, default));
+    }
+}
+
+/// <summary>Giai đoạn 8d – khung VietQR + webhook xác nhận tiền vào.</summary>
+public class VietQrTests
+{
+    private const string Khoa = "khoa-bi-mat-thu";
+
+    private static async Task<MoiTruongThu> CoHangVietQrAsync()
+    {
+        var mt = new MoiTruongThu();
+        mt.NganHang.CheDo = TuyChonNganHang.VietQr;
+        mt.NganHang.MaNganHang = "970436";
+        mt.NganHang.SoTaiKhoan = "0123456789";
+        mt.NganHang.TenTaiKhoan = "TAP HOA XOM NHO";
+        mt.NganHang.Webhook.KhoaBiMat = Khoa;
+        await mt.ThemHangAsync("Nước cam");
+        await mt.ThemLoAsync("Nước cam", 10, 365);
+        return mt;
+    }
+
+    private static string SePay(string id, decimal soTien, string noiDung, string loai = "in") =>
+        $$"""{"id":{{id}},"gateway":"Vietcombank","transferType":"{{loai}}","transferAmount":{{soTien}},"content":"{{noiDung}}"}""";
+
+    private static Task<KetQuaThanhToan> BanQr(MoiTruongThu mt, string? maThamChieu) =>
+        mt.DvBanHang().ThanhToanAsync(new YeuCauThanhToan(null, [new DongGioHang("HH-0001", 1)], PhuongThucThanhToan.ChuyenKhoanQr, null, null, maThamChieu), default);
+
+    [Fact]
+    public async Task Tao_anh_VietQR_theo_tai_khoan_cau_hinh()
+    {
+        using var mt = await CoHangVietQrAsync();
+        var qr = mt.DvQr().TaoQr(10000);
+        Assert.Matches("^XN[A-Z0-9]{8}$", qr.MaThamChieu);
+        Assert.StartsWith("https://img.vietqr.io/image/970436-0123456789-compact2.png?amount=10000&addInfo=" + qr.MaThamChieu, qr.UrlAnh);
+        Assert.Contains("accountName=TAP%20HOA%20XOM%20NHO", qr.UrlAnh);
+    }
+
+    [Fact]
+    public void Xac_thuc_webhook_bang_token_hoac_HMAC()
+    {
+        using var mt = new MoiTruongThu();
+        mt.NganHang.Webhook.KhoaBiMat = Khoa;
+        Assert.True(mt.DvQr().XacThucWebhook("Apikey " + Khoa, "{}"));
+        Assert.False(mt.DvQr().XacThucWebhook("Apikey sai", "{}"));
+        Assert.False(mt.DvQr().XacThucWebhook(null, "{}"));
+
+        mt.NganHang.Webhook.KieuXacThuc = "HMAC";
+        var than = """{"id":1}""";
+        var chuKy = Convert.ToHexString(System.Security.Cryptography.HMACSHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(Khoa), System.Text.Encoding.UTF8.GetBytes(than))).ToLowerInvariant();
+        Assert.True(mt.DvQr().XacThucWebhook(chuKy, than));
+        Assert.False(mt.DvQr().XacThucWebhook(chuKy, than + " "));
+    }
+
+    [Fact]
+    public async Task Chua_co_tien_vao_thi_that_bai_co_tien_vao_khop_ma_thi_ban_duoc_va_khong_dung_lai()
+    {
+        using var mt = await CoHangVietQrAsync();
+        var qr = mt.DvQr().TaoQr(10000);
+        var loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() => BanQr(mt, qr.MaThamChieu)); // chưa có tiền vào
+        Assert.Equal(StatusCodes.Status402PaymentRequired, loi.MaTrangThai);
+        Assert.False(await mt.DvQr().DaNhanAsync(qr.MaThamChieu, 10000, default));
+
+        // Ngân hàng chèn dấu cách / chữ thường vào nội dung; tiền ra và giao dịch trùng bị bỏ qua.
+        var noiDung = $"CK {qr.MaThamChieu[..5].ToLowerInvariant()} {qr.MaThamChieu[5..]} cam on";
+        Assert.Equal(1, await mt.DvQr().NhanWebhookAsync(SePay("101", 10000, noiDung), default));
+        Assert.Equal(0, await mt.DvQr().NhanWebhookAsync(SePay("101", 10000, noiDung), default));
+        Assert.Equal(0, await mt.DvQr().NhanWebhookAsync(SePay("102", 50000, qr.MaThamChieu, "out"), default));
+        Assert.True(await mt.DvQr().DaNhanAsync(qr.MaThamChieu, 10000, default));
+        Assert.False(await mt.DvQr().DaNhanAsync(qr.MaThamChieu, 20000, default)); // chuyển thiếu tiền
+
+        var tt = await BanQr(mt, qr.MaThamChieu);
+        Assert.Equal("101", mt.Db.PhieuThanhToan.Single(p => p.MaPTT == tt.MaPTT).MaGiaoDichNganHang);
+        Assert.Equal(tt.MaPTT, mt.Db.GiaoDichNganHang.Single().MaPTT);
+
+        loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() => BanQr(mt, qr.MaThamChieu)); // giao dịch đã dùng
+        Assert.Equal(StatusCodes.Status402PaymentRequired, loi.MaTrangThai);
+    }
+
+    [Fact]
+    public async Task Webhook_dang_Casso_doc_mang_data()
+    {
+        using var mt = new MoiTruongThu();
+        var w = mt.NganHang.Webhook;
+        (w.TruongDanhSach, w.TruongSoTien, w.TruongNoiDung) = ("data", "amount", "description");
+        var than = """{"error":0,"data":[{"id":7,"amount":25000,"description":"XNABCDEFGH"},{"id":8,"amount":"30000","description":"khac"}]}""";
+        Assert.Equal(2, await mt.DvQr().NhanWebhookAsync(than, default));
+        Assert.Equal([25000m, 30000m], mt.Db.GiaoDichNganHang.OrderBy(g => g.MaGD).Select(g => g.SoTien));
+    }
+}
+
+/// <summary>SUA_BAO_CAO 12.5 – NFR Security-04: Nhân viên chỉ xem lịch sử đổi trả khi có ca đang mở.</summary>
+public class GioLamViecTests
+{
+    [Fact]
+    public async Task Nhan_vien_khong_xem_duoc_khi_khong_co_ca_chu_quan_van_xem_duoc()
+    {
+        using var mt = new MoiTruongThu();
+        mt.DangNhapLa("NV001");
+        var loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() => mt.DvDoiTra().KiemTraGioLamViecAsync(default));
+        Assert.Equal((StatusCodes.Status403Forbidden, XomNho.Api.DoiTraQL.DichVuDoiTra.NgoaiGioLamViec), (loi.MaTrangThai, loi.Message));
+
+        mt.DangNhapLa("CQ001");
+        await mt.DvDoiTra().KiemTraGioLamViecAsync(default);
+
+        await mt.DvCa().DamBaoCaMoAsync("NV001", default);
+        mt.DangNhapLa("NV001");
+        await mt.DvDoiTra().KiemTraGioLamViecAsync(default); // có ca đang mở
     }
 }
 

@@ -15,6 +15,7 @@ const QUERY_THEO_NHOM: Record<string, QueryKey[]> = {
   'doi-tra': [['doi-tra'], ['duyet-doi-tra'], ['bao-cao']],
   khach: [['khach-hang'], ['khach-quen']],
   'ket-ca': [['ket-ca']],
+  'ngan-hang': [['qr', 'trang-thai']],
 }
 
 export type TrangThaiKetNoi = 'dang-ket-noi' | 'truc-tuyen' | 'mat-ket-noi'

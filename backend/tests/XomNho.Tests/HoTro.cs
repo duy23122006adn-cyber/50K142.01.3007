@@ -138,13 +138,16 @@ public sealed class MoiTruongThu : IDisposable
     public DichVuCa DvCa() => new(Db, SinhMa, DongHo, NullLogger<DichVuCa>.Instance);
     public DichVuTonKho DvTonKho() => new(Db, SinhMa, DongHo, new ThamSoHeThong(Db), HienTai, DvCanhBao(), DvCa());
     public DichVuKhachHang DvKhachHang() => new(Db, SinhMa, new ThamSoHeThong(Db));
-    public DichVuCongNo DvCongNo() => new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), GuiChungTu);
+    /// <summary>Tùy chọn ngân hàng dùng chung trong một môi trường thử (mặc định giả lập; test 8d đổi sang VietQR).</summary>
+    public TuyChonNganHang NganHang { get; } = new();
+    public DichVuQr DvQr() => new(Db, Options.Create(NganHang), DongHo, NullLogger<DichVuQr>.Instance);
+    public DichVuCongNo DvCongNo() => new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), GuiChungTu, DvQr());
     public DichVuBanHang DvBanHang() =>
-        new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu, DvCongNo());
+        new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu, DvCongNo(), DvQr());
 
     public DichVuKetCa DvKetCa() => new(Db, SinhMa, DongHo, HienTai, DvCanhBao());
     public DichVuHuyHoaDon DvHuyHoaDon() => new(Db, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao(), DvCongNo());
-    public XomNho.Api.DoiTraQL.DichVuDoiTra DvDoiTra() => new(Db, SinhMa, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao());
+    public XomNho.Api.DoiTraQL.DichVuDoiTra DvDoiTra() => new(Db, SinhMa, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao(), DvQr());
 
     /// <summary>Đổi người đang đăng nhập (mặc định Chủ quán CQ001).</summary>
     public void DangNhapLa(string maND)

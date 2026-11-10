@@ -8,7 +8,7 @@ import {
 import { useXacThuc } from '../../auth/AuthContext'
 import { ChonKhachHang } from '../../components/ChonKhachHang'
 import { HopThoai } from '../../components/HopThoai'
-import { GiaLapNganHang, MaQrGiaLap } from '../../components/MaQrGiaLap'
+import { KhungQr } from '../../components/KhungQr'
 import { XemHoaDon } from '../../components/XemHoaDon'
 import { NutDocTo } from '../../components/NutDocTo'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
@@ -201,7 +201,7 @@ export function BanHang() {
     void queryClient.invalidateQueries({ queryKey: ['ban-hang', 'san-pham'] })
   }
 
-  const thanhToan = async (phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQr?: 'ThanhCong' | 'ThatBai') => {
+  const thanhToan = async (phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQr?: 'ThanhCong' | 'ThatBai', maThamChieuQr?: string) => {
     if (phuongThuc === 'Tiền mặt' && (!coMang || nguoiDung?.ngoaiTuyen)) return luuHoaDonTam()
     setDangXuLy(true)
     setLoiTien(null)
@@ -212,6 +212,7 @@ export function BanHang() {
         phuongThuc,
         tienKhachDua: phuongThuc === 'Tiền mặt' ? tienDua : undefined,
         ketQuaQrGiaLap: ketQuaQr,
+        maThamChieuQr,
       })
       docDaThu(tt.phuongThuc, tt.soTien, tt.tienTraLai) // Usability NFR-02
       await taoHoaDon(tt.maPTT)
@@ -542,12 +543,7 @@ export function BanHang() {
       {buoc === 'qr' && (
         <section className="the the--hep canh-giua">
           <h2>Chuyển khoản QR</h2>
-          <MaQrGiaLap soTien={tong} />
-          <p className="so-lon">{tien(tong)}</p>
-          <button type="button" className="nut nut--rong" disabled>
-            Đang chờ ngân hàng xác nhận…
-          </button>
-          <GiaLapNganHang dangXuLy={dangXuLy} onKetQua={(ok) => thanhToan('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai')} />
+          <KhungQr soTien={tong} dangXuLy={dangXuLy} onKetQua={(ok, ma) => thanhToan('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)} />
           <button type="button" className="nut nut--chu" onClick={() => setBuoc('thanhToan')}>
             Đổi phương thức thanh toán
           </button>
