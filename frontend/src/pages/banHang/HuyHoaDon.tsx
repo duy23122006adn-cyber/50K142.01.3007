@@ -224,7 +224,6 @@ export function HuyHoaDonChiTiet() {
                   Tăng hạn mức còn lại {tien(kt.giamCongNo)}, dừng nhắc nợ hóa đơn. Quyền mua nợ được hệ thống xác định lại.
                 </p>
               )}
-              {!laNo && <p className="ghi-chu">Tiền hoàn cho khách được thực hiện ngoài hệ thống.</p>}
               <button type="button" className="nut nut--nguy-hiem-dac nut--rong" disabled={dangXuLy} onClick={dongY}>
                 Đồng ý · Hủy toàn bộ
               </button>

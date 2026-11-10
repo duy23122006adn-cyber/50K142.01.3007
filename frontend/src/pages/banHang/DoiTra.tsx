@@ -273,7 +273,6 @@ function LapPhieu({ hd }: { hd: HoaDonDoiTra }) {
             <>
               <p className="thong-bao thong-bao--xanh">{hd.thoiHan}</p>
               <h2>Chọn hàng và số lượng</h2>
-              {daChon.length === 0 && <p className="ghi-chu">Đánh dấu mặt hàng cần đổi trả ở bảng bên trái.</p>}
               {daChon.map((d) => (
                 <div key={d.maHH} className="khung-dong-doi-tra">
                   <strong>{d.tenHH}</strong>
@@ -652,7 +651,6 @@ function ChonHangMoi({ dangChonCho, onChon }: { dangChonCho: DongDoiTra | null; 
   return (
     <>
       <h2>Tìm và chọn hàng mới{dangChonCho ? ` cho ${dangChonCho.tenHH}` : ''}</h2>
-      {!dangChonCho && <p className="ghi-chu">Bấm “Chọn hàng mới” ở mặt hàng bên phải để chọn.</p>}
       <form
         className="o-tim"
         onSubmit={(e) => {

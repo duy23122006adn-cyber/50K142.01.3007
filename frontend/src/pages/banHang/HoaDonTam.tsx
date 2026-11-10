@@ -64,9 +64,6 @@ export function HoaDonTamTrang() {
 
       <section className="the the--rong">
         <h2>Trên máy này</h2>
-        <p className="ghi-chu">
-          Hóa đơn tạm được tạo khi bán tiền mặt lúc mất mạng và tự gửi lên máy chủ khi có mạng trở lại. Chỉ người bán hoặc Chủ quán gửi được.
-        </p>
         {cuc.length === 0 ? (
           <p className="ghi-chu">Máy này không có hóa đơn tạm.</p>
         ) : (
@@ -135,7 +132,6 @@ export function HoaDonTamTrang() {
                 </button>
               ))}
             </div>
-            {!laCQ && <p className="ghi-chu">Chỉ hiển thị hóa đơn tạm do bạn bán.</p>}
             {mayChu.error && <p className="thong-bao thong-bao--do">{(mayChu.error as Error).message}</p>}
             <div className="bang-cuon">
               <table className="bang bang--xen-ke">
@@ -193,12 +189,6 @@ export function HoaDonTamTrang() {
                 </tbody>
               </table>
             </div>
-            {laCQ && tab === TAB[0] && (
-              <p className="ghi-chu">
-                “Ghi nhận” lập hóa đơn chính thức theo giá khách đã trả; nếu thiếu tồn, hãy điều chỉnh tồn kho trước (Quản lý tồn kho → Điều
-                chỉnh tồn kho).
-              </p>
-            )}
           </>
         )}
       </section>

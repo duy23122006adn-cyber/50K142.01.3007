@@ -34,7 +34,7 @@ export function GiaLapNganHang({ dangXuLy, onKetQua }: { dangXuLy: boolean; onKe
   return (
     <div className="gia-lap">
       <p>
-        <strong>[Giả lập ngân hàng]</strong> MVP chưa kết nối ngân hàng thật (Q5). Chọn kết quả để thử các luồng:
+        <strong>Giả lập ngân hàng</strong>
       </p>
       <div className="hang-nut hang-nut--giua">
         <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => onKetQua(true)}>

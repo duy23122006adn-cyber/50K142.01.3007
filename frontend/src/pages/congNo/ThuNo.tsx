@@ -349,7 +349,6 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                     onChange={(e) => setSdtNhan(e.target.value)}
                   />
                 </label>
-                <p className="ghi-chu">Giả lập: số kết thúc bằng “000” sẽ gửi thất bại.</p>
                 <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy || !sdtNhan.trim()} onClick={guiPhieu}>
                   Gửi phiếu thanh toán
                 </button>

@@ -122,9 +122,6 @@ export function BaoCaoLoiNhuanTrang() {
               </tbody>
             </table>
           </div>
-          <p className="ghi-chu">
-            Gồm hóa đơn “Đã thanh toán” và “Còn nợ” lập trong kỳ; phiếu đổi trả hoàn tất được tính vào kỳ chứa ngày duyệt.
-          </p>
         </section>
       )}
     </>
@@ -190,10 +187,6 @@ export function BaoCaoDoanhThuTrang() {
               </tbody>
             </table>
           </div>
-          <p className="ghi-chu">
-            Hóa đơn ghi nợ tính theo ngày tạo đơn. Tiền hoàn / thu thêm của phiếu đổi trả hoàn tất tính vào kỳ chứa ngày duyệt, theo phương
-            thức thực tế.
-          </p>
         </section>
       )}
     </>
@@ -257,7 +250,7 @@ export function SoSanhTrang({ chiTieu }: { chiTieu: ChiTieuSoSanh }) {
       <h1>{ten.tieuDe}</h1>
       <section className="the the--rong">
         <p className="ghi-chu">
-          Kỳ báo cáo: <strong><MoTaKy tu={ky.tu} den={ky.den} /></strong>. Chọn kỳ so sánh bên dưới.
+          Kỳ báo cáo: <strong><MoTaKy tu={ky.tu} den={ky.den} /></strong>
         </p>
       </section>
       <ChonKy
@@ -382,7 +375,6 @@ export function BaoCaoSoLuongBanTrang() {
         <section className="the the--rong">
           <DauKy tu={data.tuNgay} den={data.denNgay} />
           <BangSoLuong dong={data.dong} />
-          <p className="ghi-chu">Số lượng bán đã trừ hàng trả và cộng hàng đổi mới của phiếu đổi trả hoàn tất có ngày duyệt trong kỳ.</p>
         </section>
       )}
     </>
@@ -449,7 +441,6 @@ export function TopSanPhamTrang({ loai }: { loai: 'chay' | 'cham' }) {
       {data && (
         <section className="the the--rong">
           <BangSoLuong dong={data.dong} />
-          {loai === 'cham' && <p className="ghi-chu">Gồm cả hàng đang kinh doanh không bán được trong kỳ (số lượng 0).</p>}
         </section>
       )}
     </>
@@ -514,9 +505,6 @@ export function BaoCaoTonKhoTrang() {
       )}
       {data && data.dong.length > 0 && (
         <section className="the the--rong">
-          <p className="ghi-chu">
-            Số liệu tại thời điểm xem ({ngay(data.ngayXem)}) · Bộ lọc: {data.trangThai}
-          </p>
           <div className="bang-cuon">
             <table className="bang bang--xen-ke">
               <thead>

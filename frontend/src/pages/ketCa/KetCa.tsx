@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LoiApi } from '../../api/client'
 import { ketCaApi, type BienBan, type DongKiemKe } from '../../api/nghiepVu'
-import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
 import { homNayISO, ngay } from '../../lib/dinhDang'
 import { useHoaDonTam } from '../../lib/offline'
@@ -60,7 +59,7 @@ export function LuuBienBan() {
       <>
         <h1>Biên bản kết ca</h1>
         <section className="the the--hep">
-          <p className="ghi-chu">Cửa hàng chưa có ca đang mở. Ca tự mở khi có người đăng nhập hoặc phát sinh giao dịch.</p>
+          <p className="ghi-chu">Cửa hàng chưa có ca đang mở.</p>
         </section>
       </>
     )
@@ -101,9 +100,6 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
           <dt>Trạng thái ca</dt>
           <dd>{bb.trangThaiCa}</dd>
         </dl>
-        <p className="ghi-chu">
-          Khi kết ca, cửa hàng tạm dừng giao dịch nhập, xuất, bán, hủy cho đến khi lưu biên bản hoặc hủy kết ca.
-        </p>
         <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => setHoi(true)}>
           Kết ca
         </button>
@@ -421,7 +417,6 @@ function BienBanDaLuu({ bb }: { bb: BienBan }) {
 /** Màn hình 9.2.1–9.2.3, 9.2.6–9.2.8. Điều kiện lọc lưu trên URL để "Quay lại" giữ kết quả. */
 export function DanhSachBienBan() {
   const navigate = useNavigate()
-  const { nguoiDung } = useXacThuc()
   const [params, setParams] = useSearchParams()
   const tuNgay = params.get('tuNgay') ?? ''
   const denNgay = params.get('denNgay') ?? ''
@@ -498,7 +493,6 @@ export function DanhSachBienBan() {
       </form>
 
       <section className="the the--rong">
-        {nguoiDung?.vaiTro === 'NhanVien' && <p className="ghi-chu">Chỉ hiển thị các biên bản do bạn kết ca.</p>}
         {error && !loiServer && <p className="thong-bao thong-bao--do">Không thể tải danh sách biên bản, vui lòng thử lại</p>}
         <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
           <table className="bang bang--xen-ke">

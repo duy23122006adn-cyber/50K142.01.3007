@@ -109,7 +109,6 @@ export function FormHangHoaTrang({ cheDo }: { cheDo: 'them' | 'sua' }) {
           <TruongNhap nhan="Ngưỡng cảnh báo hết hạn (ngày)" inputMode="numeric" placeholder="Số ngày, ví dụ: 10" loi={errors.nguongCanhBaoHetHan?.message} {...form.register('nguongCanhBaoHetHan')} />
           <TruongNhap nhan="Mã vạch" placeholder="Quét hoặc nhập mã vạch (không bắt buộc)" loi={errors.maVach?.message} {...form.register('maVach')} />
         </div>
-        <p className="ghi-chu">Để trống ngưỡng cảnh báo nếu không cần cảnh báo cho mặt hàng này.</p>
 
         <div className="hang-nut">
           <button type="button" className="nut" onClick={() => navigate(laSua ? `/quan-ly-hang-hoa/${maHH}` : '/quan-ly-hang-hoa')}>

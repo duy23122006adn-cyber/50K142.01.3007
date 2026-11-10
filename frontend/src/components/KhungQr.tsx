@@ -80,7 +80,7 @@ export function KhungQr({
         </dd>
       </dl>
       <p className="ghi-chu">
-        {trangThai?.daNhan ? 'Đã nhận tiền, đang ghi nhận thanh toán…' : 'Đang chờ ngân hàng báo tiền vào (tự kiểm tra mỗi 3 giây)…'}
+        {trangThai?.daNhan ? 'Đã nhận tiền, đang ghi nhận thanh toán…' : 'Đang chờ ngân hàng xác nhận…'}
       </p>
       <button type="button" className="nut nut--nho" disabled={dangXuLy} onClick={() => void refetch()}>
         Kiểm tra lại

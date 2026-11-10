@@ -767,7 +767,6 @@ export function BanHang() {
                 <span className="truong__loi">Khách hàng chưa có số điện thoại. Vui lòng nhập số điện thoại.</span>
               )}
             </label>
-            <p className="ghi-chu">Giả lập: số kết thúc bằng “000” sẽ gửi thất bại.</p>
             <button type="button" className="nut nut--chinh nut--rong" disabled={!sdtHopLe || dangXuLy} onClick={guiHoaDon}>
               Gửi hóa đơn
             </button>

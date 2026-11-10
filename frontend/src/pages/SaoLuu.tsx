@@ -86,10 +86,6 @@ export function SaoLuu() {
             </tbody>
           </table>
         </div>
-        <p className="ghi-chu">
-          Khôi phục: quản trị máy chủ dùng lệnh <code>RESTORE DATABASE</code> với tệp tương ứng (xem README). Người dùng đổi máy tính hoặc điện
-          thoại chỉ cần đăng nhập lại vì dữ liệu nằm trên máy chủ.
-        </p>
       </section>
     </>
   )
