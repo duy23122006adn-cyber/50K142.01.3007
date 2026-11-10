@@ -275,6 +275,9 @@ namespace XomNho.Api.Data.Migrations
                     b.Property<decimal>("GiaTriHoan")
                         .HasColumnType("decimal(15,0)");
 
+                    b.Property<decimal?>("GiaVonHangMoi")
+                        .HasColumnType("decimal(15,0)");
+
                     b.Property<bool>("LoiNhaSanXuat")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -322,6 +325,8 @@ namespace XomNho.Api.Data.Migrations
                             t.HasCheckConstraint("CK_CTDT_GiaTriHangMoi", "[GiaTriHangMoi] IS NULL OR [GiaTriHangMoi] >= 0");
 
                             t.HasCheckConstraint("CK_CTDT_GiaTriHoan", "[GiaTriHoan] >= 0");
+
+                            t.HasCheckConstraint("CK_CTDT_GiaVonHangMoi", "[GiaVonHangMoi] IS NULL OR ([MaHHMoi] IS NOT NULL AND [GiaVonHangMoi] >= 0)");
 
                             t.HasCheckConstraint("CK_CTDT_HangMoi", "([MaHHMoi] IS NULL AND [SoLuongMoi] IS NULL AND [GiaTriHangMoi] IS NULL) OR ([MaHHMoi] IS NOT NULL AND [SoLuongMoi] IS NOT NULL AND [GiaTriHangMoi] IS NOT NULL)");
 
@@ -1275,6 +1280,9 @@ namespace XomNho.Api.Data.Migrations
                         .HasDatabaseName("IX_PDT_MaHD");
 
                     b.HasIndex("MaND");
+
+                    b.HasIndex("NgayGioDuyet")
+                        .HasDatabaseName("IX_PDT_NgayGioDuyet");
 
                     b.HasIndex("TrangThai", "NgayGioLap")
                         .HasDatabaseName("IX_PDT_TrangThai_NgayGioLap");

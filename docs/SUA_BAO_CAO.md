@@ -400,6 +400,24 @@
 | 13.6 | Màn hình 9.2.1 | Bảng danh sách không có cột thao tác | Thêm cột "Hành động" với nút "Xem" để mở chi tiết (UC_9.2 bước 5) | 🟢 |
 | 13.7 | Màn hình 9.1.3 | Sau khi đóng thông báo chỉ ở lại biên bản | Thêm nút "Xem biên bản" chuyển sang danh sách biên bản (UC_9.2) | 🟢 |
 
+## 14. Bổ sung phát sinh khi code Giai đoạn 7
+
+Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 14.1 | UC_5.1, 5.2, 5.3 luồng 5a | "Trong kỳ báo cáo không có giao dịch bán hàng" | "Trong kỳ báo cáo không có hóa đơn nào và không có phiếu đổi trả hoàn tất nào có ngày duyệt trong kỳ." Kỳ chỉ có phiếu đổi trả vẫn hiện báo cáo (doanh thu có thể âm), để cộng các kỳ lại vẫn khớp tổng | 🟡 |
+| 14.2 | UC_5.1 BR08, UC_5.2 BR07, luồng 12b | "Kỳ so sánh không được trùng với kỳ báo cáo" | "Kỳ so sánh không được có ngày nào chung với kỳ báo cáo." Ví dụ kỳ báo cáo tháng 11 thì không so sánh với quý 4 cùng năm | 🟡 |
+| 14.3 | UC_5.1 BR07, UC_5.2 BR06 | Tỷ lệ = chênh lệch / kỳ so sánh × 100 | Thêm: "Nếu chỉ tiêu kỳ so sánh bằng 0 thì không tính tỷ lệ (hiển thị “—”). Mẫu số lấy giá trị tuyệt đối để tỷ lệ cùng dấu với mức chênh lệch." Tỷ lệ làm tròn 1 chữ số thập phân (như ví dụ “+18,4%”) | 🟡 |
+| 14.4 | UC_5.3 BR02 (bổ sung mục 3.11), BR05 | Chỉ nói trừ hàng trả; "sản phẩm không bán được" chưa nói gồm hàng nào | Số lượng bán = số lượng trên hóa đơn − hàng trả + hàng đổi mới của phiếu đổi trả hoàn tất có ngày duyệt trong kỳ. Top bán chậm gồm mọi hàng **đang kinh doanh**; hàng ngừng kinh doanh chỉ xuất hiện nếu có bán trong kỳ | 🟡 |
+| 14.5 | UC_5.2 bước 7 | Không nói hóa đơn ghi nợ đã trả hết và tiền đổi trả tính vào phương thức nào | Hóa đơn ghi nợ luôn tính vào "Ghi nợ" (theo BR04, kể cả khi khách đã trả hết). Tiền hoàn / thu thêm của phiếu đổi trả tính vào phương thức thực tế (tiền mặt hoặc chuyển khoản). Tổng ba phương thức bằng tổng doanh thu | 🟡 |
+| 14.6 | UC_5.1–5.3 BR01 (Q21) | Không có thông báo khi kỳ vượt quá ngày hiện tại | *Đề xuất* thông báo "Kỳ báo cáo không được vượt quá ngày hiện tại!". Lịch không cho chọn ngày, tháng, quý trong tương lai; tháng / quý đang diễn ra được tính đến hết hôm nay | 🟡 |
+| 14.7 | UC_5.4 BR02 (bổ sung mục 3.12), màn hình 5.4.1 | Không nói lô đã bán hết từ lâu có hiện "Hết hàng" mãi không; lô bình thường hiện trạng thái gì | Lô đã bán hết chỉ hiện "Hết hàng" khi mặt hàng chưa có lô nào nhập sau nó (giống cảnh báo "Hết hàng" được đóng khi thêm lô mới, mục 3.4). Lô không thuộc trạng thái nào hiện "Còn hàng" ở tab "Tất cả". Một lô có thể có hai trạng thái (ví dụ "Sắp hết hàng, Sắp hết hạn"). Chỉ gồm hàng đang kinh doanh | 🟡 |
+| 14.8 | Thiết kế CSDL – bảng ChiTietDoiTra | Không lưu giá vốn của hàng đổi mới | Thêm cột `GiaVonHangMoi DECIMAL(15,0) NULL` = giá nhập lúc xuất hàng mới, để báo cáo lợi nhuận tính đúng giá vốn (giống `ChiTietHoaDon.GiaVon`, Q20). Phiếu hoàn tất trước khi có cột được điền bằng giá nhập hiện tại | 🟡 |
+| 14.9 | UC_5.1, 5.2 luồng 13a1 | "Không tìm thấy dữ liệu của kỳ so sánh" | "Không tìm thấy dữ liệu của kỳ so sánh!" (khớp màn hình 5.1.21, 5.2.21) | 🟢 |
+| 14.10 | Phần Giao diện, mục báo cáo doanh thu | Tiêu đề "5.3.3. Màn hình Báo cáo doanh thu: chọn xem theo quý" | "5.2.3. …" | 🟢 |
+| 14.11 | Màn hình 5.3.9, 5.3.11, 5.4.1 | Ví dụ "Gạo ST25 / Thực phẩm khô / Kg", "Mỳ tôm / Kg" | Dùng nhóm hàng và đơn vị tính trong danh sách cố định (UC_4.1 BR05, BR06), ví dụ "Gạo & Nông sản khô / gói", "Mì tôm / gói". Màn hình 5.4.1 thêm cột "Mã lô" (mục 3.12) | 🟢 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
@@ -407,6 +425,6 @@
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 33 |
-| 🟢 Chính tả, đánh số | 32 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 41 |
+| 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

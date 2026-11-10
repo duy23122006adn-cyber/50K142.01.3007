@@ -71,6 +71,8 @@ public class PhieuDoiTraConfig : IEntityTypeConfiguration<PhieuDoiTra>
         b.HasOne(x => x.ChuQuan).WithMany().HasForeignKey(x => x.MaCQ).OnDelete(DeleteBehavior.Restrict);
         b.HasIndex(x => x.MaHD).HasDatabaseName("IX_PDT_MaHD");
         b.HasIndex(x => new { x.TrangThai, x.NgayGioLap }).HasDatabaseName("IX_PDT_TrangThai_NgayGioLap");
+        // Báo cáo UC_5.1–5.3: phiếu đổi trả tính vào kỳ chứa ngày duyệt (Q19).
+        b.HasIndex(x => x.NgayGioDuyet).HasDatabaseName("IX_PDT_NgayGioDuyet");
     }
 }
 
@@ -90,6 +92,7 @@ public class ChiTietDoiTraConfig : IEntityTypeConfiguration<ChiTietDoiTra>
                 "([MaHHMoi] IS NULL AND [SoLuongMoi] IS NULL AND [GiaTriHangMoi] IS NULL)"
                 + " OR ([MaHHMoi] IS NOT NULL AND [SoLuongMoi] IS NOT NULL AND [GiaTriHangMoi] IS NOT NULL)");
             t.HasCheckConstraint("CK_CTDT_MoTaLoi", "[LoiNhaSanXuat] = 0 OR LEN(LTRIM(RTRIM(ISNULL([MoTaLoi], N'')))) > 0");
+            t.HasCheckConstraint("CK_CTDT_GiaVonHangMoi", "[GiaVonHangMoi] IS NULL OR ([MaHHMoi] IS NOT NULL AND [GiaVonHangMoi] >= 0)");
         });
         b.HasKey(x => x.MaCTDT);
         b.Property(x => x.MaCTDT).UseIdentityColumn();
@@ -100,6 +103,7 @@ public class ChiTietDoiTraConfig : IEntityTypeConfiguration<ChiTietDoiTra>
         b.Property(x => x.MoTaLoi).HasColumnType("nvarchar(255)");
         b.Property(x => x.MaHHMoi).HasColumnType("varchar(20)");
         b.Property(x => x.GiaTriHangMoi).HasColumnType("decimal(15,0)");
+        b.Property(x => x.GiaVonHangMoi).HasColumnType("decimal(15,0)");
         b.Property(x => x.MaLoMoi).HasColumnType("varchar(20)");
         b.HasOne(x => x.PhieuDoiTra).WithMany(p => p.ChiTiet).HasForeignKey(x => x.MaPDT).OnDelete(DeleteBehavior.Restrict);
         b.HasOne(x => x.ChiTietHoaDon).WithMany().HasForeignKey(x => x.MaCTHD).OnDelete(DeleteBehavior.Restrict);

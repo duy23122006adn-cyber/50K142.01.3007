@@ -9,6 +9,14 @@ import { DoiTraDanhSach, DoiTraHoaDon } from './pages/banHang/DoiTra'
 import { HuyHoaDonChiTiet, HuyHoaDonDanhSach } from './pages/banHang/HuyHoaDon'
 import { ChiTietHoaDonTrang, LichSuBanHang } from './pages/banHang/LichSuBanHang'
 import { DuyetDoiTraChiTiet, DuyetDoiTraDanhSach, PhieuDoiTraTrang } from './pages/banHang/PhieuDoiTra'
+import {
+  BaoCaoDoanhThuTrang,
+  BaoCaoLoiNhuanTrang,
+  BaoCaoSoLuongBanTrang,
+  BaoCaoTonKhoTrang,
+  SoSanhTrang,
+  TopSanPhamTrang,
+} from './pages/baoCao/BaoCao'
 import { ChiTietKhachQuenTrang, FormKhachQuenTrang, TimKiemKhachQuen } from './pages/congNo/CongNo'
 import { ThuNo } from './pages/congNo/ThuNo'
 import { ChiTietKhachHangTrang, DanhSachKhachHang, FormKhachHang } from './pages/khachHang/KhachHang'
@@ -112,6 +120,17 @@ export default function App() {
         <Route path="ket-ca/luu-bien-ban" element={<LuuBienBan />} />
         <Route path="ket-ca/bien-ban" element={<DanhSachBienBan />} />
         <Route path="ket-ca/bien-ban/chi-tiet" element={<ChiTietBienBan />} />
+
+        {/* Giai đoạn 7 – Xem báo cáo và thống kê (UC_5.1–5.4): Chủ quán */}
+        <Route path="bao-cao" element={<Navigate to="/bao-cao/loi-nhuan" replace />} />
+        <Route path="bao-cao/loi-nhuan" element={chiChuQuan(<BaoCaoLoiNhuanTrang />)} />
+        <Route path="bao-cao/so-sanh-loi-nhuan" element={chiChuQuan(<SoSanhTrang key="loi-nhuan" chiTieu="loi-nhuan" />)} />
+        <Route path="bao-cao/doanh-thu" element={chiChuQuan(<BaoCaoDoanhThuTrang />)} />
+        <Route path="bao-cao/so-sanh-doanh-thu" element={chiChuQuan(<SoSanhTrang key="doanh-thu" chiTieu="doanh-thu" />)} />
+        <Route path="bao-cao/so-luong-ban-ra" element={chiChuQuan(<BaoCaoSoLuongBanTrang />)} />
+        <Route path="bao-cao/top-ban-chay" element={chiChuQuan(<TopSanPhamTrang key="chay" loai="chay" />)} />
+        <Route path="bao-cao/top-ban-cham" element={chiChuQuan(<TopSanPhamTrang key="cham" loai="cham" />)} />
+        <Route path="bao-cao/ton-kho" element={chiChuQuan(<BaoCaoTonKhoTrang />)} />
 
         {/* Chức năng thuộc giai đoạn sau */}
         {DANH_SACH_CHUC_NANG.filter((c) => !c.daTrienKhai).map((c) => (

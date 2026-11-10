@@ -476,7 +476,10 @@ public sealed class DichVuDoiTra(
                 await canhBao.DanhGiaLoAsync(lo, lo.HangHoa, xetHang: true, xetHan: true, capNhatNeuDaCo: true, ct);
             }
             foreach (var c in phieu.ChiTiet.Where(c => c.MaHHMoi is not null))
+            {
                 c.MaLoMoi = await XuatHangMoiAsync(c.HangHoaMoi!, c.SoLuongMoi!.Value, ct);
+                c.GiaVonHangMoi = c.HangHoaMoi!.GiaNhap; // Q20: giá vốn lúc xuất hàng, như ChiTietHoaDon.GiaVon
+            }
 
             phieu.NgayGioHoanTat = dongHo.BayGio; // bước 17
             await db.SaveChangesAsync(ct);

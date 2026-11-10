@@ -587,3 +587,71 @@ export const ketCaApi = {
     goiApi<BienBanDong[]>(`/ket-ca/bien-ban${q({ tuNgay, denNgay, coChenhLech: coChenhLech || undefined })}`),
   chiTiet: (ma: string) => goiApi<BienBan>(`/ket-ca/bien-ban/chi-tiet${q({ ma })}`),
 }
+
+// ------------------------------------------------------------------ Báo cáo (UC_5.1–5.4)
+
+export interface BaoCaoLoiNhuan {
+  tuNgay: string
+  denNgay: string
+  tongDoanhThu: number
+  tongGiaVon: number
+  tongLoiNhuan: number
+  dong: { maHH: string; tenHH: string; doanhThu: number; giaVon: number; loiNhuan: number }[]
+}
+
+export interface BaoCaoDoanhThu {
+  tuNgay: string
+  denNgay: string
+  tongDoanhThu: number
+  soDonHang: number
+  tienMat: number
+  chuyenKhoan: number
+  ghiNo: number
+  dong: { maHH: string; tenHH: string; doanhThu: number }[]
+}
+
+export interface DongSoLuongBan {
+  maHH: string
+  tenHH: string
+  nhomHang: string
+  donViTinh: string
+  soLuongBan: number
+}
+
+export interface BaoCaoSoLuongBan {
+  tuNgay: string
+  denNgay: string
+  top: 'chay' | 'cham' | null
+  soLuong: number | null
+  dong: DongSoLuongBan[]
+}
+
+export type ChiTieuSoSanh = 'loi-nhuan' | 'doanh-thu'
+
+export interface KetQuaSoSanh {
+  chiTieu: string
+  tuNgay: string
+  denNgay: string
+  tuNgaySoSanh: string
+  denNgaySoSanh: string
+  kyBaoCao: number
+  kySoSanh: number
+  chenhLech: number
+  tyLe: number | null
+}
+
+export interface BaoCaoTonKho {
+  trangThai: string
+  ngayXem: string
+  dong: { maLo: string; maHH: string; tenHH: string; donViTinh: string; soLuongTon: number; hanSuDung: string; trangThai: string[] }[]
+}
+
+export const baoCaoApi = {
+  loiNhuan: (tuNgay: string, denNgay: string) => goiApi<BaoCaoLoiNhuan>(`/bao-cao/loi-nhuan${q({ tuNgay, denNgay })}`),
+  doanhThu: (tuNgay: string, denNgay: string) => goiApi<BaoCaoDoanhThu>(`/bao-cao/doanh-thu${q({ tuNgay, denNgay })}`),
+  soLuongBan: (tuNgay: string, denNgay: string, top?: 'chay' | 'cham', soLuong?: string) =>
+    goiApi<BaoCaoSoLuongBan>(`/bao-cao/so-luong-ban${q({ tuNgay, denNgay, top, soLuong })}`),
+  soSanh: (chiTieu: ChiTieuSoSanh, tuNgay: string, denNgay: string, tuNgaySoSanh: string, denNgaySoSanh: string) =>
+    goiApi<KetQuaSoSanh>(`/bao-cao/so-sanh${q({ chiTieu, tuNgay, denNgay, tuNgaySoSanh, denNgaySoSanh })}`),
+  tonKho: (trangThai: string) => goiApi<BaoCaoTonKho>(`/bao-cao/ton-kho${q({ trangThai })}`),
+}

@@ -65,6 +65,8 @@ public class ChiTietDoiTra
     public HangHoa? HangHoaMoi { get; set; }
     public int? SoLuongMoi { get; set; }
     public decimal? GiaTriHangMoi { get; set; }
+    /// <summary>Giá vốn một đơn vị hàng mới = giá nhập lúc xuất hàng (ghi khi hoàn tất) – dùng cho báo cáo lợi nhuận (Q20).</summary>
+    public decimal? GiaVonHangMoi { get; set; }
     /// <summary>Lô xuất hàng mới – ghi khi hoàn tất. Nhiều lô thì ghi lô đầu tiên.</summary>
     public string? MaLoMoi { get; set; }
 }

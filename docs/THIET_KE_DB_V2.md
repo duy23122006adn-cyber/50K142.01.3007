@@ -380,9 +380,12 @@ Chờ duyệt ──► Từ chối
 | 10 | SoLuongMoi | INT | NULL, `CHECK (SoLuongMoi > 0)` | | — |
 | 11 | GiaTriHangMoi | DECIMAL(15,0) | NULL, `CHECK (GiaTriHangMoi >= 0)` | Giá niêm yết lúc lập phiếu × số lượng | 🆕 Có trong logic |
 | 12 | MaLoMoi | VARCHAR(20) | NULL, FK → LoHang(MaLo) | Lô xuất hàng mới, ghi lúc hoàn tất | 🆕 |
+| 13 | GiaVonHangMoi | DECIMAL(15,0) | NULL | Giá nhập một đơn vị hàng mới lúc xuất hàng, ghi lúc hoàn tất (báo cáo lợi nhuận, Q20) | 🆕 GĐ7 |
 
 **Ràng buộc:**
 - `CHECK ((MaHHMoi IS NULL AND SoLuongMoi IS NULL AND GiaTriHangMoi IS NULL) OR (MaHHMoi IS NOT NULL AND SoLuongMoi IS NOT NULL AND GiaTriHangMoi IS NOT NULL))`
+- `CHECK (GiaVonHangMoi IS NULL OR (MaHHMoi IS NOT NULL AND GiaVonHangMoi >= 0))`
+- Bảng PhieuDoiTra có thêm chỉ mục `IX_PDT_NgayGioDuyet` (báo cáo tính phiếu vào kỳ chứa ngày duyệt, Q19).
 - `CHECK (LoiNhaSanXuat = 0 OR LEN(LTRIM(RTRIM(ISNULL(MoTaLoi, N'')))) > 0)`: lỗi nhà sản xuất thì bắt buộc mô tả lỗi (UC_6.2 BR10).
 
 ### 3.21. PhieuThanhToan

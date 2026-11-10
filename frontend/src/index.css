@@ -1169,3 +1169,130 @@ select.truong__o {
   width: 6rem;
   text-align: right;
 }
+
+/* ------------------------------------------------------------------ Giai đoạn 7: báo cáo */
+.chon-ky__dau {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hang-nut--sat {
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+
+.lich {
+  max-width: 22rem;
+}
+
+.lich__dau {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.lich__luoi {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.lich__thu {
+  font-size: 0.85rem;
+  color: var(--mau-chu-phu);
+}
+
+.lich__ngay {
+  min-height: 2.2rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--mau-chu);
+  cursor: pointer;
+}
+
+.lich__ngay:hover:not(:disabled) {
+  border-color: var(--mau-chinh);
+}
+
+.lich__ngay:disabled {
+  color: var(--mau-vien);
+  cursor: not-allowed;
+}
+
+.lich__ngay--chon {
+  background: var(--mau-chinh);
+  color: #fff;
+  font-weight: 600;
+}
+
+.luoi-ky {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.luoi-ky--thang {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.luoi-so-lieu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.o-so-lieu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mau-vien);
+  border-radius: var(--bo-goc);
+}
+
+.o-so-lieu--chinh {
+  border-color: var(--mau-chinh);
+  background: var(--mau-chinh-nhat);
+}
+
+.o-so-lieu__nhan {
+  color: var(--mau-chu-phu);
+  font-size: 0.95rem;
+}
+
+.o-so-lieu__gia-tri {
+  font-size: 1.35rem;
+}
+
+.khung-do {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--mau-do);
+  border-radius: var(--bo-goc);
+  background: var(--mau-do-nhat);
+  text-align: center;
+}
+
+.hang-tim {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+@media (max-width: 860px) {
+  .chon-ky .luoi-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
