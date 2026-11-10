@@ -27,7 +27,8 @@ public sealed class DichVuXacThuc(
     IGuiOtp guiOtp,
     DichVuToken dichVuToken,
     IThamSoHeThong thamSo,
-    IOptions<TuyChonTichHop> tichHop)
+    IOptions<TuyChonTichHop> tichHop,
+    CaLam.DichVuCa dichVuCa)
 {
     public const string KhongDuocBoTrong = "Không được bỏ trống!";
     public const string DangNhapKhongThanhCong = "Đăng nhập không thành công!";
@@ -124,6 +125,9 @@ public sealed class DichVuXacThuc(
         db.PhienDangNhap.Add(phien);
         db.GhiNhatKy("Đăng nhập", nd.MaND, nd.TenDangNhap);
         await db.SaveChangesAsync(ct);
+
+        // Q10: chưa có ca nào đang mở thì mở ca, người đăng nhập là người phụ trách.
+        await dichVuCa.ThuMoCaKhiDangNhapAsync(nd.MaND, ct);
 
         var (access, hetHan) = dichVuToken.TaoAccessToken(nd, phien.MaPhien);
         return new KetQuaDangNhap(access, hetHan, ThongTin(nd), refresh, phien.HetHan);

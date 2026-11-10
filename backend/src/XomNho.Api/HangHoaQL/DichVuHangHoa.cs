@@ -130,8 +130,9 @@ public sealed class DichVuHangHoa(XomNhoDbContext db, ISinhMa sinhMa, IThamSoHeT
         var tongTon = await db.LoHang.Where(l => l.MaHH == maHH).SumAsync(l => (int?)l.SoLuongTon, ct) ?? 0;
         if (tongTon > 0) throw new LoiNghiepVuException(StatusCodes.Status409Conflict, ConTonKho);
 
-        // BR01: đã phát sinh giao dịch (đã nhập lô; từ Giai đoạn 3 thêm: đã bán) → chỉ ngừng kinh doanh.
-        var coGiaoDich = await db.LoHang.AnyAsync(l => l.MaHH == maHH, ct);
+        // BR01: đã phát sinh giao dịch (đã nhập lô hoặc đã bán) → chỉ ngừng kinh doanh.
+        var coGiaoDich = await db.LoHang.AnyAsync(l => l.MaHH == maHH, ct)
+            || await db.ChiTietHoaDon.AnyAsync(c => c.MaHH == maHH, ct);
         return new KetQuaKiemTraXoaHangHoa(h.MaHH, h.TenHH, coGiaoDich ? CheDoXoa.NgungKinhDoanh : CheDoXoa.XoaHan);
     }
 

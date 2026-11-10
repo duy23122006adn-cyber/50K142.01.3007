@@ -29,19 +29,27 @@ public static class CheDoXoa
     public const string NgungKinhDoanh = "NgungKinhDoanh";
 }
 
-/// <summary>
-/// Ràng buộc của nhân viên với ca làm việc và hóa đơn (UC_2.4 BR02–BR04).
-/// Bảng CaLamViec và HoaDon có từ Giai đoạn 3, khi đó lớp này được bổ sung truy vấn thật.
-/// </summary>
+/// <summary>Ràng buộc của nhân viên với ca làm việc và hóa đơn (UC_2.4 BR02–BR04).</summary>
 public interface IRangBuocNhanVien
 {
     Task<(bool DangTrongCa, bool ConCaChuaDoiSoat, bool CoLichSuGiaoDich)> KiemTraAsync(string maNV, CancellationToken ct);
 }
 
-public sealed class RangBuocNhanVienGiaiDoan2 : IRangBuocNhanVien
+/// <summary>
+/// - Đang trong ca: phụ trách ca "Đang hoạt động".
+/// - Còn ca chưa đối soát: phụ trách ca "Đang kết ca" (chưa lưu biên bản – SUA_BAO_CAO 3.3).
+/// - Có lịch sử: đã lập hóa đơn hoặc đã từng phụ trách ca.
+/// </summary>
+public sealed class RangBuocNhanVien(XomNhoDbContext db) : IRangBuocNhanVien
 {
-    public Task<(bool, bool, bool)> KiemTraAsync(string maNV, CancellationToken ct) =>
-        Task.FromResult((false, false, false));
+    public async Task<(bool, bool, bool)> KiemTraAsync(string maNV, CancellationToken ct)
+    {
+        var trangThaiCa = await db.CaLamViec.Where(c => c.MaND == maNV).Select(c => c.TrangThai).ToListAsync(ct);
+        var coHoaDon = await db.HoaDon.AnyAsync(h => h.MaND == maNV, ct);
+        return (trangThaiCa.Contains(TrangThaiCa.DangHoatDong),
+                trangThaiCa.Contains(TrangThaiCa.DangKetCa),
+                coHoaDon || trangThaiCa.Count > 0);
+    }
 }
 
 /// <summary>UC_2.1 Thêm, UC_2.2 Sửa, UC_2.4 Xóa tài khoản nhân viên (chỉ Chủ quán).</summary>

@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using XomNho.Api.BanHangQL;
+using XomNho.Api.CaLam;
 using XomNho.Api.Common;
+using XomNho.Api.KhachHangQL;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
 using XomNho.Api.HangHoaQL;
@@ -30,7 +33,10 @@ builder.Services.AddScoped<ISinhMa, SinhMaSqlServer>();
 builder.Services.AddScoped<IThamSoHeThong, ThamSoHeThong>();
 
 // ------------------------------------------------------------------ Nghiệp vụ (Giai đoạn 2)
-builder.Services.AddScoped<IRangBuocNhanVien, RangBuocNhanVienGiaiDoan2>();
+builder.Services.AddScoped<IRangBuocNhanVien, RangBuocNhanVien>();
+builder.Services.AddScoped<DichVuCa>();
+builder.Services.AddScoped<DichVuKhachHang>();
+builder.Services.AddScoped<DichVuBanHang>();
 builder.Services.AddScoped<DichVuNhanVien>();
 builder.Services.AddScoped<DichVuHangHoa>();
 builder.Services.AddScoped<DichVuCanhBao>();
@@ -39,6 +45,7 @@ builder.Services.AddHostedService<QuetCanhBaoNen>();
 
 // ------------------------------------------------------------------ Tích hợp (giả lập trong MVP)
 builder.Services.AddSingleton<IGuiOtp, GuiOtpGiaLap>();
+builder.Services.AddSingleton<IGuiChungTu, GuiChungTuGiaLap>();
 
 // ------------------------------------------------------------------ Xác thực & phân quyền
 builder.Services.AddSingleton<DichVuToken>();

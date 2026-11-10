@@ -29,7 +29,8 @@ public sealed class DichVuTonKho(
     IDongHo dongHo,
     IThamSoHeThong thamSo,
     INguoiDungHienTai hienTai,
-    DichVuCanhBao canhBao)
+    DichVuCanhBao canhBao,
+    CaLam.DichVuCa dichVuCa)
 {
     public const string KhongDuocDeTrong = "Không được để trống";
     public const string GiaTriSai = "Giá trị không hợp lệ!";
@@ -94,6 +95,7 @@ public sealed class DichVuTonKho(
 
     public async Task DieuChinhAsync(string maLo, YeuCauDieuChinh yc, CancellationToken ct)
     {
+        await dichVuCa.KiemTraKhongDangKetCaAsync(ct); // UC_9.1 BR07
         var lo = await db.LoHang.Include(l => l.HangHoa).FirstOrDefaultAsync(l => l.MaLo == maLo, ct)
             ?? throw new LoiNghiepVuException(StatusCodes.Status404NotFound, KhongTimThayLo);
         var (khoaHan, khoaToanBo) = await KhoaTheoCanhBaoAsync(maLo, ct);
@@ -175,6 +177,7 @@ public sealed class DichVuTonKho(
     public async Task<string> ThemLoAsync(YeuCauThemLo yc, CancellationToken ct)
     {
         const string KhongTrong = "Không được để trống!";
+        await dichVuCa.KiemTraKhongDangKetCaAsync(ct); // UC_9.1 BR07
         var kt = new BoKiemTra();
         // 5a – BR01
         kt.Kiem("tenHangHoa", !QuyTac.Trong(yc.TenHangHoa), KhongTrong)

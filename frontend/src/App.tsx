@@ -4,6 +4,9 @@ import type { VaiTro } from './api/client'
 import { useXacThuc } from './auth/AuthContext'
 import { DANH_SACH_CHUC_NANG } from './auth/chucNang'
 import { BoCuc } from './components/BoCuc'
+import { BanHang } from './pages/banHang/BanHang'
+import { ChiTietHoaDonTrang, LichSuBanHang } from './pages/banHang/LichSuBanHang'
+import { ChiTietKhachHangTrang, DanhSachKhachHang, FormKhachHang } from './pages/khachHang/KhachHang'
 import { ChuaTrienKhai, KhongCoQuyen } from './pages/ChuaTrienKhai'
 import { DangNhap } from './pages/DangNhap'
 import { DoiMatKhau } from './pages/DoiMatKhau'
@@ -69,6 +72,16 @@ export default function App() {
         {/* Quản lý lô hàng (UC_10.1) */}
         <Route path="quan-ly-lo-hang" element={chiChuQuan(<DanhSachLoHang />)} />
         <Route path="quan-ly-lo-hang/them" element={chiChuQuan(<ThemLoHang />)} />
+
+        {/* Giai đoạn 3 – Bán hàng (UC_6.5, 6.1) và khách hàng (UC_8.1–8.3): cả hai vai trò */}
+        <Route path="quan-ly-ban-hang" element={<Navigate to="/quan-ly-ban-hang/ban-hang" replace />} />
+        <Route path="quan-ly-ban-hang/ban-hang" element={<BanHang />} />
+        <Route path="quan-ly-ban-hang/lich-su" element={<LichSuBanHang />} />
+        <Route path="quan-ly-ban-hang/hoa-don" element={<ChiTietHoaDonTrang />} />
+        <Route path="quan-ly-khach-hang" element={<DanhSachKhachHang />} />
+        <Route path="quan-ly-khach-hang/them" element={<FormKhachHang cheDo="them" />} />
+        <Route path="quan-ly-khach-hang/:maKH" element={<ChiTietKhachHangTrang />} />
+        <Route path="quan-ly-khach-hang/:maKH/sua" element={<FormKhachHang cheDo="sua" />} />
 
         {/* Chức năng thuộc giai đoạn sau */}
         {DANH_SACH_CHUC_NANG.filter((c) => !c.daTrienKhai).map((c) => (

@@ -341,6 +341,19 @@
 | 9.9 | UC_3.2 BR04 | "kiểm tra định kỳ mỗi ngày" | Ghi rõ giờ: "kiểm tra định kỳ lúc 00:05 mỗi ngày và khi khởi động hệ thống" | 🟢 |
 | 9.10 | UC_3.2 main flow | Không nói danh sách có gồm cảnh báo đã xử lý không | Mặc định chỉ hiện cảnh báo "Chưa xử lý"; có tùy chọn hiện cả cảnh báo đã xử lý | 🟢 |
 
+## 10. Bổ sung phát sinh khi code Giai đoạn 3
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 10.1 | UC_8.3 BR02 và BR03 | BR02 cho phép "+84", BR03 lại cấm mọi ký tự ngoài chữ, số, khoảng trắng (tức cấm "+") | Thêm vào BR03: "…ngoại trừ tiền tố “+84” ở đầu số điện thoại (BR02)" | 🟡 |
+| 10.2 | Kết ca – BR11 (quy tắc mở ca, mục 3.22) | Ca tự mở khi đăng nhập | Bổ sung: "…hoặc khi phát sinh giao dịch bán hàng mà cửa hàng chưa có ca đang mở (trường hợp ca vừa kết thúc trong lúc người dùng vẫn đăng nhập)" | 🟡 |
+| 10.3 | UC_2.4 BR02, BR03 | "đang trong ca", "còn ca chưa đối soát" chưa định nghĩa | "Đang trong ca": nhân viên là người phụ trách ca ở trạng thái "Đang hoạt động". "Còn ca chưa đối soát": phụ trách ca ở trạng thái "Đang kết ca". "Có lịch sử ca": đã từng phụ trách ca | 🟡 |
+| 10.4 | UC_6.1 BR01 và màn hình 6.1.1 | BR01: phải nhập ít nhất 1 điều kiện; màn hình 6.1.1 lại hiện "Tất cả hóa đơn" trước khi tìm | Giữ cả hai: mở màn hình thì hiện danh sách tất cả hóa đơn (mới nhất trước); bấm "Tìm kiếm" mà không có điều kiện thì báo "Vui lòng nhập ít nhất một điều kiện." | 🟢 |
+| 10.5 | UC_6.1 BR02 – ngày lập | "có thể là một ngày hoặc một khoảng ngày" | Ghi rõ: chỉ nhập "Từ ngày" thì tìm đúng ngày đó; nhập cả hai thì tìm theo khoảng | 🟢 |
+| 10.6 | Màn hình 6.5.1 | Tab lọc "Đồ uống / Thực phẩm / Hàng khác" | Tab lọc theo 11 danh mục của UC_4.1 BR06 (chỉ hiện danh mục đang có hàng) | 🟢 |
+| 10.7 | UC_6.5 bước 10–14 | Không quy định mã cho khoản thu bán hàng | Mỗi lần thu (kể cả QR thất bại) tạo một phiếu thanh toán mã `PTT-dd/mm/yyyy.nnn`; hóa đơn chỉ tạo khi phiếu "Thành công" | 🟢 |
+| 10.8 | UC_6.5 bước 6, 11.a | "Chính sách giảm giá" và "mã QR" | Giá bán đã gồm giảm giá (Q4). QR là bản giả lập: màn hình có nút chọn kết quả "Ngân hàng xác nhận / Thanh toán thất bại" (Q5) | 🟢 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.

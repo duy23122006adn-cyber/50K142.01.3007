@@ -47,9 +47,23 @@ export const DANH_SACH_CHUC_NANG: ChucNang[] = [
     ],
   },
   { duongDan: '/bao-cao', ten: 'Xem báo cáo và thống kê', moTa: 'Lợi nhuận, doanh thu, số lượng bán, tồn kho', vaiTro: CHU_QUAN, giaiDoan: 7, daTrienKhai: false },
-  { duongDan: '/quan-ly-ban-hang', ten: 'Quản lý bán hàng', moTa: 'Bán hàng, lịch sử, hủy hóa đơn, đổi trả', vaiTro: CA_HAI, giaiDoan: 3, daTrienKhai: false },
+  {
+    duongDan: '/quan-ly-ban-hang', ten: 'Quản lý bán hàng', moTa: 'Bán hàng tại quầy, lịch sử bán hàng',
+    vaiTro: CA_HAI, giaiDoan: 3, daTrienKhai: true,
+    con: [
+      { duongDan: '/quan-ly-ban-hang/ban-hang', ten: 'Bán hàng', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-ban-hang/lich-su', ten: 'Lịch sử bán hàng', vaiTro: CA_HAI },
+    ],
+  },
   { duongDan: '/quan-ly-cong-no', ten: 'Quản lý công nợ', moTa: 'Hóa đơn nợ, khách quen, thu nợ', vaiTro: CA_HAI, giaiDoan: 4, daTrienKhai: false },
-  { duongDan: '/quan-ly-khach-hang', ten: 'Quản lý khách hàng', moTa: 'Thêm, sửa, tìm kiếm khách hàng', vaiTro: CA_HAI, giaiDoan: 3, daTrienKhai: false },
+  {
+    duongDan: '/quan-ly-khach-hang', ten: 'Quản lý khách hàng', moTa: 'Thêm, sửa, tìm kiếm khách hàng',
+    vaiTro: CA_HAI, giaiDoan: 3, daTrienKhai: true,
+    con: [
+      { duongDan: '/quan-ly-khach-hang', ten: 'Tìm kiếm khách hàng', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-khach-hang/them', ten: 'Thêm khách hàng', vaiTro: CA_HAI },
+    ],
+  },
   { duongDan: '/ket-ca', ten: 'Kết ca', moTa: 'Lưu và xem biên bản kết ca', vaiTro: CA_HAI, giaiDoan: 6, daTrienKhai: false },
   {
     duongDan: '/quan-ly-lo-hang', ten: 'Quản lý lô hàng', moTa: 'Danh sách và thêm lô hàng mới',
@@ -74,5 +88,9 @@ export const TEN_TRANG: Record<string, string> = {
   '/quan-ly-ton-kho/dieu-chinh': 'Điều chỉnh tồn kho',
   '/quan-ly-hang-hoa/them': 'Thêm hàng hóa',
   '/quan-ly-lo-hang/them': 'Thêm lô hàng',
+  '/quan-ly-ban-hang/ban-hang': 'Bán hàng',
+  '/quan-ly-ban-hang/lich-su': 'Lịch sử bán hàng',
+  '/quan-ly-ban-hang/hoa-don': 'Chi tiết hóa đơn',
+  '/quan-ly-khach-hang/them': 'Thêm khách hàng',
   ...Object.fromEntries(DANH_SACH_CHUC_NANG.map((c) => [c.duongDan, c.ten])),
 }

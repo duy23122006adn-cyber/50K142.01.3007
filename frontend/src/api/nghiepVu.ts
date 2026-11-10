@@ -174,3 +174,121 @@ export const loHangApi = {
   them: (f: { tenHangHoa: string; soLuong: string; hanSuDung: string }) =>
     goiApi<{ ma: string }>('/lo-hang', { method: 'POST', body: f }),
 }
+
+// ------------------------------------------------------------------ Ca làm việc (Q10)
+
+export interface CaHienTai {
+  maCa: string
+  ngayLamViec: string
+  gioBatDau: string
+  trangThai: string
+  maND: string
+  hoTenPhuTrach: string
+}
+
+export const caApi = {
+  hienTai: () => goiApi<CaHienTai | null>('/ca/hien-tai'),
+}
+
+// ------------------------------------------------------------------ Khách hàng (UC_8.1–8.3)
+
+export interface KhachHangDong {
+  maKH: string
+  hoTen: string
+  sdt: string
+}
+
+export interface ChiTietKhachHang extends KhachHangDong {
+  matHangThuongMua: { maHH: string; tenHH: string; donViTinh: string; soLuongDaMua: number }[]
+}
+
+export const khachHangApi = {
+  timKiem: (tuKhoa: string, trang = 1) => goiApi<KetQuaTrang<KhachHangDong>>(`/khach-hang${q({ tuKhoa, trang })}`),
+  chiTiet: (ma: string) => goiApi<ChiTietKhachHang>(`/khach-hang/${encodeURIComponent(ma)}`),
+  them: (f: { hoTen: string; sdt: string }) => goiApi<KhachHangDong>('/khach-hang', { method: 'POST', body: f }),
+  sua: (ma: string, f: { hoTen: string; sdt: string }) =>
+    goiApi<ThongBao>(`/khach-hang/${encodeURIComponent(ma)}`, { method: 'PUT', body: f }),
+}
+
+// ------------------------------------------------------------------ Bán hàng (UC_6.5), lịch sử (UC_6.1)
+
+export interface SanPhamBan {
+  maHH: string
+  tenHH: string
+  maVach: string | null
+  donViTinh: string
+  giaBan: number
+  tonBanDuoc: number
+  maDM: string
+  tenDM: string
+}
+
+export interface DongGioHang {
+  maHH: string
+  soLuong: number
+}
+
+export interface DongHoaDon {
+  maHH: string
+  tenHH: string
+  donViTinh: string
+  soLuong: number
+  donGia: number
+  thanhTien: number
+}
+
+export interface ChiTietHoaDon {
+  maHD: string
+  tenCuaHang: string
+  ngayGioLap: string
+  maNguoiBan: string
+  nguoiBan: string
+  maKH: string | null
+  tenKhach: string | null
+  sdtKhach: string | null
+  loaiHoaDon: string
+  trangThai: string
+  dong: DongHoaDon[]
+  tongTienHang: number
+  tongTienThanhToan: number
+  soTienDaTra: number
+  phuongThuc: string
+  soTienConNo: number
+}
+
+export interface HoaDonDong {
+  maHD: string
+  ngayGioLap: string
+  tenKhach: string | null
+  tongTien: number
+  trangThai: string
+}
+
+export interface DieuKienTimHoaDon {
+  ma?: string
+  khach?: string
+  tuNgay?: string
+  denNgay?: string
+  trangThai?: string
+}
+
+export const banHangApi = {
+  sanPham: (tuKhoa: string) => goiApi<SanPhamBan[]>(`/ban-hang/san-pham${q({ tuKhoa })}`),
+  thanhToan: (yc: {
+    maKH: string | null
+    dong: DongGioHang[]
+    phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR'
+    tienKhachDua?: string
+    ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai'
+  }) => goiApi<{ maPTT: string; soTien: number; tienTraLai: number; phuongThuc: string }>('/ban-hang/thanh-toan', { method: 'POST', body: yc }),
+  taoHoaDon: (yc: { maPTT: string; maKH: string | null; dong: DongGioHang[] }) =>
+    goiApi<ChiTietHoaDon>('/ban-hang/hoa-don', { method: 'POST', body: yc }),
+  guiHoaDon: (yc: { maHD: string; kenh: 'SMS' | 'Zalo'; sdt: string }) =>
+    goiApi<ThongBao>('/ban-hang/gui-hoa-don', { method: 'POST', body: yc }),
+}
+
+export const hoaDonApi = {
+  timKiem: (dk: DieuKienTimHoaDon, trang: number, tatCa: boolean) =>
+    goiApi<KetQuaTrang<HoaDonDong>>(`/hoa-don${q({ ...dk, trang, tatCa: tatCa || undefined })}`),
+  chiTiet: (ma: string) => goiApi<ChiTietHoaDon>(`/hoa-don/chi-tiet${q({ ma })}`),
+}

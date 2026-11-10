@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
+using XomNho.Api.BanHangQL;
+using XomNho.Api.CaLam;
+using XomNho.Api.KhachHangQL;
 using XomNho.Api.Common;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
@@ -22,17 +26,22 @@ public sealed class DongHoGia : IDongHo
 /// <summary>Sinh mã giả – đếm trong bộ nhớ, dùng đúng định dạng mã thật.</summary>
 public sealed class SinhMaGia(IDongHo dongHo) : ISinhMa
 {
-    // NV001 và CQ001 đã có sẵn trong môi trường thử.
-    private readonly Dictionary<LoaiMa, int> _dem = new() { [LoaiMa.NhanVien] = 1, [LoaiMa.ChuQuan] = 1 };
+    // Đếm theo (loại, kỳ) giống bảng BoDemMa. NV001 và CQ001 đã có sẵn trong môi trường thử.
+    private readonly Dictionary<(LoaiMa, string), int> _dem = new()
+    {
+        [(LoaiMa.NhanVien, DinhDangMa.KyToanCuc)] = 1,
+        [(LoaiMa.ChuQuan, DinhDangMa.KyToanCuc)] = 1,
+    };
 
     public Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default)
     {
-        _dem[loai] = _dem.GetValueOrDefault(loai) + 1;
-        return Task.FromResult(DinhDangMa.Tao(loai, _dem[loai], dongHo.HomNay));
+        var khoa = (loai, DinhDangMa.Ky(loai, dongHo.HomNay));
+        _dem[khoa] = _dem.GetValueOrDefault(khoa) + 1;
+        return Task.FromResult(DinhDangMa.Tao(loai, _dem[khoa], dongHo.HomNay));
     }
 
     public Task<string> XemTruocAsync(LoaiMa loai, CancellationToken ct = default) =>
-        Task.FromResult(DinhDangMa.Tao(loai, _dem.GetValueOrDefault(loai) + 1, dongHo.HomNay));
+        Task.FromResult(DinhDangMa.Tao(loai, _dem.GetValueOrDefault((loai, DinhDangMa.Ky(loai, dongHo.HomNay))) + 1, dongHo.HomNay));
 }
 
 /// <summary>Người dùng hiện tại giả – mặc định Chủ quán CQ001.</summary>
@@ -43,6 +52,18 @@ public sealed class NguoiDungHienTaiGia : INguoiDungHienTai
     public string? VaiTro { get; set; } = VaiTroNguoiDung.ChuQuan;
     public Guid? MaPhien { get; set; }
     public string? DiaChiIP => "127.0.0.1";
+}
+
+public sealed class GuiChungTuGia : IGuiChungTu
+{
+    public List<(string Kenh, string Sdt)> DaGui { get; } = [];
+    public bool ThanhCong { get; set; } = true;
+
+    public Task<bool> GuiAsync(string kenh, string soDienThoai, string noiDung, CancellationToken ct = default)
+    {
+        DaGui.Add((kenh, soDienThoai));
+        return Task.FromResult(ThanhCong);
+    }
 }
 
 public sealed class GuiOtpGia : IGuiOtp
@@ -84,7 +105,7 @@ public sealed class MoiTruongThu : IDisposable
         var jwt = Options.Create(new TuyChonJwt { Key = new string('k', 48) });
         DichVu = new DichVuXacThuc(
             Db, DongHo, GuiOtp, new DichVuToken(jwt, DongHo), new ThamSoHeThong(Db),
-            Options.Create(new TuyChonTichHop { HienOtpGiaLap = hienOtp }));
+            Options.Create(new TuyChonTichHop { HienOtpGiaLap = hienOtp }), DvCa());
 
         Db.ChuQuan.Add(new ChuQuan
         {
@@ -101,10 +122,24 @@ public sealed class MoiTruongThu : IDisposable
         Db.SaveChanges();
     }
 
-    public DichVuNhanVien DvNhanVien() => new(Db, SinhMa, DongHo, HienTai, new RangBuocNhanVienGiaiDoan2());
+    public GuiChungTuGia GuiChungTu { get; } = new();
+
+    public DichVuNhanVien DvNhanVien() => new(Db, SinhMa, DongHo, HienTai, new RangBuocNhanVien(Db));
     public DichVuHangHoa DvHangHoa() => new(Db, SinhMa, new ThamSoHeThong(Db));
     public DichVuCanhBao DvCanhBao() => new(Db, DongHo);
-    public DichVuTonKho DvTonKho() => new(Db, SinhMa, DongHo, new ThamSoHeThong(Db), HienTai, DvCanhBao());
+    public DichVuCa DvCa() => new(Db, SinhMa, DongHo, NullLogger<DichVuCa>.Instance);
+    public DichVuTonKho DvTonKho() => new(Db, SinhMa, DongHo, new ThamSoHeThong(Db), HienTai, DvCanhBao(), DvCa());
+    public DichVuKhachHang DvKhachHang() => new(Db, SinhMa, new ThamSoHeThong(Db));
+    public DichVuBanHang DvBanHang() =>
+        new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu);
+
+    /// <summary>Bán nhanh: thanh toán tiền mặt rồi tạo hóa đơn.</summary>
+    public async Task<ChiTietHoaDonDto> BanAsync(string? maKH, params (string MaHH, int SoLuong)[] dong)
+    {
+        var gio = dong.Select(d => new DongGioHang(d.MaHH, d.SoLuong)).ToList();
+        var tt = await DvBanHang().ThanhToanAsync(new YeuCauThanhToan(maKH, gio, PhuongThucThanhToan.TienMat, "10000000", null), default);
+        return await DvBanHang().TaoHoaDonAsync(new YeuCauTaoHoaDon(tt.MaPTT, maKH, gio), default);
+    }
 
     /// <summary>Thêm nhanh một hàng hóa hợp lệ, trả mã.</summary>
     public Task<string> ThemHangAsync(string ten, string? nguongHang = "5", string? nguongHan = "10") =>
