@@ -49,6 +49,10 @@ public class XomNhoDbContext(
     public DbSet<ChiTietDoiTra> ChiTietDoiTra => Set<ChiTietDoiTra>();
     public DbSet<ThongBao> ThongBao => Set<ThongBao>();
 
+    // Giai đoạn 6
+    public DbSet<BienBanKetCa> BienBanKetCa => Set<BienBanKetCa>();
+    public DbSet<ChiTietBienBan> ChiTietBienBan => Set<ChiTietBienBan>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Không phân biệt hoa thường khi so sánh/tìm kiếm (THIET_KE_DB_V2.md mục 1).

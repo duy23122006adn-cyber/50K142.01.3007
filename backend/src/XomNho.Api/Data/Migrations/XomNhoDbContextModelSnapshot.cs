@@ -23,6 +23,41 @@ namespace XomNho.Api.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("XomNho.Api.Domain.BienBanKetCa", b =>
+                {
+                    b.Property<string>("MaBB")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<bool>("CoChenhLech")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaCa")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaND")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("NgayGioLuu")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2(0)")
+                        .HasDefaultValueSql("SYSDATETIME()");
+
+                    b.HasKey("MaBB");
+
+                    b.HasIndex("MaCa")
+                        .IsUnique()
+                        .HasDatabaseName("UX_BienBanKetCa_MaCa");
+
+                    b.HasIndex("MaND");
+
+                    b.HasIndex("NgayGioLuu")
+                        .HasDatabaseName("IX_BienBanKetCa_NgayGioLuu");
+
+                    b.ToTable("BienBanKetCa", (string)null);
+                });
+
             modelBuilder.Entity("XomNho.Api.Domain.BoDemMa", b =>
                 {
                     b.Property<string>("TienTo")
@@ -176,6 +211,54 @@ namespace XomNho.Api.Data.Migrations
                     b.HasKey("MaCauHinh");
 
                     b.ToTable("CauHinh", (string)null);
+                });
+
+            modelBuilder.Entity("XomNho.Api.Domain.ChiTietBienBan", b =>
+                {
+                    b.Property<int>("MaCTBB")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaCTBB"));
+
+                    b.Property<int>("ChenhLech")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("int")
+                        .HasComputedColumnSql("[SoLuongThucTe] - [SoLuongLyThuyet]", true);
+
+                    b.Property<string>("MaBB")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaHH")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("NguyenNhan")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("SoLuongLyThuyet")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoLuongThucTe")
+                        .HasColumnType("int");
+
+                    b.HasKey("MaCTBB");
+
+                    b.HasIndex("MaHH");
+
+                    b.HasIndex("MaBB", "MaHH")
+                        .IsUnique()
+                        .HasDatabaseName("UX_CTBB_MaBB_MaHH");
+
+                    b.ToTable("ChiTietBienBan", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_CTBB_LyThuyet", "[SoLuongLyThuyet] >= 0");
+
+                            t.HasCheckConstraint("CK_CTBB_NguyenNhan", "[SoLuongThucTe] = [SoLuongLyThuyet] OR LEN(LTRIM(RTRIM(ISNULL([NguyenNhan], N'')))) > 0");
+
+                            t.HasCheckConstraint("CK_CTBB_ThucTe", "[SoLuongThucTe] >= 0");
+                        });
                 });
 
             modelBuilder.Entity("XomNho.Api.Domain.ChiTietDoiTra", b =>
@@ -1382,6 +1465,25 @@ namespace XomNho.Api.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("XomNho.Api.Domain.BienBanKetCa", b =>
+                {
+                    b.HasOne("XomNho.Api.Domain.CaLamViec", "CaLamViec")
+                        .WithMany()
+                        .HasForeignKey("MaCa")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XomNho.Api.Domain.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("MaND")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CaLamViec");
+
+                    b.Navigation("NguoiDung");
+                });
+
             modelBuilder.Entity("XomNho.Api.Domain.CaLamViec", b =>
                 {
                     b.HasOne("XomNho.Api.Domain.NguoiDung", "NguoiDung")
@@ -1403,6 +1505,25 @@ namespace XomNho.Api.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("LoHang");
+                });
+
+            modelBuilder.Entity("XomNho.Api.Domain.ChiTietBienBan", b =>
+                {
+                    b.HasOne("XomNho.Api.Domain.BienBanKetCa", "BienBanKetCa")
+                        .WithMany("ChiTiet")
+                        .HasForeignKey("MaBB")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XomNho.Api.Domain.HangHoa", "HangHoa")
+                        .WithMany()
+                        .HasForeignKey("MaHH")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BienBanKetCa");
+
+                    b.Navigation("HangHoa");
                 });
 
             modelBuilder.Entity("XomNho.Api.Domain.ChiTietDoiTra", b =>
@@ -1744,6 +1865,11 @@ namespace XomNho.Api.Data.Migrations
                         .HasForeignKey("XomNho.Api.Domain.NhanVien", "MaND")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("XomNho.Api.Domain.BienBanKetCa", b =>
+                {
+                    b.Navigation("ChiTiet");
                 });
 
             modelBuilder.Entity("XomNho.Api.Domain.HangHoa", b =>

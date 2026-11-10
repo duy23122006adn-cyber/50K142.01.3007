@@ -75,7 +75,14 @@ export const DANH_SACH_CHUC_NANG: ChucNang[] = [
       { duongDan: '/quan-ly-khach-hang/them', ten: 'Thêm khách hàng', vaiTro: CA_HAI },
     ],
   },
-  { duongDan: '/ket-ca', ten: 'Kết ca', moTa: 'Lưu và xem biên bản kết ca', vaiTro: CA_HAI, giaiDoan: 6, daTrienKhai: false },
+  {
+    duongDan: '/ket-ca', ten: 'Kết ca', moTa: 'Lưu và xem biên bản kết ca',
+    vaiTro: CA_HAI, giaiDoan: 6, daTrienKhai: true,
+    con: [
+      { duongDan: '/ket-ca/luu-bien-ban', ten: 'Lưu biên bản', vaiTro: CA_HAI },
+      { duongDan: '/ket-ca/bien-ban', ten: 'Xem biên bản', vaiTro: CA_HAI },
+    ],
+  },
   {
     duongDan: '/quan-ly-lo-hang', ten: 'Quản lý lô hàng', moTa: 'Danh sách và thêm lô hàng mới',
     vaiTro: CHU_QUAN, giaiDoan: 2, daTrienKhai: true,
@@ -110,6 +117,9 @@ export const TEN_TRANG: Record<string, string> = {
   '/quan-ly-ban-hang/duyet-doi-tra': 'Duyệt phiếu đổi trả',
   '/quan-ly-ban-hang/duyet-doi-tra/phieu': 'Chi tiết phiếu',
   '/quan-ly-khach-hang/them': 'Thêm khách hàng',
+  '/ket-ca/luu-bien-ban': 'Lưu biên bản',
+  '/ket-ca/bien-ban': 'Xem biên bản',
+  '/ket-ca/bien-ban/chi-tiet': 'Chi tiết biên bản',
   '/quan-ly-cong-no/tim-kiem': 'Tìm kiếm khách quen',
   '/quan-ly-cong-no/thu-no': 'Tạo phiếu thanh toán nợ',
   '/quan-ly-cong-no/them': 'Thêm khách quen',

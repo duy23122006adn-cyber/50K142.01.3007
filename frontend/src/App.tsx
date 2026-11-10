@@ -13,6 +13,7 @@ import { ChiTietKhachQuenTrang, FormKhachQuenTrang, TimKiemKhachQuen } from './p
 import { ThuNo } from './pages/congNo/ThuNo'
 import { ChiTietKhachHangTrang, DanhSachKhachHang, FormKhachHang } from './pages/khachHang/KhachHang'
 import { ChuaTrienKhai, KhongCoQuyen } from './pages/ChuaTrienKhai'
+import { ChiTietBienBan, DanhSachBienBan, LuuBienBan } from './pages/ketCa/KetCa'
 import { DangNhap } from './pages/DangNhap'
 import { DoiMatKhau } from './pages/DoiMatKhau'
 import { ChiTietHangHoa } from './pages/hangHoa/ChiTietHangHoa'
@@ -105,6 +106,12 @@ export default function App() {
         <Route path="quan-ly-cong-no/khach-quen" element={<Navigate to="/quan-ly-cong-no/tim-kiem" replace />} />
         <Route path="quan-ly-cong-no/khach-quen/:maKH" element={<ChiTietKhachQuenTrang />} />
         <Route path="quan-ly-cong-no/khach-quen/:maKH/sua" element={chiChuQuan(<FormKhachQuenTrang cheDo="sua" />)} />
+
+        {/* Giai đoạn 6 – Kết ca (UC_9.1, 9.2): cả hai vai trò */}
+        <Route path="ket-ca" element={<Navigate to="/ket-ca/luu-bien-ban" replace />} />
+        <Route path="ket-ca/luu-bien-ban" element={<LuuBienBan />} />
+        <Route path="ket-ca/bien-ban" element={<DanhSachBienBan />} />
+        <Route path="ket-ca/bien-ban/chi-tiet" element={<ChiTietBienBan />} />
 
         {/* Chức năng thuộc giai đoạn sau */}
         {DANH_SACH_CHUC_NANG.filter((c) => !c.daTrienKhai).map((c) => (

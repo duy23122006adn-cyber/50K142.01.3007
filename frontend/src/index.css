@@ -1149,3 +1149,23 @@ select.truong__o {
   font-weight: 600;
   background: var(--mau-chinh-nhat);
 }
+
+/* ------------------------------------------------------------ Giai đoạn 6 – Kết ca */
+
+.chu-cam {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.bang--xen-ke tbody tr:nth-child(even) {
+  background: var(--mau-chinh-nhat);
+}
+
+.bang tbody tr.dong-chenh-lech {
+  background: var(--mau-do-nhat);
+}
+
+.o-so-luong {
+  width: 6rem;
+  text-align: right;
+}

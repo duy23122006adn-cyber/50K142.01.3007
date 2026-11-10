@@ -40,6 +40,7 @@ builder.Services.AddScoped<DichVuKhachHang>();
 builder.Services.AddScoped<DichVuBanHang>();
 builder.Services.AddScoped<DichVuCongNo>();
 builder.Services.AddScoped<DichVuHuyHoaDon>();
+builder.Services.AddScoped<DichVuKetCa>();
 builder.Services.AddScoped<XomNho.Api.DoiTraQL.DichVuDoiTra>();
 builder.Services.AddScoped<DichVuNhanVien>();
 builder.Services.AddScoped<DichVuHangHoa>();

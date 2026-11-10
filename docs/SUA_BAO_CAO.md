@@ -388,6 +388,18 @@
 | 12.13 | Màn hình 6.2.1 | Không có cách mở lại phiếu đã gửi duyệt sau khi rời màn hình | Thêm khối "Phiếu đổi trả đang xử lý" dưới danh sách hóa đơn (phiếu chờ duyệt hoặc đã duyệt chưa hoàn tất; Nhân viên chỉ thấy phiếu mình lập) | 🟢 |
 | 12.14 | UC_6.2 luồng 14.a.7.3.a.1 | "Thành toán không thành công" | "Thanh toán chưa thành công" (khớp màn hình 6.2.29) | 🟢 |
 
+## 13. Bổ sung phát sinh khi code Giai đoạn 6
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 13.1 | Màn hình 9.1.1 | Không có nút đưa ca sang "Đang kết ca"; cột "Tồn thực tế" ghi "Dữ liệu từ hệ thống" | Thêm màn hình ca "Đang hoạt động" có nút "Kết ca" (hỏi xác nhận vì sẽ khóa giao dịch toàn quán, mục 3.22). Cột "Tồn thực tế" là ô nhập, mặc định bằng tồn lý thuyết | 🟡 |
+| 13.2 | UC_9.1 BR09 | Không nói biên bản gồm những mặt hàng nào | Gồm mọi mặt hàng đã từng có lô: đang kinh doanh, hoặc ngừng kinh doanh nhưng còn tồn. Mặt hàng chưa nhập lô nào không có trong biên bản | 🟡 |
+| 13.3 | UC_9.1 BR08 | Không nói tồn có tính lô đã hết hạn không | Tồn lý thuyết là tổng tồn mọi lô, kể cả lô đã hết hạn (hàng vẫn nằm trong quán, cần đếm khi kiểm kê) | 🟡 |
+| 13.4 | Màn hình 9.1.1, 9.2.4 | Mã hàng ví dụ `HH-000004` | `HH-0004` (theo UC_4.1 BR04, Q16) | 🟢 |
+| 13.5 | UC_9.1 BR05 | Số thứ tự biên bản "trong ngày" theo ngày làm việc | Đếm theo ngày lưu biên bản. Hai ngày này chỉ khác nhau khi ca kéo dài qua nửa đêm | 🟢 |
+| 13.6 | Màn hình 9.2.1 | Bảng danh sách không có cột thao tác | Thêm cột "Hành động" với nút "Xem" để mở chi tiết (UC_9.2 bước 5) | 🟢 |
+| 13.7 | Màn hình 9.1.3 | Sau khi đóng thông báo chỉ ở lại biên bản | Thêm nút "Xem biên bản" chuyển sang danh sách biên bản (UC_9.2) | 🟢 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
@@ -395,6 +407,6 @@
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 30 |
-| 🟢 Chính tả, đánh số | 28 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 33 |
+| 🟢 Chính tả, đánh số | 32 |
 | Chương Kiến trúc (điền mới) | 1 |

@@ -542,3 +542,48 @@ export const thongBaoApi = {
   danhSach: () => goiApi<{ soChuaDoc: number; danhSach: ThongBaoDong[] }>('/thong-bao'),
   daDoc: (maTB?: number) => goiApi<void>('/thong-bao/da-doc', { method: 'POST', body: { maTB: maTB ?? null } }),
 }
+
+// ------------------------------------------------------------------ Kết ca (UC_9.1, 9.2)
+
+export interface DongKiemKe {
+  maHH: string
+  tenHH: string
+  donViTinh: string
+  soLuongLyThuyet: number
+  soLuongThucTe: number
+  chenhLech: number
+  nguyenNhan: string | null
+}
+
+export interface BienBan {
+  maBB: string | null
+  maCa: string
+  ngayLamViec: string
+  gioBatDau: string
+  gioKetThuc: string | null
+  maNguoiKetCa: string
+  nguoiKetCa: string
+  trangThaiCa: string
+  coChenhLech: boolean
+  dong: DongKiemKe[]
+}
+
+export interface BienBanDong {
+  maBB: string
+  ngayLamViec: string
+  maCa: string
+  maNguoiKetCa: string
+  nguoiKetCa: string
+  coChenhLech: boolean
+}
+
+export const ketCaApi = {
+  hienTai: () => goiApi<BienBan | null>('/ket-ca/hien-tai'),
+  batDau: (maCa: string) => goiApi<BienBan>('/ket-ca/bat-dau', { method: 'POST', body: { maCa } }),
+  huy: (maCa: string) => goiApi<void>('/ket-ca/huy', { method: 'POST', body: { maCa } }),
+  luu: (maCa: string, dong: { maHH: string; soLuongThucTe: number; nguyenNhan: string | null }[]) =>
+    goiApi<BienBan>('/ket-ca/luu', { method: 'POST', body: { maCa, dong } }),
+  danhSach: (tuNgay: string, denNgay: string, coChenhLech: boolean) =>
+    goiApi<BienBanDong[]>(`/ket-ca/bien-ban${q({ tuNgay, denNgay, coChenhLech: coChenhLech || undefined })}`),
+  chiTiet: (ma: string) => goiApi<BienBan>(`/ket-ca/bien-ban/chi-tiet${q({ ma })}`),
+}

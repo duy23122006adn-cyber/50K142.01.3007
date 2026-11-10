@@ -140,6 +140,7 @@ public sealed class MoiTruongThu : IDisposable
     public DichVuBanHang DvBanHang() =>
         new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu, DvCongNo());
 
+    public DichVuKetCa DvKetCa() => new(Db, SinhMa, DongHo, HienTai, DvCanhBao());
     public DichVuHuyHoaDon DvHuyHoaDon() => new(Db, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao(), DvCongNo());
     public XomNho.Api.DoiTraQL.DichVuDoiTra DvDoiTra() => new(Db, SinhMa, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao());
 
