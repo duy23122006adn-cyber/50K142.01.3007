@@ -385,3 +385,160 @@ export const congNoApi = {
   guiPhieu: (yc: { maPTT: string; kenh: 'SMS' | 'Zalo'; sdt: string }) =>
     goiApi<ThongBao>('/cong-no/gui-phieu', { method: 'POST', body: yc }),
 }
+
+// ------------------------------------------------------------------ Hủy hóa đơn, đổi trả, duyệt phiếu (UC_6.2–6.4)
+
+export interface KiemTraHuy {
+  maHD: string
+  duocHuy: boolean
+  thongBao: string | null
+  laHoaDonNo: boolean
+  soLuongHoanKho: number
+  soTienCanHoan: number
+  giamDoanhThu: number
+  giamCongNo: number
+}
+
+export interface NhatKyHuy {
+  maHD: string
+  maNguoiHuy: string
+  nguoiHuy: string
+  thoiGianHuy: string
+  lyDoHuy: string
+  tongTien: number
+  soTienCanHoan: number
+  banSao: ChiTietHoaDon
+}
+
+export const huyHoaDonApi = {
+  kiemTra: (ma: string) => goiApi<KiemTraHuy>(`/huy-hoa-don/kiem-tra${q({ ma })}`),
+  huy: (yc: { maHD: string; khachChuaNhanHang: boolean; lyDoHuy: string }) =>
+    goiApi<KiemTraHuy>('/huy-hoa-don', { method: 'POST', body: yc }),
+  nhatKy: (ma: string) => goiApi<NhatKyHuy>(`/hoa-don/nhat-ky-huy${q({ ma })}`),
+}
+
+export interface DongDoiTra {
+  maHH: string
+  tenHH: string
+  donViTinh: string
+  donGia: number
+  daMua: number
+  daDoiTra: number
+  dangCho: number
+  conLai: number
+}
+
+export interface HoaDonDoiTra {
+  hoaDon: ChiTietHoaDon
+  duocDoiTra: boolean
+  tieuDeLoi: string | null
+  thongBaoLoi: string | null
+  thoiHan: string
+  dong: DongDoiTra[]
+}
+
+export type LoaiPhieuDoiTra = 'Trả hàng' | 'Đổi hàng'
+
+export interface DongYeuCauDoiTra {
+  maHH: string
+  soLuong: number
+  maHHMoi?: string | null
+  soLuongMoi?: number | null
+}
+
+export interface YeuCauLapPhieu {
+  maHD: string
+  loaiPhieu: LoaiPhieuDoiTra
+  dong: DongYeuCauDoiTra[]
+  tinhTrang: string[]
+  loiNhaSanXuat: boolean
+  moTaLoi: string | null
+  lyDoDoiTra: string
+}
+
+export interface DongPhieuDoiTra {
+  maHH: string
+  tenHH: string
+  donViTinh: string
+  soLuongTra: number
+  giaTriHoan: number
+  maHHMoi: string | null
+  tenHHMoi: string | null
+  donViTinhMoi: string | null
+  soLuongMoi: number | null
+  donGiaMoi: number | null
+  giaTriHangMoi: number | null
+}
+
+export interface XemTruocPhieu {
+  loaiPhieu: LoaiPhieuDoiTra
+  dong: DongPhieuDoiTra[]
+  soTienHoan: number
+  giaTriHangMoi: number
+  chenhLech: number
+  tienHoanKhach: number
+  canThuThem: number
+}
+
+export interface PhieuDoiTra extends XemTruocPhieu {
+  maPDT: string
+  maHD: string
+  tenKhach: string | null
+  ngayGioLap: string
+  maNguoiLap: string
+  nguoiLap: string
+  vaiTroNguoiLap: string
+  lyDoDoiTra: string
+  tinhTrangHang: string
+  moTaLoi: string | null
+  trangThai: string
+  trangThaiXuLy: string
+  lyDoTuChoi: string | null
+  ngayGioDuyet: string | null
+  nguoiDuyet: string | null
+  ngayGioHoanTat: string | null
+  daThuThem: boolean
+}
+
+export interface PhieuDoiTraDong {
+  maPDT: string
+  maHD: string
+  tenKhach: string | null
+  loaiPhieu: LoaiPhieuDoiTra
+  nguoiLap: string
+  vaiTroNguoiLap: string
+  ngayGioLap: string
+  trangThai: string
+  trangThaiXuLy: string
+}
+
+export const doiTraApi = {
+  hoaDon: (ma: string) => goiApi<HoaDonDoiTra>(`/doi-tra/hoa-don${q({ ma })}`),
+  xemTruoc: (yc: YeuCauLapPhieu) => goiApi<XemTruocPhieu>('/doi-tra/xem-truoc', { method: 'POST', body: yc }),
+  lapPhieu: (yc: YeuCauLapPhieu) => goiApi<PhieuDoiTra>('/doi-tra/phieu', { method: 'POST', body: yc }),
+  phieu: (ma: string) => goiApi<PhieuDoiTra>(`/doi-tra/phieu${q({ ma })}`),
+  dangXuLy: () => goiApi<PhieuDoiTraDong[]>('/doi-tra/dang-xu-ly'),
+  xuLy: (yc: { maPDT: string; phuongThuc?: 'Tiền mặt' | 'Chuyển khoản QR'; ketQuaQrGiaLap?: 'ThanhCong' | 'ThatBai' }) =>
+    goiApi<PhieuDoiTra>('/doi-tra/xu-ly', { method: 'POST', body: yc }),
+  khongHoanTat: (maPDT: string) => goiApi<PhieuDoiTra>('/doi-tra/khong-hoan-tat', { method: 'POST', body: { maPDT } }),
+}
+
+export const duyetDoiTraApi = {
+  danhSach: (trangThai = '') => goiApi<PhieuDoiTraDong[]>(`/duyet-doi-tra${q({ trangThai })}`),
+  duyet: (maPDT: string) => goiApi<PhieuDoiTra>('/duyet-doi-tra/duyet', { method: 'POST', body: { maPDT } }),
+  tuChoi: (maPDT: string, lyDo: string) => goiApi<PhieuDoiTra>('/duyet-doi-tra/tu-choi', { method: 'POST', body: { maPDT, lyDo } }),
+}
+
+export interface ThongBaoDong {
+  maTB: number
+  loaiThongBao: string
+  noiDung: string
+  maThamChieu: string | null
+  thoiDiemTao: string
+  daDoc: boolean
+}
+
+export const thongBaoApi = {
+  danhSach: () => goiApi<{ soChuaDoc: number; danhSach: ThongBaoDong[] }>('/thong-bao'),
+  daDoc: (maTB?: number) => goiApi<void>('/thong-bao/da-doc', { method: 'POST', body: { maTB: maTB ?? null } }),
+}

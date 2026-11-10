@@ -3,7 +3,7 @@
 > Nguồn yêu cầu: `NHÓM_1_PTTKHTTT.docx` (SRS Nhóm 1, lớp 50K14.2).
 > Nguyên tắc: code phải khớp với báo cáo. Khi các phần của báo cáo mâu thuẫn nhau, ưu tiên use case chi tiết và đặc tả màn hình hơn phần tổng quan, và chọn phương án ít phải sửa báo cáo nhất.
 >
-> Trạng thái hiện tại: **Giai đoạn 4 đã xong**, chờ duyệt trước khi sang Giai đoạn 5. Cách chạy: xem [README.md](README.md).
+> Trạng thái hiện tại: **Giai đoạn 5 đã xong**, chờ duyệt trước khi sang Giai đoạn 6. Cách chạy: xem [README.md](README.md).
 
 ---
 
@@ -85,7 +85,7 @@ Thứ tự phụ thuộc: Tài khoản → Hàng hóa → Lô/Tồn kho → Ca l
 | 2 | Quản lý nhân viên, hàng hóa, lô hàng, tìm kiếm và điều chỉnh tồn, cảnh báo tồn kho (kèm tác vụ kiểm tra hằng ngày) | UC_2.1, 2.2, 2.4, 4.1–4.4, 10.1, 3.1–3.3 | ✅ Xong (96 unit test, 30 bước E2E) |
 | 3 | Tự mở ca, quản lý khách hàng, bán hàng (tiền mặt + QR giả lập), lịch sử bán hàng | UC_8.1–8.3, 6.5, 6.1 | ✅ Xong (126 unit test, 25 bước E2E) |
 | 4 | Khách quen và công nợ: hóa đơn nợ từ màn hình bán hàng, tìm/thêm/sửa/xóa khách quen, thu nợ theo thứ tự cũ nhất (tiền mặt + QR giả lập), tự khóa/mở quyền mua nợ | UC_7.1–7.6 | ✅ Xong (148 unit test, 34 bước E2E) |
-| 5 | Hủy hóa đơn, đổi trả và duyệt phiếu | UC_6.3, 6.2, 6.4 | ☐ |
+| 5 | Hủy hóa đơn (hoàn kho, nhật ký kèm bản sao), đổi trả (trả hàng / đổi hàng, thu thêm hoặc hoàn chênh lệch), duyệt phiếu, thông báo kết quả duyệt | UC_6.3, 6.2, 6.4 | ✅ Xong (168 unit test, 43 bước E2E) |
 | 6 | Kết ca và biên bản | UC_9.1, 9.2 | ☐ |
 | 7 | Báo cáo lợi nhuận, doanh thu, số lượng bán, tồn kho | UC_5.1–5.4 | ☐ |
 | 8 | Sau MVP: QR ngân hàng thật, SMS/Zalo, OTP qua SMS, đọc to số tiền, sao lưu, offline, đồng bộ điện thoại | — | ☐ |

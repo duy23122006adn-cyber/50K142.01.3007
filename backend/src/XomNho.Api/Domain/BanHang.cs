@@ -91,6 +91,9 @@ public class PhieuThanhToan
     public string? MaKQ { get; set; }
     public KhachQuen? KhachQuen { get; set; }
     public List<PhanBoThanhToan> PhanBo { get; set; } = [];
+    /// <summary>Có giá trị khi hoàn tiền / thu thêm của phiếu đổi trả (Giai đoạn 5).</summary>
+    public string? MaPDT { get; set; }
+    public PhieuDoiTra? PhieuDoiTra { get; set; }
 }
 
 /// <summary>Bảng NhatKyGuiChungTu – kết quả gửi hóa đơn / phiếu qua SMS, Zalo.</summary>

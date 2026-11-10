@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LoiApi } from '../../api/client'
 import { hoaDonApi, type DieuKienTimHoaDon } from '../../api/nghiepVu'
+import { NhatKyHuy } from '../../components/NhatKyHuy'
 import { PhanTrang } from '../../components/PhanTrang'
 import { NhanTrangThaiHoaDon, XemHoaDon } from '../../components/XemHoaDon'
 import { homNayISO, ngayGio, tien } from '../../lib/dinhDang'
@@ -160,6 +161,8 @@ export function ChiTietHoaDonTrang() {
         {error && <p className="thong-bao thong-bao--do">Không thể hiển thị chi tiết hóa đơn.</p>}
         {!data && !error && <p className="ghi-chu">Đang tải…</p>}
         {data && <XemHoaDon hd={data} />}
+        {/* UC_6.3 BR12: hóa đơn đã hủy vẫn xem được cùng thông tin hủy. */}
+        {data?.trangThai === 'Đã hủy' && <NhatKyHuy maHD={data.maHD} coBanSao={false} />}
         <div className="hang-nut khong-in">
           {data && (
             <button type="button" className="nut" onClick={() => window.print()}>

@@ -25,8 +25,13 @@ public sealed class DongHoGia : IDongHo
 }
 
 /// <summary>Sinh mã giả – đếm trong bộ nhớ, dùng đúng định dạng mã thật.</summary>
+/// <remarks>
+/// InMemory không theo dõi transaction nên không kiểm tra được yêu cầu "sinh mã trong transaction" của SinhMaSqlServer –
+/// lỗi loại này chỉ bắt được bằng kiểm thử E2E trên SQL Server.
+/// </remarks>
 public sealed class SinhMaGia(IDongHo dongHo) : ISinhMa
 {
+
     // Đếm theo (loại, kỳ) giống bảng BoDemMa. NV001 và CQ001 đã có sẵn trong môi trường thử.
     private readonly Dictionary<(LoaiMa, string), int> _dem = new()
     {
@@ -134,6 +139,24 @@ public sealed class MoiTruongThu : IDisposable
     public DichVuCongNo DvCongNo() => new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), GuiChungTu);
     public DichVuBanHang DvBanHang() =>
         new(Db, SinhMa, DongHo, HienTai, new ThamSoHeThong(Db), DvCa(), DvCanhBao(), GuiChungTu, DvCongNo());
+
+    public DichVuHuyHoaDon DvHuyHoaDon() => new(Db, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao(), DvCongNo());
+    public XomNho.Api.DoiTraQL.DichVuDoiTra DvDoiTra() => new(Db, SinhMa, DongHo, HienTai, DvBanHang(), DvCa(), DvCanhBao());
+
+    /// <summary>Đổi người đang đăng nhập (mặc định Chủ quán CQ001).</summary>
+    public void DangNhapLa(string maND)
+    {
+        HienTai.MaND = maND;
+        HienTai.VaiTro = maND.StartsWith("CQ") ? VaiTroNguoiDung.ChuQuan : VaiTroNguoiDung.NhanVien;
+        HienTai.TenDangNhap = maND.StartsWith("CQ") ? "chuquan" : "nhanvien1";
+    }
+
+    /// <summary>Tồn hiện tại của một lô (đọc lại từ DB).</summary>
+    public int Ton(string maLo)
+    {
+        Db.ChangeTracker.Clear();
+        return Db.LoHang.Single(l => l.MaLo == maLo).SoLuongTon;
+    }
 
     /// <summary>Tạo nhanh hóa đơn nợ cho khách quen.</summary>
     public Task<ChiTietHoaDonDto> GhiNoAsync(string maKH, params (string MaHH, int SoLuong)[] dong) =>

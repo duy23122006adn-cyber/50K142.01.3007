@@ -4,6 +4,7 @@ import { caApi } from '../api/nghiepVu'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useXacThuc } from '../auth/AuthContext'
 import { TEN_TRANG, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
+import { ChuongThongBao } from './ChuongThongBao'
 import { HopThoai } from './HopThoai'
 
 /** Breadcrumb theo đặc tả: "Trang chủ / … / …". Đoạn là mã (NV001, HH-0001…) giữ nguyên. */
@@ -75,6 +76,7 @@ export function BoCuc() {
         </Link>
 
         <ThongTinCa />
+        <ChuongThongBao />
 
         <div className="tai-khoan" ref={menuRef}>
           <button

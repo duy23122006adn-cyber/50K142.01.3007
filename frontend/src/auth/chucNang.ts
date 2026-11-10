@@ -53,6 +53,9 @@ export const DANH_SACH_CHUC_NANG: ChucNang[] = [
     con: [
       { duongDan: '/quan-ly-ban-hang/ban-hang', ten: 'Bán hàng', vaiTro: CA_HAI },
       { duongDan: '/quan-ly-ban-hang/lich-su', ten: 'Lịch sử bán hàng', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-ban-hang/doi-tra', ten: 'Xử lý đổi trả', vaiTro: CA_HAI },
+      { duongDan: '/quan-ly-ban-hang/huy-hoa-don', ten: 'Hủy hóa đơn bán hàng', vaiTro: CHU_QUAN },
+      { duongDan: '/quan-ly-ban-hang/duyet-doi-tra', ten: 'Duyệt phiếu đổi trả', vaiTro: CHU_QUAN },
     ],
   },
   {
@@ -99,6 +102,13 @@ export const TEN_TRANG: Record<string, string> = {
   '/quan-ly-ban-hang/ban-hang': 'Bán hàng',
   '/quan-ly-ban-hang/lich-su': 'Lịch sử bán hàng',
   '/quan-ly-ban-hang/hoa-don': 'Chi tiết hóa đơn',
+  '/quan-ly-ban-hang/doi-tra': 'Xử lý đổi trả',
+  '/quan-ly-ban-hang/doi-tra/hoa-don': 'Hóa đơn gốc',
+  '/quan-ly-ban-hang/doi-tra/phieu': 'Phiếu đổi trả',
+  '/quan-ly-ban-hang/huy-hoa-don': 'Hủy hóa đơn',
+  '/quan-ly-ban-hang/huy-hoa-don/hoa-don': 'Chi tiết hóa đơn',
+  '/quan-ly-ban-hang/duyet-doi-tra': 'Duyệt phiếu đổi trả',
+  '/quan-ly-ban-hang/duyet-doi-tra/phieu': 'Chi tiết phiếu',
   '/quan-ly-khach-hang/them': 'Thêm khách hàng',
   '/quan-ly-cong-no/tim-kiem': 'Tìm kiếm khách quen',
   '/quan-ly-cong-no/thu-no': 'Tạo phiếu thanh toán nợ',

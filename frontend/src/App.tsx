@@ -5,7 +5,10 @@ import { useXacThuc } from './auth/AuthContext'
 import { DANH_SACH_CHUC_NANG } from './auth/chucNang'
 import { BoCuc } from './components/BoCuc'
 import { BanHang } from './pages/banHang/BanHang'
+import { DoiTraDanhSach, DoiTraHoaDon } from './pages/banHang/DoiTra'
+import { HuyHoaDonChiTiet, HuyHoaDonDanhSach } from './pages/banHang/HuyHoaDon'
 import { ChiTietHoaDonTrang, LichSuBanHang } from './pages/banHang/LichSuBanHang'
+import { DuyetDoiTraChiTiet, DuyetDoiTraDanhSach, PhieuDoiTraTrang } from './pages/banHang/PhieuDoiTra'
 import { ChiTietKhachQuenTrang, FormKhachQuenTrang, TimKiemKhachQuen } from './pages/congNo/CongNo'
 import { ThuNo } from './pages/congNo/ThuNo'
 import { ChiTietKhachHangTrang, DanhSachKhachHang, FormKhachHang } from './pages/khachHang/KhachHang'
@@ -80,6 +83,15 @@ export default function App() {
         <Route path="quan-ly-ban-hang/ban-hang" element={<BanHang />} />
         <Route path="quan-ly-ban-hang/lich-su" element={<LichSuBanHang />} />
         <Route path="quan-ly-ban-hang/hoa-don" element={<ChiTietHoaDonTrang />} />
+
+        {/* Giai đoạn 5 – Đổi trả (UC_6.2: cả hai vai trò), hủy hóa đơn (UC_6.3) và duyệt phiếu (UC_6.4): Chủ quán */}
+        <Route path="quan-ly-ban-hang/doi-tra" element={<DoiTraDanhSach />} />
+        <Route path="quan-ly-ban-hang/doi-tra/hoa-don" element={<DoiTraHoaDon />} />
+        <Route path="quan-ly-ban-hang/doi-tra/phieu" element={<PhieuDoiTraTrang />} />
+        <Route path="quan-ly-ban-hang/huy-hoa-don" element={chiChuQuan(<HuyHoaDonDanhSach />)} />
+        <Route path="quan-ly-ban-hang/huy-hoa-don/hoa-don" element={chiChuQuan(<HuyHoaDonChiTiet />)} />
+        <Route path="quan-ly-ban-hang/duyet-doi-tra" element={chiChuQuan(<DuyetDoiTraDanhSach />)} />
+        <Route path="quan-ly-ban-hang/duyet-doi-tra/phieu" element={chiChuQuan(<DuyetDoiTraChiTiet />)} />
         <Route path="quan-ly-khach-hang" element={<DanhSachKhachHang />} />
         <Route path="quan-ly-khach-hang/them" element={<FormKhachHang cheDo="them" />} />
         <Route path="quan-ly-khach-hang/:maKH" element={<ChiTietKhachHangTrang />} />

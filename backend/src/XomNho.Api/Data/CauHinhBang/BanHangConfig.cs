@@ -139,9 +139,11 @@ public class PhieuThanhToanConfig : IEntityTypeConfiguration<PhieuThanhToan>
             t.HasCheckConstraint("CK_PTT_TrangThai",
                 $"[TrangThai] IN (N'{TrangThaiPhieuThanhToan.ThanhCong}', N'{TrangThaiPhieuThanhToan.KhongThanhCong}', N'{TrangThaiPhieuThanhToan.DaHuy}')");
             t.HasCheckConstraint("CK_PTT_BanHang",
-                $"[LoaiPhieu] <> N'{LoaiPhieuThanhToan.BanHang}' OR ([HuongTien] = N'{HuongTienTe.Thu}' AND [MaKQ] IS NULL)");
+                $"[LoaiPhieu] <> N'{LoaiPhieuThanhToan.BanHang}' OR ([HuongTien] = N'{HuongTienTe.Thu}' AND [MaKQ] IS NULL AND [MaPDT] IS NULL)");
             t.HasCheckConstraint("CK_PTT_ThuNo",
-                $"[LoaiPhieu] <> N'{LoaiPhieuThanhToan.ThuNo}' OR ([HuongTien] = N'{HuongTienTe.Thu}' AND [MaKQ] IS NOT NULL AND [MaHDTTN] IS NULL)");
+                $"[LoaiPhieu] <> N'{LoaiPhieuThanhToan.ThuNo}' OR ([HuongTien] = N'{HuongTienTe.Thu}' AND [MaKQ] IS NOT NULL AND [MaHDTTN] IS NULL AND [MaPDT] IS NULL)");
+            t.HasCheckConstraint("CK_PTT_DoiTra",
+                $"[LoaiPhieu] <> N'{LoaiPhieuThanhToan.DoiTra}' OR ([MaPDT] IS NOT NULL AND [MaKQ] IS NULL AND [MaHDTTN] IS NULL)");
         });
         b.HasKey(x => x.MaPTT);
         b.Property(x => x.MaPTT).HasColumnType("varchar(20)");
@@ -158,6 +160,8 @@ public class PhieuThanhToanConfig : IEntityTypeConfiguration<PhieuThanhToan>
         b.HasOne(x => x.NguoiDung).WithMany().HasForeignKey(x => x.MaND).OnDelete(DeleteBehavior.Restrict);
         b.HasOne(x => x.HoaDonThanhToanNgay).WithMany().HasForeignKey(x => x.MaHDTTN).OnDelete(DeleteBehavior.Restrict);
         b.HasOne(x => x.KhachQuen).WithMany().HasForeignKey(x => x.MaKQ).OnDelete(DeleteBehavior.Restrict);
+        b.Property(x => x.MaPDT).HasColumnType("varchar(20)");
+        b.HasOne(x => x.PhieuDoiTra).WithMany().HasForeignKey(x => x.MaPDT).OnDelete(DeleteBehavior.Restrict);
     }
 }
 
