@@ -153,6 +153,15 @@ app.MapHub<XomNho.Api.HeThongQL.SuKienHub>(XomNho.Api.HeThongQL.SuKienHub.DuongD
 
 await KhoiTaoDuLieu.ChayAsync(app.Services);
 
+// Dữ liệu mẫu 30 ngày cho môi trường phát triển / demo: dotnet run -- --du-lieu-mau (chạy xong thì thoát).
+if (args.Contains("--du-lieu-mau"))
+{
+    if (!app.Environment.IsDevelopment())
+        throw new InvalidOperationException("Chỉ tạo dữ liệu mẫu ở môi trường Development.");
+    await DuLieuMau.ChayAsync(app.Services);
+    return;
+}
+
 app.Run();
 
 /// <summary>Tên chính sách phân quyền.</summary>

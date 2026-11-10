@@ -350,7 +350,7 @@
 | 10.3 | UC_2.4 BR02, BR03 | "đang trong ca", "còn ca chưa đối soát" chưa định nghĩa | "Đang trong ca": nhân viên là người phụ trách ca ở trạng thái "Đang hoạt động". "Còn ca chưa đối soát": phụ trách ca ở trạng thái "Đang kết ca". "Có lịch sử ca": đã từng phụ trách ca | 🟡 |
 | 10.4 | UC_6.1 BR01 và màn hình 6.1.1 | BR01: phải nhập ít nhất 1 điều kiện; màn hình 6.1.1 lại hiện "Tất cả hóa đơn" trước khi tìm | Giữ cả hai: mở màn hình thì hiện danh sách tất cả hóa đơn (mới nhất trước); bấm "Tìm kiếm" mà không có điều kiện thì báo "Vui lòng nhập ít nhất một điều kiện." | 🟢 |
 | 10.5 | UC_6.1 BR02 – ngày lập | "có thể là một ngày hoặc một khoảng ngày" | Ghi rõ: chỉ nhập "Từ ngày" thì tìm đúng ngày đó; nhập cả hai thì tìm theo khoảng | 🟢 |
-| 10.6 | Màn hình 6.5.1 | Tab lọc "Đồ uống / Thực phẩm / Hàng khác" | Tab lọc theo 11 danh mục của UC_4.1 BR06 (chỉ hiện danh mục đang có hàng) | 🟢 |
+| 10.6 | Màn hình 6.5.1 | Tab lọc "Đồ uống / Thực phẩm / Hàng khác" | **Đã làm theo báo cáo**, không cần sửa màn hình. Chỉ thêm ghi chú: "Ba nhóm gom từ 11 danh mục của UC_4.1 BR06 – Đồ uống: Nước giải khát, Sữa & Sản phẩm từ sữa; Hàng khác: Bột giặt / Nước giặt, Nước xả, Sữa tắm, Dầu gội; Thực phẩm: các danh mục còn lại." Ô tìm kiếm chỉ tìm theo tên (placeholder "Tìm tên sản phẩm", mục 20) | 🟢 |
 | 10.7 | UC_6.5 bước 10–14 | Không quy định mã cho khoản thu bán hàng | Mỗi lần thu (kể cả QR thất bại) tạo một phiếu thanh toán mã `PTT-dd/mm/yyyy.nnn`; hóa đơn chỉ tạo khi phiếu "Thành công" | 🟢 |
 | 10.8 | UC_6.5 bước 6, 11.a | "Chính sách giảm giá" và "mã QR" | Giá bán đã gồm giảm giá (Q4). QR là bản giả lập: màn hình có nút chọn kết quả "Ngân hàng xác nhận / Thanh toán thất bại" (Q5) | 🟢 |
 

@@ -60,6 +60,24 @@ Tài khoản được tạo tự động khi backend khởi động lần đầu
 
 **Thử khóa tài khoản (UC_1):** nhập sai mật khẩu `nhanvien1` 10 lần. Màn hình chuyển sang "Nhập OTP", và ở môi trường Development, mã OTP giả lập hiện ngay trên màn hình thay cho tin nhắn SMS gửi Chủ quán.
 
+## Dữ liệu mẫu (30 ngày hoạt động)
+
+Lệnh dưới đây chỉ chạy ở môi trường Development, và chỉ chạy được một lần: nếu đã có dữ liệu mẫu, lệnh tự bỏ qua.
+
+```powershell
+cd backend
+$env:ASPNETCORE_ENVIRONMENT = 'Development'
+dotnet run --project src/XomNho.Api --launch-profile http -- --du-lieu-mau
+```
+
+Lệnh mô phỏng 30 ngày bán hàng tính lùi từ hôm nay, gồm:
+- khoảng 30 nhân viên (2 người đã nghỉ việc) và 30 hàng hóa thuộc 11 danh mục, cùng các lô hàng (có lô sắp hết hạn và hết hạn);
+- 30 khách hàng và 30 khách quen;
+- mỗi ngày một ca và một biên bản kết ca, vài ngày có chênh lệch;
+- hơn 100 hóa đơn (tiền mặt, chuyển khoản, ghi nợ), phiếu thu nợ, phiếu đổi trả ở đủ các trạng thái, hủy hóa đơn, điều chỉnh tồn.
+
+Mọi thao tác đi qua các dịch vụ nghiệp vụ, nên mã chứng từ, FEFO, giá vốn, cảnh báo và công nợ đều nhất quán. Nhân viên mẫu đăng nhập bằng `nhanvien02` … `nhanvien30`, mật khẩu `NhanVien2026`.
+
 ## Kiểm thử
 
 ```powershell

@@ -28,6 +28,16 @@ interface DongGio {
 
 type Buoc = 'gio' | 'thanhToan' | 'tienMat' | 'qr' | 'ghiNo' | 'ketThuc' | 'hoaDon' | 'hoanTat' | 'tam'
 
+/** Màn hình 6.5.1 mục 22–25: ba nhóm lọc trên màn hình bán hàng, gom từ 11 danh mục cố định. */
+const NHOM_BAN_HANG = ['Đồ uống', 'Thực phẩm', 'Hàng khác'] as const
+type NhomBanHang = (typeof NHOM_BAN_HANG)[number]
+
+function nhomCua(tenDM: string): NhomBanHang {
+  if (tenDM === 'Nước giải khát' || tenDM.startsWith('Sữa &')) return 'Đồ uống'
+  if (['Bột giặt', 'Nước xả', 'Sữa tắm', 'Dầu gội'].some((t) => tenDM.startsWith(t))) return 'Hàng khác'
+  return 'Thực phẩm'
+}
+
 /** Giai đoạn 8c: lấy sản phẩm từ máy chủ (và lưu lại cho lúc offline); mất mạng thì dùng danh mục đã lưu trên máy. */
 async function taiSanPham(tuKhoa: string): Promise<SanPhamBan[]> {
   try {
@@ -110,12 +120,8 @@ export function BanHang() {
   const soSp = gio.reduce((s, d) => s + d.soLuong, 0)
   const dongGui = gio.map((d) => ({ maHH: d.maHH, soLuong: d.soLuong }))
 
-  const cacDanhMuc = useMemo(() => {
-    const m = new Map<string, string>()
-    sanPham.data?.forEach((p) => m.set(p.maDM, p.tenDM))
-    return [...m.entries()]
-  }, [sanPham.data])
-  const dsHienThi = (sanPham.data ?? []).filter((p) => !tab || p.maDM === tab)
+  // Màn hình 6.5.1: tab lọc "Tất cả / Đồ uống / Thực phẩm / Hàng khác" – gom 11 danh mục (UC_4.1 BR06) vào 3 nhóm.
+  const dsHienThi = (sanPham.data ?? []).filter((p) => !tab || nhomCua(p.tenDM) === tab)
 
   // ------------------------------------------------------------------ Giỏ hàng (bước 3–7)
 
@@ -139,20 +145,10 @@ export function BanHang() {
     setGio((g) => g.map((x) => (x.maHH === maHH ? { ...x, soLuong: x.soLuong + delta } : x)).filter((x) => x.soLuong > 0))
   }
 
-  const timSanPham = async (e: React.FormEvent) => {
+  /** Màn hình 6.5.1 mục 20–21: tìm theo tên sản phẩm. */
+  const timSanPham = (e: React.FormEvent) => {
     e.preventDefault()
-    const k = oTim.trim()
-    setTuKhoa(k)
-    // Quét mã vạch: khớp đúng mã vạch → thêm thẳng vào giỏ.
-    if (k) {
-      const kq = await queryClient.fetchQuery({ queryKey: ['ban-hang', 'san-pham', k, coMang], queryFn: () => taiSanPham(k), networkMode: 'always' })
-      const khop = kq.find((p) => p.maVach === k)
-      if (khop) {
-        them(khop)
-        setOTim('')
-        setTuKhoa('')
-      }
-    }
+    setTuKhoa(oTim.trim())
   }
 
   const giaoDichMoi = () => {
@@ -326,6 +322,25 @@ export function BanHang() {
     </div>
   )
 
+  /** Màn hình 6.5.1 mục 38–40: hai nút chọn khách ngay dưới tiêu đề "Đơn hàng mới". */
+  const chonKhachGio = (
+    <>
+      <div className="pos-khach">
+        <button type="button" className={`nut ${khach ? 'nut--dang-chon' : ''}`} onClick={() => setMoChonKhach(true)}>
+          Chọn khách hàng
+        </button>
+        <button type="button" className={`nut ${!khach ? 'nut--dang-chon' : ''}`} onClick={() => setKhach(null)}>
+          Khách vãng lai
+        </button>
+      </div>
+      {khach && (
+        <p className="ghi-chu pos-khach__ten">
+          Khách hàng: <strong>{khach.hoTen}</strong> · {khach.sdt}
+        </p>
+      )}
+    </>
+  )
+
   return (
     <>
       <h1>
@@ -335,55 +350,63 @@ export function BanHang() {
       {buoc === 'gio' && (
         <div className="pos">
           <section className="the pos__hang">
+            {/* 6.5.1 mục 19: tiêu đề danh mục và số sản phẩm; 6.5.2: "Kết quả tìm kiếm" khi có từ khóa */}
+            <div className="pos-dau">
+              <strong>{tuKhoa ? 'Kết quả tìm kiếm' : 'Hàng hóa'}</strong>
+              <span>{dsHienThi.length} sản phẩm</span>
+            </div>
             <form className="o-tim" onSubmit={timSanPham}>
               <input
                 className="truong__o"
-                placeholder="Tìm tên sản phẩm hoặc quét mã vạch"
+                placeholder="Tìm tên sản phẩm"
                 value={oTim}
                 onChange={(e) => setOTim(e.target.value)}
-                aria-label="Tìm sản phẩm hoặc quét mã vạch"
+                aria-label="Tìm tên sản phẩm"
                 autoFocus
               />
-              <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
+              <button type="submit" className="nut nut--chinh">
+                Tìm kiếm
+              </button>
             </form>
-            <p className="ghi-chu">
-              {tuKhoa ? `Kết quả tìm kiếm · ${dsHienThi.length} sản phẩm · Từ khóa: “${tuKhoa}”` : `Hàng hóa · ${dsHienThi.length} sản phẩm`}
-            </p>
-            {cacDanhMuc.length > 1 && (
-              <div className="tab" role="tablist">
-                <button type="button" className={`nut nut--nho ${!tab ? 'nut--chinh' : ''}`} onClick={() => setTab('')}>
-                  Tất cả
+            <div className="pos-tab" role="tablist" aria-label="Lọc theo nhóm hàng">
+              {(['', ...NHOM_BAN_HANG] as const).map((n) => (
+                <button
+                  key={n || 'tat-ca'}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === n}
+                  className={`nut ${tab === n ? 'nut--chinh' : ''}`}
+                  onClick={() => setTab(n)}
+                >
+                  {n || 'Tất cả'}
                 </button>
-                {cacDanhMuc.map(([ma, ten]) => (
-                  <button key={ma} type="button" className={`nut nut--nho ${tab === ma ? 'nut--chinh' : ''}`} onClick={() => setTab(ma)}>
-                    {ten}
-                  </button>
-                ))}
-              </div>
-            )}
-            {sanPham.data && dsHienThi.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy sản phẩm phù hợp</p>}
-            <ul className="luoi-san-pham">
-              {dsHienThi.map((p) => (
-                <li key={p.maHH}>
-                  <button type="button" className="o-san-pham" onClick={() => them(p)} disabled={p.tonBanDuoc === 0}>
-                    <strong>{p.tenHH}</strong>
-                    <span className="o-san-pham__gia">
-                      {tien(p.giaBan)} / {p.donViTinh}
-                    </span>
-                    <small className="ghi-chu">
-                      Tồn {so(p.tonBanDuoc)} · {p.maHH}
-                    </small>
-                  </button>
-                </li>
               ))}
-            </ul>
+            </div>
+            {sanPham.data && dsHienThi.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy sản phẩm phù hợp</p>}
+            {dsHienThi.length > 0 && (
+              <ul className="ds-san-pham">
+                {dsHienThi.map((p) => (
+                  <li key={p.maHH}>
+                    <button type="button" className="ds-san-pham__dong" onClick={() => them(p)} disabled={p.tonBanDuoc === 0}>
+                      <strong>{p.tenHH}</strong>
+                      <span>
+                        {tien(p.giaBan)} / {p.donViTinh} · Tồn {so(p.tonBanDuoc)} · {p.maHH}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
           <aside className="the pos__gio">
-            <h2>Giỏ hàng · {soSp} sản phẩm</h2>
-            {khungKhach}
+            <div className="pos-dau">
+              <strong>Đơn hàng mới</strong>
+              <span>{soSp} sản phẩm</span>
+            </div>
+            {chonKhachGio}
             {gio.length === 0 ? (
-              <p className="ghi-chu">Giỏ hàng chưa có sản phẩm</p>
+              <p className="pos-gio-trong">Giỏ hàng chưa có sản phẩm</p>
             ) : (
               <ul className="ds-gio">
                 {gio.map((d) => (
