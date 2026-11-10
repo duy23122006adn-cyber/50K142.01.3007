@@ -92,6 +92,24 @@ dotnet test
 
 Người dùng đổi máy tính hoặc điện thoại không cần khôi phục gì: dữ liệu nằm trên máy chủ, chỉ cần đăng nhập lại (Q27).
 
+## Bán hàng offline (NFR Availability-02, 03)
+
+- Khi mất mạng, màn hình Bán hàng vẫn hoạt động với **tiền mặt**:
+  - giá và tồn lấy từ danh mục đã lưu trên máy, máy tự làm mới mỗi 5 phút khi còn mạng;
+  - mỗi giao dịch thành một hóa đơn tạm `TAM-…` lưu trong trình duyệt.
+- Khi có mạng lại, máy tự gửi hóa đơn tạm lên máy chủ:
+  - hợp lệ thì được cấp hóa đơn chính thức;
+  - nếu thiếu tồn, giá đã đổi hoặc hàng đã ngừng kinh doanh thì chuyển "Chờ Chủ quán xử lý" và báo ở chuông.
+- Xem và xử lý tại **Quản lý bán hàng → Hóa đơn tạm (offline)**.
+- **Mở lại trang khi đang mất mạng** chỉ hoạt động ở bản build, vì service worker `public/sw.js` không chạy với `npm run dev`. Chạy thử bản build:
+
+  ```powershell
+  cd frontend; npm run build; npm run preview
+  ```
+
+  Bản build chạy tại http://localhost:4173 và gọi API qua proxy giống bản phát triển.
+- Phiên offline dùng người đăng nhập gần nhất trên máy. Có mạng lại thì hệ thống khôi phục phiên thật bằng cookie; cookie hết hạn thì phải đăng nhập lại để đồng bộ.
+
 ## Lưu ý bảo mật
 
 - `appsettings.Development.json` chứa khóa JWT và mật khẩu mẫu **chỉ dùng cho máy phát triển**.

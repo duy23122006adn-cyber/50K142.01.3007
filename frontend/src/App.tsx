@@ -6,6 +6,7 @@ import { DANH_SACH_CHUC_NANG } from './auth/chucNang'
 import { BoCuc } from './components/BoCuc'
 import { BanHang } from './pages/banHang/BanHang'
 import { DoiTraDanhSach, DoiTraHoaDon } from './pages/banHang/DoiTra'
+import { HoaDonTamTrang } from './pages/banHang/HoaDonTam'
 import { HuyHoaDonChiTiet, HuyHoaDonDanhSach } from './pages/banHang/HuyHoaDon'
 import { ChiTietHoaDonTrang, LichSuBanHang } from './pages/banHang/LichSuBanHang'
 import { DuyetDoiTraChiTiet, DuyetDoiTraDanhSach, PhieuDoiTraTrang } from './pages/banHang/PhieuDoiTra'
@@ -103,6 +104,8 @@ export default function App() {
         <Route path="quan-ly-ban-hang/huy-hoa-don/hoa-don" element={chiChuQuan(<HuyHoaDonChiTiet />)} />
         <Route path="quan-ly-ban-hang/duyet-doi-tra" element={chiChuQuan(<DuyetDoiTraDanhSach />)} />
         <Route path="quan-ly-ban-hang/duyet-doi-tra/phieu" element={chiChuQuan(<DuyetDoiTraChiTiet />)} />
+        {/* Giai đoạn 8c – hóa đơn tạm bán offline: cả hai vai trò (ghi nhận / hủy: Chủ quán, server kiểm tra) */}
+        <Route path="quan-ly-ban-hang/hoa-don-tam" element={<HoaDonTamTrang />} />
         <Route path="quan-ly-khach-hang" element={<DanhSachKhachHang />} />
         <Route path="quan-ly-khach-hang/them" element={<FormKhachHang cheDo="them" />} />
         <Route path="quan-ly-khach-hang/:maKH" element={<ChiTietKhachHangTrang />} />

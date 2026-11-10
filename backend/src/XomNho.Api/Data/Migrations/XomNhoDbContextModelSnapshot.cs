@@ -615,6 +615,90 @@ namespace XomNho.Api.Data.Migrations
                     b.ToTable("HoaDonNo", (string)null);
                 });
 
+            modelBuilder.Entity("XomNho.Api.Domain.HoaDonTam", b =>
+                {
+                    b.Property<string>("MaTam")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("LyDo")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("MaHD")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaKH")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaND")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaNguoiDongBo")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("MaNguoiXuLy")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("NgayGioBan")
+                        .HasColumnType("datetime2(0)");
+
+                    b.Property<DateTime>("NgayGioDongBo")
+                        .HasColumnType("datetime2(0)");
+
+                    b.Property<DateTime?>("NgayGioXuLy")
+                        .HasColumnType("datetime2(0)");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PhienBan")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<decimal>("TienKhachDua")
+                        .HasColumnType("decimal(15,0)");
+
+                    b.Property<decimal>("TongTien")
+                        .HasColumnType("decimal(15,0)");
+
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("MaTam");
+
+                    b.HasIndex("MaHD")
+                        .IsUnique()
+                        .HasDatabaseName("UX_HoaDonTam_MaHD")
+                        .HasFilter("[MaHD] IS NOT NULL");
+
+                    b.HasIndex("MaKH");
+
+                    b.HasIndex("MaND");
+
+                    b.HasIndex("MaNguoiDongBo");
+
+                    b.HasIndex("MaNguoiXuLy");
+
+                    b.HasIndex("TrangThai", "NgayGioBan")
+                        .HasDatabaseName("IX_HoaDonTam_TrangThai");
+
+                    b.ToTable("HoaDonTam", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HDT_MaHD", "([TrangThai] = N'Đã ghi nhận' AND [MaHD] IS NOT NULL) OR ([TrangThai] <> N'Đã ghi nhận' AND [MaHD] IS NULL AND LEN(LTRIM(RTRIM(ISNULL([LyDo], N'')))) > 0)");
+
+                            t.HasCheckConstraint("CK_HDT_NoiDung", "ISJSON([NoiDung]) = 1");
+
+                            t.HasCheckConstraint("CK_HDT_TongTien", "[TongTien] > 0 AND [TienKhachDua] >= [TongTien]");
+
+                            t.HasCheckConstraint("CK_HDT_TrangThai", "[TrangThai] IN (N'Đã ghi nhận', N'Chờ Chủ quán xử lý', N'Đã hủy')");
+                        });
+                });
+
             modelBuilder.Entity("XomNho.Api.Domain.HoaDonThanhToanNgay", b =>
                 {
                     b.Property<string>("MaHD")
@@ -1640,6 +1724,40 @@ namespace XomNho.Api.Data.Migrations
                     b.Navigation("HoaDon");
 
                     b.Navigation("KhachQuen");
+                });
+
+            modelBuilder.Entity("XomNho.Api.Domain.HoaDonTam", b =>
+                {
+                    b.HasOne("XomNho.Api.Domain.HoaDon", "HoaDon")
+                        .WithOne()
+                        .HasForeignKey("XomNho.Api.Domain.HoaDonTam", "MaHD")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("XomNho.Api.Domain.KhachHang", null)
+                        .WithMany()
+                        .HasForeignKey("MaKH")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("XomNho.Api.Domain.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("MaND")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XomNho.Api.Domain.NguoiDung", null)
+                        .WithMany()
+                        .HasForeignKey("MaNguoiDongBo")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XomNho.Api.Domain.NguoiDung", null)
+                        .WithMany()
+                        .HasForeignKey("MaNguoiXuLy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("HoaDon");
+
+                    b.Navigation("NguoiDung");
                 });
 
             modelBuilder.Entity("XomNho.Api.Domain.HoaDonThanhToanNgay", b =>

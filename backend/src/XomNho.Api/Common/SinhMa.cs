@@ -73,6 +73,9 @@ public interface ISinhMa
     /// </summary>
     Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default);
 
+    /// <summary>Cấp mã theo một ngày cụ thể – hóa đơn bán offline mang ngày bán thật (Giai đoạn 8c).</summary>
+    Task<string> SinhMaTheoNgayAsync(LoaiMa loai, DateOnly ngay, CancellationToken ct = default);
+
     /// <summary>Xem trước mã kế tiếp, không tăng bộ đếm (Q16).</summary>
     Task<string> XemTruocAsync(LoaiMa loai, CancellationToken ct = default);
 }
@@ -89,12 +92,13 @@ public sealed class SinhMaSqlServer(XomNhoDbContext db, IDongHo dongHo) : ISinhM
         OUTPUT inserted.SoHienTai;
         """;
 
-    public async Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default)
+    public Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default) => SinhMaTheoNgayAsync(loai, dongHo.HomNay, ct);
+
+    public async Task<string> SinhMaTheoNgayAsync(LoaiMa loai, DateOnly ngay, CancellationToken ct = default)
     {
         var tx = db.Database.CurrentTransaction
             ?? throw new InvalidOperationException("Phải sinh mã trong transaction đang mở.");
 
-        var ngay = dongHo.HomNay;
         var so = await ChayAsync(SqlTang, loai, ngay, tx, ct);
         return DinhDangMa.Tao(loai, so, ngay);
     }

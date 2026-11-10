@@ -14,6 +14,8 @@ import { NutDocTo } from '../../components/NutDocTo'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
 import { docTien } from '../../lib/docSo'
 import { docDaThu, docTongTien } from '../../lib/docTo'
+import { useCoMang } from '../../lib/mang'
+import { luuSanPham, sanPhamOffline, taoHoaDonTam, type HoaDonTamCuc } from '../../lib/offline'
 
 interface DongGio {
   maHH: string
@@ -24,7 +26,19 @@ interface DongGio {
   soLuong: number
 }
 
-type Buoc = 'gio' | 'thanhToan' | 'tienMat' | 'qr' | 'ghiNo' | 'ketThuc' | 'hoaDon' | 'hoanTat'
+type Buoc = 'gio' | 'thanhToan' | 'tienMat' | 'qr' | 'ghiNo' | 'ketThuc' | 'hoaDon' | 'hoanTat' | 'tam'
+
+/** Giai đoạn 8c: lấy sản phẩm từ máy chủ (và lưu lại cho lúc offline); mất mạng thì dùng danh mục đã lưu trên máy. */
+async function taiSanPham(tuKhoa: string): Promise<SanPhamBan[]> {
+  try {
+    const ds = await banHangApi.sanPham(tuKhoa)
+    if (!tuKhoa) luuSanPham(ds)
+    return ds
+  } catch (e) {
+    if (e instanceof LoiApi && e.status === 0) return sanPhamOffline(tuKhoa)
+    throw e
+  }
+}
 
 type Popup =
   | null
@@ -37,6 +51,7 @@ type Popup =
   | { loai: 'loi'; thongBao: string }
   | { loai: 'ghiNoLoi'; thongBao: string; maLoi: string; maKH: string }
   | { loai: 'ghiNoXong' }
+  | { loai: 'matMang' }
 
 const KHOA_GIO = 'xn_gio_hang'
 
@@ -75,12 +90,19 @@ export function BanHang() {
   const [sdtNhan, setSdtNhan] = useState('')
   const [daGui, setDaGui] = useState(false)
 
-  const sanPham = useQuery({ queryKey: ['ban-hang', 'san-pham', tuKhoa], queryFn: () => banHangApi.sanPham(tuKhoa) })
+  const coMang = useCoMang()
+  const [hoaDonTam, setHoaDonTam] = useState<HoaDonTamCuc | null>(null)
+  // networkMode 'always': vẫn chạy khi trình duyệt báo offline để lấy danh mục đã lưu trên máy.
+  const sanPham = useQuery({
+    queryKey: ['ban-hang', 'san-pham', tuKhoa, coMang],
+    queryFn: () => taiSanPham(tuKhoa),
+    networkMode: 'always',
+  })
 
   // Giữ giỏ hàng khi chuyển trang (8.b.2) và báo "thao tác chưa hoàn tất" cho nút Đăng xuất (UC_11 1.a).
   useEffect(() => {
     sessionStorage.setItem(KHOA_GIO, JSON.stringify({ gio, khach }))
-    datChuaLuu(gio.length > 0 && buoc !== 'hoaDon' && buoc !== 'hoanTat')
+    datChuaLuu(gio.length > 0 && buoc !== 'hoaDon' && buoc !== 'hoanTat' && buoc !== 'tam')
   }, [gio, khach, buoc, datChuaLuu])
   useEffect(() => () => datChuaLuu(false), [datChuaLuu])
 
@@ -123,7 +145,7 @@ export function BanHang() {
     setTuKhoa(k)
     // Quét mã vạch: khớp đúng mã vạch → thêm thẳng vào giỏ.
     if (k) {
-      const kq = await queryClient.fetchQuery({ queryKey: ['ban-hang', 'san-pham', k], queryFn: () => banHangApi.sanPham(k) })
+      const kq = await queryClient.fetchQuery({ queryKey: ['ban-hang', 'san-pham', k, coMang], queryFn: () => taiSanPham(k), networkMode: 'always' })
       const khop = kq.find((p) => p.maVach === k)
       if (khop) {
         them(khop)
@@ -139,6 +161,7 @@ export function BanHang() {
     setTienDua('')
     setLoiTien(null)
     setHoaDon(null)
+    setHoaDonTam(null)
     setDaGui(false)
     setBuoc('gio')
     void queryClient.invalidateQueries({ queryKey: ['ban-hang', 'san-pham'] })
@@ -160,7 +183,26 @@ export function BanHang() {
     }
   }
 
+  /** Giai đoạn 8c: bán tiền mặt khi mất mạng – lưu hóa đơn tạm trên máy, mã chính thức cấp khi đồng bộ. */
+  const luuHoaDonTam = () => {
+    if (!nguoiDung) return
+    const tam = taoHoaDonTam({
+      maND: nguoiDung.maND,
+      hoTen: nguoiDung.hoTen,
+      maKH: khach?.maKH ?? null,
+      tenKhach: khach?.hoTen ?? null,
+      dong: gio.map((d) => ({ maHH: d.maHH, tenHH: d.tenHH, donViTinh: d.donViTinh, soLuong: d.soLuong, donGia: d.giaBan })),
+      tienKhachDua: soTienDua,
+    })
+    docDaThu('Tiền mặt', tam.tongTien, soTienDua - tam.tongTien)
+    setPopup(null)
+    setHoaDonTam(tam)
+    setBuoc('tam')
+    void queryClient.invalidateQueries({ queryKey: ['ban-hang', 'san-pham'] })
+  }
+
   const thanhToan = async (phuongThuc: 'Tiền mặt' | 'Chuyển khoản QR', ketQuaQr?: 'ThanhCong' | 'ThatBai') => {
+    if (phuongThuc === 'Tiền mặt' && (!coMang || nguoiDung?.ngoaiTuyen)) return luuHoaDonTam()
     setDangXuLy(true)
     setLoiTien(null)
     try {
@@ -175,6 +217,7 @@ export function BanHang() {
       await taoHoaDon(tt.maPTT)
     } catch (e) {
       if (!(e instanceof LoiApi)) return setPopup({ loai: 'loi', thongBao: 'Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.' })
+      if (e.status === 0) return setPopup(phuongThuc === 'Tiền mặt' ? { loai: 'matMang' } : { loai: 'loi', thongBao: e.message })
       if (e.status === 402) return setPopup({ loai: 'qrThatBai' })
       if (e.status === 409 && e.duLieu.maHH) return setPopup({ loai: 'khongDuHang', thongBao: e.message })
       if (e.loi.tienKhachDua) return setLoiTien(e.loi.tienKhachDua)
@@ -284,7 +327,9 @@ export function BanHang() {
 
   return (
     <>
-      <h1>{buoc === 'hoaDon' ? 'Hóa đơn bán hàng' : buoc === 'ketThuc' ? 'Giao dịch đã kết thúc' : 'Bán hàng'}</h1>
+      <h1>
+        {buoc === 'hoaDon' ? 'Hóa đơn bán hàng' : buoc === 'ketThuc' ? 'Giao dịch đã kết thúc' : buoc === 'tam' ? 'Hóa đơn tạm' : 'Bán hàng'}
+      </h1>
 
       {buoc === 'gio' && (
         <div className="pos">
@@ -436,12 +481,13 @@ export function BanHang() {
               <button type="button" className="nut nut--chinh nut--to" onClick={() => setBuoc('tienMat')}>
                 Tiền mặt
               </button>
-              <button type="button" className="nut nut--chinh nut--to" onClick={() => setBuoc('qr')}>
+              <button type="button" className="nut nut--chinh nut--to" disabled={!coMang} onClick={() => setBuoc('qr')}>
                 Chuyển khoản QR
               </button>
             </div>
+            {!coMang && <p className="ghi-chu chu-cam">Đang mất mạng: chỉ bán được tiền mặt (lưu hóa đơn tạm). Chuyển khoản và ghi nợ cần có mạng.</p>}
             <p className="ghi-chu">Khách hàng muốn ghi nợ?</p>
-            <button type="button" className="nut nut--rong" onClick={() => batDauGhiNo()}>
+            <button type="button" className="nut nut--rong" disabled={!coMang} onClick={() => batDauGhiNo()}>
               Chuyển sang ghi nợ
             </button>
           </aside>
@@ -487,7 +533,7 @@ export function BanHang() {
               disabled={dangXuLy || soTienDua < tong}
               onClick={() => thanhToan('Tiền mặt')}
             >
-              Xác nhận &amp; tạo hóa đơn
+              {coMang && !nguoiDung?.ngoaiTuyen ? 'Xác nhận & tạo hóa đơn' : 'Xác nhận & lưu hóa đơn tạm'}
             </button>
           </div>
         </section>
@@ -713,6 +759,65 @@ export function BanHang() {
         </div>
       )}
 
+      {buoc === 'tam' && hoaDonTam && (
+        <section className="the the--hep">
+          <h2>Hóa đơn tạm (bán offline)</h2>
+          <dl className="thong-tin">
+            <dt>Mã tạm</dt>
+            <dd>
+              <strong>{hoaDonTam.maTam}</strong>
+            </dd>
+            <dt>Thời gian</dt>
+            <dd>{ngayGio(hoaDonTam.ngayGioBan)}</dd>
+            <dt>Người bán</dt>
+            <dd>{hoaDonTam.hoTen}</dd>
+            {hoaDonTam.tenKhach && (
+              <>
+                <dt>Khách hàng</dt>
+                <dd>{hoaDonTam.tenKhach}</dd>
+              </>
+            )}
+          </dl>
+          <table className="bang">
+            <thead>
+              <tr>
+                <th>Sản phẩm</th>
+                <th className="so">SL</th>
+                <th className="so">Đơn giá</th>
+                <th className="so">Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hoaDonTam.dong.map((d) => (
+                <tr key={d.maHH}>
+                  <td>{d.tenHH}</td>
+                  <td className="so">{d.soLuong}</td>
+                  <td className="so">{tien(d.donGia)}</td>
+                  <td className="so">{tien(d.donGia * d.soLuong)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <dl className="thong-tin">
+            <dt>Tổng tiền</dt>
+            <dd className="so-lon">{tien(hoaDonTam.tongTien)}</dd>
+            <dt>Tiền khách đưa</dt>
+            <dd>{tien(hoaDonTam.tienKhachDua)}</dd>
+            <dt>Tiền trả lại</dt>
+            <dd>{tien(hoaDonTam.tienKhachDua - hoaDonTam.tongTien)}</dd>
+          </dl>
+          <p className="thong-bao thong-bao--xanh">Đã lưu hóa đơn tạm trên máy. Hệ thống tự cấp mã hóa đơn chính thức khi có mạng trở lại.</p>
+          <div className="hang-nut">
+            <button type="button" className="nut khong-in" onClick={() => window.print()}>
+              In hóa đơn tạm
+            </button>
+            <button type="button" className="nut nut--chinh khong-in" onClick={giaoDichMoi}>
+              Tạo giao dịch mới
+            </button>
+          </div>
+        </section>
+      )}
+
       {buoc === 'hoanTat' && (
         <section className="the the--hep">
           <h2>Hoàn tất bán hàng</h2>
@@ -777,6 +882,26 @@ export function BanHang() {
         }
       >
         <p className="thong-bao thong-bao--do">{popup?.loai === 'khongDuHang' ? popup.thongBao : ''}</p>
+      </HopThoai>
+
+      {/* Giai đoạn 8c: mất kết nối khi đang thu tiền mặt */}
+      <HopThoai
+        mo={popup?.loai === 'matMang'}
+        kieu="loi"
+        onDong={() => setPopup(null)}
+        nut={
+          <>
+            <button type="button" className="nut" onClick={() => setPopup(null)}>
+              Quay lại
+            </button>
+            <button type="button" className="nut nut--chinh" onClick={luuHoaDonTam}>
+              Lưu hóa đơn tạm
+            </button>
+          </>
+        }
+      >
+        <p className="thong-bao thong-bao--do">Không kết nối được máy chủ.</p>
+        <p>Bạn có thể lưu giao dịch tiền mặt này thành hóa đơn tạm trên máy; hệ thống tự đồng bộ khi có mạng trở lại.</p>
       </HopThoai>
 
       {/* 6.5.15 Thanh toán chưa thành công */}

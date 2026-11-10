@@ -79,6 +79,48 @@ public class HoaDonConfig : IEntityTypeConfiguration<HoaDon>
     }
 }
 
+/// <summary>Giai đoạn 8c – hóa đơn tạm bán offline.</summary>
+public class HoaDonTamConfig : IEntityTypeConfiguration<HoaDonTam>
+{
+    public void Configure(EntityTypeBuilder<HoaDonTam> b)
+    {
+        var tt = string.Join(", ", TrangThaiHoaDonTam.TatCa.Select(x => $"N'{x}'"));
+        b.ToTable("HoaDonTam", t =>
+        {
+            t.HasCheckConstraint("CK_HDT_TrangThai", $"[TrangThai] IN ({tt})");
+            t.HasCheckConstraint("CK_HDT_TongTien", "[TongTien] > 0 AND [TienKhachDua] >= [TongTien]");
+            t.HasCheckConstraint("CK_HDT_NoiDung", "ISJSON([NoiDung]) = 1");
+            // Đã ghi nhận ⇔ có hóa đơn chính thức; chờ xử lý / đã hủy phải có lý do.
+            t.HasCheckConstraint("CK_HDT_MaHD",
+                $"([TrangThai] = N'{TrangThaiHoaDonTam.DaGhiNhan}' AND [MaHD] IS NOT NULL)"
+                + $" OR ([TrangThai] <> N'{TrangThaiHoaDonTam.DaGhiNhan}' AND [MaHD] IS NULL AND LEN(LTRIM(RTRIM(ISNULL([LyDo], N'')))) > 0)");
+        });
+        b.HasKey(x => x.MaTam);
+        b.Property(x => x.MaTam).HasColumnType("varchar(20)");
+        b.Property(x => x.NgayGioBan).HasColumnType("datetime2(0)");
+        b.Property(x => x.MaND).HasColumnType("varchar(20)");
+        b.Property(x => x.MaKH).HasColumnType("varchar(20)");
+        b.Property(x => x.NoiDung).HasColumnType("nvarchar(max)").IsRequired();
+        b.Property(x => x.TongTien).HasColumnType("decimal(15,0)");
+        b.Property(x => x.TienKhachDua).HasColumnType("decimal(15,0)");
+        b.Property(x => x.TrangThai).HasColumnType("nvarchar(30)").IsRequired();
+        b.Property(x => x.LyDo).HasColumnType("nvarchar(255)");
+        b.Property(x => x.NgayGioDongBo).HasColumnType("datetime2(0)");
+        b.Property(x => x.MaNguoiDongBo).HasColumnType("varchar(20)");
+        b.Property(x => x.MaHD).HasColumnType("varchar(20)");
+        b.Property(x => x.NgayGioXuLy).HasColumnType("datetime2(0)");
+        b.Property(x => x.MaNguoiXuLy).HasColumnType("varchar(20)");
+        b.Property(x => x.PhienBan).IsRowVersion();
+        b.HasOne(x => x.NguoiDung).WithMany().HasForeignKey(x => x.MaND).OnDelete(DeleteBehavior.Restrict);
+        b.HasOne<NguoiDung>().WithMany().HasForeignKey(x => x.MaNguoiDongBo).OnDelete(DeleteBehavior.Restrict);
+        b.HasOne<NguoiDung>().WithMany().HasForeignKey(x => x.MaNguoiXuLy).OnDelete(DeleteBehavior.Restrict);
+        b.HasOne<KhachHang>().WithMany().HasForeignKey(x => x.MaKH).OnDelete(DeleteBehavior.Restrict);
+        b.HasOne(x => x.HoaDon).WithOne().HasForeignKey<HoaDonTam>(x => x.MaHD).OnDelete(DeleteBehavior.Restrict);
+        b.HasIndex(x => x.MaHD).IsUnique().HasFilter("[MaHD] IS NOT NULL").HasDatabaseName("UX_HoaDonTam_MaHD");
+        b.HasIndex(x => new { x.TrangThai, x.NgayGioBan }).HasDatabaseName("IX_HoaDonTam_TrangThai");
+    }
+}
+
 /// <summary>THIET_KE_DB_V2.md mục 3.15.</summary>
 public class HoaDonThanhToanNgayConfig : IEntityTypeConfiguration<HoaDonThanhToanNgay>
 {

@@ -3,7 +3,7 @@
 > Nguồn yêu cầu: `NHÓM_1_PTTKHTTT.docx` (SRS Nhóm 1, lớp 50K14.2).
 > Nguyên tắc: code phải khớp với báo cáo. Khi các phần của báo cáo mâu thuẫn nhau, ưu tiên use case chi tiết và đặc tả màn hình hơn phần tổng quan, và chọn phương án ít phải sửa báo cáo nhất.
 >
-> Trạng thái hiện tại: **Giai đoạn 8b đã xong**, chờ duyệt phương án offline trước khi làm 8c. Cách chạy: xem [README.md](README.md).
+> Trạng thái hiện tại: **Giai đoạn 8c đã xong**, chờ duyệt. Còn 8d (tích hợp thật) chờ chọn nhà cung cấp. Cách chạy: xem [README.md](README.md).
 
 ---
 
@@ -90,7 +90,7 @@ Thứ tự phụ thuộc: Tài khoản → Hàng hóa → Lô/Tồn kho → Ca l
 | 7 | Báo cáo lợi nhuận, doanh thu (theo phương thức thanh toán), so sánh hai kỳ, số lượng bán ra + top bán chạy/chậm, tồn kho theo lô; đổi trả tính vào kỳ duyệt phiếu, giá vốn lưu lúc bán | UC_5.1–5.4 | ✅ Xong (188 unit test, 25 bước E2E) |
 | 8a | Đọc to số tiền (giọng đọc trình duyệt), sao lưu CSDL tự động hằng ngày + sao lưu bù + màn hình sao lưu cho Chủ quán | NFR Usability-02, Backup-01 | ✅ Xong (198 unit test, 9 bước E2E) |
 | 8b | Thông báo tức thời (SignalR: mọi máy đang mở web tự cập nhật khi dữ liệu đổi, chuông thông báo đến ngay) và giao diện cho điện thoại (menu ngăn kéo, thanh tiêu đề gọn) | Tích hợp "đồng bộ với thiết bị di động" | ✅ Xong (201 unit test, 11 bước E2E) |
-| 8c | Bán hàng offline (lưu tạm trên máy, tự đồng bộ khi có mạng) | NFR Availability-02, 03 | ☐ |
+| 8c | Bán hàng offline: tiền mặt, hóa đơn tạm lưu trên máy, tự đồng bộ (chống trùng, mã theo ngày bán), xung đột chuyển Chủ quán xử lý, service worker, phiên offline | NFR Availability-02, 03 | ✅ Xong (208 unit test, 24 bước E2E) |
 | 8d | QR ngân hàng thật, SMS/Zalo, OTP qua SMS – chưa làm, chờ chọn nhà cung cấp | — | ☐ |
 
 ---

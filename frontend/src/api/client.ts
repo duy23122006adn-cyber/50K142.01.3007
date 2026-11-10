@@ -3,7 +3,10 @@
  * cookie HttpOnly do server đặt, JavaScript không đọc được.
  */
 
+import { datCoMang } from '../lib/mang'
+
 export const LOI_HE_THONG = 'Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.'
+export const KHONG_KET_NOI = 'Không kết nối được máy chủ. Vui lòng kiểm tra mạng và thử lại.'
 
 /** Lỗi trả về từ API: { thongBao, loi: { truong: thongBao }, ...duLieu }. */
 export class LoiApi extends Error {
@@ -26,6 +29,8 @@ export interface NguoiDung {
   hoTen: string
   tenDangNhap: string
   vaiTro: VaiTro
+  /** Giai đoạn 8c: phiên khôi phục từ máy khi mở trang lúc mất mạng – chưa xác thực với máy chủ, chỉ bán offline. */
+  ngoaiTuyen?: boolean
 }
 
 export interface PhanHoiDangNhap {
@@ -35,7 +40,7 @@ export interface PhanHoiDangNhap {
 }
 
 let accessToken: string | null = null
-let khiLamMoi: ((kq: PhanHoiDangNhap | null) => void) | null = null
+let khiLamMoi: ((kq: PhanHoiDangNhap | null, loiMang?: boolean) => void) | null = null
 let dangLamMoi: Promise<PhanHoiDangNhap | null> | null = null
 
 export function datAccessToken(token: string | null) {
@@ -60,7 +65,7 @@ export async function tokenConHieuLuc(): Promise<string> {
 }
 
 /** AuthContext đăng ký để cập nhật người dùng khi token được làm mới hoặc phiên hết hạn. */
-export function dangKyKhiLamMoi(fn: (kq: PhanHoiDangNhap | null) => void) {
+export function dangKyKhiLamMoi(fn: (kq: PhanHoiDangNhap | null, loiMang?: boolean) => void) {
   khiLamMoi = fn
 }
 
@@ -69,13 +74,16 @@ export function lamMoiToken(): Promise<PhanHoiDangNhap | null> {
   dangLamMoi ??= (async () => {
     try {
       const res = await fetch('/api/auth/lam-moi', { method: 'POST', credentials: 'same-origin' })
+      if (res.status >= 502 && res.status <= 504) throw new Error('Máy chủ không tới được')
+      datCoMang(true)
       const kq = res.ok ? ((await res.json()) as PhanHoiDangNhap) : null
       datAccessToken(kq?.accessToken ?? null)
       khiLamMoi?.(kq)
       return kq
     } catch {
-      datAccessToken(null)
-      khiLamMoi?.(null)
+      // Lỗi mạng: không xóa phiên – AuthContext có thể dùng phiên offline đã lưu trên máy.
+      datCoMang(false)
+      khiLamMoi?.(null, true)
       return null
     } finally {
       dangLamMoi = null
@@ -103,8 +111,15 @@ export async function goiApi<T>(duongDan: string, { method = 'GET', body }: TuyC
       credentials: 'same-origin',
     })
   } catch {
-    throw new LoiApi(0, 'Không kết nối được máy chủ. Vui lòng kiểm tra mạng và thử lại.')
+    datCoMang(false)
+    throw new LoiApi(0, KHONG_KET_NOI)
   }
+  // Proxy / service worker trả 502–504 khi máy chủ không tới được → coi như mất mạng.
+  if (res.status >= 502 && res.status <= 504) {
+    datCoMang(false)
+    throw new LoiApi(0, KHONG_KET_NOI)
+  }
+  datCoMang(true)
 
   // Access token hết hạn → làm mới một lần rồi gọi lại.
   if (res.status === 401 && thuLai && !duongDan.startsWith('/auth/')) {

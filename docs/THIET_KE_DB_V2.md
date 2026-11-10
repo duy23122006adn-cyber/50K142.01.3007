@@ -54,7 +54,7 @@ Mã do hệ thống tự sinh qua bảng `BoDemMa`, không cấp lại và chỉ
 
 ## 2. Danh sách bảng
 
-Tổng cộng 30 bảng: 23 bảng có trong báo cáo (đã chỉnh) và 7 bảng mới.
+Tổng cộng 31 bảng: 23 bảng có trong báo cáo (đã chỉnh), 7 bảng mới và bảng HoaDonTam thêm ở Giai đoạn 8c.
 
 | Nhóm | Bảng | Nguồn |
 |---|---|---|
@@ -64,6 +64,7 @@ Tổng cộng 30 bảng: 23 bảng có trong báo cáo (đã chỉnh) và 7 bả
 | Hàng hóa và kho | DanhMuc, HangHoa, LoHang, CanhBaoTonKho, PhieuDieuChinhTon | Báo cáo |
 | Ca làm việc | CaLamViec, BienBanKetCa, ChiTietBienBan | Báo cáo |
 | Bán hàng | HoaDon, HoaDonThanhToanNgay, HoaDonNo, ChiTietHoaDon, NhatKyHuy | Báo cáo |
+| | HoaDonTam (bán offline) | 🆕 GĐ8c |
 | Đổi trả | PhieuDoiTra, ChiTietDoiTra | Báo cáo |
 | Thanh toán | PhieuThanhToan, PhanBoThanhToan | Báo cáo |
 | Hệ thống | BoDemMa, CauHinh, NhatKyThaoTac, ThongBao, NhatKyGuiChungTu | 🆕 |
@@ -528,6 +529,29 @@ Khi gửi lại OTP (UC_1 5.f.2), các OTP cũ chưa dùng của tài khoản đ
 | 6 | ThoiDiemGui | DATETIME2(0) | NOT NULL, DEFAULT SYSDATETIME() | |
 | 7 | KetQua | NVARCHAR(25) | NOT NULL, `CHECK (KetQua IN (N'Thành công', N'Không thành công'))` | |
 | 8 | MaND | VARCHAR(20) | NOT NULL, FK → NguoiDung(MaND) | |
+
+#### HoaDonTam 🆕 GĐ8c (NFR Availability-02, 03 – bán offline)
+
+Hóa đơn bán tiền mặt khi mất mạng, do máy bán gửi lên khi có mạng trở lại. `MaTam` do máy bán tạo và dùng làm khóa chống trùng: gửi lại nhiều lần chỉ ghi nhận một lần.
+
+| # | Cột | Kiểu | Ràng buộc | Ghi chú |
+|---|---|---|---|---|
+| 1 | MaTam | VARCHAR(20) | PK | `TAM-yyMMdd-XXXXXX` |
+| 2 | NgayGioBan | DATETIME2(0) | NOT NULL | Giờ bán thật trên máy; hóa đơn chính thức lấy giờ này và mã theo ngày này |
+| 3 | MaND | VARCHAR(20) | NOT NULL, FK → NguoiDung | Người bán |
+| 4 | MaKH | VARCHAR(20) | NULL, FK → KhachHang | |
+| 5 | NoiDung | NVARCHAR(MAX) | NOT NULL, `CHECK (ISJSON(NoiDung) = 1)` | Các dòng {maHH, tenHH, soLuong, donGia} – giá khách đã trả |
+| 6 | TongTien | DECIMAL(15,0) | NOT NULL | |
+| 7 | TienKhachDua | DECIMAL(15,0) | NOT NULL | `CHECK (TongTien > 0 AND TienKhachDua >= TongTien)` |
+| 8 | TrangThai | NVARCHAR(30) | NOT NULL, `CHECK (… IN (N'Đã ghi nhận', N'Chờ Chủ quán xử lý', N'Đã hủy'))` | |
+| 9 | LyDo | NVARCHAR(255) | NULL | Lý do chờ xử lý / lý do hủy |
+| 10 | NgayGioDongBo | DATETIME2(0) | NOT NULL | |
+| 11 | MaNguoiDongBo | VARCHAR(20) | NOT NULL, FK → NguoiDung | Người bán hoặc Chủ quán |
+| 12 | MaHD | VARCHAR(20) | NULL, FK → HoaDon, UNIQUE (lọc NOT NULL) | Hóa đơn chính thức |
+| 13 | NgayGioXuLy, MaNguoiXuLy | DATETIME2(0), VARCHAR(20) | NULL | Chủ quán ghi nhận / hủy |
+| 14 | PhienBan | ROWVERSION | | |
+
+**Ràng buộc:** `CHECK ((TrangThai = N'Đã ghi nhận' AND MaHD IS NOT NULL) OR (TrangThai <> N'Đã ghi nhận' AND MaHD IS NULL AND LyDo không rỗng))`.
 
 ---
 

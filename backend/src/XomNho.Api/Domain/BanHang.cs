@@ -109,6 +109,44 @@ public class NhatKyGuiChungTu
     public string MaND { get; set; } = null!;
 }
 
+/// <summary>
+/// Bảng HoaDonTam – hóa đơn bán tiền mặt khi mất mạng (NFR Availability-02, 03; Giai đoạn 8c).
+/// Máy bán tạo mã tạm; khi có mạng gửi lên, hệ thống cấp hóa đơn chính thức hoặc chuyển Chủ quán xử lý.
+/// MaTam là khóa chống trùng: gửi lại nhiều lần chỉ ghi nhận một lần.
+/// </summary>
+public class HoaDonTam
+{
+    public string MaTam { get; set; } = null!;
+    /// <summary>Thời điểm bán thật trên máy (hóa đơn chính thức lấy ngày giờ này).</summary>
+    public DateTime NgayGioBan { get; set; }
+    /// <summary>Người bán – người đăng nhập trên máy lúc bán.</summary>
+    public string MaND { get; set; } = null!;
+    public NguoiDung NguoiDung { get; set; } = null!;
+    public string? MaKH { get; set; }
+    /// <summary>JSON các dòng [{maHH, tenHH, soLuong, donGia}] – giá khách đã trả.</summary>
+    public string NoiDung { get; set; } = null!;
+    public decimal TongTien { get; set; }
+    public decimal TienKhachDua { get; set; }
+    public string TrangThai { get; set; } = TrangThaiHoaDonTam.DaGhiNhan;
+    /// <summary>Lý do chờ Chủ quán xử lý, hoặc lý do hủy.</summary>
+    public string? LyDo { get; set; }
+    public DateTime NgayGioDongBo { get; set; }
+    public string MaNguoiDongBo { get; set; } = null!;
+    public string? MaHD { get; set; }
+    public HoaDon? HoaDon { get; set; }
+    public DateTime? NgayGioXuLy { get; set; }
+    public string? MaNguoiXuLy { get; set; }
+    public byte[] PhienBan { get; set; } = [];
+}
+
+public static class TrangThaiHoaDonTam
+{
+    public const string DaGhiNhan = "Đã ghi nhận";
+    public const string ChoXuLy = "Chờ Chủ quán xử lý";
+    public const string DaHuy = "Đã hủy";
+    public static readonly string[] TatCa = [DaGhiNhan, ChoXuLy, DaHuy];
+}
+
 public static class TrangThaiCa
 {
     public const string DangHoatDong = "Đang hoạt động";

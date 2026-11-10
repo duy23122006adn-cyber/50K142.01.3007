@@ -1,10 +1,125 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using XomNho.Api.BanHangQL;
+using XomNho.Api.CaLam;
+using XomNho.Api.Common;
 using XomNho.Api.Data;
 using XomNho.Api.Domain;
 using XomNho.Api.HeThongQL;
 
 namespace XomNho.Tests;
+
+/// <summary>Giai đoạn 8c – đồng bộ hóa đơn tạm bán offline.</summary>
+public class HoaDonTamTests
+{
+    /// <summary>Nước cam 10.000đ: LO-000001 (5 chai). Hôm nay 10/11/2026.</summary>
+    private static async Task<MoiTruongThu> CoHangAsync()
+    {
+        var mt = new MoiTruongThu();
+        await mt.ThemHangAsync("Nước cam");
+        await mt.ThemLoAsync("Nước cam", 5, 365);
+        mt.DangNhapLa("NV001");
+        return mt;
+    }
+
+    private static YeuCauDongBoHoaDonTam Tam(string maTam, DateTime luc, int soLuong, decimal donGia = 10000, string maND = "NV001") =>
+        new(maTam, luc, maND, null, [new DongHoaDonTam("HH-0001", "Nước cam", soLuong, donGia)], 100000);
+
+    [Fact]
+    public async Task Dong_bo_cap_hoa_don_theo_ngay_ban_va_gui_lai_khong_ghi_hai_lan()
+    {
+        using var mt = await CoHangAsync();
+        mt.DongHo.Tien(TimeSpan.FromDays(1)); // đồng bộ vào ngày 11/11 cho hóa đơn bán 10/11
+        var ngayBan = new DateTime(2026, 11, 10, 21, 15, 30);
+        var kq = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-ABC123", ngayBan, 2), default);
+
+        Assert.Equal((TrangThaiHoaDonTam.DaGhiNhan, "HD-10/11/2026.001"), (kq.TrangThai, kq.MaHD));
+        var hd = mt.Db.HoaDon.Single(h => h.MaHD == kq.MaHD);
+        Assert.Equal((ngayBan, 20000m, "NV001"), (hd.NgayGioLap, hd.TongTien, hd.MaND));
+        var ptt = mt.Db.PhieuThanhToan.Single(p => p.MaHDTTN == kq.MaHD);
+        Assert.Equal(("PTT-10/11/2026.001", PhuongThucThanhToan.TienMat, 20000m), (ptt.MaPTT, ptt.PhuongThuc, ptt.SoTien));
+        Assert.Equal(3, mt.Ton("LO-000001"));
+
+        var lai = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-ABC123", ngayBan, 2), default);
+        Assert.Equal(kq.MaHD, lai.MaHD);
+        Assert.Equal(3, mt.Ton("LO-000001"));
+        Assert.Single(mt.Db.HoaDon);
+    }
+
+    [Fact]
+    public async Task Thieu_ton_cho_chu_quan_xu_ly_dieu_chinh_roi_ghi_nhan()
+    {
+        using var mt = await CoHangAsync();
+        var kq = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-AAAAAA", mt.DongHo.BayGio, 8), default);
+        Assert.Equal(TrangThaiHoaDonTam.ChoXuLy, kq.TrangThai);
+        Assert.Contains("không đủ tồn (cần 8, còn 5)", kq.LyDo);
+        Assert.Null(kq.MaHD);
+        Assert.Equal(5, mt.Ton("LO-000001"));
+        Assert.Contains(mt.Db.ThongBao, t => t.MaND == "CQ001" && t.MaThamChieu == kq.MaTam);
+
+        mt.DangNhapLa("CQ001");
+        var loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() =>
+            mt.DvBanHang().GhiNhanTamAsync(new YeuCauXuLyHoaDonTam(kq.MaTam, null), default));
+        Assert.Contains("điều chỉnh tồn kho", loi.Message);
+
+        await mt.ThemLoAsync("Nước cam", 10, 200);
+        kq = await mt.DvBanHang().GhiNhanTamAsync(new YeuCauXuLyHoaDonTam(kq.MaTam, null), default);
+        Assert.Equal(TrangThaiHoaDonTam.DaGhiNhan, kq.TrangThai);
+        Assert.Equal(7, mt.Ton("LO-000001") + mt.Ton("LO-000002")); // 5 + 10 − 8
+    }
+
+    [Fact]
+    public async Task Gia_da_doi_cho_xu_ly_ghi_nhan_theo_gia_khach_da_tra_hoac_huy_co_ly_do()
+    {
+        using var mt = await CoHangAsync();
+        var a = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-GIA001", mt.DongHo.BayGio, 1, donGia: 9000), default);
+        var b = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-GIA002", mt.DongHo.BayGio, 1, donGia: 9000), default);
+        Assert.Contains("đã đổi", a.LyDo);
+
+        mt.DangNhapLa("CQ001");
+        a = await mt.DvBanHang().GhiNhanTamAsync(new YeuCauXuLyHoaDonTam(a.MaTam, null), default);
+        Assert.Equal(9000m, mt.Db.ChiTietHoaDon.Single(c => c.MaHD == a.MaHD).DonGia);
+
+        var loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() => mt.DvBanHang().HuyTamAsync(new YeuCauXuLyHoaDonTam(b.MaTam, " "), default));
+        Assert.True(loi.Loi!.ContainsKey("lyDo"));
+        b = await mt.DvBanHang().HuyTamAsync(new YeuCauXuLyHoaDonTam(b.MaTam, "Khách trả lại hàng"), default);
+        Assert.Equal(TrangThaiHoaDonTam.DaHuy, b.TrangThai);
+        await Assert.ThrowsAsync<LoiNghiepVuException>(() => mt.DvBanHang().GhiNhanTamAsync(new YeuCauXuLyHoaDonTam(b.MaTam, null), default));
+    }
+
+    [Fact]
+    public async Task Chi_nguoi_ban_hoac_chu_quan_dong_bo_va_dang_ket_ca_thi_cho()
+    {
+        using var mt = await CoHangAsync();
+        var loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() =>
+            mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-KHAC01", mt.DongHo.BayGio, 1, maND: "CQ001"), default));
+        Assert.Equal(StatusCodes.Status403Forbidden, loi.MaTrangThai);
+
+        mt.DangNhapLa("CQ001");
+        var ca = await mt.DvCa().DamBaoCaMoAsync("CQ001", default);
+        await mt.DvKetCa().BatDauAsync(new YeuCauMaCa(ca.MaCa), default);
+        loi = await Assert.ThrowsAsync<LoiNghiepVuException>(() =>
+            mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-KHAC01", mt.DongHo.BayGio, 1), default));
+        Assert.Equal(DichVuCa.DangKetCa, loi.Message);
+        Assert.Empty(mt.Db.HoaDonTam);
+
+        await mt.DvKetCa().HuyAsync(new YeuCauMaCa(ca.MaCa), default);
+        var kq = await mt.DvBanHang().DongBoTamAsync(Tam("TAM-261110-KHAC01", mt.DongHo.BayGio, 1), default); // Chủ quán đồng bộ hộ
+        Assert.Equal(("NV001", TrangThaiHoaDonTam.DaGhiNhan), (kq.MaND, kq.TrangThai));
+    }
+
+    [Theory]
+    [InlineData("TAM-1", 1, 100000)]
+    [InlineData("TAM-261110-ABC123", 0, 100000)]
+    [InlineData("TAM-261110-ABC123", 1, 5000)]   // tiền khách đưa không đủ
+    public async Task Du_lieu_khong_hop_le(string maTam, int soLuong, decimal tienDua)
+    {
+        using var mt = await CoHangAsync();
+        await Assert.ThrowsAsync<LoiNghiepVuException>(() =>
+            mt.DvBanHang().DongBoTamAsync(Tam(maTam, mt.DongHo.BayGio, soLuong) with { TienKhachDua = tienDua }, default));
+    }
+}
 
 /// <summary>Đồng bộ thời gian thực: sau mỗi lần lưu, phát đúng nhóm dữ liệu và đúng người nhận thông báo.</summary>
 public class SuKienTucThoiTests
