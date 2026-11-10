@@ -88,9 +88,8 @@ export function BoCuc() {
         >
           ☰
         </button>
-        <Link to="/" className="thuong-hieu">
-          <span className="thuong-hieu__logo" aria-hidden>XN</span>
-          <span className="thuong-hieu__ten">Tạp hóa Xóm Nhỏ</span>
+        <Link to="/" className="thuong-hieu" aria-label="Tạp hóa Xóm Nhỏ – Trang chủ">
+          <span className="thuong-hieu__ten">Xóm nhỏ</span>
         </Link>
 
         <ThongTinCa />

@@ -344,7 +344,7 @@ export function BanHang() {
                 aria-label="Tìm sản phẩm hoặc quét mã vạch"
                 autoFocus
               />
-              <button type="submit" className="nut">Tìm kiếm</button>
+              <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
             </form>
             <p className="ghi-chu">
               {tuKhoa ? `Kết quả tìm kiếm · ${dsHienThi.length} sản phẩm · Từ khóa: “${tuKhoa}”` : `Hàng hóa · ${dsHienThi.length} sản phẩm`}

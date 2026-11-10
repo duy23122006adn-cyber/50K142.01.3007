@@ -82,7 +82,7 @@ export function DangNhap() {
   return (
     <div className="trang-dang-nhap">
       <section className="trang-dang-nhap__trai" aria-hidden>
-        <div className="logo-lon">Xóm Nhỏ</div>
+        <div className="logo-lon">Xóm nhỏ</div>
         <p>Đây là website bán hàng của tiệm tạp hóa Xóm Nhỏ</p>
       </section>
 

@@ -1,19 +1,28 @@
-/* Tạp hóa Xóm Nhỏ – NFR Usability-01: giao diện trực quan, chữ và số lớn. */
+/*
+ * Tạp hóa Xóm Nhỏ – NFR Usability-01: giao diện trực quan, chữ và số lớn.
+ * Bảng màu lấy theo mockup trong phần Giao diện của báo cáo (đo trực tiếp từ ảnh màn hình):
+ * thanh tiêu đề / nút chính / tiêu đề bảng #CB001E, nền nội dung #F7FAFC, viền #E0E5F3,
+ * dòng bảng xen kẽ #F2F7FF, hộp thoại thành công #0B8638, hộp thoại lỗi #E1291C.
+ */
 :root {
-  --mau-chinh: #047857;
-  --mau-chinh-dam: #065f46;
-  --mau-chinh-nhat: #ecfdf5;
-  --mau-nen: #f5f7f6;
+  --mau-chinh: #cb001e;
+  --mau-chinh-dam: #a50019;
+  --mau-chinh-nhat: #fdf0f2;
+  --mau-nen: #f7fafc;
   --mau-the: #ffffff;
-  --mau-chu: #1f2a27;
-  --mau-chu-phu: #5b6b66;
-  --mau-vien: #d6e0dc;
-  --mau-do: #c62828;
-  --mau-do-nhat: #fdecec;
-  --mau-xanh-tb: #1b7a3d;
+  --mau-chu: #16181d;
+  --mau-chu-phu: #5b6472;
+  --mau-vien: #e0e5f3;
+  --mau-vien-nut: #dfe5ee;
+  --mau-dong-xen: #f2f7ff;
+  --mau-do: #e1291c;
+  --mau-do-nhat: #fdecea;
+  --mau-xanh-tb: #0b8638;
+  --mau-chu-xanh: #1f904a;
+  --mau-chu-do: #e54338;
   --bo-goc: 10px;
-  --bong: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 16px rgb(0 0 0 / 0.06);
-  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --bong: 0 1px 2px rgb(16 24 40 / 0.04), 0 2px 8px rgb(16 24 40 / 0.04);
+  font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 18px;
   line-height: 1.5;
   color: var(--mau-chu);
@@ -59,18 +68,19 @@ a {
   gap: 0.4rem;
   min-height: 48px;
   padding: 0.6rem 1.4rem;
-  border: 1px solid var(--mau-vien);
-  border-radius: var(--bo-goc);
+  border: 1px solid var(--mau-vien-nut);
+  border-radius: 999px;
   background: var(--mau-the);
   color: var(--mau-chu);
   font: inherit;
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .nut:hover {
-  background: #f0f4f2;
+  background: var(--mau-nen);
 }
 
 .nut--chinh {
@@ -136,7 +146,7 @@ a {
 .truong__o:focus {
   border-color: var(--mau-chinh);
   outline: none;
-  box-shadow: 0 0 0 3px rgb(4 120 87 / 0.18);
+  box-shadow: 0 0 0 3px rgb(203 0 30 / 0.14);
 }
 
 .truong__o--loi {
@@ -198,22 +208,44 @@ a {
   min-height: 100vh;
 }
 
+/* Màn hình 1.1: nửa trái đỏ có các dải chéo, logo chữ vàng cam viền xanh đậm; nửa phải nền trắng. */
+.trang-dang-nhap {
+  grid-template-columns: 36% 1fr;
+  background: #fff;
+}
+
 .trang-dang-nhap__trai {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  background: linear-gradient(160deg, var(--mau-chinh) 0%, var(--mau-chinh-dam) 100%);
+  gap: 1.5rem;
+  padding: 2rem 3rem;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.06) 0 30%, transparent 30% 55%, rgb(0 0 0 / 0.07) 55% 70%, transparent 70%),
+    linear-gradient(45deg, transparent 0 40%, rgb(0 0 0 / 0.08) 40% 62%, transparent 62%),
+    linear-gradient(160deg, #cb001e 0%, #b2001b 100%);
   color: #fff;
-  text-align: center;
+  font-size: 1.15rem;
 }
 
 .logo-lon {
-  font-size: 3.2rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  font-size: 4rem;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  background: linear-gradient(180deg, #ffe14d 0%, #ffb000 55%, #ff7a00 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px #00164f;
+  filter: drop-shadow(0 3px 0 #00164f);
+}
+
+.trang-dang-nhap__trai p {
+  margin: 0;
+  line-height: 1.6;
 }
 
 .trang-dang-nhap__phai {
@@ -225,16 +257,19 @@ a {
 
 .the-dang-nhap {
   width: 100%;
-  max-width: 420px;
-  padding: 2rem;
-  border-radius: 16px;
-  background: var(--mau-the);
-  box-shadow: var(--bong);
+  max-width: 440px;
+  padding: 1rem 0;
+  background: transparent;
 }
 
 .the-dang-nhap h1 {
-  font-size: 2rem;
-  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.the-dang-nhap .truong__nhan {
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .the-dang-nhap .nut + .nut {
@@ -268,27 +303,27 @@ a {
   color: #fff;
 }
 
+/* Màn hình mẫu: logo chữ "Xóm nhỏ" màu trắng ở góc trái thanh tiêu đề. */
 .thuong-hieu {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   color: #fff;
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   text-decoration: none;
 }
 
-.thuong-hieu__logo,
 .tai-khoan__avatar {
   display: inline-grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #fff;
-  color: var(--mau-chinh);
+  color: var(--mau-chu);
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .tai-khoan {
@@ -349,7 +384,7 @@ a {
 }
 
 .tai-khoan__menu button:hover {
-  background: var(--mau-chinh-nhat);
+  background: var(--mau-nen);
 }
 
 .bo-cuc__than {
@@ -358,30 +393,42 @@ a {
   min-height: calc(100vh - 64px);
 }
 
+/* Menu trái theo mẫu: nền trắng, viền phải mảnh, nhóm có dấu ▸ / ▾, mục đang chọn in đậm. */
 .menu-trai {
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding: 1rem 0.6rem;
-  border-right: 1px solid var(--mau-vien);
+  border-right: 1px solid #e8ecf7;
   background: var(--mau-the);
 }
 
 .menu-trai a {
-  padding: 0.7rem 0.9rem;
-  border-radius: var(--bo-goc);
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
   color: var(--mau-chu);
   text-decoration: none;
 }
 
 .menu-trai a:hover {
-  background: var(--mau-chinh-nhat);
+  background: var(--mau-nen);
 }
 
 .menu-trai a.active {
-  background: var(--mau-chinh-nhat);
-  color: var(--mau-chinh-dam);
+  color: var(--mau-chu);
   font-weight: 700;
+}
+
+.menu-trai__nhom > a::before {
+  content: '▸';
+  display: inline-block;
+  width: 0.9em;
+  font-size: 0.75em;
+  color: var(--mau-chu);
+}
+
+.menu-trai__nhom > a.active::before {
+  content: '▾';
 }
 
 .noi-dung {
@@ -390,9 +437,20 @@ a {
 }
 
 .breadcrumb {
-  margin-bottom: 0.75rem;
-  color: var(--mau-chu-phu);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--mau-vien);
+  color: var(--mau-chu);
   font-size: 0.95rem;
+}
+
+.breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
 }
 
 /* Giai đoạn 8b – điện thoại: menu chức năng thành ngăn kéo mở bằng nút ☰. */
@@ -475,10 +533,12 @@ a {
 }
 
 /* ------------------------------------------------------------------ Thẻ nội dung */
+/* Thẻ theo mẫu: nền trắng, viền mảnh, bo góc, gần như không đổ bóng. */
 .the {
   max-width: 820px;
   padding: 1.5rem;
-  border-radius: 14px;
+  border: 1px solid var(--mau-vien);
+  border-radius: 12px;
   background: var(--mau-the);
   box-shadow: var(--bong);
 }
@@ -527,7 +587,7 @@ a {
 
 .o-chuc-nang:hover {
   border-color: var(--mau-chinh);
-  box-shadow: var(--bong);
+  box-shadow: 0 4px 14px rgb(203 0 30 / 0.1);
 }
 
 .o-chuc-nang span {
@@ -545,7 +605,7 @@ a {
 }
 
 .hop-thoai::backdrop {
-  background: rgb(15 23 20 / 0.45);
+  background: rgb(30 34 44 / 0.35);
 }
 
 .hop-thoai__noi-dung p {
@@ -557,6 +617,44 @@ a {
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1rem;
+}
+
+/* Hộp thoại thông báo theo mẫu (4.5.3, 4.5.4…): chữ và nút căn giữa; thành công màu xanh lá, lỗi màu đỏ tươi. */
+.hop-thoai--thanhCong,
+.hop-thoai--loi {
+  text-align: center;
+}
+
+.hop-thoai--thanhCong .hop-thoai__nut,
+.hop-thoai--loi .hop-thoai__nut {
+  justify-content: center;
+}
+
+.hop-thoai--thanhCong .thong-bao,
+.hop-thoai--loi .thong-bao {
+  font-size: 1.3rem;
+}
+
+.hop-thoai--thanhCong .nut--chinh {
+  min-width: 60%;
+  border-color: var(--mau-xanh-tb);
+  border-radius: 6px;
+  background: var(--mau-xanh-tb);
+}
+
+.hop-thoai--thanhCong .nut--chinh:hover {
+  background: #097030;
+}
+
+.hop-thoai--loi .nut--chinh {
+  min-width: 60%;
+  border-color: var(--mau-do);
+  border-radius: 6px;
+  background: var(--mau-do);
+}
+
+.hop-thoai--loi .nut--chinh:hover {
+  background: #c22015;
 }
 
 /* ------------------------------------------------------------------ Giai đoạn 2: bảng, công cụ, menu con */
@@ -621,9 +719,10 @@ a {
   vertical-align: top;
 }
 
+/* Tiêu đề bảng theo mẫu 6.1: nền đỏ, chữ trắng; dòng xen kẽ xanh rất nhạt. */
 .bang th {
-  background: var(--mau-chinh-nhat);
-  color: var(--mau-chinh-dam);
+  background: var(--mau-chinh);
+  color: #fff;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -633,7 +732,14 @@ a {
 }
 
 .bang tbody tr:hover {
-  background: #f8faf9;
+  background: #eaf1fb;
+}
+
+/* Bảng "Thông tin / Giá trị" (mẫu 4.4.x): tiêu đề xám nhạt. */
+.bang--thong-tin th {
+  background: #f3f6fa;
+  color: var(--mau-chu-phu);
+  font-weight: 600;
 }
 
 .bang .so {
@@ -665,7 +771,7 @@ a {
 }
 
 .chu-do {
-  color: var(--mau-do) !important;
+  color: var(--mau-chu-do) !important;
   font-weight: 700;
 }
 
@@ -691,9 +797,10 @@ a {
   white-space: nowrap;
 }
 
+/* Trạng thái trong bảng theo mẫu 6.1: chữ xanh lá / đỏ, nền rất nhạt. */
 .nhan--xanh {
-  background: #dcfce7;
-  color: #166534;
+  background: #eaf6ee;
+  color: var(--mau-chu-xanh);
 }
 
 .nhan--xam {
@@ -703,7 +810,7 @@ a {
 
 .nhan--do {
   background: var(--mau-do-nhat);
-  color: var(--mau-do);
+  color: var(--mau-chu-do);
 }
 
 .nhan--cam {
@@ -729,7 +836,7 @@ a {
 }
 
 .nut--nguy-hiem-dac:hover {
-  background: #a31f1f;
+  background: #c22015;
 }
 
 .luoi-2 {
@@ -745,12 +852,12 @@ a {
 }
 
 .truong__o--chi-doc {
-  background: var(--mau-chinh-nhat);
+  background: #f3f6fa;
   color: var(--mau-chu);
 }
 
 .truong__o:disabled {
-  background: #eef1f0;
+  background: #f1f3f7;
   cursor: not-allowed;
 }
 
@@ -761,7 +868,7 @@ select.truong__o {
 .thong-tin--chi-doc {
   padding: 0.75rem 1rem;
   border-radius: var(--bo-goc);
-  background: var(--mau-chinh-nhat);
+  background: #f3f6fa;
 }
 
 .phan-trang {
@@ -975,7 +1082,7 @@ select.truong__o {
   margin-bottom: 0.75rem;
   padding: 0.6rem 0.75rem;
   border-radius: var(--bo-goc);
-  background: var(--mau-chinh-nhat);
+  background: var(--mau-dong-xen);
 }
 
 .khung-khach .hang-nut {
@@ -1119,7 +1226,7 @@ select.truong__o {
 /* ------------------------------------------------------------ Giai đoạn 5 – Hủy hóa đơn, đổi trả, thông báo */
 
 .chu-xanh {
-  color: var(--mau-xanh-tb);
+  color: var(--mau-chu-xanh);
 }
 
 .cot-chon {
@@ -1183,8 +1290,8 @@ select.truong__o {
   height: 18px;
   padding: 0 4px;
   border-radius: 999px;
-  background: var(--mau-do);
-  color: #fff;
+  background: #ffd43b;
+  color: var(--mau-chu);
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 18px;
@@ -1243,7 +1350,7 @@ select.truong__o {
 }
 
 .bang--xen-ke tbody tr:nth-child(even) {
-  background: var(--mau-chinh-nhat);
+  background: var(--mau-dong-xen);
 }
 
 .bang tbody tr.dong-chenh-lech {
