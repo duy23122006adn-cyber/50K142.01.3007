@@ -439,9 +439,9 @@ export function BanHang() {
                 <NutDocTo cauThu={`Tổng tiền cần thanh toán ${docTien(tong)}`} />
               </div>
             </div>
-            <h3 className="pos-tt__nhom">Hình thức thanh toán</h3>
-            <p className="ghi-chu pos-tt__nhan">Thanh toán trực tiếp</p>
-            <div className="pos-tt__pt">
+            <h3 className="tieu-de-nhom">Hình thức thanh toán</h3>
+            <p className="ghi-chu nhan-nhom">Thanh toán trực tiếp</p>
+            <div className="luoi-thanh-toan">
               <button type="button" className="nut nut--chinh" onClick={() => setBuoc('tienMat')}>
                 Tiền mặt
               </button>
@@ -449,7 +449,7 @@ export function BanHang() {
                 Chuyển khoản QR
               </button>
             </div>
-            <p className="ghi-chu pos-tt__nhan">Khách hàng muốn ghi nợ?</p>
+            <p className="ghi-chu nhan-nhom">Khách hàng muốn ghi nợ?</p>
             <button type="button" className="nut nut--rong pos-tt__no" onClick={() => batDauGhiNo()}>
               Chuyển sang ghi nợ
             </button>

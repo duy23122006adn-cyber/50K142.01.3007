@@ -1689,24 +1689,30 @@ select.truong__o {
   line-height: 1.35;
 }
 
-.pos-tt__nhom {
+/* Dùng chung: bán hàng (6.5.3), thu thêm chênh lệch đổi hàng (6.2.26). */
+.tieu-de-nhom {
   margin: 1.1rem 0 0;
   padding-top: 0.9rem;
   border-top: 1px solid var(--mau-vien);
   font-size: 1.05rem;
 }
 
-.pos-tt__nhan {
+.nhan-nhom {
   margin: 0.6rem 0 0.4rem;
 }
 
-.pos-tt__pt {
+.luoi-thanh-toan {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
 }
 
-.pos-tt__pt .nut,
+/* Nút rộng ngay sau lưới (vd. "Về danh sách") không dính sát. */
+.luoi-thanh-toan + .nut--rong {
+  margin-top: 0.6rem;
+}
+
+.luoi-thanh-toan .nut,
 .pos-tt__no {
   min-height: 52px;
   padding: 0.4rem 0.5rem;
@@ -1715,7 +1721,7 @@ select.truong__o {
   line-height: 1.2;
 }
 
-.pos-tt__pt .nut {
+.luoi-thanh-toan .nut {
   font-size: 1.05rem;
 }
 

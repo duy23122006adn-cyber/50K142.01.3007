@@ -86,198 +86,205 @@ export function PhieuDoiTraTrang() {
   const td = tieuDePhieu(p, buocThu)
   const doi = p.loaiPhieu === 'Đổi hàng'
   const choXuLy = p.trangThai === 'Đã duyệt' && !p.ngayGioHoanTat
+  // Thu thêm bằng QR: màn hình chuyển khoản riêng, giống bước "Chuyển khoản QR" của bán hàng (6.5).
+  const manQr = choXuLy && doi && p.trangThaiXuLy === 'Chờ thu thêm' && buocThu === 'qr'
 
   return (
     <>
       <h1 className={td.do ? 'chu-do' : undefined}>{td.chu}</h1>
-      <div className="pos">
-        <section className="the pos__hang">
-          <ThongTinPhieu p={p} />
-        </section>
-
-        <aside className="the pos__gio">
-          <h2>{doi ? 'Phiếu đổi hàng' : 'Phiếu trả hàng'}</h2>
-          <p>
-            Phiếu: <NhanTrangThaiPhieu trangThai={p.trangThai} />
+      {manQr ? (
+        <section className="the the--hep canh-giua">
+          <h2>Chuyển khoản QR</h2>
+          <p className="ghi-chu">
+            Thu thêm chênh lệch đổi hàng · Phiếu {p.maPDT}
           </p>
-          <p className={p.trangThai === 'Từ chối' || p.trangThai === 'Không hoàn tất' ? 'chu-do' : 'chu-xanh'}>
-            Xử lý: {p.trangThaiXuLy}
-          </p>
-          <dl className="thong-tin">
-            {p.dong.map((d) => (
-              <div key={d.maHH} className="thong-tin__dong">
-                <dt>{doi ? 'Đổi' : 'Hàng trả'}</dt>
-                <dd>
-                  <MatHang d={d} />
-                </dd>
-              </div>
-            ))}
-            {doi && p.canThuThem > 0 && (
-              <>
-                <dt>Cần thu thêm</dt>
-                <dd className="so-lon">{tien(p.canThuThem)}</dd>
-              </>
-            )}
-            {p.tienHoanKhach > 0 && (
-              <>
-                <dt>{doi ? 'Hoàn lại khách' : 'Số tiền hoàn'}</dt>
-                <dd className="so-lon">{tien(p.tienHoanKhach)}</dd>
-              </>
-            )}
-          </dl>
-
-          {/* 6.2.17 / 6.2.25 / 6.2.33 / 6.2.36 – chờ Chủ quán duyệt */}
-          {p.trangThai === 'Chờ duyệt' && (
-            <>
-              <button type="button" className="nut nut--chinh nut--rong" disabled={isFetching} onClick={() => void refetch()}>
-                Tải lại kết quả duyệt
-              </button>
-              {nguoiDung?.vaiTro === 'ChuQuan' && (
-                <button
-                  type="button"
-                  className="nut nut--rong"
-                  onClick={() => navigate(`${GOC_DUYET}/phieu?ma=${encodeURIComponent(p.maPDT)}`)}
-                >
-                  Duyệt phiếu
-                </button>
-              )}
-            </>
-          )}
-
-          {/* 6.2.18 – bị từ chối */}
-          {p.trangThai === 'Từ chối' && (
-            <>
-              <p className="thong-bao thong-bao--do">Phiếu đổi trả bị từ chối</p>
-              <p>Lý do: {p.lyDoTuChoi}</p>
-              <p className="ghi-chu">Thông báo lý do cho khách. Phiếu đã chốt, không sửa được.</p>
-            </>
-          )}
-
-          {/* 6.2.19 – trả hàng đã duyệt */}
-          {choXuLy && !doi && (
-            <>
-              <h3>Hoàn tiền cho khách</h3>
-              <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
-                Xác nhận đã hoàn {tien(p.tienHoanKhach)}
-              </button>
-            </>
-          )}
-
-          {/* 6.2.26–6.2.28 – đổi hàng giá cao hơn, thu thêm */}
-          {choXuLy && doi && p.trangThaiXuLy === 'Chờ thu thêm' && (
-            <>
-              <h3>Thu thêm chênh lệch</h3>
-              <p>
-                <ChenhLech soTien={p.chenhLech} />
-              </p>
-              {buocThu === 'chon' && (
-                <div className="hang-nut">
-                  <button type="button" className="nut nut--chinh" onClick={() => setBuocThu('tienMat')}>
-                    Tiền mặt
-                  </button>
-                  <button type="button" className="nut nut--chinh" onClick={() => setBuocThu('qr')}>
-                    Chuyển khoản QR
-                  </button>
-                </div>
-              )}
-              {buocThu === 'tienMat' && (
-                <>
-                  <p className="ghi-chu">Thanh toán tiền mặt · Xử lý: Chờ xác nhận thu</p>
-                  <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy('Tiền mặt')}>
-                    Đã thu đủ {tien(p.canThuThem)}
-                  </button>
-                </>
-              )}
-              {buocThu === 'qr' && (
-                <>
-                  <p className="ghi-chu">Chuyển khoản QR · Cần thanh toán {tien(p.canThuThem)}</p>
-                  <div className="canh-giua">
-                    <KhungQr
-                      soTien={p.canThuThem}
-                      dangXuLy={dangXuLy}
-                      onKetQua={(ok, ma) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)}
-                    />
-                  </div>
-                </>
-              )}
-              {buocThu !== 'chon' && (
-                <button type="button" className="nut nut--chu nut--rong" onClick={() => setBuocThu('chon')}>
-                  Đổi hình thức thu
-                </button>
-              )}
-            </>
-          )}
-
-          {/* 6.2.37 – đổi hàng giá thấp hơn */}
-          {choXuLy && doi && p.trangThaiXuLy === 'Chờ hoàn chênh lệch' && (
-            <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
-              Đã hoàn {tien(p.tienHoanKhach)}
-            </button>
-          )}
-
-          {/* 6.2.34 – ngang giá, hoặc đã thu thêm nhưng cập nhật kho lỗi (6.2.30) */}
-          {choXuLy && doi && p.trangThaiXuLy === 'Chờ cập nhật kho' && (
-            <>
-              {p.daThuThem && <p className="ghi-chu">Đã thu thêm {tien(p.canThuThem)}. Khoản thu được giữ nguyên.</p>}
-              <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
-                {p.daThuThem ? 'Thực hiện lại cập nhật' : 'Xác nhận đổi hàng'}
-              </button>
-            </>
-          )}
-
-          {/* 6.2.20 / 6.2.32 / 6.2.35 / 6.2.38 – hoàn tất */}
-          {p.ngayGioHoanTat && (
-            <>
-              <h3>Xử lý hoàn tất</h3>
-              <dl className="thong-tin">
-                <dt>Cộng tồn kho</dt>
-                <dd>
-                  {p.dong.map((d) => (
-                    <div key={d.maHH}>
-                      {d.soLuongTra} {d.donViTinh} {d.tenHH}
-                    </div>
-                  ))}
-                </dd>
-                {doi && (
-                  <>
-                    <dt>Trừ tồn kho</dt>
-                    <dd>
-                      {p.dong.map((d) => (
-                        <div key={d.maHH}>
-                          {d.soLuongMoi} {d.donViTinhMoi} {d.tenHHMoi}
-                        </div>
-                      ))}
-                    </dd>
-                  </>
-                )}
-                {!doi && (
-                  <>
-                    <dt>Giảm doanh thu</dt>
-                    <dd>{tien(p.soTienHoan)}</dd>
-                    <dt>Đã hoàn tiền</dt>
-                    <dd>{tien(p.tienHoanKhach)}</dd>
-                  </>
-                )}
-                {doi && p.chenhLech !== 0 && (
-                  <>
-                    <dt>{p.chenhLech > 0 ? 'Đã thu thêm' : 'Đã hoàn chênh lệch'}</dt>
-                    <dd>{tien(Math.abs(p.chenhLech))}</dd>
-                  </>
-                )}
-                <dt>Thời điểm hoàn tất</dt>
-                <dd>{ngayGio(p.ngayGioHoanTat)}</dd>
-              </dl>
-            </>
-          )}
-
-          {/* 6.2.31 */}
-          {p.trangThai === 'Không hoàn tất' && <p className="thong-bao thong-bao--do">Giao dịch không hoàn tất</p>}
-
-          <button type="button" className="nut nut--chu nut--rong" onClick={() => navigate(GOC_DOI_TRA)}>
-            Về danh sách
+          <KhungQr
+            soTien={p.canThuThem}
+            dangXuLy={dangXuLy}
+            onKetQua={(ok, maQr) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', maQr)}
+          />
+          <button type="button" className="nut nut--chu" onClick={() => setBuocThu('chon')}>
+            Đổi hình thức thu
           </button>
-        </aside>
-      </div>
+        </section>
+      ) : (
+        <div className="pos">
+          <section className="the pos__hang">
+            <ThongTinPhieu p={p} />
+          </section>
+
+          <aside className="the pos__gio">
+            <h2>{doi ? 'Phiếu đổi hàng' : 'Phiếu trả hàng'}</h2>
+            <p>
+              Phiếu: <NhanTrangThaiPhieu trangThai={p.trangThai} />
+            </p>
+            <p className={p.trangThai === 'Từ chối' || p.trangThai === 'Không hoàn tất' ? 'chu-do' : 'chu-xanh'}>
+              Xử lý: {p.trangThaiXuLy}
+            </p>
+            <dl className="thong-tin">
+              {p.dong.map((d) => (
+                <div key={d.maHH} className="thong-tin__dong">
+                  <dt>{doi ? 'Đổi' : 'Hàng trả'}</dt>
+                  <dd>
+                    <MatHang d={d} />
+                  </dd>
+                </div>
+              ))}
+              {doi && p.canThuThem > 0 && (
+                <>
+                  <dt>Cần thu thêm</dt>
+                  <dd className="so-lon">{tien(p.canThuThem)}</dd>
+                </>
+              )}
+              {p.tienHoanKhach > 0 && (
+                <>
+                  <dt>{doi ? 'Hoàn lại khách' : 'Số tiền hoàn'}</dt>
+                  <dd className="so-lon">{tien(p.tienHoanKhach)}</dd>
+                </>
+              )}
+            </dl>
+
+            {/* 6.2.17 / 6.2.25 / 6.2.33 / 6.2.36 – chờ Chủ quán duyệt */}
+            {p.trangThai === 'Chờ duyệt' && (
+              <>
+                <button type="button" className="nut nut--chinh nut--rong" disabled={isFetching} onClick={() => void refetch()}>
+                  Tải lại kết quả duyệt
+                </button>
+                {nguoiDung?.vaiTro === 'ChuQuan' && (
+                  <button
+                    type="button"
+                    className="nut nut--rong"
+                    onClick={() => navigate(`${GOC_DUYET}/phieu?ma=${encodeURIComponent(p.maPDT)}`)}
+                  >
+                    Duyệt phiếu
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* 6.2.18 – bị từ chối */}
+            {p.trangThai === 'Từ chối' && (
+              <>
+                <p className="thong-bao thong-bao--do">Phiếu đổi trả bị từ chối</p>
+                <p>Lý do: {p.lyDoTuChoi}</p>
+                <p className="ghi-chu">Thông báo lý do cho khách. Phiếu đã chốt, không sửa được.</p>
+              </>
+            )}
+
+            {/* 6.2.19 – trả hàng đã duyệt */}
+            {choXuLy && !doi && (
+              <>
+                <h3>Hoàn tiền cho khách</h3>
+                <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
+                  Xác nhận đã hoàn {tien(p.tienHoanKhach)}
+                </button>
+              </>
+            )}
+
+            {/* 6.2.26–6.2.28 – đổi hàng giá cao hơn, thu thêm */}
+            {choXuLy && doi && p.trangThaiXuLy === 'Chờ thu thêm' && (
+              <>
+                <h3 className="tieu-de-nhom">Thu thêm chênh lệch</h3>
+                <p className="ghi-chu nhan-nhom">
+                  <ChenhLech soTien={p.chenhLech} />
+                </p>
+                {buocThu === 'chon' && (
+                  <div className="luoi-thanh-toan">
+                    <button type="button" className="nut nut--chinh" onClick={() => setBuocThu('tienMat')}>
+                      Tiền mặt
+                    </button>
+                    <button type="button" className="nut nut--chinh" onClick={() => setBuocThu('qr')}>
+                      Chuyển khoản QR
+                    </button>
+                  </div>
+                )}
+                {buocThu === 'tienMat' && (
+                  <>
+                    <p className="ghi-chu">Thanh toán tiền mặt · Xử lý: Chờ xác nhận thu</p>
+                    <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy('Tiền mặt')}>
+                      Đã thu đủ {tien(p.canThuThem)}
+                    </button>
+                  </>
+                )}
+                {buocThu === 'tienMat' && (
+                  <button type="button" className="nut nut--chu nut--rong" onClick={() => setBuocThu('chon')}>
+                    Đổi hình thức thu
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* 6.2.37 – đổi hàng giá thấp hơn */}
+            {choXuLy && doi && p.trangThaiXuLy === 'Chờ hoàn chênh lệch' && (
+              <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
+                Đã hoàn {tien(p.tienHoanKhach)}
+              </button>
+            )}
+
+            {/* 6.2.34 – ngang giá, hoặc đã thu thêm nhưng cập nhật kho lỗi (6.2.30) */}
+            {choXuLy && doi && p.trangThaiXuLy === 'Chờ cập nhật kho' && (
+              <>
+                {p.daThuThem && <p className="ghi-chu">Đã thu thêm {tien(p.canThuThem)}. Khoản thu được giữ nguyên.</p>}
+                <button type="button" className="nut nut--chinh nut--rong" disabled={dangXuLy} onClick={() => xuLy()}>
+                  {p.daThuThem ? 'Thực hiện lại cập nhật' : 'Xác nhận đổi hàng'}
+                </button>
+              </>
+            )}
+
+            {/* 6.2.20 / 6.2.32 / 6.2.35 / 6.2.38 – hoàn tất */}
+            {p.ngayGioHoanTat && (
+              <>
+                <h3>Xử lý hoàn tất</h3>
+                <dl className="thong-tin">
+                  <dt>Cộng tồn kho</dt>
+                  <dd>
+                    {p.dong.map((d) => (
+                      <div key={d.maHH}>
+                        {d.soLuongTra} {d.donViTinh} {d.tenHH}
+                      </div>
+                    ))}
+                  </dd>
+                  {doi && (
+                    <>
+                      <dt>Trừ tồn kho</dt>
+                      <dd>
+                        {p.dong.map((d) => (
+                          <div key={d.maHH}>
+                            {d.soLuongMoi} {d.donViTinhMoi} {d.tenHHMoi}
+                          </div>
+                        ))}
+                      </dd>
+                    </>
+                  )}
+                  {!doi && (
+                    <>
+                      <dt>Giảm doanh thu</dt>
+                      <dd>{tien(p.soTienHoan)}</dd>
+                      <dt>Đã hoàn tiền</dt>
+                      <dd>{tien(p.tienHoanKhach)}</dd>
+                    </>
+                  )}
+                  {doi && p.chenhLech !== 0 && (
+                    <>
+                      <dt>{p.chenhLech > 0 ? 'Đã thu thêm' : 'Đã hoàn chênh lệch'}</dt>
+                      <dd>{tien(Math.abs(p.chenhLech))}</dd>
+                    </>
+                  )}
+                  <dt>Thời điểm hoàn tất</dt>
+                  <dd>{ngayGio(p.ngayGioHoanTat)}</dd>
+                </dl>
+              </>
+            )}
+
+            {/* 6.2.31 */}
+            {p.trangThai === 'Không hoàn tất' && <p className="thong-bao thong-bao--do">Giao dịch không hoàn tất</p>}
+
+            <button type="button" className="nut nut--chu nut--rong" onClick={() => navigate(GOC_DOI_TRA)}>
+              Về danh sách
+            </button>
+          </aside>
+        </div>
+      )}
 
       {/* 6.2.29 */}
       <HopThoai
