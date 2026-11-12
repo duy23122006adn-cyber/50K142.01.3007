@@ -128,66 +128,60 @@ export function DangNhap() {
             </button>
           </form>
         ) : (
-          <form className="the-dang-nhap" onSubmit={guiOtp} noValidate>
+          // Màn hình 1.4 theo mẫu báo cáo: tiêu đề, ô "Nhập OTP", dòng đỏ "Tài khoản đang bị khóa tạm thời!", nút Xác nhận.
+          <form className="the-dang-nhap the-otp" onSubmit={guiOtp} noValidate>
             <h1>Nhập OTP</h1>
-            <p className="thong-bao thong-bao--do canh-giua" role="alert">
-              Tài khoản đang bị khóa tạm thời!
-            </p>
-            <p className="ghi-chu">
-              Mã xác nhận đã được gửi tới số điện thoại của Chủ quán{khoa.sdtNhanMa ? ` (${khoa.sdtNhanMa})` : ''}. Vui
-              lòng liên hệ Chủ quán để nhận mã. Mã có hiệu lực trong 5 phút.
-            </p>
-            {khoa.giaLapSms ? (
-              // Giả lập: thể hiện rõ mã đi tới điện thoại Chủ quán, tài khoản nào bị khóa và vai trò gì.
-              <div className="gia-lap sms-gia-lap">
-                <p className="sms-gia-lap__dong">
-                  <strong>[Giả lập SMS]</strong> Tài khoản bị khóa: <strong>{khoa.giaLapSms.taiKhoanBiKhoa}</strong> –{' '}
-                  {khoa.giaLapSms.hoTenBiKhoa} <span className="nhan-vai-tro">{khoa.giaLapSms.vaiTroBiKhoa}</span>
-                </p>
-                <div className="dt-gia-lap" aria-label="Điện thoại Chủ quán">
-                  <div className="dt-gia-lap__dau">
-                    📱 Điện thoại Chủ quán · {khoa.giaLapSms.nguoiNhan} · {khoa.giaLapSms.sdtNhan}
-                  </div>
-                  <p className="dt-gia-lap__tin">{khoa.giaLapSms.noiDung}</p>
-                </div>
-                <p className="sms-gia-lap__dong">
-                  {khoa.giaLapSms.vaiTroBiKhoa === 'Nhân viên'
-                    ? 'Thực tế nhân viên không thấy tin này: Chủ quán đọc mã cho nhân viên nhập vào ô bên dưới.'
-                    : 'Tài khoản Chủ quán bị khóa: mã gửi tới chính điện thoại của Chủ quán.'}
-                </p>
-              </div>
-            ) : (
-              khoa.maOtpGiaLap && (
-                <p className="gia-lap">
-                  <strong>[Giả lập SMS]</strong> Mã OTP: <code>{khoa.maOtpGiaLap}</code>
-                </p>
-              )
-            )}
-            <TruongNhap
-              nhan="Mã OTP"
+            <input
+              className={`truong__o ${formOtp.formState.errors.maOtp ? 'truong__o--loi' : ''}`}
               placeholder="Nhập OTP"
+              aria-label="Mã OTP"
+              aria-invalid={formOtp.formState.errors.maOtp ? true : undefined}
               inputMode="numeric"
               autoComplete="one-time-code"
               autoFocus
-              loi={formOtp.formState.errors.maOtp?.message}
               {...formOtp.register('maOtp')}
             />
-            <button type="submit" className="nut nut--chinh nut--rong" disabled={formOtp.formState.isSubmitting}>
+            {formOtp.formState.errors.maOtp && (
+              <p className="truong__loi" role="alert">
+                {formOtp.formState.errors.maOtp.message}
+              </p>
+            )}
+            <p className="chu-khoa-tam" role="alert">
+              Tài khoản đang bị khóa tạm thời!
+            </p>
+            <button type="submit" className="nut nut--do nut--rong" disabled={formOtp.formState.isSubmitting}>
               Xác nhận
-            </button>
-            <button
-              type="button"
-              className="nut nut--chu nut--rong"
-              onClick={() => {
-                setKhoa(null)
-                formDN.reset({ tenDangNhap: khoa.tenDangNhap, matKhau: '' })
-              }}
-            >
-              Quay lại đăng nhập
             </button>
           </form>
         )}
       </section>
+
+      {/* Chỉ khi giả lập SMS: thông báo nhỏ góc dưới phải mô phỏng tin nhắn đến điện thoại Chủ quán,
+          nằm ngoài form để form giữ đúng mẫu 1.4 và không che giao diện. */}
+      {khoa?.maOtpGiaLap && (
+        <aside
+          className="sms-noi"
+          aria-label="Giả lập tin nhắn SMS"
+          title={
+            khoa.giaLapSms?.vaiTroBiKhoa === 'Nhân viên'
+              ? 'Thực tế nhân viên không thấy tin này: Chủ quán đọc mã cho nhân viên nhập vào ô "Nhập OTP".'
+              : 'Mã được gửi tới điện thoại của Chủ quán.'
+          }
+        >
+          <div className="sms-noi__dau">
+            📱 Giả lập SMS tới Chủ quán
+            {khoa.giaLapSms && ` · ${khoa.giaLapSms.nguoiNhan} · ${khoa.giaLapSms.sdtNhan}`}
+          </div>
+          <div className="sms-noi__than">
+            {khoa.giaLapSms && (
+              <>
+                Mở khóa <strong>{khoa.giaLapSms.taiKhoanBiKhoa}</strong> ({khoa.giaLapSms.vaiTroBiKhoa}):{' '}
+              </>
+            )}
+            <span className="sms-noi__ma">{khoa.maOtpGiaLap}</span>
+          </div>
+        </aside>
+      )}
     </div>
   )
 }
