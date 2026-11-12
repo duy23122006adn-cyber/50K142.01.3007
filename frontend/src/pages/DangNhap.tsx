@@ -17,10 +17,21 @@ const schemaOtp = z.object({ maOtp: khongTrong })
 type FormDangNhap = z.infer<typeof schemaDangNhap>
 type FormOtp = z.infer<typeof schemaOtp>
 
+/** Chỉ có khi máy chủ bật giả lập SMS: mô phỏng tin nhắn đến điện thoại Chủ quán. */
+interface SmsGiaLap {
+  nguoiNhan: string
+  sdtNhan: string
+  taiKhoanBiKhoa: string
+  hoTenBiKhoa: string
+  vaiTroBiKhoa: 'Chủ quán' | 'Nhân viên'
+  noiDung: string
+}
+
 interface ThongTinKhoa {
   tenDangNhap: string
   sdtNhanMa?: string
   maOtpGiaLap?: string
+  giaLapSms?: SmsGiaLap
 }
 
 /** UC_1 – màn hình 1.1 đến 1.4. */
@@ -52,6 +63,7 @@ export function DangNhap() {
           tenDangNhap: tenDangNhap.trim(),
           sdtNhanMa: e.duLieu.sdtNhanMa as string | undefined,
           maOtpGiaLap: e.duLieu.maOtpGiaLap as string | undefined,
+          giaLapSms: e.duLieu.giaLapSms as SmsGiaLap | undefined,
         })
         formOtp.reset({ maOtp: '' })
         return
@@ -125,10 +137,31 @@ export function DangNhap() {
               Mã xác nhận đã được gửi tới số điện thoại của Chủ quán{khoa.sdtNhanMa ? ` (${khoa.sdtNhanMa})` : ''}. Vui
               lòng liên hệ Chủ quán để nhận mã. Mã có hiệu lực trong 5 phút.
             </p>
-            {khoa.maOtpGiaLap && (
-              <p className="gia-lap">
-                <strong>[Giả lập SMS]</strong> Mã OTP: <code>{khoa.maOtpGiaLap}</code>
-              </p>
+            {khoa.giaLapSms ? (
+              // Giả lập: thể hiện rõ mã đi tới điện thoại Chủ quán, tài khoản nào bị khóa và vai trò gì.
+              <div className="gia-lap sms-gia-lap">
+                <p className="sms-gia-lap__dong">
+                  <strong>[Giả lập SMS]</strong> Tài khoản bị khóa: <strong>{khoa.giaLapSms.taiKhoanBiKhoa}</strong> –{' '}
+                  {khoa.giaLapSms.hoTenBiKhoa} <span className="nhan-vai-tro">{khoa.giaLapSms.vaiTroBiKhoa}</span>
+                </p>
+                <div className="dt-gia-lap" aria-label="Điện thoại Chủ quán">
+                  <div className="dt-gia-lap__dau">
+                    📱 Điện thoại Chủ quán · {khoa.giaLapSms.nguoiNhan} · {khoa.giaLapSms.sdtNhan}
+                  </div>
+                  <p className="dt-gia-lap__tin">{khoa.giaLapSms.noiDung}</p>
+                </div>
+                <p className="sms-gia-lap__dong">
+                  {khoa.giaLapSms.vaiTroBiKhoa === 'Nhân viên'
+                    ? 'Thực tế nhân viên không thấy tin này: Chủ quán đọc mã cho nhân viên nhập vào ô bên dưới.'
+                    : 'Tài khoản Chủ quán bị khóa: mã gửi tới chính điện thoại của Chủ quán.'}
+                </p>
+              </div>
+            ) : (
+              khoa.maOtpGiaLap && (
+                <p className="gia-lap">
+                  <strong>[Giả lập SMS]</strong> Mã OTP: <code>{khoa.maOtpGiaLap}</code>
+                </p>
+              )
             )}
             <TruongNhap
               nhan="Mã OTP"

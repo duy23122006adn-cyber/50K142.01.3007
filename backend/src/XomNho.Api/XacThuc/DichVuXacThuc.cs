@@ -84,7 +84,7 @@ public sealed class DichVuXacThuc(
             db.GhiNhatKy("Gửi lại mã mở khóa", nd.MaND, nd.TenDangNhap);
             await db.SaveChangesAsync(ct);
             await guiOtp.GuiAsync(otp.SdtChuQuan, otp.Ma, nd.TenDangNhap, ct);
-            throw LoiTaiKhoanBiKhoa(otp);
+            throw LoiTaiKhoanBiKhoa(otp, nd);
         }
 
         if (!BCrypt.Net.BCrypt.Verify(matKhau, nd.MatKhau))
@@ -101,7 +101,7 @@ public sealed class DichVuXacThuc(
                     chiTiet: new { lyDo = $"Nhập sai mật khẩu {nd.SoLanNhapSai} lần liên tiếp" });
                 await db.SaveChangesAsync(ct);
                 await guiOtp.GuiAsync(otp.SdtChuQuan, otp.Ma, nd.TenDangNhap, ct);
-                throw LoiTaiKhoanBiKhoa(otp);
+                throw LoiTaiKhoanBiKhoa(otp, nd);
             }
 
             // 5.b
@@ -317,7 +317,7 @@ public sealed class DichVuXacThuc(
 
     private static ThongTinNguoiDung ThongTin(NguoiDung nd) => new(nd.MaND, nd.HoTen, nd.TenDangNhap, nd.VaiTro);
 
-    private sealed record OtpMoi(string Ma, string SdtChuQuan);
+    private sealed record OtpMoi(string Ma, string SdtChuQuan, string TenChuQuan);
 
     /// <summary>Tạo OTP 6 số, vô hiệu các OTP cũ chưa dùng của tài khoản.</summary>
     private async Task<OtpMoi> TaoOtpAsync(NguoiDung nd, CancellationToken ct)
@@ -339,19 +339,32 @@ public sealed class DichVuXacThuc(
         });
 
         // BR03: mã chỉ gửi tới số điện thoại của Chủ quán.
-        var sdtChuQuan = await db.ChuQuan.OrderBy(c => c.MaND).Select(c => c.SDT).FirstOrDefaultAsync(ct)
-            ?? nd.SDT;
-        return new OtpMoi(ma, sdtChuQuan.Trim());
+        var chuQuan = await db.ChuQuan.OrderBy(c => c.MaND).Select(c => new { c.SDT, c.HoTen }).FirstOrDefaultAsync(ct);
+        return new OtpMoi(ma, (chuQuan?.SDT ?? nd.SDT).Trim(), chuQuan?.HoTen ?? nd.HoTen);
     }
 
-    private LoiNghiepVuException LoiTaiKhoanBiKhoa(OtpMoi otp)
+    private LoiNghiepVuException LoiTaiKhoanBiKhoa(OtpMoi otp, NguoiDung nd)
     {
         var them = new Dictionary<string, object?>
         {
             ["canNhapOtp"] = true,
             ["sdtNhanMa"] = QuyTac.CheSoDienThoai(otp.SdtChuQuan),
         };
-        if (tichHop.Value.HienOtpGiaLap) them["maOtpGiaLap"] = otp.Ma;
+        if (tichHop.Value.HienOtpGiaLap)
+        {
+            // Chỉ khi giả lập: mô phỏng tin nhắn đến điện thoại Chủ quán để người thử biết mã đi tới ai,
+            // tài khoản nào bị khóa và vai trò gì (thực tế nhân viên không thấy mã, phải hỏi Chủ quán).
+            them["maOtpGiaLap"] = otp.Ma;
+            them["giaLapSms"] = new
+            {
+                nguoiNhan = otp.TenChuQuan,
+                sdtNhan = QuyTac.CheSoDienThoai(otp.SdtChuQuan),
+                taiKhoanBiKhoa = nd.TenDangNhap,
+                hoTenBiKhoa = nd.HoTen,
+                vaiTroBiKhoa = nd.VaiTro == VaiTroNguoiDung.ChuQuan ? "Chủ quán" : "Nhân viên",
+                noiDung = $"Xom Nho: ma mo khoa tai khoan {nd.TenDangNhap} la {otp.Ma} (hieu luc 5 phut).",
+            };
+        }
         return new LoiNghiepVuException(StatusCodes.Status423Locked, TaiKhoanBiKhoaTam, duLieuThem: them);
     }
 

@@ -210,6 +210,53 @@ a {
   color: #78350f;
 }
 
+/* Màn hình nhập OTP – mô phỏng tin nhắn đến điện thoại Chủ quán (chỉ khi giả lập SMS). */
+.sms-gia-lap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+}
+
+.sms-gia-lap__dong {
+  margin: 0;
+}
+
+.nhan-vai-tro {
+  display: inline-block;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  background: #78350f;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.dt-gia-lap {
+  padding: 0.6rem;
+  border: 2px solid #374151;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--mau-chu);
+}
+
+.dt-gia-lap__dau {
+  margin-bottom: 0.4rem;
+  color: var(--mau-chu-phu);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.dt-gia-lap__tin {
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  border-radius: 14px 14px 14px 4px;
+  background: #eef1f6;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
 .gia-lap code {
   font-size: 1.3rem;
   letter-spacing: 0.15em;
