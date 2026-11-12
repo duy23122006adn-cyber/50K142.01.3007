@@ -1006,7 +1006,8 @@ select.truong__o {
 
 .pos {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
+  /* Giỏ rộng 380px; màn hình hẹp thì co còn tối thiểu 320px để khung hàng hóa không bị ép. */
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 38%, 380px);
   align-items: start;
   gap: 1.25rem;
   max-width: 1300px;
@@ -1016,9 +1017,31 @@ select.truong__o {
   max-width: none;
 }
 
+/* Hai khung nằm cạnh nhau trong lưới: bỏ lề trên của quy tắc .the + .the để thẳng hàng. */
+.pos > .the + .the {
+  margin-top: 0;
+}
+
+/* Giỏ hàng ghim khi cuộn nhưng không cao quá màn hình: danh sách món tự cuộn bên trong,
+   tiêu đề, chọn khách, tổng tiền và nút thanh toán luôn nhìn thấy để nhấn ngay. */
 .pos__gio {
   position: sticky;
   top: 80px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+}
+
+.pos__gio > * {
+  flex-shrink: 0;
+}
+
+.pos__gio > .ds-gio {
+  flex: 0 1 auto;
+  min-height: 4.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 @media (max-width: 980px) {
@@ -1027,6 +1050,7 @@ select.truong__o {
   }
   .pos__gio {
     position: static;
+    max-height: none;
   }
 }
 
@@ -1058,8 +1082,10 @@ select.truong__o {
 
 .pos-tab .nut {
   min-height: 44px;
-  padding: 0.4rem 0.5rem;
+  padding: 0.4rem 0.35rem;
   border-radius: 8px;
+  white-space: normal;
+  line-height: 1.2;
 }
 
 @media (max-width: 560px) {
@@ -1117,8 +1143,11 @@ select.truong__o {
 
 .pos-khach .nut {
   min-height: 44px;
-  padding: 0.4rem 0.5rem;
+  padding: 0.4rem 0.35rem;
   border-radius: 8px;
+  /* Khung hẹp (hoặc trình duyệt phóng to) thì chữ xuống dòng, không bị cắt. */
+  white-space: normal;
+  line-height: 1.2;
 }
 
 .nut--dang-chon {
