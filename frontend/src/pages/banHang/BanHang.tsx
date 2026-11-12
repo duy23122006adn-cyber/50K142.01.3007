@@ -256,29 +256,6 @@ export function BanHang() {
 
   // ------------------------------------------------------------------ Giao diện
 
-  const khungKhach = (
-    <div className="khung-khach">
-      <span className="ghi-chu">Khách hàng:</span>{' '}
-      {khach ? (
-        <button type="button" className="nut nut--nho" onClick={() => setMoChonKhach(true)}>
-          {khach.hoTen} · {khach.sdt}
-        </button>
-      ) : (
-        <strong>Khách vãng lai</strong>
-      )}
-      <div className="hang-nut hang-nut--trai">
-        <button type="button" className="nut nut--nho" onClick={() => setMoChonKhach(true)}>
-          Chọn khách hàng
-        </button>
-        {khach && (
-          <button type="button" className="nut nut--nho" onClick={() => setKhach(null)}>
-            Khách vãng lai
-          </button>
-        )}
-      </div>
-    </div>
-  )
-
   /** Màn hình 6.5.1 mục 38–40: hai nút chọn khách ngay dưới tiêu đề "Đơn hàng mới". */
   const chonKhachGio = (
     <>
@@ -445,29 +422,35 @@ export function BanHang() {
               Quay lại giỏ hàng
             </button>
           </section>
-          <aside className="the pos__gio">
-            <h2>Thanh toán</h2>
-            {khungKhach}
-            <p className="ghi-chu">Cần thanh toán</p>
-            <p className="so-rat-lon">{tien(tong)}</p>
-            <div className="hang-nut hang-nut--trai">
-              <button type="button" className="nut nut--nho" onClick={() => docTongTien(tong)} title="Đọc lại số tiền">
-                🔊 Đọc số tiền
-              </button>
-              <NutDocTo cauThu={`Tổng tiền cần thanh toán ${docTien(tong)}`} />
+          {/* Cùng bố cục với giỏ "Đơn hàng mới": tiêu đề + số sản phẩm, hai nút chọn khách, tổng tiền dưới đường gạch. */}
+          <aside className="the pos__gio pos-tt">
+            <div className="pos-dau">
+              <strong>Thanh toán</strong>
+              <span>{soSp} sản phẩm</span>
             </div>
-            <h3>Hình thức thanh toán</h3>
-            <p className="ghi-chu">Thanh toán trực tiếp</p>
-            <div className="luoi-2">
-              <button type="button" className="nut nut--chinh nut--to" onClick={() => setBuoc('tienMat')}>
+            {chonKhachGio}
+            <div className="pos-tt__tong">
+              <span className="ghi-chu">Cần thanh toán</span>
+              <p className="so-rat-lon">{tien(tong)}</p>
+              <div className="pos-tt__doc">
+                <button type="button" className="nut nut--nho" onClick={() => docTongTien(tong)} title="Đọc lại số tiền">
+                  🔊 Đọc số tiền
+                </button>
+                <NutDocTo cauThu={`Tổng tiền cần thanh toán ${docTien(tong)}`} />
+              </div>
+            </div>
+            <h3 className="pos-tt__nhom">Hình thức thanh toán</h3>
+            <p className="ghi-chu pos-tt__nhan">Thanh toán trực tiếp</p>
+            <div className="pos-tt__pt">
+              <button type="button" className="nut nut--chinh" onClick={() => setBuoc('tienMat')}>
                 Tiền mặt
               </button>
-              <button type="button" className="nut nut--chinh nut--to" onClick={() => setBuoc('qr')}>
+              <button type="button" className="nut nut--chinh" onClick={() => setBuoc('qr')}>
                 Chuyển khoản QR
               </button>
             </div>
-            <p className="ghi-chu">Khách hàng muốn ghi nợ?</p>
-            <button type="button" className="nut nut--rong" onClick={() => batDauGhiNo()}>
+            <p className="ghi-chu pos-tt__nhan">Khách hàng muốn ghi nợ?</p>
+            <button type="button" className="nut nut--rong pos-tt__no" onClick={() => batDauGhiNo()}>
               Chuyển sang ghi nợ
             </button>
           </aside>

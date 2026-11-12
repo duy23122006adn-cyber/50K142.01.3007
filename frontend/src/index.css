@@ -695,7 +695,6 @@ a {
 .hop-thoai--thanhCong .nut--chinh {
   min-width: 60%;
   border-color: var(--mau-xanh-tb);
-  border-radius: 6px;
   background: var(--mau-xanh-tb);
 }
 
@@ -706,7 +705,6 @@ a {
 .hop-thoai--loi .nut--chinh {
   min-width: 60%;
   border-color: var(--mau-do);
-  border-radius: 6px;
   background: var(--mau-do);
 }
 
@@ -1666,10 +1664,59 @@ select.truong__o {
 }
 
 /* ------------------------------------------------------------------ Giai đoạn 8a: đọc to, sao lưu */
-.nut-doc-to {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.2rem;
+/* Bước thanh toán (6.5.3) – cùng bố cục với giỏ "Đơn hàng mới". */
+.pos-tt__tong {
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--mau-vien);
+}
+
+.pos-tt__tong .so-rat-lon {
+  margin: 0.1rem 0 0.6rem;
+  line-height: 1.15;
+}
+
+.pos-tt__doc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nhac-giong {
+  flex-basis: 100%;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.pos-tt__nhom {
+  margin: 1.1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--mau-vien);
+  font-size: 1.05rem;
+}
+
+.pos-tt__nhan {
+  margin: 0.6rem 0 0.4rem;
+}
+
+.pos-tt__pt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.pos-tt__pt .nut,
+.pos-tt__no {
+  min-height: 52px;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.pos-tt__pt .nut {
+  font-size: 1.05rem;
 }
 
 .chu-nho {
@@ -1691,9 +1738,6 @@ select.truong__o {
   }
 }
 /* ------------------------------------------------------------------ Quản lý tài khoản – theo mẫu 2.1–2.5 */
-.trang-tai-khoan .nut:not(.nut--nho) {
-  border-radius: 6px;
-}
 
 .trang-tai-khoan .truong__sao {
   color: inherit;
