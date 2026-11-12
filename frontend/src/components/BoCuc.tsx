@@ -177,8 +177,8 @@ export function BoCuc() {
                 </NavLink>
                 {con.length > 0 && (
                   // Luôn có trong DOM để mở/thu có hiệu ứng; khi thu thì inert (không Tab vào được).
-                  <div className={`menu-trai__xo ${moCon ? 'menu-trai__xo--mo' : ''}`} inert={!moCon}>
-                    <div className="menu-trai__boc">
+                  <div className={`xo ${moCon ? 'xo--mo' : ''}`} inert={!moCon}>
+                    <div className="xo__boc">
                       <div className="menu-trai__con">
                         {con.map((m) => (
                           <NavLink key={m.duongDan} to={m.duongDan} end>

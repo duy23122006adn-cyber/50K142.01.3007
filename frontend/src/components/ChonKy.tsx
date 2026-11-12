@@ -136,6 +136,8 @@ export function ChonKy({
   const [lichTu, setLichTu] = useState<ThangXem>(tachNgay(tuNgay || homNay))
   const [lichDen, setLichDen] = useState<ThangXem>(tachNgay(denNgay || homNay))
   const [loi, setLoi] = useState<Record<string, string>>({})
+  // Phần lịch / chọn tháng / quý / khoảng ngày: ấn lại tab đang chọn để thu gọn, giống menu trái.
+  const [moLich, setMoLich] = useState(true)
 
   const loiHienThi = { ...(loiServer ?? {}), ...loi }
 
@@ -152,12 +154,17 @@ export function ChonKy({
     if (!tuNgay) l.tuNgay = KHONG_DE_TRONG
     if (!denNgay) l.denNgay = KHONG_DE_TRONG
     if (tuNgay && denNgay && tuNgay > denNgay) l.tuNgay = 'Ngày bắt đầu không được lớn hơn ngày kết thúc!'
-    if (Object.keys(l).length) return setLoi(l)
+    if (Object.keys(l).length) {
+      setMoLich(true) // lỗi nằm trong phần lịch → mở ra cho thấy
+      return setLoi(l)
+    }
     onXacNhan({ cheDo, tu: tuNgay, den: denNgay })
   }
 
   const doiTab = (c: CheDoKy) => {
+    if (c === cheDo) return setMoLich((v) => !v)
     setCheDo(c)
+    setMoLich(true)
     setLoi({})
   }
 
@@ -171,10 +178,16 @@ export function ChonKy({
               type="button"
               role="tab"
               aria-selected={cheDo === c}
+              aria-expanded={cheDo === c ? moLich : undefined}
               className={`nut nut--nho ${cheDo === c ? 'nut--chinh' : ''}`}
               onClick={() => doiTab(c)}
             >
               {ten}
+              {cheDo === c && (
+                <span className={`mui-ten ${moLich ? 'mui-ten--mo' : ''}`} aria-hidden>
+                  ▸
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -186,88 +199,94 @@ export function ChonKy({
         </div>
       </div>
 
-      {cheDo === 'ngay' && (
-        <Lich xem={lichNgay} setXem={setLichNgay} chon={ngayChon} onChon={setNgayChon} nhan="Chọn ngày" />
-      )}
+      <div className={`xo ${moLich ? 'xo--mo' : ''}`} inert={!moLich}>
+        <div className="xo__boc">
+          <div className="chon-ky__than">
+            {cheDo === 'ngay' && (
+              <Lich xem={lichNgay} setXem={setLichNgay} chon={ngayChon} onChon={setNgayChon} nhan="Chọn ngày" />
+            )}
 
-      {cheDo === 'thang' && (
-        <div className="lich">
-          <ChonNam nam={nam} setNam={setNam} />
-          <div className="luoi-ky luoi-ky--thang">
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((t) => (
-              <button
-                key={t}
-                type="button"
-                className={`nut nut--nho ${t === thang ? 'nut--chinh' : ''}`}
-                disabled={iso(nam, t, 1) > homNay}
-                aria-pressed={t === thang}
-                onClick={() => setThang(t)}
-              >
-                Tháng {t}
-              </button>
-            ))}
+            {cheDo === 'thang' && (
+              <div className="lich">
+                <ChonNam nam={nam} setNam={setNam} />
+                <div className="luoi-ky luoi-ky--thang">
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      className={`nut nut--nho ${t === thang ? 'nut--chinh' : ''}`}
+                      disabled={iso(nam, t, 1) > homNay}
+                      aria-pressed={t === thang}
+                      onClick={() => setThang(t)}
+                    >
+                      Tháng {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {cheDo === 'quy' && (
+              <div className="lich">
+                <ChonNam nam={nam} setNam={setNam} />
+                <div className="luoi-ky">
+                  {[1, 2, 3, 4].map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      className={`nut nut--nho ${q === quy ? 'nut--chinh' : ''}`}
+                      disabled={iso(nam, q * 3 - 2, 1) > homNay}
+                      aria-pressed={q === quy}
+                      onClick={() => setQuy(q)}
+                    >
+                      Quý {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {cheDo === 'tuyChon' && (
+              <div className="luoi-2">
+                <div>
+                  <label className="truong">
+                    <span className="truong__nhan">Từ ngày</span>
+                    <input
+                      className={`truong__o ${loiHienThi.tuNgay ? 'truong__o--loi' : ''}`}
+                      type="date"
+                      max={homNay}
+                      value={tuNgay}
+                      onChange={(e) => {
+                        setTuNgay(e.target.value)
+                        if (e.target.value) setLichTu(tachNgay(e.target.value))
+                      }}
+                    />
+                    {loiHienThi.tuNgay && <span className="truong__loi">{loiHienThi.tuNgay}</span>}
+                  </label>
+                  <Lich xem={lichTu} setXem={setLichTu} chon={tuNgay} onChon={setTuNgay} nhan="Chọn từ ngày" />
+                </div>
+                <div>
+                  <label className="truong">
+                    <span className="truong__nhan">Đến ngày</span>
+                    <input
+                      className={`truong__o ${loiHienThi.denNgay ? 'truong__o--loi' : ''}`}
+                      type="date"
+                      max={homNay}
+                      value={denNgay}
+                      onChange={(e) => {
+                        setDenNgay(e.target.value)
+                        if (e.target.value) setLichDen(tachNgay(e.target.value))
+                      }}
+                    />
+                    {loiHienThi.denNgay && <span className="truong__loi">{loiHienThi.denNgay}</span>}
+                  </label>
+                  <Lich xem={lichDen} setXem={setLichDen} chon={denNgay} onChon={setDenNgay} nhan="Chọn đến ngày" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
-
-      {cheDo === 'quy' && (
-        <div className="lich">
-          <ChonNam nam={nam} setNam={setNam} />
-          <div className="luoi-ky">
-            {[1, 2, 3, 4].map((q) => (
-              <button
-                key={q}
-                type="button"
-                className={`nut nut--nho ${q === quy ? 'nut--chinh' : ''}`}
-                disabled={iso(nam, q * 3 - 2, 1) > homNay}
-                aria-pressed={q === quy}
-                onClick={() => setQuy(q)}
-              >
-                Quý {q}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {cheDo === 'tuyChon' && (
-        <div className="luoi-2">
-          <div>
-            <label className="truong">
-              <span className="truong__nhan">Từ ngày</span>
-              <input
-                className={`truong__o ${loiHienThi.tuNgay ? 'truong__o--loi' : ''}`}
-                type="date"
-                max={homNay}
-                value={tuNgay}
-                onChange={(e) => {
-                  setTuNgay(e.target.value)
-                  if (e.target.value) setLichTu(tachNgay(e.target.value))
-                }}
-              />
-              {loiHienThi.tuNgay && <span className="truong__loi">{loiHienThi.tuNgay}</span>}
-            </label>
-            <Lich xem={lichTu} setXem={setLichTu} chon={tuNgay} onChon={setTuNgay} nhan="Chọn từ ngày" />
-          </div>
-          <div>
-            <label className="truong">
-              <span className="truong__nhan">Đến ngày</span>
-              <input
-                className={`truong__o ${loiHienThi.denNgay ? 'truong__o--loi' : ''}`}
-                type="date"
-                max={homNay}
-                value={denNgay}
-                onChange={(e) => {
-                  setDenNgay(e.target.value)
-                  if (e.target.value) setLichDen(tachNgay(e.target.value))
-                }}
-              />
-              {loiHienThi.denNgay && <span className="truong__loi">{loiHienThi.denNgay}</span>}
-            </label>
-            <Lich xem={lichDen} setXem={setLichDen} chon={denNgay} onChon={setDenNgay} nhan="Chọn đến ngày" />
-          </div>
-        </div>
-      )}
+      </div>
 
       {cheDo !== 'tuyChon' && (loiHienThi.tuNgay || loiHienThi.denNgay) && (
         <p className="thong-bao thong-bao--do">{loiHienThi.tuNgay ?? loiHienThi.denNgay}</p>

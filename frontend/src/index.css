@@ -441,8 +441,9 @@ a {
   transform: rotate(90deg);
 }
 
-/* Mở/thu mục con nhẹ nhàng: chiều cao 0fr ↔ 1fr kèm mờ dần. */
-.menu-trai__xo {
+/* Khối mở/thu nhẹ nhàng (menu trái, bộ chọn kỳ báo cáo): chiều cao 0fr ↔ 1fr kèm mờ dần.
+   Cấu trúc: .xo[.xo--mo] > .xo__boc > nội dung. */
+.xo {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
@@ -451,18 +452,31 @@ a {
     opacity 0.2s ease;
 }
 
-.menu-trai__xo--mo {
+.xo--mo {
   grid-template-rows: 1fr;
   opacity: 1;
 }
 
-.menu-trai__boc {
+.xo__boc {
   min-height: 0;
   overflow: hidden;
 }
 
+/* Mũi tên ▸ xoay xuống khi mở (tab bộ chọn kỳ). */
+.mui-ten {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-size: 0.75em;
+  transition: transform 0.25s ease;
+}
+
+.mui-ten--mo {
+  transform: rotate(90deg);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .menu-trai__xo,
+  .xo,
+  .mui-ten,
   .menu-trai__nhom > a::before {
     transition: none;
   }
@@ -1491,7 +1505,11 @@ select.truong__o {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+}
+
+/* Khoảng cách đầu ↔ lịch nằm trong phần thu gọn được, để khi thu không còn khoảng trống. */
+.chon-ky__than {
+  padding-top: 1rem;
 }
 
 .hang-nut--sat {
