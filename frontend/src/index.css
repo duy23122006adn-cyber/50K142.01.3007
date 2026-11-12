@@ -79,24 +79,39 @@ a {
   cursor: pointer;
 }
 
-.nut:hover {
-  background: var(--mau-nen);
+/*
+ * Mọi nút mặc định nền trắng; chỉ khi di chuột tới (hover) hoặc đang ấn (active) mới chuyển đỏ.
+ * Nút chính (.nut--chinh) chỉ đậm viền hơn để vẫn phân biệt được với nút phụ.
+ * Mục đang chọn (tab, tháng/quý, kênh gửi, số trang) dùng .nut--chon: giữ màu đỏ vì đã được ấn chọn.
+ */
+.nut {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .nut--chinh {
-  background: var(--mau-chinh);
-  border-color: var(--mau-chinh);
-  color: #fff;
-}
-
-.nut--chinh:hover {
-  background: var(--mau-chinh-dam);
+  border-color: #b9c1cf;
 }
 
 .nut--chu {
   border-color: transparent;
   background: transparent;
-  color: var(--mau-chinh);
+}
+
+.nut:not(:disabled):hover,
+.nut:not(:disabled):active,
+.nut--chon {
+  border-color: var(--mau-chinh);
+  background: var(--mau-chinh);
+  color: #fff;
+}
+
+.nut:not(:disabled):active,
+.nut--chon:not(:disabled):hover {
+  border-color: var(--mau-chinh-dam);
+  background: var(--mau-chinh-dam);
 }
 
 .nut--rong {
@@ -692,24 +707,9 @@ a {
   font-size: 1.3rem;
 }
 
-.hop-thoai--thanhCong .nut--chinh {
-  min-width: 60%;
-  border-color: var(--mau-xanh-tb);
-  background: var(--mau-xanh-tb);
-}
-
-.hop-thoai--thanhCong .nut--chinh:hover {
-  background: #097030;
-}
-
+.hop-thoai--thanhCong .nut--chinh,
 .hop-thoai--loi .nut--chinh {
   min-width: 60%;
-  border-color: var(--mau-do);
-  background: var(--mau-do);
-}
-
-.hop-thoai--loi .nut--chinh:hover {
-  background: #c22015;
 }
 
 /* ------------------------------------------------------------------ Giai đoạn 2: bảng, công cụ, menu con */
@@ -879,19 +879,10 @@ a {
   font-size: 0.95rem;
 }
 
-.nut--nguy-hiem {
-  border-color: #f1b5b5;
-  color: var(--mau-do);
-}
-
+/* Nút nguy hiểm (Xóa, Hủy hóa đơn…): mặc định trắng như mọi nút, di chuột / ấn mới đỏ. */
+.nut--nguy-hiem,
 .nut--nguy-hiem-dac {
-  border-color: var(--mau-do);
-  background: var(--mau-do);
-  color: #fff;
-}
-
-.nut--nguy-hiem-dac:hover {
-  background: #c22015;
+  border-color: #b9c1cf;
 }
 
 .luoi-2 {
@@ -1648,70 +1639,35 @@ select.truong__o {
 }
 
 /* ------------------------------------------------------------------ Giai đoạn 8d: VietQR */
-/* Khung QR hai cột: trái mã QR, phải thông tin + xác nhận; hẹp thì tự xuống một cột. */
 .khung-qr {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  align-items: center;
-  gap: 1.25rem 2rem;
-  text-align: left;
-}
-
-.khung-qr__trai {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  text-align: center;
 }
 
-.khung-qr__trai .ghi-chu {
-  margin: 0;
-}
-
-.khung-qr__phai {
+/* Màn hình "Chuyển khoản QR" (bán hàng 6.5, đổi hàng 6.2): khung rộng hết bề ngang, mọi thứ căn giữa. */
+.man-qr {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
-
-.khung-qr__phai .thong-tin {
-  margin: 0;
-}
-
-.khung-qr__phai .gia-lap {
+  align-items: center;
   text-align: center;
 }
 
-.khung-qr__cho {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
+.man-qr h2 {
+  margin-bottom: 0.25rem;
 }
 
-/* Màn hình "Chuyển khoản QR" (bán hàng 6.5, đổi hàng 6.2). */
-.man-qr__dau {
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--mau-vien);
+.man-qr > .ghi-chu {
+  margin: 0 0 0.75rem;
 }
 
-.man-qr__dau h2,
-.man-qr__dau .ghi-chu {
-  margin: 0;
+.man-qr .gia-lap {
+  width: min(460px, 100%);
 }
 
-.man-qr__dau .ghi-chu {
-  margin-top: 0.3rem;
-}
-
-.man-qr__chan {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.25rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--mau-vien);
+.man-qr > .nut--chu {
+  margin-top: 0.75rem;
 }
 
 .anh-qr {

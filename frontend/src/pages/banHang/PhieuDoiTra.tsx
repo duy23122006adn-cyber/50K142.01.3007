@@ -346,7 +346,7 @@ export function DuyetDoiTraDanhSach() {
               type="button"
               role="tab"
               aria-selected={trangThai === t}
-              className={`nut nut--nho ${trangThai === t ? 'nut--chinh' : ''}`}
+              className={`nut nut--nho ${trangThai === t ? 'nut--chon' : ''}`}
               onClick={() => setTrangThai(t)}
             >
               {t}

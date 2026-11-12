@@ -334,7 +334,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                 <p className="ghi-chu">Kênh gửi</p>
                 <div className="tab">
                   {(['SMS', 'Zalo'] as const).map((x) => (
-                    <button key={x} type="button" className={`nut nut--nho ${kenh === x ? 'nut--chinh' : ''}`} onClick={() => setKenh(x)}>
+                    <button key={x} type="button" className={`nut nut--nho ${kenh === x ? 'nut--chon' : ''}`} onClick={() => setKenh(x)}>
                       {x}
                     </button>
                   ))}

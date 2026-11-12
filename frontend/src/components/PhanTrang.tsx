@@ -20,7 +20,7 @@ export function PhanTrang({ trang, soTrang, onDoiTrang }: Props) {
           {i > 0 && t - ds[i - 1] > 1 && <span className="phan-trang__cach">…</span>}
           <button
             type="button"
-            className={`nut nut--nho ${t === trang ? 'nut--chinh' : ''}`}
+            className={`nut nut--nho ${t === trang ? 'nut--chon' : ''}`}
             aria-current={t === trang ? 'page' : undefined}
             onClick={() => onDoiTrang(t)}
           >

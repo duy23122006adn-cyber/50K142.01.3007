@@ -179,7 +179,7 @@ export function ChonKy({
               role="tab"
               aria-selected={cheDo === c}
               aria-expanded={cheDo === c ? moLich : undefined}
-              className={`nut nut--nho ${cheDo === c ? 'nut--chinh' : ''}`}
+              className={`nut nut--nho ${cheDo === c ? 'nut--chon' : ''}`}
               onClick={() => doiTab(c)}
             >
               {ten}
@@ -214,7 +214,7 @@ export function ChonKy({
                     <button
                       key={t}
                       type="button"
-                      className={`nut nut--nho ${t === thang ? 'nut--chinh' : ''}`}
+                      className={`nut nut--nho ${t === thang ? 'nut--chon' : ''}`}
                       disabled={iso(nam, t, 1) > homNay}
                       aria-pressed={t === thang}
                       onClick={() => setThang(t)}
@@ -234,7 +234,7 @@ export function ChonKy({
                     <button
                       key={q}
                       type="button"
-                      className={`nut nut--nho ${q === quy ? 'nut--chinh' : ''}`}
+                      className={`nut nut--nho ${q === quy ? 'nut--chon' : ''}`}
                       disabled={iso(nam, q * 3 - 2, 1) > homNay}
                       aria-pressed={q === quy}
                       onClick={() => setQuy(q)}

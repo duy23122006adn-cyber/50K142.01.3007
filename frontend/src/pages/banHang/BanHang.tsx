@@ -309,7 +309,7 @@ export function BanHang() {
                   type="button"
                   role="tab"
                   aria-selected={tab === n}
-                  className={`nut ${tab === n ? 'nut--chinh' : ''}`}
+                  className={`nut ${tab === n ? 'nut--chon' : ''}`}
                   onClick={() => setTab(n)}
                 >
                   {n || 'Tất cả'}
@@ -688,7 +688,7 @@ export function BanHang() {
             <p className="ghi-chu">Kênh gửi</p>
             <div className="tab">
               {(['SMS', 'Zalo'] as const).map((k) => (
-                <button key={k} type="button" className={`nut nut--nho ${kenh === k ? 'nut--chinh' : ''}`} onClick={() => setKenh(k)}>
+                <button key={k} type="button" className={`nut nut--nho ${kenh === k ? 'nut--chon' : ''}`} onClick={() => setKenh(k)}>
                   {k}
                 </button>
               ))}

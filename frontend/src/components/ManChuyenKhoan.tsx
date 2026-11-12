@@ -3,7 +3,7 @@ import { KhungQr } from './KhungQr'
 
 /**
  * Màn hình "Chuyển khoản QR" dùng chung cho bán hàng (6.5) và thu thêm chênh lệch đổi hàng (6.2):
- * khung rộng, mã QR bên trái, thông tin + xác nhận bên phải, nút quay lại chọn hình thức thanh toán.
+ * mẫu một cột như cũ (tiêu đề, mã QR, số tiền, xác nhận ngân hàng), khung kéo rộng hết bề ngang và căn giữa.
  */
 export function ManChuyenKhoan({
   moTa,
@@ -19,17 +19,13 @@ export function ManChuyenKhoan({
   onDoiHinhThuc: () => void
 }) {
   return (
-    <section className="the the--vua man-qr">
-      <div className="man-qr__dau">
-        <h2>Chuyển khoản QR</h2>
-        {moTa && <p className="ghi-chu">{moTa}</p>}
-      </div>
+    <section className="the the--rong man-qr">
+      <h2>Chuyển khoản QR</h2>
+      {moTa && <p className="ghi-chu">{moTa}</p>}
       <KhungQr soTien={soTien} dangXuLy={dangXuLy} onKetQua={onKetQua} />
-      <div className="man-qr__chan">
-        <button type="button" className="nut nut--chu" onClick={onDoiHinhThuc}>
-          Đổi hình thức thanh toán
-        </button>
-      </div>
+      <button type="button" className="nut nut--chu" onClick={onDoiHinhThuc}>
+        Đổi hình thức thanh toán
+      </button>
     </section>
   )
 }

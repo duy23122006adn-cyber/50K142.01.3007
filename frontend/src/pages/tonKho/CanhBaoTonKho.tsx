@@ -31,7 +31,7 @@ export function CanhBaoTonKho() {
                   type="button"
                   role="tab"
                   aria-selected={tab === t}
-                  className={`nut nut--nho ${tab === t ? 'nut--chinh' : ''}`}
+                  className={`nut nut--nho ${tab === t ? 'nut--chon' : ''}`}
                   onClick={() => setTab(t)}
                 >
                   {t} ({sl})
