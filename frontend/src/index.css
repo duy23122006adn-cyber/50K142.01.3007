@@ -927,34 +927,9 @@ select.truong__o {
   font-size: 0.95rem;
 }
 
-/* ------------------------------------------------------------------ Giai đoạn 3: bán hàng, hóa đơn, ca */
-.the-ca {
-  margin-left: auto;
-  margin-right: 0.75rem;
-  padding: 0.25rem 0.7rem;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.16);
-  color: #fff;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.the-ca--trong {
-  opacity: 0.75;
-}
-
-@media (max-width: 560px) {
-  .the-ca {
-    margin-right: 0;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.75rem;
-    white-space: normal;
-    text-align: center;
-  }
-}
-
 /* Đèn trạng thái kết nối thời gian thực (Giai đoạn 8b). */
 .den-ket-noi {
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;

@@ -1,6 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { caApi } from '../api/nghiepVu'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useXacThuc } from '../auth/AuthContext'
 import { TEN_TRANG, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
@@ -26,17 +24,6 @@ function Breadcrumb() {
         )
       })}
     </nav>
-  )
-}
-
-/** Ca đang mở của cửa hàng (Q10) – hiển thị trên thanh tiêu đề. */
-function ThongTinCa() {
-  const { data: ca } = useQuery({ queryKey: ['ca-hien-tai'], queryFn: caApi.hienTai, refetchInterval: 120_000 })
-  if (!ca) return <span className="the-ca the-ca--trong">Chưa mở ca</span>
-  return (
-    <span className="the-ca" title={`Người phụ trách: ${ca.hoTenPhuTrach}`}>
-      {ca.maCa} · {ca.gioBatDau.slice(0, 5)} · {ca.trangThai}
-    </span>
   )
 }
 
@@ -86,7 +73,6 @@ export function BoCuc() {
           <span className="thuong-hieu__ten">Xóm nhỏ</span>
         </Link>
 
-        <ThongTinCa />
         <span
           className={`den-ket-noi den-ket-noi--${ketNoi}`}
           title={ketNoi === 'truc-tuyen' ? 'Đang đồng bộ thời gian thực' : ketNoi === 'mat-ket-noi' ? 'Mất kết nối máy chủ – đang thử kết nối lại' : 'Đang kết nối…'}
