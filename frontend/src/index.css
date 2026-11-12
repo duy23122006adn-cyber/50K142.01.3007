@@ -403,8 +403,10 @@ a {
   cursor: pointer;
 }
 
-.tai-khoan__menu button:hover {
-  background: var(--mau-nen);
+.tai-khoan__menu button:hover,
+.tai-khoan__menu button:active {
+  background: var(--mau-chinh);
+  color: #fff;
 }
 
 .bo-cuc__than {
@@ -655,16 +657,36 @@ a {
   background: var(--mau-the);
   color: var(--mau-chu);
   text-decoration: none;
-}
-
-.o-chuc-nang:hover {
-  border-color: var(--mau-chinh);
-  box-shadow: 0 4px 14px rgb(203 0 30 / 0.1);
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .o-chuc-nang span {
   color: var(--mau-chu-phu);
   font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+
+/* Như mọi nút: di chuột tới / ấn vào mới chuyển nền đỏ, chữ trắng. */
+.o-chuc-nang:hover,
+.o-chuc-nang:active {
+  border-color: var(--mau-chinh);
+  background: var(--mau-chinh);
+  color: #fff;
+  box-shadow: 0 4px 14px rgb(203 0 30 / 0.18);
+}
+
+.o-chuc-nang:active {
+  border-color: var(--mau-chinh-dam);
+  background: var(--mau-chinh-dam);
+}
+
+.o-chuc-nang:hover span,
+.o-chuc-nang:active span {
+  color: rgb(255 255 255 / 0.88);
 }
 
 /* ------------------------------------------------------------------ Hộp thoại */
@@ -1120,8 +1142,20 @@ select.truong__o {
   font-size: 0.95rem;
 }
 
-.ds-san-pham__dong:hover:not(:disabled) {
-  background: var(--mau-dong-xen);
+/* Dòng sản phẩm (bán hàng) – di chuột / ấn vào thì đỏ như mọi nút. */
+.ds-san-pham__dong:hover:not(:disabled),
+.ds-san-pham__dong:active:not(:disabled) {
+  background: var(--mau-chinh);
+  color: #fff;
+}
+
+.ds-san-pham__dong:active:not(:disabled) {
+  background: var(--mau-chinh-dam);
+}
+
+.ds-san-pham__dong:hover:not(:disabled) span,
+.ds-san-pham__dong:active:not(:disabled) span {
+  color: rgb(255 255 255 / 0.88);
 }
 
 .ds-san-pham__dong:disabled {
@@ -1188,9 +1222,11 @@ select.truong__o {
   cursor: pointer;
 }
 
-.o-san-pham:hover:not(:disabled) {
+.o-san-pham:hover:not(:disabled),
+.o-san-pham:active:not(:disabled) {
   border-color: var(--mau-chinh);
-  background: var(--mau-chinh-nhat);
+  background: var(--mau-chinh);
+  color: #fff;
 }
 
 .o-san-pham:disabled {
@@ -1575,8 +1611,11 @@ select.truong__o {
   cursor: pointer;
 }
 
-.lich__ngay:hover:not(:disabled) {
+.lich__ngay:hover:not(:disabled),
+.lich__ngay:active:not(:disabled) {
   border-color: var(--mau-chinh);
+  background: var(--mau-chinh);
+  color: #fff;
 }
 
 .lich__ngay:disabled {
