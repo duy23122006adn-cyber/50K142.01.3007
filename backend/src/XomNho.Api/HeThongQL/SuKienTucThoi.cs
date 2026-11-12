@@ -57,7 +57,6 @@ public static class NhomDuLieu
         [typeof(ChiTietHoaDon)] = HoaDon,
         [typeof(PhieuThanhToan)] = HoaDon,
         [typeof(NhatKyHuy)] = HoaDon,
-        [typeof(HoaDonTam)] = HoaDon,
         [typeof(GiaoDichNganHang)] = NganHang,
         [typeof(PhieuDoiTra)] = DoiTra,
         [typeof(ChiTietDoiTra)] = DoiTra,

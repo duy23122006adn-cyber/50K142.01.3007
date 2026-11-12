@@ -241,11 +241,8 @@ public sealed partial class DichVuBanHang(
         }
     }
 
-    /// <summary>
-    /// BR11 + Q20: xuất kho theo lô có HSD gần nhất, ghi lô và giá vốn từng phần; đánh giá cảnh báo hết hàng.
-    /// <paramref name="donGia"/>: giá khách đã trả (hóa đơn tạm bán offline); mặc định là giá bán hiện hành.
-    /// </summary>
-    private async Task XuatKhoAsync(HoaDon hd, List<DongDaTinh> dong, CancellationToken ct, IReadOnlyDictionary<string, decimal>? donGia = null)
+    /// <summary>BR11 + Q20: xuất kho theo lô có HSD gần nhất, ghi lô và giá vốn từng phần; đánh giá cảnh báo hết hàng.</summary>
+    private async Task XuatKhoAsync(HoaDon hd, List<DongDaTinh> dong, CancellationToken ct)
     {
         var homNay = dongHo.HomNay;
         foreach (var d in dong)
@@ -263,7 +260,7 @@ public sealed partial class DichVuBanHang(
                 hd.ChiTiet.Add(new ChiTietHoaDon
                 {
                     MaHH = d.HangHoa.MaHH, MaLo = lo.MaLo, SoLuong = lay,
-                    DonGia = donGia?.GetValueOrDefault(d.HangHoa.MaHH, d.HangHoa.GiaBan) ?? d.HangHoa.GiaBan, GiaVon = d.HangHoa.GiaNhap,
+                    DonGia = d.HangHoa.GiaBan, GiaVon = d.HangHoa.GiaNhap,
                 });
                 await canhBao.DanhGiaLoAsync(lo, d.HangHoa, xetHang: true, xetHan: false, capNhatNeuDaCo: true, ct);
             }

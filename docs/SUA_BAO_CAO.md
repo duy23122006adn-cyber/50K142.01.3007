@@ -427,9 +427,7 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 
 | 15.3 | Phần tích hợp "Đồng bộ với thiết bị di động" | "Đồng bộ dữ liệu theo thời gian thực giữa máy tính tại quầy và điện thoại" – không nói cách làm | "Điện thoại của Chủ quán mở cùng website (giao diện tự co cho màn hình nhỏ, menu dạng ngăn kéo). Dữ liệu chỉ có một nơi là máy chủ; khi một máy thay đổi dữ liệu, các máy đang mở web được báo ngay và tự cập nhật màn hình. Thanh tiêu đề hiện trạng thái “Trực tuyến / Mất kết nối”." Không làm ứng dụng di động riêng (đúng Out of scope) | 🟡 |
 
-| 15.4 | NFR Availability-02, 03 | "Vẫn bán hàng và ghi nhận hóa đơn bình thường khi mất mạng… Dữ liệu hóa đơn được lưu tạm cục bộ… tự động đồng bộ" | Ghi rõ phạm vi: "Khi mất mạng, máy bán vẫn bán hàng **thanh toán tiền mặt**; chuyển khoản QR, ghi nợ, đổi trả, hủy hóa đơn, thu nợ, kết ca và thêm lô cần có mạng. Hóa đơn bán lúc mất mạng là **hóa đơn tạm** (mã `TAM-…`), được lưu trên máy và tự gửi lên máy chủ khi có mạng; mã hóa đơn chính thức `HD-dd/mm/yyyy.nnn` được cấp lúc đồng bộ, theo ngày bán thật." *Đề xuất* thêm màn hình "Hóa đơn tạm (offline)" trong Quản lý bán hàng | 🟡 |
-| 15.5 | NFR Concurrency ("ưu tiên dữ liệu Chủ quán khi xung đột"), UC_6.5 BR10 | Không nói xử lý thế nào khi hóa đơn bán offline không còn hợp lệ lúc đồng bộ | "Khi đồng bộ, nếu không đủ tồn (máy khác đã bán), giá bán đã đổi hoặc hàng đã ngừng kinh doanh, hóa đơn tạm chuyển sang “Chờ Chủ quán xử lý” và Chủ quán nhận thông báo. Chủ quán “Ghi nhận” (theo giá khách đã trả; điều chỉnh tồn trước nếu thiếu) hoặc “Hủy” kèm lý do." Hóa đơn tạm chỉ được đồng bộ bởi chính người bán hoặc Chủ quán | 🟡 |
-| 15.6 | UC_9.1 (kết ca) | Không nói về hàng bán offline chưa đồng bộ | Thêm: "Máy còn hóa đơn tạm chưa đồng bộ thì không lưu được biên bản kết ca trên máy đó." Hạn chế còn lại: máy khác không biết hóa đơn tạm của một máy đang mất mạng, nên kết ca ở máy khác có thể lệch đúng số hàng đó (ghi nguyên nhân trong biên bản) | 🟡 |
+| 15.4 | NFR Availability-02, 03 | "Hỗ trợ chế độ Offline: vẫn bán hàng và ghi nhận hóa đơn bình thường khi mất mạng/mất điện. Dữ liệu hóa đơn được lưu tạm cục bộ… tự động đồng bộ" | **Không làm trong phiên bản này** (chủ dự án quyết định bỏ vì thiết kế giao diện không có màn hình cho chế độ offline / hóa đơn tạm). Giữ cách sửa ở mục 4: ghi rõ "Hỗ trợ chế độ Offline (giai đoạn sau)". Khi mất mạng, các màn hình báo lỗi kết nối | 🟡 |
 
 | 15.7 | Phần tích hợp "Chuyển khoản QR qua ngân hàng", UC_6.5 bước 11 | Không nói cách hệ thống biết khách đã chuyển khoản | "Mã QR là VietQR của tài khoản cửa hàng, kèm số tiền và nội dung chuyển khoản là mã tham chiếu riêng của giao dịch. Dịch vụ theo dõi biến động số dư báo tiền vào cho hệ thống; hệ thống đối chiếu mã tham chiếu và số tiền rồi mới ghi nhận thanh toán. Mỗi giao dịch ngân hàng chỉ dùng cho một lần thanh toán." Bản hiện tại chạy giả lập cho tới khi cấu hình tài khoản thật (README) | 🟡 |
 
@@ -440,6 +438,6 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 | Mức | Số mục |
 |---|---|
 | 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 48 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 46 |
 | 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

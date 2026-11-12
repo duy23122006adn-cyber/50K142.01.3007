@@ -65,7 +65,6 @@ export const DANH_SACH_CHUC_NANG: ChucNang[] = [
       { duongDan: '/quan-ly-ban-hang/doi-tra', ten: 'Xử lý đổi trả', vaiTro: CA_HAI },
       { duongDan: '/quan-ly-ban-hang/huy-hoa-don', ten: 'Hủy hóa đơn bán hàng', vaiTro: CHU_QUAN },
       { duongDan: '/quan-ly-ban-hang/duyet-doi-tra', ten: 'Duyệt phiếu đổi trả', vaiTro: CHU_QUAN },
-      { duongDan: '/quan-ly-ban-hang/hoa-don-tam', ten: 'Hóa đơn tạm (offline)', vaiTro: CA_HAI },
     ],
   },
   {
@@ -127,7 +126,6 @@ export const TEN_TRANG: Record<string, string> = {
   '/quan-ly-ban-hang/huy-hoa-don/hoa-don': 'Chi tiết hóa đơn',
   '/quan-ly-ban-hang/duyet-doi-tra': 'Duyệt phiếu đổi trả',
   '/quan-ly-ban-hang/duyet-doi-tra/phieu': 'Chi tiết phiếu',
-  '/quan-ly-ban-hang/hoa-don-tam': 'Hóa đơn tạm (offline)',
   '/quan-ly-khach-hang/them': 'Thêm khách hàng',
   '/ket-ca/luu-bien-ban': 'Lưu biên bản',
   '/ket-ca/bien-ban': 'Xem biên bản',

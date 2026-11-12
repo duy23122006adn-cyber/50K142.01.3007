@@ -1600,24 +1600,6 @@ select.truong__o {
   background: #fff;
 }
 
-/* ------------------------------------------------------------------ Giai đoạn 8c: bán offline */
-.bang-offline {
-  margin: 0 0 1rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid #f59e0b;
-  border-radius: var(--bo-goc);
-  background: #fffbeb;
-  color: #92400e;
-  font-weight: 600;
-}
-
-.bang-offline--cho {
-  border-color: var(--mau-vien);
-  background: var(--mau-the);
-  color: var(--mau-chu);
-  font-weight: 400;
-}
-
 /* ------------------------------------------------------------------ Giai đoạn 8a: đọc to, sao lưu */
 .nut-doc-to {
   display: inline-flex;

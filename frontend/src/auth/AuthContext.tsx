@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { dangKyKhiLamMoi, datAccessToken, lamMoiToken, type NguoiDung } from '../api/client'
 import * as api from '../api/xacThuc'
-import { luuNguoiDung, nguoiDungDaLuu, xoaNguoiDungDaLuu } from '../lib/offline'
 
 interface GiaTriXacThuc {
   nguoiDung: NguoiDung | null
@@ -24,21 +23,7 @@ export function XacThucProvider({ children }: { children: ReactNode }) {
   const chuaLuu = useRef(false)
 
   useEffect(() => {
-    dangKyKhiLamMoi((kq, loiMang) => {
-      if (kq) {
-        luuNguoiDung(kq.nguoiDung)
-        setNguoiDung(kq.nguoiDung)
-      } else if (loiMang) {
-        // Giai đoạn 8c: mất mạng – giữ phiên đang có; nếu vừa mở trang thì dùng người đăng nhập gần nhất trên máy (chỉ bán offline).
-        setNguoiDung((hienTai) => {
-          if (hienTai) return hienTai
-          const daLuu = nguoiDungDaLuu()
-          return daLuu ? { ...daLuu, ngoaiTuyen: true } : null
-        })
-      } else {
-        setNguoiDung(null)
-      }
-    })
+    dangKyKhiLamMoi((kq) => setNguoiDung(kq?.nguoiDung ?? null))
     // Khôi phục phiên nếu cookie refresh còn hiệu lực.
     lamMoiToken().finally(() => setDangKhoiPhuc(false))
   }, [])
@@ -46,14 +31,12 @@ export function XacThucProvider({ children }: { children: ReactNode }) {
   const dangNhap = useCallback(async (tenDangNhap: string, matKhau: string) => {
     const kq = await api.dangNhap(tenDangNhap, matKhau)
     datAccessToken(kq.accessToken)
-    luuNguoiDung(kq.nguoiDung)
     setNguoiDung(kq.nguoiDung)
   }, [])
 
   const xoaPhien = useCallback(() => {
     datAccessToken(null)
     chuaLuu.current = false
-    xoaNguoiDungDaLuu()
     setNguoiDung(null)
   }, [])
 

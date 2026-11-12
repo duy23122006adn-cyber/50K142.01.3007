@@ -30,9 +30,7 @@ export function ChuongThongBao() {
       await thongBaoApi.daDoc(t.maTB)
       void queryClient.invalidateQueries({ queryKey: ['thong-bao'] })
     }
-    if (t.loaiThongBao === 'Hóa đơn tạm') {
-      navigate('/quan-ly-ban-hang/hoa-don-tam') // Giai đoạn 8c
-    } else if (t.maThamChieu) {
+    if (t.maThamChieu) {
       void queryClient.invalidateQueries({ queryKey: ['doi-tra'] })
       navigate(`/quan-ly-ban-hang/doi-tra/phieu?ma=${encodeURIComponent(t.maThamChieu)}`)
     }

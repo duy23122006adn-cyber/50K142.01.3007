@@ -658,29 +658,6 @@ export const baoCaoApi = {
   tonKho: (trangThai: string) => goiApi<BaoCaoTonKho>(`/bao-cao/ton-kho${q({ trangThai })}`),
 }
 
-// ------------------------------------------------------------------ Hóa đơn tạm bán offline (Giai đoạn 8c)
-
-export interface HoaDonTamMayChu {
-  maTam: string
-  ngayGioBan: string
-  maND: string
-  nguoiBan: string
-  tongTien: number
-  tienKhachDua: number
-  trangThai: string
-  lyDo: string | null
-  maHD: string | null
-  ngayGioDongBo: string
-  ngayGioXuLy: string | null
-  dong: { maHH: string; tenHH: string; soLuong: number; donGia: number }[]
-}
-
-export const hoaDonTamApi = {
-  danhSach: (trangThai: string) => goiApi<HoaDonTamMayChu[]>(`/ban-hang/hoa-don-tam${q({ trangThai })}`),
-  ghiNhan: (maTam: string) => goiApi<HoaDonTamMayChu>('/ban-hang/hoa-don-tam/ghi-nhan', { method: 'POST', body: { maTam } }),
-  huy: (maTam: string, lyDo: string) => goiApi<HoaDonTamMayChu>('/ban-hang/hoa-don-tam/huy', { method: 'POST', body: { maTam, lyDo } }),
-}
-
 // ------------------------------------------------------------------ Sao lưu (Backup NFR-01)
 
 export interface BanSaoLuu {

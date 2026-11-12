@@ -90,8 +90,8 @@ Thứ tự phụ thuộc: Tài khoản → Hàng hóa → Lô/Tồn kho → Ca l
 | 7 | Báo cáo lợi nhuận, doanh thu (theo phương thức thanh toán), so sánh hai kỳ, số lượng bán ra + top bán chạy/chậm, tồn kho theo lô; đổi trả tính vào kỳ duyệt phiếu, giá vốn lưu lúc bán | UC_5.1–5.4 | ✅ Xong (188 unit test, 25 bước E2E) |
 | 8a | Đọc to số tiền (giọng đọc trình duyệt), sao lưu CSDL tự động hằng ngày + sao lưu bù + màn hình sao lưu cho Chủ quán | NFR Usability-02, Backup-01 | ✅ Xong (198 unit test, 9 bước E2E) |
 | 8b | Thông báo tức thời (SignalR: mọi máy đang mở web tự cập nhật khi dữ liệu đổi, chuông thông báo đến ngay) và giao diện cho điện thoại (menu ngăn kéo, thanh tiêu đề gọn) | Tích hợp "đồng bộ với thiết bị di động" | ✅ Xong (201 unit test, 11 bước E2E) |
-| 8c | Bán hàng offline: tiền mặt, hóa đơn tạm lưu trên máy, tự đồng bộ (chống trùng, mã theo ngày bán), xung đột chuyển Chủ quán xử lý, service worker, phiên offline | NFR Availability-02, 03 | ✅ Xong (208 unit test, 24 bước E2E) |
-| 8d | Khung tích hợp thật bật bằng cấu hình (mặc định giả lập): VietQR + webhook xác nhận tiền vào (máy chủ tự đối chiếu), SMS/Zalo/OTP qua HTTP API; NFR Security-04 (giờ làm việc = có ca đang mở) | Tích hợp ngân hàng, SMS/Zalo; NFR Security-04 | ✅ Xong (213 unit test, 21 bước E2E) |
+| 8c | ~~Bán hàng offline (hóa đơn tạm, tự đồng bộ)~~ – đã làm rồi **gỡ bỏ** theo yêu cầu chủ dự án vì thiết kế giao diện không có phần này (migration GD10 xóa bảng HoaDonTam) | NFR Availability-02, 03 | ⛔ Đã bỏ |
+| 8d | Khung tích hợp thật bật bằng cấu hình (mặc định giả lập): VietQR + webhook xác nhận tiền vào (máy chủ tự đối chiếu), SMS/Zalo/OTP qua HTTP API; NFR Security-04 (giờ làm việc = có ca đang mở) | Tích hợp ngân hàng, SMS/Zalo; NFR Security-04 | ✅ Xong (206 unit test sau khi bỏ 8c, 21 bước E2E) |
 
 ---
 

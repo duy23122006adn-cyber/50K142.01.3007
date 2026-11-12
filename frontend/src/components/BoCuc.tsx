@@ -4,9 +4,6 @@ import { caApi } from '../api/nghiepVu'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useXacThuc } from '../auth/AuthContext'
 import { TEN_TRANG, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
-import { useDongBoOffline } from '../lib/dongBo'
-import { useCoMang } from '../lib/mang'
-import { useHoaDonTam } from '../lib/offline'
 import { useKetNoiTucThoi } from '../lib/suKien'
 import { ChuongThongBao } from './ChuongThongBao'
 import { HopThoai } from './HopThoai'
@@ -50,10 +47,7 @@ export function BoCuc() {
   const { pathname } = useLocation()
   const [moMenu, setMoMenu] = useState(false)
   const [moMenuChucNang, setMoMenuChucNang] = useState(false) // điện thoại: menu dạng ngăn kéo
-  const ketNoi = useKetNoiTucThoi(nguoiDung?.ngoaiTuyen ? undefined : nguoiDung?.maND)
-  useDongBoOffline(nguoiDung)
-  const coMang = useCoMang()
-  const soTam = useHoaDonTam().filter((t) => t.trangThai === 'Chờ đồng bộ').length
+  const ketNoi = useKetNoiTucThoi(nguoiDung?.maND)
   const [hoiDangXuat, setHoiDangXuat] = useState<null | 'thuong' | 'chuaLuu'>(null)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -178,17 +172,6 @@ export function BoCuc() {
         </nav>
 
         <main className="noi-dung">
-          {(!coMang || nguoiDung.ngoaiTuyen) && (
-            <p className="bang-offline" role="status">
-              Mất kết nối máy chủ – đang bán offline: chỉ bán tiền mặt, hóa đơn được lưu tạm trên máy và tự đồng bộ khi có mạng.
-            </p>
-          )}
-          {coMang && !nguoiDung.ngoaiTuyen && soTam > 0 && (
-            <p className="bang-offline bang-offline--cho" role="status">
-              Máy này còn {soTam} hóa đơn tạm đang chờ đồng bộ.{' '}
-              <Link to="/quan-ly-ban-hang/hoa-don-tam">Xem hóa đơn tạm</Link>
-            </p>
-          )}
           <Breadcrumb />
           <Outlet />
         </main>

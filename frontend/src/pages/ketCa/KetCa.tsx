@@ -5,7 +5,6 @@ import { LoiApi } from '../../api/client'
 import { ketCaApi, type BienBan, type DongKiemKe } from '../../api/nghiepVu'
 import { HopThoai } from '../../components/HopThoai'
 import { homNayISO, ngay } from '../../lib/dinhDang'
-import { useHoaDonTam } from '../../lib/offline'
 
 const DS_BIEN_BAN = '/ket-ca/bien-ban'
 
@@ -141,8 +140,6 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
   const [loi, setLoi] = useState<Record<string, string>>({})
   const [popup, setPopup] = useState<Popup | null>(null)
   const [dangXuLy, setDangXuLy] = useState(false)
-  // Giai đoạn 8c: hàng đã bán offline trên máy này chưa trừ kho → kiểm kê sẽ lệch.
-  const soTam = useHoaDonTam().filter((t) => t.trangThai === 'Chờ đồng bộ').length
 
   const soThucTe = (d: DongKiemKe) => (/^\d+$/.test(thucTe[d.maHH] ?? '') ? Number(thucTe[d.maHH]) : null)
   const chenh = (d: DongKiemKe) => {
@@ -151,11 +148,6 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
   }
 
   const luu = async () => {
-    if (soTam > 0)
-      return setPopup({
-        loai: 'loi',
-        thongBao: `Máy này còn ${soTam} hóa đơn tạm bán offline chưa đồng bộ. Vui lòng đồng bộ (cần có mạng và hủy kết ca nếu đang kết ca) trước khi lưu biên bản.`,
-      })
     // 7a: kiểm tra ngay trên giao diện; server kiểm tra lại.
     const l: Record<string, string> = {}
     for (const d of bb.dong) {
@@ -208,11 +200,6 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
             <dd className="chu-cam">{bb.trangThaiCa}</dd>
           </dl>
         </div>
-        {soTam > 0 && (
-          <p className="thong-bao thong-bao--do">
-            Máy này còn {soTam} hóa đơn tạm chưa đồng bộ – tồn lý thuyết chưa trừ số hàng này. Hủy kết ca, đồng bộ hóa đơn tạm rồi kết ca lại.
-          </p>
-        )}
         <BangKiemKe
           dong={bb.dong}
           nhap={{ thucTe, setThucTe, nguyenNhan, setNguyenNhan, loi, chenh }}

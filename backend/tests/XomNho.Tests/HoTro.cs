@@ -39,13 +39,11 @@ public sealed class SinhMaGia(IDongHo dongHo) : ISinhMa
         [(LoaiMa.ChuQuan, DinhDangMa.KyToanCuc)] = 1,
     };
 
-    public Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default) => SinhMaTheoNgayAsync(loai, dongHo.HomNay, ct);
-
-    public Task<string> SinhMaTheoNgayAsync(LoaiMa loai, DateOnly ngay, CancellationToken ct = default)
+    public Task<string> SinhMaAsync(LoaiMa loai, CancellationToken ct = default)
     {
-        var khoa = (loai, DinhDangMa.Ky(loai, ngay));
+        var khoa = (loai, DinhDangMa.Ky(loai, dongHo.HomNay));
         _dem[khoa] = _dem.GetValueOrDefault(khoa) + 1;
-        return Task.FromResult(DinhDangMa.Tao(loai, _dem[khoa], ngay));
+        return Task.FromResult(DinhDangMa.Tao(loai, _dem[khoa], dongHo.HomNay));
     }
 
     public Task<string> XemTruocAsync(LoaiMa loai, CancellationToken ct = default) =>
