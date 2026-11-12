@@ -53,7 +53,7 @@ export function DanhSachNhanVien() {
   }
 
   return (
-    <>
+    <div className="trang-tai-khoan">
       <h1>Quản lý tài khoản</h1>
       <section className="the the--rong">
         <div className="thanh-cong-cu">
@@ -72,7 +72,7 @@ export function DanhSachNhanVien() {
               onChange={(e) => setOTim(e.target.value)}
               aria-label="Tìm theo tên hoặc số điện thoại"
             />
-            <button type="submit" className="nut">Tìm kiếm</button>
+            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
           <Link to="/quan-ly-tai-khoan/them" className="nut nut--chinh">
             Thêm tài khoản
@@ -84,7 +84,7 @@ export function DanhSachNhanVien() {
         {data && data.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy nhân viên phù hợp</p>}
         {data && data.length > 0 && (
           <div className="bang-cuon">
-            <table className="bang">
+            <table className="bang bang--xen-ke bang--gon">
               <thead>
                 <tr>
                   <th>Họ tên</th>
@@ -100,21 +100,21 @@ export function DanhSachNhanVien() {
                     <td>{nv.hoTen}</td>
                     <td>{nv.maND}</td>
                     <td>{nv.sdt}</td>
+                    <td>{nv.trangThai}</td>
                     <td>
-                      <span className={`nhan nhan--${nv.trangThai === 'Hoạt động' ? 'xanh' : 'xam'}`}>{nv.trangThai}</span>
-                    </td>
-                    <td className="o-hanh-dong">
+                      <div className="o-hanh-dong">
                       <button type="button" className="nut nut--nho" onClick={() => navigate(`/quan-ly-tai-khoan/${nv.maND}/sua`)}>
                         Sửa
                       </button>
                       <button
                         type="button"
-                        className="nut nut--nho nut--nguy-hiem"
+                        className="nut nut--nho"
                         disabled={nv.trangThai === 'Ngừng hoạt động'}
                         onClick={() => batDauXoa(nv.maND)}
                       >
                         Xóa
                       </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -128,35 +128,32 @@ export function DanhSachNhanVien() {
       <HopThoai
         mo={xacNhan !== null}
         tieuDe={xacNhan?.cheDo === 'XoaHan' ? 'Xóa tài khoản nhân viên?' : 'Ngừng hoạt động tài khoản?'}
-        kieu={xacNhan?.cheDo === 'XoaHan' ? 'thuong' : 'loi'}
+        className="hop-thoai--xac-nhan"
         onDong={() => setXacNhan(null)}
         nut={
           <>
             <button type="button" className="nut" onClick={() => setXacNhan(null)}>
               Hủy
             </button>
-            <button type="button" className="nut nut--nguy-hiem-dac" onClick={thucHienXoa} disabled={dangXoa}>
+            <button type="button" className="nut nut--chinh" onClick={thucHienXoa} disabled={dangXoa}>
               Xác nhận
             </button>
           </>
         }
       >
-        <p className={xacNhan?.cheDo === 'XoaHan' ? '' : 'thong-bao--do'}>
-          <strong>
+        <div className={xacNhan?.cheDo === 'XoaHan' ? '' : 'chu-do-thuong'}>
+          <p>
             {xacNhan?.maND} — {xacNhan?.hoTen}
-          </strong>
-        </p>
-        {xacNhan?.cheDo === 'XoaHan' ? (
-          <p>Bạn có chắc muốn xóa tài khoản này?</p>
-        ) : (
-          <p className="thong-bao thong-bao--do">
-            Nhân viên đã có hóa đơn hoặc lịch sử ca làm việc. Tài khoản sẽ chuyển sang “Ngừng hoạt động” và không thể đăng
-            nhập.
           </p>
-        )}
+          <p>
+            {xacNhan?.cheDo === 'XoaHan'
+              ? 'Bạn có chắc muốn xóa tài khoản này?'
+              : 'Nhân viên đã có hóa đơn hoặc lịch sử ca làm việc. Tài khoản sẽ chuyển sang “Ngừng hoạt động” và không thể đăng nhập.'}
+          </p>
+        </div>
       </HopThoai>
 
       <ThongBaoKetQua ketQua={ketQua} onDong={() => setKetQua(null)} />
-    </>
+    </div>
   )
 }

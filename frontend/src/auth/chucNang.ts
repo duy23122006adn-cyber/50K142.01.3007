@@ -19,6 +19,8 @@ export interface ChucNang {
   giaiDoan: number
   daTrienKhai: boolean
   con?: MucCon[]
+  /** Mục cha mở trang của chính nó (không phải mục con đầu tiên). */
+  moTrangCha?: boolean
 }
 
 const CA_HAI: VaiTro[] = ['ChuQuan', 'NhanVien']
@@ -27,7 +29,8 @@ const CHU_QUAN: VaiTro[] = ['ChuQuan']
 export const DANH_SACH_CHUC_NANG: ChucNang[] = [
   {
     duongDan: '/quan-ly-tai-khoan', ten: 'Quản lý tài khoản', moTa: 'Thêm, sửa, xóa tài khoản nhân viên',
-    vaiTro: CHU_QUAN, giaiDoan: 2, daTrienKhai: true,
+    vaiTro: CHU_QUAN, giaiDoan: 2, daTrienKhai: true, moTrangCha: true,
+    con: [{ duongDan: '/quan-ly-tai-khoan/them', ten: 'Thêm mới tài khoản nhân viên', vaiTro: CHU_QUAN }],
   },
   {
     duongDan: '/quan-ly-ton-kho', ten: 'Quản lý tồn kho', moTa: 'Tra cứu tồn kho, cảnh báo, điều chỉnh tồn',
@@ -104,6 +107,11 @@ export const TEN_VAI_TRO: Record<VaiTro, string> = {
 }
 
 export const chucNangCua = (vaiTro: VaiTro) => DANH_SACH_CHUC_NANG.filter((c) => c.vaiTro.includes(vaiTro))
+
+/** Breadcrumb riêng cho trang có mã trong đường dẫn: [mẫu đường dẫn, trang cha, tên trang]. */
+export const TEN_TRANG_MAU: [RegExp, string, string][] = [
+  [/^\/quan-ly-tai-khoan\/[^/]+\/sua$/, '/quan-ly-tai-khoan', 'Sửa nhân viên'], // mẫu 2.3.1
+]
 
 /** Tên hiển thị trên breadcrumb theo đường dẫn đầy đủ. */
 export const TEN_TRANG: Record<string, string> = {

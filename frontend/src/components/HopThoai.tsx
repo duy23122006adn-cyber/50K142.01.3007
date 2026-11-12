@@ -8,10 +8,12 @@ interface Props {
   nut: ReactNode
   kieu?: 'thuong' | 'loi' | 'thanhCong'
   onDong?: () => void
+  /** Lớp CSS thêm cho hộp thoại (ví dụ căn giữa theo mẫu xác nhận 2.5.1). */
+  className?: string
 }
 
 /** Hộp thoại xác nhận/thông báo dùng <dialog> gốc của trình duyệt (có sẵn bẫy focus và phím Esc). */
-export function HopThoai({ mo, tieuDe, children, nut, kieu = 'thuong', onDong }: Props) {
+export function HopThoai({ mo, tieuDe, children, nut, kieu = 'thuong', onDong, className }: Props) {
   const ref = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function HopThoai({ mo, tieuDe, children, nut, kieu = 'thuong', onDong }:
   return (
     <dialog
       ref={ref}
-      className={`hop-thoai hop-thoai--${kieu}`}
+      className={`hop-thoai hop-thoai--${kieu} ${className ?? ''}`}
       onCancel={(e) => {
         e.preventDefault()
         onDong?.()

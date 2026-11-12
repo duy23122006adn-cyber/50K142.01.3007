@@ -1600,3 +1600,136 @@ select.truong__o {
     gap: 1rem;
   }
 }
+/* ------------------------------------------------------------------ Quản lý tài khoản – theo mẫu 2.1–2.5 */
+.trang-tai-khoan .nut:not(.nut--nho) {
+  border-radius: 6px;
+}
+
+.trang-tai-khoan .truong__sao {
+  color: inherit;
+}
+
+.trang-tai-khoan .o-tim {
+  max-width: 520px;
+  margin-bottom: 0;
+  margin-left: auto;
+}
+
+/* Bảng gọn: dòng thấp, căn giữa theo chiều dọc, nút Sửa/Xóa nhỏ (mẫu 2.1). */
+.bang--gon th,
+.bang--gon td {
+  padding: 0.5rem 0.8rem;
+  vertical-align: middle;
+}
+
+.bang--gon .nut--nho {
+  min-height: 34px;
+  padding: 0.2rem 1.1rem;
+}
+
+.luoi-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 1.25rem;
+}
+
+@media (max-width: 760px) {
+  .luoi-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ô chỉ đọc nền xanh nhạt (mẫu 2.3.1). */
+.o-chi-doc {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--bo-goc);
+  background: var(--mau-dong-xen);
+  color: var(--mau-chu);
+}
+
+/* Ô ngày dd/mm/yyyy có biểu tượng lịch ở cuối ô. */
+.o-ngay {
+  position: relative;
+}
+
+.o-ngay .truong__o {
+  padding-right: 3rem;
+}
+
+.o-ngay__nut {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  display: flex;
+  padding: 0.35rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--mau-chu);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.o-ngay__nut:hover {
+  background: var(--mau-nen);
+}
+
+.o-ngay__lich {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Lịch sử chỉnh sửa trong khung sửa nhân viên (mẫu 2.3.5): tiêu đề bảng xanh nhạt. */
+.lich-su-sua {
+  margin-top: 1.25rem;
+}
+
+.lich-su-sua h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.bang--nhat th {
+  background: var(--mau-dong-xen);
+  color: var(--mau-chu);
+  font-size: 0.9rem;
+}
+
+.noi-dung-sua strong {
+  display: block;
+}
+
+/* Hộp thoại xác nhận xóa / ngừng hoạt động (mẫu 2.5.1, 2.5.3): căn giữa. */
+.hop-thoai--xac-nhan {
+  text-align: center;
+}
+
+.hop-thoai--xac-nhan .hop-thoai__tieu-de {
+  font-size: 1.35rem;
+}
+
+.hop-thoai--xac-nhan .hop-thoai__noi-dung p {
+  margin: 0.3rem 0;
+}
+
+.hop-thoai--xac-nhan .hop-thoai__nut {
+  justify-content: center;
+}
+
+.hop-thoai--xac-nhan .nut {
+  min-width: 110px;
+}
+
+.chu-do-thuong {
+  color: var(--mau-do);
+}

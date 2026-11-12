@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useXacThuc } from '../auth/AuthContext'
-import { TEN_TRANG, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
+import { TEN_TRANG, TEN_TRANG_MAU, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
 import { useKetNoiTucThoi } from '../lib/suKien'
 import { ChuongThongBao } from './ChuongThongBao'
 import { HopThoai } from './HopThoai'
@@ -9,6 +9,19 @@ import { HopThoai } from './HopThoai'
 /** Breadcrumb theo đặc tả: "Trang chủ / … / …". Đoạn là mã (NV001, HH-0001…) giữ nguyên. */
 function Breadcrumb() {
   const { pathname } = useLocation()
+  const mau = TEN_TRANG_MAU.find(([m]) => m.test(pathname))
+  if (mau) {
+    const [, cha, ten] = mau
+    return (
+      <nav className="breadcrumb" aria-label="Vị trí hiện tại">
+        <Link to="/">Trang chủ</Link>
+        {' / '}
+        <Link to={cha}>{TEN_TRANG[cha] ?? cha}</Link>
+        {' / '}
+        <span aria-current="page">{ten}</span>
+      </nav>
+    )
+  }
   const cacPhan = pathname.split('/').filter(Boolean)
   return (
     <nav className="breadcrumb" aria-label="Vị trí hiện tại">
@@ -140,7 +153,7 @@ export function BoCuc() {
             const con = c.con?.filter((m) => m.vaiTro.includes(nguoiDung.vaiTro)) ?? []
             return (
               <div key={c.duongDan} className="menu-trai__nhom">
-                <NavLink to={con[0]?.duongDan ?? c.duongDan} className={dangMo ? 'active' : undefined}>
+                <NavLink to={c.moTrangCha ? c.duongDan : (con[0]?.duongDan ?? c.duongDan)} className={dangMo ? 'active' : undefined}>
                   {c.ten}
                 </NavLink>
                 {dangMo && con.length > 0 && (
