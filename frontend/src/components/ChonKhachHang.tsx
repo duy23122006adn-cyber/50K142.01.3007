@@ -111,7 +111,7 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
               aria-label="Tên hoặc số điện thoại khách hàng"
               autoFocus
             />
-            <button type="submit" className="nut">Tìm</button>
+            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
           {loi && <p className="truong__loi">{loi}</p>}
           {ketQua && ketQua.length > 0 && (

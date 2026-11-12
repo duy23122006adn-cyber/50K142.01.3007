@@ -56,7 +56,7 @@ export function TimKiemKhachQuen() {
               onChange={(e) => setOTim(e.target.value)}
               aria-label="Tên hoặc số điện thoại khách quen"
             />
-            <button type="submit" className="nut">
+            <button type="submit" className="nut nut--chinh">
               Tìm kiếm
             </button>
           </form>

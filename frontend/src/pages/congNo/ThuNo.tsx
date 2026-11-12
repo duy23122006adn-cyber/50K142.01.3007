@@ -56,7 +56,7 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
             aria-label="Tên hoặc số điện thoại khách hàng có công nợ"
             autoFocus
           />
-          <button type="submit" className="nut">
+          <button type="submit" className="nut nut--chinh">
             Tìm kiếm
           </button>
         </form>

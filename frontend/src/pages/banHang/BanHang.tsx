@@ -544,7 +544,7 @@ export function BanHang() {
                     aria-label="Tên hoặc số điện thoại khách hàng cần ghi nợ"
                     autoFocus
                   />
-                  <button type="submit" className="nut">Tìm kiếm</button>
+                  <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
                 </form>
                 {loiTimNo && <p className="truong__loi">{loiTimNo}</p>}
                 {ketQuaTimNo && ketQuaTimNo.length === 0 && <p className="thong-bao thong-bao--do canh-giua">Không tìm thấy khách hàng</p>}

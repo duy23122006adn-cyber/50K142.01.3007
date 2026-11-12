@@ -37,7 +37,7 @@ export function TimKiemHangHoa() {
               onChange={(e) => setOTim(e.target.value)}
               aria-label="Tên hàng hóa"
             />
-            <button type="submit" className="nut">Tìm kiếm</button>
+            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
           <Link to="/quan-ly-hang-hoa/them" className="nut nut--chinh">
             Thêm hàng hóa

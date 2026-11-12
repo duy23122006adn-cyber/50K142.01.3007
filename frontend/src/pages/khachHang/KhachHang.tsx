@@ -43,7 +43,7 @@ export function DanhSachKhachHang() {
               onChange={(e) => setOTim(e.target.value)}
               aria-label="Tên hoặc số điện thoại"
             />
-            <button type="submit" className="nut">Tìm kiếm</button>
+            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
           <Link to="/quan-ly-khach-hang/them" className="nut nut--chinh">
             Thêm khách hàng

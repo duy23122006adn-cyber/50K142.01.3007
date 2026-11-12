@@ -665,7 +665,7 @@ function ChonHangMoi({ dangChonCho, onChon }: { dangChonCho: DongDoiTra | null; 
           onChange={(e) => setOTim(e.target.value)}
           aria-label="Tên hoặc mã hàng mới"
         />
-        <button type="submit" className="nut">
+        <button type="submit" className="nut nut--chinh">
           Tìm kiếm
         </button>
       </form>
