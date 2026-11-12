@@ -8,7 +8,7 @@ import {
 import { useXacThuc } from '../../auth/AuthContext'
 import { ChonKhachHang } from '../../components/ChonKhachHang'
 import { HopThoai } from '../../components/HopThoai'
-import { KhungQr } from '../../components/KhungQr'
+import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { XemHoaDon } from '../../components/XemHoaDon'
 import { NutDocTo } from '../../components/NutDocTo'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
@@ -503,13 +503,13 @@ export function BanHang() {
       )}
 
       {buoc === 'qr' && (
-        <section className="the the--hep canh-giua">
-          <h2>Chuyển khoản QR</h2>
-          <KhungQr soTien={tong} dangXuLy={dangXuLy} onKetQua={(ok, ma) => thanhToan('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)} />
-          <button type="button" className="nut nut--chu" onClick={() => setBuoc('thanhToan')}>
-            Đổi phương thức thanh toán
-          </button>
-        </section>
+        <ManChuyenKhoan
+          moTa={`Thanh toán đơn hàng · ${soSp} sản phẩm`}
+          soTien={tong}
+          dangXuLy={dangXuLy}
+          onKetQua={(ok, ma) => thanhToan('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', ma)}
+          onDoiHinhThuc={() => setBuoc('thanhToan')}
+        />
       )}
 
       {buoc === 'ghiNo' && (

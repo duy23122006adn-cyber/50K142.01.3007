@@ -5,7 +5,7 @@ import { LoiApi } from '../../api/client'
 import { doiTraApi, duyetDoiTraApi, type PhieuDoiTra } from '../../api/nghiepVu'
 import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
-import { KhungQr } from '../../components/KhungQr'
+import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { ngayGio, tien } from '../../lib/dinhDang'
 import { docTien } from '../../lib/docSo'
 import { docDaThu, docTo } from '../../lib/docTo'
@@ -93,20 +93,13 @@ export function PhieuDoiTraTrang() {
     <>
       <h1 className={td.do ? 'chu-do' : undefined}>{td.chu}</h1>
       {manQr ? (
-        <section className="the the--hep canh-giua">
-          <h2>Chuyển khoản QR</h2>
-          <p className="ghi-chu">
-            Thu thêm chênh lệch đổi hàng · Phiếu {p.maPDT}
-          </p>
-          <KhungQr
-            soTien={p.canThuThem}
-            dangXuLy={dangXuLy}
-            onKetQua={(ok, maQr) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', maQr)}
-          />
-          <button type="button" className="nut nut--chu" onClick={() => setBuocThu('chon')}>
-            Đổi hình thức thu
-          </button>
-        </section>
+        <ManChuyenKhoan
+          moTa={`Thu thêm chênh lệch đổi hàng · Phiếu ${p.maPDT}`}
+          soTien={p.canThuThem}
+          dangXuLy={dangXuLy}
+          onKetQua={(ok, maQr) => xuLy('Chuyển khoản QR', ok ? 'ThanhCong' : 'ThatBai', maQr)}
+          onDoiHinhThuc={() => setBuocThu('chon')}
+        />
       ) : (
         <div className="pos">
           <section className="the pos__hang">
@@ -208,7 +201,7 @@ export function PhieuDoiTraTrang() {
                 )}
                 {buocThu === 'tienMat' && (
                   <button type="button" className="nut nut--chu nut--rong" onClick={() => setBuocThu('chon')}>
-                    Đổi hình thức thu
+                    Đổi hình thức thanh toán
                   </button>
                 )}
               </>
