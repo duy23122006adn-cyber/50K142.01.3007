@@ -50,6 +50,10 @@ export function BoCuc() {
   const ketNoi = useKetNoiTucThoi(nguoiDung?.maND)
   const [hoiDangXuat, setHoiDangXuat] = useState<null | 'thuong' | 'chuaLuu'>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  // Nhóm menu bị người dùng thu gọn; chỉ có hiệu lực khi còn ở đúng trang lúc thu gọn
+  // (chuyển trang thì nhóm của trang mới tự mở lại).
+  const [thuGon, setThuGon] = useState<{ nhom: string; pathname: string } | null>(null)
+  const nhomThuGon = thuGon?.pathname === pathname ? thuGon.nhom : null
 
   useEffect(() => {
     if (!moMenu) return
@@ -151,12 +155,27 @@ export function BoCuc() {
           {chucNangCua(nguoiDung.vaiTro).map((c) => {
             const dangMo = pathname === c.duongDan || pathname.startsWith(c.duongDan + '/')
             const con = c.con?.filter((m) => m.vaiTro.includes(nguoiDung.vaiTro)) ?? []
+            const moCon = dangMo && con.length > 0 && nhomThuGon !== c.duongDan
             return (
               <div key={c.duongDan} className="menu-trai__nhom">
-                <NavLink to={c.moTrangCha ? c.duongDan : (con[0]?.duongDan ?? c.duongDan)} className={dangMo ? 'active' : undefined}>
+                <NavLink
+                  to={c.moTrangCha ? c.duongDan : (con[0]?.duongDan ?? c.duongDan)}
+                  className={[dangMo && 'active', moCon && 'mo'].filter(Boolean).join(' ')}
+                  aria-expanded={con.length > 0 ? moCon : undefined}
+                  onClick={(e) => {
+                    if (moCon) {
+                      // Đang mở mục con → ấn lại để thu gọn, không chuyển trang, không đóng ngăn kéo.
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setThuGon({ nhom: c.duongDan, pathname })
+                    } else {
+                      setThuGon(null)
+                    }
+                  }}
+                >
                   {c.ten}
                 </NavLink>
-                {dangMo && con.length > 0 && (
+                {moCon && (
                   <div className="menu-trai__con">
                     {con.map((m) => (
                       <NavLink key={m.duongDan} to={m.duongDan} end>

@@ -433,7 +433,7 @@ a {
   color: var(--mau-chu);
 }
 
-.menu-trai__nhom > a.active::before {
+.menu-trai__nhom > a.mo::before {
   content: '▾';
 }
 
