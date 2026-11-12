@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import logoXomNho from '../assets/logo-xom-nho.png'
 import { useXacThuc } from '../auth/AuthContext'
 import { TEN_TRANG, TEN_TRANG_MAU, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
 import { useKetNoiTucThoi } from '../lib/suKien'
@@ -87,7 +88,7 @@ export function BoCuc() {
           ☰
         </button>
         <Link to="/" className="thuong-hieu" aria-label="Tạp hóa Xóm Nhỏ – Trang chủ">
-          <span className="thuong-hieu__ten">Xóm nhỏ</span>
+          <img className="thuong-hieu__logo" src={logoXomNho} alt="Xóm nhỏ" />
         </Link>
 
         <span

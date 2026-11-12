@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { LoiApi } from '../api/client'
 import { moKhoa } from '../api/xacThuc'
+import logoXomNho from '../assets/logo-xom-nho.png'
 import { useXacThuc } from '../auth/AuthContext'
 import { TruongNhap } from '../components/TruongNhap'
 
@@ -94,7 +95,7 @@ export function DangNhap() {
   return (
     <div className="trang-dang-nhap">
       <section className="trang-dang-nhap__trai" aria-hidden>
-        <div className="logo-lon">Xóm nhỏ</div>
+        <img className="logo-lon" src={logoXomNho} alt="Xóm nhỏ" />
       </section>
 
       <section className="trang-dang-nhap__phai">

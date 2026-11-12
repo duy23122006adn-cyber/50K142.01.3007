@@ -249,18 +249,12 @@ a {
   font-size: 1.15rem;
 }
 
+/* Logo "Xóm nhỏ" (ảnh PNG nền trong suốt) trên khung đỏ trang đăng nhập. */
 .logo-lon {
-  font-size: 4rem;
-  font-weight: 900;
-  font-style: italic;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  background: linear-gradient(180deg, #ffe14d 0%, #ffb000 55%, #ff7a00 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-stroke: 2px #00164f;
-  filter: drop-shadow(0 3px 0 #00164f);
+  display: block;
+  width: min(420px, 100%);
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.25));
 }
 
 .trang-dang-nhap__trai p {
@@ -362,7 +356,7 @@ a {
     min-height: 160px;
   }
   .logo-lon {
-    font-size: 2.2rem;
+    width: min(240px, 70%);
   }
 }
 
@@ -390,6 +384,13 @@ a {
   font-weight: 700;
   font-size: 1.3rem;
   text-decoration: none;
+}
+
+/* Logo trên thanh tiêu đề đỏ (thay chữ "Xóm nhỏ"). */
+.thuong-hieu__logo {
+  display: block;
+  height: 44px;
+  width: auto;
 }
 
 .tai-khoan__avatar {
@@ -652,9 +653,11 @@ a {
     gap: 0.4rem;
     padding: 0 8px;
   }
-  .thuong-hieu__ten,
   .den-ket-noi__chu {
     display: none;
+  }
+  .thuong-hieu__logo {
+    height: 34px;
   }
   .the {
     padding: 1rem;
