@@ -433,8 +433,39 @@ a {
   color: var(--mau-chu);
 }
 
+.menu-trai__nhom > a::before {
+  transition: transform 0.25s ease;
+}
+
 .menu-trai__nhom > a.mo::before {
-  content: '▾';
+  transform: rotate(90deg);
+}
+
+/* Mở/thu mục con nhẹ nhàng: chiều cao 0fr ↔ 1fr kèm mờ dần. */
+.menu-trai__xo {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.menu-trai__xo--mo {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.menu-trai__boc {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-trai__xo,
+  .menu-trai__nhom > a::before {
+    transition: none;
+  }
 }
 
 .noi-dung {
