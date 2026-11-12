@@ -103,6 +103,11 @@ a {
   width: 100%;
 }
 
+/* Các nút rộng xếp chồng (đổi trả, hủy hóa đơn, thu nợ, thanh toán…) cách nhau, không dính sát. */
+.nut--rong + .nut--rong {
+  margin-top: 0.6rem;
+}
+
 .nut:disabled {
   opacity: 0.5;
   cursor: not-allowed;
