@@ -60,22 +60,24 @@ export function ChiTietHangHoa() {
     <>
       <h1>Chi tiết thông tin hàng hóa</h1>
       <section className="the the--vua">
-        <table className="bang bang--thong-tin">
-          <thead>
-            <tr>
-              <th>Thông tin</th>
-              <th>Giá trị</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dong.map(([k, v]) => (
-              <tr key={k}>
-                <td>{k}</td>
-                <td>{v}</td>
+        <div className="bang-cuon">
+          <table className="bang bang--thong-tin">
+            <thead>
+              <tr>
+                <th>Thông tin</th>
+                <th>Giá trị</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {dong.map(([k, v]) => (
+                <tr key={k}>
+                  <td>{k}</td>
+                  <td>{v}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         {h.trangThai === 'Đang kinh doanh' && (
           <div className="hang-nut">
             <button type="button" className="nut" onClick={() => navigate(`/quan-ly-hang-hoa/${maHH}/sua`)}>

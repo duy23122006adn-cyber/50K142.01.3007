@@ -267,26 +267,28 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                 <dt>Phương thức</dt>
                 <dd>{phieu.phuongThuc}</dd>
               </dl>
-              <table className="bang">
-                <thead>
-                  <tr>
-                    <th>Mã hóa đơn nợ</th>
-                    <th className="so">Số tiền</th>
-                    <th>Hạn thanh toán</th>
-                    <th>Trạng thái</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {phieu.hoaDon.map((h) => (
-                    <tr key={h.maHD}>
-                      <td>{h.maHD}</td>
-                      <td className="so">{tien(h.soTien)}</td>
-                      <td>{ngay(h.hanThanhToan)}</td>
-                      <td>{h.trangThaiNo}</td>
+              <div className="bang-cuon">
+                <table className="bang">
+                  <thead>
+                    <tr>
+                      <th>Mã hóa đơn nợ</th>
+                      <th className="so">Số tiền</th>
+                      <th>Hạn thanh toán</th>
+                      <th>Trạng thái</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {phieu.hoaDon.map((h) => (
+                      <tr key={h.maHD}>
+                        <td>{h.maHD}</td>
+                        <td className="so">{tien(h.soTien)}</td>
+                        <td>{ngay(h.hanThanhToan)}</td>
+                        <td>{h.trangThaiNo}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <dl className="thong-tin thong-tin--tong">
                 <dt>Tổng tiền thanh toán</dt>
                 <dd className="so-lon">{tien(phieu.tongTien)}</dd>

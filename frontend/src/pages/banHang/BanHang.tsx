@@ -393,28 +393,30 @@ export function BanHang() {
         <div className="pos">
           <section className="the pos__hang">
             <h2>Thông tin đơn hàng</h2>
-            <table className="bang">
-              <thead>
-                <tr>
-                  <th>Sản phẩm</th>
-                  <th className="so">SL</th>
-                  <th className="so">Đơn giá</th>
-                  <th className="so">Thành tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                {gio.map((d) => (
-                  <tr key={d.maHH}>
-                    <td>
-                      {d.tenHH} <small className="ghi-chu">/ ĐVT: {d.donViTinh}</small>
-                    </td>
-                    <td className="so">{d.soLuong}</td>
-                    <td className="so">{tien(d.giaBan)}</td>
-                    <td className="so">{tien(d.giaBan * d.soLuong)}</td>
+            <div className="bang-cuon">
+              <table className="bang">
+                <thead>
+                  <tr>
+                    <th>Sản phẩm</th>
+                    <th className="so">SL</th>
+                    <th className="so">Đơn giá</th>
+                    <th className="so">Thành tiền</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {gio.map((d) => (
+                    <tr key={d.maHH}>
+                      <td>
+                        {d.tenHH} <small className="ghi-chu">/ ĐVT: {d.donViTinh}</small>
+                      </td>
+                      <td className="so">{d.soLuong}</td>
+                      <td className="so">{tien(d.giaBan)}</td>
+                      <td className="so">{tien(d.giaBan * d.soLuong)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <p className="tong-lon">
               Tổng tiền cần thanh toán: <strong>{tien(tong)}</strong>
             </p>
@@ -534,30 +536,32 @@ export function BanHang() {
                 {ketQuaTimNo && ketQuaTimNo.length > 0 && (
                   <>
                     <p className="ghi-chu">Kết quả tìm kiếm: {ketQuaTimNo.length} khách hàng</p>
-                    <table className="bang">
-                      <thead>
-                        <tr>
-                          <th>Mã KH</th>
-                          <th>Họ tên</th>
-                          <th>Số điện thoại</th>
-                          <th>Hành động</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {ketQuaTimNo.map((kh) => (
-                          <tr key={kh.maKH}>
-                            <td>{kh.maKH}</td>
-                            <td>{kh.hoTen}</td>
-                            <td>{kh.sdt}</td>
-                            <td>
-                              <button type="button" className="nut nut--nho nut--chinh" onClick={() => chonKhachGhiNo(kh)}>
-                                Chọn
-                              </button>
-                            </td>
+                    <div className="bang-cuon">
+                      <table className="bang">
+                        <thead>
+                          <tr>
+                            <th>Mã KH</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Hành động</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {ketQuaTimNo.map((kh) => (
+                            <tr key={kh.maKH}>
+                              <td>{kh.maKH}</td>
+                              <td>{kh.hoTen}</td>
+                              <td>{kh.sdt}</td>
+                              <td>
+                                <button type="button" className="nut nut--nho nut--chinh" onClick={() => chonKhachGhiNo(kh)}>
+                                  Chọn
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </>
                 )}
               </>
@@ -582,28 +586,30 @@ export function BanHang() {
                   <dt>Hạn thanh toán</dt>
                   <dd>{ngay(kiemTraNo.hanThanhToan)}</dd>
                 </dl>
-                <table className="bang">
-                  <thead>
-                    <tr>
-                      <th>Sản phẩm / ĐVT</th>
-                      <th className="so">SL</th>
-                      <th className="so">Đơn giá</th>
-                      <th className="so">Thành tiền</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {gio.map((d) => (
-                      <tr key={d.maHH}>
-                        <td>
-                          {d.tenHH} — <span className="ghi-chu">{d.donViTinh}</span>
-                        </td>
-                        <td className="so">{d.soLuong}</td>
-                        <td className="so">{tien(d.giaBan)}</td>
-                        <td className="so">{tien(d.giaBan * d.soLuong)}</td>
+                <div className="bang-cuon">
+                  <table className="bang">
+                    <thead>
+                      <tr>
+                        <th>Sản phẩm / ĐVT</th>
+                        <th className="so">SL</th>
+                        <th className="so">Đơn giá</th>
+                        <th className="so">Thành tiền</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {gio.map((d) => (
+                        <tr key={d.maHH}>
+                          <td>
+                            {d.tenHH} — <span className="ghi-chu">{d.donViTinh}</span>
+                          </td>
+                          <td className="so">{d.soLuong}</td>
+                          <td className="so">{tien(d.giaBan)}</td>
+                          <td className="so">{tien(d.giaBan * d.soLuong)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
                 <dl className="thong-tin thong-tin--tong">
                   <dt>Tổng tiền hàng</dt>
                   <dd>{tien(tong)}</dd>
