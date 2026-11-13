@@ -26,6 +26,16 @@ export function LichSuBanHang() {
     retry: false,
   })
   const loi = error instanceof LoiApi ? error : null
+  // Mẫu 6.1-04…07: điều kiện sai → báo lỗi một dòng dưới khung tìm kiếm, danh sách "Tất cả hóa đơn" vẫn hiển thị như chưa tìm.
+  const tatCa = useQuery({
+    queryKey: ['hoa-don', 'tat-ca', trang],
+    queryFn: () => hoaDonApi.timKiem(Object.fromEntries(TRUONG.map((k) => [k, ''])) as DieuKienTimHoaDon, trang, true),
+    enabled: !!error,
+    placeholderData: keepPreviousData,
+  })
+  const hienTim = daTim && !error
+  const ds = error ? tatCa.data : data
+  const thongBaoLoi = loi ? (Object.values(loi.loi)[0] ?? loi.message) : error ? 'Tìm kiếm không thành công.' : null
 
   const tim = (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,11 +55,11 @@ export function LichSuBanHang() {
     <>
       <h1>Lịch sử bán hàng</h1>
       <form className="the the--rong" onSubmit={tim} noValidate>
-        <div className="luoi-loc">
+        {/* Mẫu 6.1: 3 cột; hàng 2 gồm Từ ngày, Đến ngày và nút Tìm kiếm / Thoát. */}
+        <div className="luoi-loc luoi-loc--3">
           <label className="truong">
             <span className="truong__nhan">Mã hóa đơn</span>
             <input className={`truong__o ${loi?.loi.ma ? 'truong__o--loi' : ''}`} placeholder="Nhập mã đầy đủ" {...o('ma')} />
-            {loi?.loi.ma && <span className="truong__loi">{loi.loi.ma}</span>}
           </label>
           <label className="truong">
             <span className="truong__nhan">Tên hoặc số điện thoại</span>
@@ -67,33 +77,31 @@ export function LichSuBanHang() {
           <label className="truong">
             <span className="truong__nhan">Từ ngày</span>
             <input className={`truong__o ${loi?.loi.tuNgay ? 'truong__o--loi' : ''}`} type="date" max={homNayISO()} {...o('tuNgay')} />
-            {loi?.loi.tuNgay && <span className="truong__loi">{loi.loi.tuNgay}</span>}
           </label>
           <label className="truong">
             <span className="truong__nhan">Đến ngày (nếu có)</span>
             <input className={`truong__o ${loi?.loi.denNgay ? 'truong__o--loi' : ''}`} type="date" max={homNayISO()} {...o('denNgay')} />
-            {loi?.loi.denNgay && <span className="truong__loi">{loi.loi.denNgay}</span>}
           </label>
+          <div className="truong luoi-loc__nut">
+            <button type="submit" className="nut nut--chinh">
+              Tìm kiếm
+            </button>
+            <button type="button" className="nut" onClick={() => navigate('/')}>
+              Thoát
+            </button>
+          </div>
         </div>
-        {chuaNhapDieuKien && <p className="thong-bao thong-bao--do">Vui lòng nhập ít nhất một điều kiện.</p>}
-        {loi && Object.keys(loi.loi).length === 0 && <p className="thong-bao thong-bao--do">{loi.message}</p>}
-        <div className="hang-nut">
-          <button type="button" className="nut" onClick={() => navigate('/')}>
-            Thoát
-          </button>
-          <button type="submit" className="nut nut--chinh">
-            Tìm kiếm
-          </button>
-        </div>
+        {chuaNhapDieuKien && <p className="truong__loi loi-tim">Vui lòng nhập ít nhất một điều kiện.</p>}
+        {thongBaoLoi && <p className="truong__loi loi-tim">{thongBaoLoi}</p>}
       </form>
 
-      {data && (
+      {ds && (
         <section className="the the--rong">
           <h2>
-            {daTim ? 'Kết quả tìm kiếm' : 'Tất cả hóa đơn'} · {data.tongSo} hóa đơn
+            {hienTim ? 'Kết quả tìm kiếm' : 'Tất cả hóa đơn'} · {ds.tongSo} hóa đơn
           </h2>
-          {data.tongSo === 0 ? (
-            <p className="thong-bao thong-bao--do">{daTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}</p>
+          {ds.tongSo === 0 ? (
+            <p className="chu-do canh-giua">{hienTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}</p>
           ) : (
             <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
               <table className="bang">
@@ -108,7 +116,7 @@ export function LichSuBanHang() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.danhSach.map((h) => (
+                  {ds.danhSach.map((h) => (
                     <tr key={h.maHD}>
                       <td>{h.maHD}</td>
                       <td>{ngayGio(h.ngayGioLap)}</td>
@@ -133,8 +141,8 @@ export function LichSuBanHang() {
             </div>
           )}
           <PhanTrang
-            trang={data.trang}
-            soTrang={data.soTrang}
+            trang={ds.trang}
+            soTrang={ds.soTrang}
             onDoiTrang={(t) => {
               const p = new URLSearchParams(params)
               p.set('trang', String(t))

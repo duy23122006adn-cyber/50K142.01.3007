@@ -2077,3 +2077,31 @@ select.truong__o {
   text-align: center;
   padding: 2.5rem 1rem;
 }
+
+/* Lỗi điều kiện tìm kiếm hiển thị một dòng chữ đỏ dưới khung điều kiện (mẫu 6.1-04…07). */
+.loi-tim {
+  display: block;
+  margin: 0 0 0.5rem;
+}
+
+/* Lịch sử bán hàng (mẫu 6.1): 3 cột cố định, ô nút nằm cùng hàng với ngày, nút căn đáy cho thẳng ô nhập. */
+.luoi-loc--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.luoi-loc__nut {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.luoi-loc__nut .nut {
+  flex: 1;
+  min-height: 48px;
+}
+
+@media (max-width: 760px) {
+  .luoi-loc--3 {
+    grid-template-columns: 1fr;
+  }
+}
