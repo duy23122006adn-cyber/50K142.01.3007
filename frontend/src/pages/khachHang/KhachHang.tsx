@@ -125,48 +125,54 @@ export function ChiTietKhachHangTrang() {
   return (
     <>
       <h1>Chi tiết khách hàng</h1>
-      <section className="the the--vua">
-        <dl className="thong-tin">
-          <dt>Mã KH</dt>
-          <dd>{data.maKH}</dd>
-          <dt>Họ tên</dt>
-          <dd>{data.hoTen}</dd>
-          <dt>Số điện thoại</dt>
-          <dd>{data.sdt}</dd>
-        </dl>
-        <h2>Mặt hàng thường mua</h2>
-        {data.matHangThuongMua.length === 0 ? (
-          <p className="ghi-chu">Khách hàng chưa có hóa đơn mua hàng nào.</p>
-        ) : (
-          <div className="bang-cuon">
-            <table className="bang">
-              <thead>
-                <tr>
-                  <th>Mã hàng</th>
-                  <th>Tên mặt hàng</th>
-                  <th>Đơn vị tính</th>
-                  <th className="so">Số lượng đã mua</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.matHangThuongMua.map((m) => (
-                  <tr key={m.maHH}>
-                    <td>{m.maHH}</td>
-                    <td>{m.tenHH}</td>
-                    <td>{m.donViTinh}</td>
-                    <td className="so">{so(m.soLuongDaMua)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Mẫu 8.3.3: thẻ "Thông tin khách hàng" (3 cột) + thẻ "Mặt hàng thường mua" (bảng luôn có tiêu đề cột). */}
+      <section className="the the--rong">
+        <h2 className="tieu-de-the">Thông tin khách hàng</h2>
+        <dl className="luoi-chi-tiet">
+          <div>
+            <dt>Mã KH</dt>
+            <dd>{data.maKH}</dd>
           </div>
-        )}
-        <div className="hang-nut">
-          <button type="button" className="nut" onClick={() => navigate('/quan-ly-khach-hang')}>
-            Quay lại danh sách
-          </button>
+          <div>
+            <dt>Họ tên</dt>
+            <dd>{data.hoTen}</dd>
+          </div>
+          <div>
+            <dt>Số điện thoại</dt>
+            <dd>{data.sdt}</dd>
+          </div>
+        </dl>
+      </section>
+      <section className="the the--rong">
+        <h2 className="tieu-de-the">Mặt hàng thường mua</h2>
+        <div className="bang-cuon">
+          <table className="bang">
+            <thead>
+              <tr>
+                <th>Mã hàng</th>
+                <th>Tên mặt hàng</th>
+                <th>Đơn vị tính</th>
+                <th className="so">Số lượng đã mua</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.matHangThuongMua.map((m) => (
+                <tr key={m.maHH}>
+                  <td>{m.maHH}</td>
+                  <td>{m.tenHH}</td>
+                  <td>{m.donViTinh}</td>
+                  <td className="so">{so(m.soLuongDaMua)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
+      <div className="hang-nut">
+        <button type="button" className="nut" onClick={() => navigate('/quan-ly-khach-hang')}>
+          Quay lại danh sách
+        </button>
+      </div>
     </>
   )
 }

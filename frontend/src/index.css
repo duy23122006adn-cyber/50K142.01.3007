@@ -2040,3 +2040,28 @@ select.truong__o {
 .khung-top .truong__loi {
   display: block;
 }
+
+/* Thẻ chi tiết: tiêu đề nhỏ + lưới thông tin nhiều cột (nhãn mờ ở trên, giá trị đậm ở dưới). */
+.tieu-de-the {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+.luoi-chi-tiet {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0;
+}
+
+.luoi-chi-tiet dt {
+  color: var(--mau-chu-phu);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.luoi-chi-tiet dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
