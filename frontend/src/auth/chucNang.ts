@@ -118,19 +118,19 @@ export const TEN_TRANG: Record<string, string> = {
   '/tai-khoan': 'Tài khoản cá nhân',
   '/tai-khoan/doi-mat-khau': 'Đổi mật khẩu',
   '/tai-khoan/sao-luu': 'Sao lưu dữ liệu',
-  '/quan-ly-tai-khoan/them': 'Thêm tài khoản',
+  '/quan-ly-tai-khoan/them': 'Thêm mới tài khoản nhân viên',
   '/quan-ly-ton-kho/tim-kiem': 'Tìm kiếm tồn kho',
   '/quan-ly-ton-kho/canh-bao': 'Xem cảnh báo tồn kho',
   '/quan-ly-ton-kho/dieu-chinh': 'Điều chỉnh tồn kho',
   '/quan-ly-hang-hoa/them': 'Thêm hàng hóa',
   '/quan-ly-lo-hang/them': 'Thêm lô hàng',
-  '/quan-ly-ban-hang/ban-hang': 'Tạo hóa đơn',
-  '/quan-ly-ban-hang/lich-su': 'Lịch sử bán hàng',
+  '/quan-ly-ban-hang/ban-hang': 'Tạo hóa đơn bán hàng',
+  '/quan-ly-ban-hang/lich-su': 'Tìm kiếm lịch sử bán hàng',
   '/quan-ly-ban-hang/hoa-don': 'Chi tiết hóa đơn',
   '/quan-ly-ban-hang/doi-tra': 'Xử lý đổi trả',
   '/quan-ly-ban-hang/doi-tra/hoa-don': 'Hóa đơn gốc',
   '/quan-ly-ban-hang/doi-tra/phieu': 'Phiếu đổi trả',
-  '/quan-ly-ban-hang/huy-hoa-don': 'Hủy hóa đơn',
+  '/quan-ly-ban-hang/huy-hoa-don': 'Hủy hóa đơn bán hàng',
   '/quan-ly-ban-hang/huy-hoa-don/hoa-don': 'Chi tiết hóa đơn',
   '/quan-ly-ban-hang/duyet-doi-tra': 'Duyệt phiếu đổi trả',
   '/quan-ly-ban-hang/duyet-doi-tra/phieu': 'Chi tiết phiếu',
@@ -138,17 +138,58 @@ export const TEN_TRANG: Record<string, string> = {
   '/ket-ca/luu-bien-ban': 'Lưu biên bản',
   '/ket-ca/bien-ban': 'Xem biên bản',
   '/ket-ca/bien-ban/chi-tiet': 'Chi tiết biên bản',
-  '/bao-cao/loi-nhuan': 'Báo cáo lợi nhuận',
+  '/bao-cao/loi-nhuan': 'Xem báo cáo lợi nhuận',
   '/bao-cao/so-sanh-loi-nhuan': 'So sánh lợi nhuận',
-  '/bao-cao/doanh-thu': 'Báo cáo doanh thu',
+  '/bao-cao/doanh-thu': 'Xem báo cáo doanh thu',
   '/bao-cao/so-sanh-doanh-thu': 'So sánh doanh thu',
-  '/bao-cao/so-luong-ban-ra': 'Báo cáo số lượng bán ra',
+  '/bao-cao/so-luong-ban-ra': 'Xem báo cáo số lượng bán ra',
   '/bao-cao/top-ban-chay': 'Top bán chạy',
   '/bao-cao/top-ban-cham': 'Top bán chậm',
-  '/bao-cao/ton-kho': 'Báo cáo tồn kho',
+  '/bao-cao/ton-kho': 'Xem báo cáo tồn kho',
   '/quan-ly-cong-no/tim-kiem': 'Tìm kiếm khách quen',
   '/quan-ly-cong-no/thu-no': 'Tạo phiếu thanh toán nợ',
   '/quan-ly-cong-no/them': 'Thêm khách quen',
   '/quan-ly-cong-no/khach-quen': 'Tìm kiếm khách quen',
   ...Object.fromEntries(DANH_SACH_CHUC_NANG.map((c) => [c.duongDan, c.ten])),
+}
+
+/**
+ * Trang không nằm trực tiếp trên menu nhưng được mở từ một mục con → breadcrumb chèn mục con đó vào trước,
+ * để đường dẫn khớp menu trái (VD: Quản lý bán hàng / Tìm kiếm lịch sử bán hàng / Chi tiết hóa đơn).
+ */
+export const TRANG_CHA_AO: Record<string, string> = {
+  '/quan-ly-ban-hang/hoa-don': '/quan-ly-ban-hang/lich-su',
+  '/bao-cao/so-sanh-loi-nhuan': '/bao-cao/loi-nhuan',
+  '/bao-cao/so-sanh-doanh-thu': '/bao-cao/doanh-thu',
+  '/bao-cao/top-ban-chay': '/bao-cao/so-luong-ban-ra',
+  '/bao-cao/top-ban-cham': '/bao-cao/so-luong-ban-ra',
+}
+
+export interface MatBreadcrumb {
+  den: string
+  ten: string
+}
+
+/** Chuỗi breadcrumb (không gồm "Trang chủ") khớp tên menu trái. */
+export function chuoiBreadcrumb(pathname: string): MatBreadcrumb[] {
+  const mau = TEN_TRANG_MAU.find(([m]) => m.test(pathname))
+  if (mau) return [{ den: mau[1], ten: TEN_TRANG[mau[1]] ?? mau[1] }, { den: pathname, ten: mau[2] }]
+
+  const cacPhan = pathname.split('/').filter(Boolean)
+  const ketQua: MatBreadcrumb[] = []
+  cacPhan.forEach((p, i) => {
+    const den = '/' + cacPhan.slice(0, i + 1).join('/')
+    const cha = TRANG_CHA_AO[den]
+    if (cha) ketQua.push({ den: cha, ten: TEN_TRANG[cha] ?? cha })
+    ketQua.push({ den, ten: TEN_TRANG[den] ?? (p === 'sua' ? 'Sửa' : decodeURIComponent(p)) })
+    if (i === 0) {
+      // Nhóm có mục con trùng đường dẫn nhóm (VD "Tìm kiếm khách hàng" = /quan-ly-khach-hang):
+      // trang nhóm và trang chi tiết theo mã thuộc mục con đó; trang con có tên riêng (/them…) thì không.
+      const nhom = DANH_SACH_CHUC_NANG.find((c) => c.duongDan === den)
+      const conTrung = nhom?.con?.find((m) => m.duongDan === den)
+      const tiepTheo = cacPhan[1] ? `${den}/${cacPhan[1]}` : null
+      if (conTrung && (tiepTheo === null || !(tiepTheo in TEN_TRANG))) ketQua.push({ den, ten: conTrung.ten })
+    }
+  })
+  return ketQua
 }

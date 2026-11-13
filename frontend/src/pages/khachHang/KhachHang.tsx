@@ -50,8 +50,8 @@ export function DanhSachKhachHang() {
 
         {data && !loi && (
           <>
-            <h2>
-              {tuKhoa ? 'Khách hàng phù hợp' : 'Danh sách khách hàng'} · {data.tongSo} khách hàng
+            <h2 className="tieu-de-bang">
+              {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách khách hàng'} · {data.tongSo} khách hàng
             </h2>
             {data.tongSo === 0 ? (
               <p className="thong-bao thong-bao--do">{tuKhoa ? 'Không tìm thấy khách hàng' : 'Hiện không có khách hàng nào'}</p>

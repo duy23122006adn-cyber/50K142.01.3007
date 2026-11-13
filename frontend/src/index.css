@@ -833,12 +833,20 @@ a {
   margin: 0;
 }
 
+/* Thanh tìm kiếm dàn kín chiều ngang: ô nhập giãn ra, chạm nút "Thêm…" (nếu có) hoặc mép phải khung. */
 .o-tim {
   display: flex;
   flex: 1 1 320px;
   gap: 0.5rem;
-  max-width: 560px;
   margin-bottom: 0.5rem;
+}
+
+.o-tim .truong__o {
+  flex: 1;
+}
+
+.thanh-cong-cu .o-tim {
+  margin-bottom: 0;
 }
 
 .o-tim .truong__o {
@@ -1877,11 +1885,6 @@ select.truong__o {
   color: inherit;
 }
 
-.trang-tai-khoan .o-tim {
-  max-width: 520px;
-  margin-bottom: 0;
-  margin-left: auto;
-}
 
 /* Bảng gọn: dòng thấp, căn giữa theo chiều dọc, nút Sửa/Xóa nhỏ (mẫu 2.1). */
 .bang--gon th,

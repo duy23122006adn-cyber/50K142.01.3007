@@ -43,31 +43,34 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
     <>
       <h1>Tìm khách hàng có công nợ</h1>
       <section className="the the--rong">
-        <form
-          className="o-tim"
-          onSubmit={(e) => {
-            e.preventDefault()
-            setTuKhoa(oTim.trim())
-          }}
-        >
-          <input
-            className={`truong__o ${loi ? 'truong__o--loi' : ''}`}
-            placeholder="Nhập tên / số điện thoại để tìm kiếm"
-            value={oTim}
-            onChange={(e) => setOTim(e.target.value)}
-            aria-label="Tên hoặc số điện thoại khách hàng có công nợ"
-            autoFocus
-          />
-          <button type="submit" className="nut nut--chinh">
-            Tìm kiếm
-          </button>
-        </form>
+        <div className="thanh-cong-cu">
+          <form
+            className="o-tim"
+            onSubmit={(e) => {
+              e.preventDefault()
+              setTuKhoa(oTim.trim())
+            }}
+          >
+            <input
+              className={`truong__o ${loi ? 'truong__o--loi' : ''}`}
+              placeholder="Nhập tên / số điện thoại để tìm kiếm"
+              value={oTim}
+              onChange={(e) => setOTim(e.target.value)}
+              aria-label="Tên hoặc số điện thoại khách hàng có công nợ"
+              autoFocus
+            />
+            <button type="submit" className="nut nut--chinh">
+              Tìm kiếm
+            </button>
+          </form>
+        </div>
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
         {data && !loi && data.length === 0 && (
           <p className="thong-bao thong-bao--do canh-giua">
             {tuKhoa ? 'Không tìm thấy khách hàng có công nợ!' : 'Hiện không có khách hàng nào còn công nợ.'}
           </p>
         )}
+        {data && !loi && <h2 className="tieu-de-bang">{tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách khách có công nợ'} · {data.length} khách hàng</h2>}
         {data && !loi && data.length > 0 && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
             <table className="bang">

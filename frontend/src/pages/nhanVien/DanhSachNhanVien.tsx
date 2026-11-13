@@ -59,7 +59,6 @@ export function DanhSachNhanVien() {
       <h1>Quản lý tài khoản</h1>
       <section className="the the--rong">
         <div className="thanh-cong-cu">
-          <h2>Danh sách nhân viên</h2>
           <form
             className="o-tim"
             onSubmit={(e) => {
@@ -81,6 +80,11 @@ export function DanhSachNhanVien() {
           </Link>
         </div>
 
+        {data && (
+          <h2 className="tieu-de-bang">
+            {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách nhân viên'} · {data.length} nhân viên
+          </h2>
+        )}
         {isLoading && <p className="ghi-chu">Đang tải…</p>}
         {error && <p className="thong-bao thong-bao--do">{(error as Error).message}</p>}
         {data && data.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy nhân viên phù hợp</p>}

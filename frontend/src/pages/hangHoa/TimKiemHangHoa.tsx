@@ -44,7 +44,11 @@ export function TimKiemHangHoa() {
           </Link>
         </div>
 
-        {data && tuKhoa && <p className="ghi-chu">Kết quả tìm kiếm: {data.tongSo} hàng hóa</p>}
+        {data && (
+          <h2 className="tieu-de-bang">
+            {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách hàng hóa'} · {data.tongSo} hàng hóa
+          </h2>
+        )}
         {data && data.tongSo === 0 && (
           <p className="khung-loi">{tuKhoa ? 'Không tìm thấy hàng hóa' : 'Chưa có hàng hóa nào.'}</p>
         )}

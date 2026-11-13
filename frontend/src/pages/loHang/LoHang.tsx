@@ -28,6 +28,7 @@ export function DanhSachLoHang() {
             Thêm lô hàng
           </Link>
         </div>
+        {data && <h2 className="tieu-de-bang">Danh sách lô hàng · {data.tongSo} lô hàng</h2>}
         {data && data.tongSo === 0 && <p className="ghi-chu">Chưa có lô hàng nào.</p>}
         {data && data.tongSo > 0 && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>

@@ -88,9 +88,9 @@ export function TimKiemKhachQuen() {
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
         {data && !loi && (
           <>
-            <p className="ghi-chu">
-              {data.length} khách quen{trangThai ? ` · ${trangThai}` : ''}
-            </p>
+            <h2 className="tieu-de-bang">
+              {tuKhoa || trangThai ? 'Kết quả tìm kiếm' : 'Danh sách khách quen'} · {data.length} khách quen{trangThai ? ` · ${trangThai}` : ''}
+            </h2>
             {data.length === 0 ? (
               <p className="thong-bao thong-bao--do">
                 {tuKhoa || trangThai ? 'Không tìm thấy thông tin khách quen phù hợp!' : 'Hiện chưa có khách quen nào.'}

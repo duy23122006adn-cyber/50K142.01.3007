@@ -358,9 +358,9 @@ export function DuyetDoiTraDanhSach() {
         {error && <p className="thong-bao thong-bao--do">Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.</p>}
         {data && (
           <>
-            <p className="ghi-chu">
-              {data.length} phiếu đang ở trạng thái {trangThai}
-            </p>
+            <h2 className="tieu-de-bang">
+              Danh sách phiếu {trangThai.toLowerCase()} · {data.length} phiếu
+            </h2>
             {data.length === 0 ? (
               <p className="ghi-chu">Không có phiếu nào.</p>
             ) : (

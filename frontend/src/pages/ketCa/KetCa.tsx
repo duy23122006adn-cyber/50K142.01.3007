@@ -487,6 +487,7 @@ export function DanhSachBienBan() {
       </form>
 
       <section className="the the--rong">
+        {data && <h2>{coLoc ? 'Kết quả lọc' : 'Danh sách biên bản'} · {data.length} biên bản</h2>}
         {error && !loiServer && <p className="thong-bao thong-bao--do">Không thể tải danh sách biên bản, vui lòng thử lại</p>}
         <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
           <table className="bang bang--xen-ke">

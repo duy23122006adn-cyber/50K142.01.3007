@@ -25,26 +25,31 @@ export function TimKiemTonKho({ cheDoDieuChinh = false }: { cheDoDieuChinh?: boo
     <>
       <h1>{cheDoDieuChinh ? 'Điều chỉnh tồn kho' : 'Tìm kiếm tồn kho'}</h1>
       <section className="the the--rong">
-        <form
-          className="o-tim"
-          onSubmit={(e) => {
-            e.preventDefault()
-            setTuKhoa(oTim.trim())
-            setTrang(1)
-          }}
-        >
-          <input
-            className="truong__o"
-            placeholder="Nhập tên hàng hóa"
-            value={oTim}
-            onChange={(e) => setOTim(e.target.value)}
-            aria-label="Tên hoặc mã hàng hóa"
-          />
-          <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
-        </form>
+        <div className="thanh-cong-cu">
+          <form
+            className="o-tim"
+            onSubmit={(e) => {
+              e.preventDefault()
+              setTuKhoa(oTim.trim())
+              setTrang(1)
+            }}
+          >
+            <input
+              className="truong__o"
+              placeholder="Nhập tên hàng hóa"
+              value={oTim}
+              onChange={(e) => setOTim(e.target.value)}
+              aria-label="Tên hoặc mã hàng hóa"
+            />
+            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
+          </form>
+        </div>
 
-        <h2 className="tieu-de-bang">Danh sách tồn kho</h2>
-        {data && tuKhoa && <p className="ghi-chu">Kết quả tìm kiếm: {data.tongSo} lô hàng</p>}
+        {data && (
+          <h2 className="tieu-de-bang">
+            {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách tồn kho'} · {data.tongSo} lô hàng
+          </h2>
+        )}
         {data && data.tongSo === 0 && (
           <p className="thong-bao thong-bao--do">{tuKhoa ? 'Không tìm thấy hàng hóa!' : 'Chưa có lô hàng nào.'}</p>
         )}

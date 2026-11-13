@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import logoXomNho from '../assets/logo-xom-nho.png'
 import { useXacThuc } from '../auth/AuthContext'
-import { TEN_TRANG, TEN_TRANG_MAU, TEN_VAI_TRO, chucNangCua } from '../auth/chucNang'
+import { TEN_VAI_TRO, chucNangCua, chuoiBreadcrumb } from '../auth/chucNang'
 import { useKetNoiTucThoi } from '../lib/suKien'
 import { ChuongThongBao } from './ChuongThongBao'
 import { HopThoai } from './HopThoai'
@@ -10,33 +10,16 @@ import { HopThoai } from './HopThoai'
 /** Breadcrumb theo đặc tả: "Trang chủ / … / …". Đoạn là mã (NV001, HH-0001…) giữ nguyên. */
 function Breadcrumb() {
   const { pathname } = useLocation()
-  const mau = TEN_TRANG_MAU.find(([m]) => m.test(pathname))
-  if (mau) {
-    const [, cha, ten] = mau
-    return (
-      <nav className="breadcrumb" aria-label="Vị trí hiện tại">
-        <Link to="/">Trang chủ</Link>
-        {' / '}
-        <Link to={cha}>{TEN_TRANG[cha] ?? cha}</Link>
-        {' / '}
-        <span aria-current="page">{ten}</span>
-      </nav>
-    )
-  }
-  const cacPhan = pathname.split('/').filter(Boolean)
+  const cacMat = chuoiBreadcrumb(pathname)
   return (
     <nav className="breadcrumb" aria-label="Vị trí hiện tại">
       <Link to="/">Trang chủ</Link>
-      {cacPhan.map((p, i) => {
-        const den = '/' + cacPhan.slice(0, i + 1).join('/')
-        const ten = TEN_TRANG[den] ?? (p === 'sua' ? 'Sửa' : decodeURIComponent(p))
-        return (
-          <span key={den}>
-            {' / '}
-            {i === cacPhan.length - 1 ? <span aria-current="page">{ten}</span> : <Link to={den}>{ten}</Link>}
-          </span>
-        )
-      })}
+      {cacMat.map((m, i) => (
+        <span key={i}>
+          {' / '}
+          {i === cacMat.length - 1 ? <span aria-current="page">{m.ten}</span> : <Link to={m.den}>{m.ten}</Link>}
+        </span>
+      ))}
     </nav>
   )
 }

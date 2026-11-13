@@ -77,8 +77,8 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
 
         {data && !loi && (
           <>
-            <h2>
-              {tuKhoa ? 'Kết quả tìm kiếm' : 'Tất cả hóa đơn'} · {data.tongSo} hóa đơn
+            <h2 className="tieu-de-bang">
+              {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách hóa đơn'} · {data.tongSo} hóa đơn
             </h2>
             {data.tongSo === 0 ? (
               <p className="thong-bao thong-bao--do">{tuKhoa ? thongBaoRong : 'Chưa có hóa đơn nào.'}</p>
