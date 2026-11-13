@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { LoiApi } from '../../api/client'
 import { khachHangApi, type KhachHangDong } from '../../api/nghiepVu'
 import { useXacThuc } from '../../auth/AuthContext'
@@ -45,9 +45,6 @@ export function DanhSachKhachHang() {
             />
             <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
-          <Link to="/quan-ly-khach-hang/them" className="nut nut--chinh">
-            Thêm khách hàng
-          </Link>
         </div>
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
 
@@ -75,13 +72,15 @@ export function DanhSachKhachHang() {
                         <td>{kh.maKH}</td>
                         <td>{kh.hoTen}</td>
                         <td>{kh.sdt}</td>
-                        <td className="o-hanh-dong">
-                          <button type="button" className="nut nut--nho" onClick={() => navigate(`/quan-ly-khach-hang/${kh.maKH}`)}>
-                            Xem
-                          </button>
-                          <button type="button" className="nut nut--nho" onClick={() => navigate(`/quan-ly-khach-hang/${kh.maKH}/sua`)}>
-                            Sửa
-                          </button>
+                        <td>
+                          <div className="o-hanh-dong">
+                            <button type="button" className="nut nut--nho" onClick={() => navigate(`/quan-ly-khach-hang/${kh.maKH}`)}>
+                              Xem
+                            </button>
+                            <button type="button" className="nut nut--nho" onClick={() => navigate(`/quan-ly-khach-hang/${kh.maKH}/sua`)}>
+                              Sửa
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
