@@ -14,6 +14,8 @@ export function DanhSachKhachHang() {
   const [oTim, setOTim] = useState('')
   const [tuKhoa, setTuKhoa] = useState('')
   const [trang, setTrang] = useState(1)
+  const [loiTim, setLoiTim] = useState<string | null>(null)
+  const qc = useQueryClient()
 
   const { data, error, isFetching } = useQuery({
     queryKey: ['khach-hang', tuKhoa, trang],
@@ -21,7 +23,24 @@ export function DanhSachKhachHang() {
     placeholderData: keepPreviousData,
     retry: false,
   })
-  const loi = error instanceof LoiApi ? (error.loi.tuKhoa ?? error.message) : error ? 'Tìm kiếm không thành công' : null
+  const thongBaoLoi = (e: unknown) =>
+    e instanceof LoiApi ? (e.loi.tuKhoa ?? e.message) : e ? 'Tìm kiếm không thành công' : null
+  const loi = loiTim ?? thongBaoLoi(error)
+
+  /** Mẫu 8.3.x: từ khóa không hợp lệ → báo lỗi dưới ô, danh sách khách hàng vẫn hiển thị như thường. */
+  const tim = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const k = oTim.trim()
+    try {
+      if (k) await qc.fetchQuery({ queryKey: ['khach-hang', k, 1], queryFn: () => khachHangApi.timKiem(k, 1), retry: false })
+      setLoiTim(null)
+      setTuKhoa(k)
+    } catch (err) {
+      setLoiTim(thongBaoLoi(err))
+      setTuKhoa('')
+    }
+    setTrang(1)
+  }
 
   return (
     <>
@@ -33,14 +52,7 @@ export function DanhSachKhachHang() {
             <label className="truong__nhan" htmlFor="tim-khach-hang">
               Tên hoặc số điện thoại
             </label>
-            <form
-              className="o-tim"
-              onSubmit={(e) => {
-                e.preventDefault()
-                setTuKhoa(oTim.trim())
-                setTrang(1)
-              }}
-            >
+            <form className="o-tim" onSubmit={tim}>
               <input
                 id="tim-khach-hang"
                 className={`truong__o ${loi ? 'truong__o--loi' : ''}`}
@@ -50,11 +62,11 @@ export function DanhSachKhachHang() {
               />
               <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
             </form>
+            {loi && <p className="truong__loi">{loi}</p>}
           </div>
         </div>
-        {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
 
-        {data && !loi && (
+        {data && !error && (
           <>
             <h2 className="tieu-de-bang">
               {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách khách hàng'} · {data.tongSo} khách hàng
