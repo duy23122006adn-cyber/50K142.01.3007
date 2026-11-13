@@ -114,6 +114,8 @@ Người dùng đổi máy tính hoặc điện thoại không cần khôi phụ
 
 Mọi tích hợp đều bật bằng cấu hình trong `appsettings.json`, mục `TichHop`. Khóa bí mật nên đặt bằng biến môi trường, ví dụ `TichHop__NganHang__Webhook__KhoaBiMat`.
 
+**Chuyển khoản QR – đang dùng** (`TichHop:NganHang`): `CheDo = "VietQRThuCong"` với tài khoản Vikki Bank 342152655 – TRUONG NGOC NAM (đã ghi sẵn trong `appsettings.json`). Màn hình thanh toán hiện ảnh VietQR thật đúng số tiền, nội dung `XN…`; người bán xem biến động số dư trên điện thoại rồi bấm "Đã nhận tiền" hoặc "Chưa nhận được tiền". Muốn quay lại mã QR giả lập thì đặt `CheDo = "GiaLap"`. Bộ kiểm thử luôn chạy giả lập (xem `kiem-thu/README.md`).
+
 **Chuyển khoản QR có xác nhận tự động** (`TichHop:NganHang`):
 
 1. Điền tài khoản nhận tiền:
