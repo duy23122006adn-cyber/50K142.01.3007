@@ -849,6 +849,11 @@ a {
   margin-bottom: 0;
 }
 
+/* Ô tìm kiếm có nhãn in đậm phía trên (theo mẫu màn hình có nhãn cứng). */
+.o-tim-co-nhan {
+  flex: 1 1 320px;
+}
+
 .o-tim .truong__o {
   min-height: 48px;
 }

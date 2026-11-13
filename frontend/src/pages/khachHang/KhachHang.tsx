@@ -28,23 +28,29 @@ export function DanhSachKhachHang() {
       <h1>Quản lý khách hàng</h1>
       <section className="the the--rong">
         <div className="thanh-cong-cu">
-          <form
-            className="o-tim"
-            onSubmit={(e) => {
-              e.preventDefault()
-              setTuKhoa(oTim.trim())
-              setTrang(1)
-            }}
-          >
-            <input
-              className={`truong__o ${loi ? 'truong__o--loi' : ''}`}
-              placeholder="Nhập tên hoặc số điện thoại"
-              value={oTim}
-              onChange={(e) => setOTim(e.target.value)}
-              aria-label="Tên hoặc số điện thoại"
-            />
-            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
-          </form>
+          {/* Mẫu 8.3: nhãn cứng "Tên hoặc số điện thoại" phía trên ô tìm kiếm. */}
+          <div className="o-tim-co-nhan">
+            <label className="truong__nhan" htmlFor="tim-khach-hang">
+              Tên hoặc số điện thoại
+            </label>
+            <form
+              className="o-tim"
+              onSubmit={(e) => {
+                e.preventDefault()
+                setTuKhoa(oTim.trim())
+                setTrang(1)
+              }}
+            >
+              <input
+                id="tim-khach-hang"
+                className={`truong__o ${loi ? 'truong__o--loi' : ''}`}
+                placeholder="Nhập tên hoặc số điện thoại"
+                value={oTim}
+                onChange={(e) => setOTim(e.target.value)}
+              />
+              <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
+            </form>
+          </div>
         </div>
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
 
