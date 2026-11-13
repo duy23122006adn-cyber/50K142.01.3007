@@ -423,28 +423,29 @@ export function TopSanPhamTrang({ loai }: { loai: 'chay' | 'cham' }) {
   return (
     <>
       <h1>{tieuDe}</h1>
-      <form className="the the--rong" onSubmit={xem} noValidate>
-        <DauKy tu={ky.tu} den={ky.den} />
-        <div className="hang-tim">
-          <label className="truong">
-            <span className="truong__nhan">Số lượng sản phẩm mong muốn</span>
-            <input
-              className={`truong__o o-so-luong ${loi.truong.soLuong ? 'truong__o--loi' : ''}`}
-              inputMode="numeric"
-              value={nhap}
-              onChange={(e) => setNhap(e.target.value)}
-            />
-            {loi.truong.soLuong && <span className="truong__loi">{loi.truong.soLuong}</span>}
-          </label>
-          <div className="hang-nut hang-nut--sat">
-            <button type="submit" className="nut nut--chinh" disabled={isFetching}>
-              Xem
-            </button>
-            <button type="button" className="nut" onClick={() => navigate(`${GOC}/so-luong-ban-ra?${thamSoKy(ky)}`)}>
-              Quay lại
-            </button>
-          </div>
+      <form className="the the--rong khung-top" onSubmit={xem} noValidate>
+        <div className="khung-top__dau">
+          <DauKy tu={ky.tu} den={ky.den} />
+          <button type="button" className="nut" onClick={() => navigate(`${GOC}/so-luong-ban-ra?${thamSoKy(ky)}`)}>
+            Quay lại
+          </button>
         </div>
+        <label className="truong__nhan" htmlFor="so-luong-top">
+          Số lượng sản phẩm mong muốn
+        </label>
+        <div className="khung-top__nhap">
+          <input
+            id="so-luong-top"
+            className={`truong__o o-so-luong ${loi.truong.soLuong ? 'truong__o--loi' : ''}`}
+            inputMode="numeric"
+            value={nhap}
+            onChange={(e) => setNhap(e.target.value)}
+          />
+          <button type="submit" className="nut nut--chinh" disabled={isFetching}>
+            Xem
+          </button>
+        </div>
+        {loi.truong.soLuong && <span className="truong__loi">{loi.truong.soLuong}</span>}
       </form>
       {loi.chung && <KhongCoDuLieu thongBao={loi.chung} />}
       {data && (

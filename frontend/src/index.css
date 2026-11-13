@@ -2009,3 +2009,34 @@ select.truong__o {
 .chu-do-thuong {
   color: var(--mau-do);
 }
+
+/* Top bán chạy / bán chậm: dòng kỳ báo cáo + "Quay lại" bên phải; ô số lượng và nút "Xem" nằm sát nhau. */
+.khung-top__dau {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--mau-vien);
+}
+
+.khung-top__dau .ghi-chu {
+  margin: 0;
+}
+
+.khung-top__nhap {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.khung-top__nhap .o-so-luong {
+  width: 7rem;
+  min-height: 48px;
+}
+
+.khung-top .truong__loi {
+  display: block;
+}
