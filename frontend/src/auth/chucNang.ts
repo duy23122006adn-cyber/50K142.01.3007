@@ -108,9 +108,16 @@ export const TEN_VAI_TRO: Record<VaiTro, string> = {
 
 export const chucNangCua = (vaiTro: VaiTro) => DANH_SACH_CHUC_NANG.filter((c) => c.vaiTro.includes(vaiTro))
 
-/** Breadcrumb riêng cho trang có mã trong đường dẫn: [mẫu đường dẫn, trang cha, tên trang]. */
-export const TEN_TRANG_MAU: [RegExp, string, string][] = [
-  [/^\/quan-ly-tai-khoan\/[^/]+\/sua$/, '/quan-ly-tai-khoan', 'Sửa nhân viên'], // mẫu 2.3.1
+/** Breadcrumb riêng cho trang có mã trong đường dẫn: [mẫu đường dẫn, trang mở ra nó, tên trang] – hiện tên trang thay cho mã. */
+export const TEN_TRANG_MAU: [RegExp, (m: RegExpMatchArray) => string, string][] = [
+  [/^\/quan-ly-tai-khoan\/[^/]+\/sua$/, () => '/quan-ly-tai-khoan', 'Sửa nhân viên'], // mẫu 2.3.1
+  [/^\/quan-ly-ton-kho\/dieu-chinh\/[^/]+$/, () => '/quan-ly-ton-kho/dieu-chinh', 'Điều chỉnh lô hàng'],
+  [/^\/quan-ly-hang-hoa\/([^/]+)$/, () => '/quan-ly-hang-hoa', 'Chi tiết thông tin hàng hóa'],
+  [/^\/quan-ly-hang-hoa\/([^/]+)\/sua$/, (m) => `/quan-ly-hang-hoa/${m[1]}`, 'Sửa hàng hóa'],
+  [/^\/quan-ly-khach-hang\/([^/]+)$/, () => '/quan-ly-khach-hang', 'Chi tiết khách hàng'],
+  [/^\/quan-ly-khach-hang\/([^/]+)\/sua$/, () => '/quan-ly-khach-hang', 'Sửa thông tin khách hàng'],
+  [/^\/quan-ly-cong-no\/khach-quen\/([^/]+)$/, () => '/quan-ly-cong-no/tim-kiem', 'Chi tiết khách quen'],
+  [/^\/quan-ly-cong-no\/khach-quen\/([^/]+)\/sua$/, (m) => `/quan-ly-cong-no/khach-quen/${m[1]}`, 'Sửa thông tin khách quen'],
 ]
 
 /** Tên hiển thị trên breadcrumb theo đường dẫn đầy đủ. */
@@ -172,8 +179,11 @@ export interface MatBreadcrumb {
 
 /** Chuỗi breadcrumb (không gồm "Trang chủ") khớp tên menu trái. */
 export function chuoiBreadcrumb(pathname: string): MatBreadcrumb[] {
-  const mau = TEN_TRANG_MAU.find(([m]) => m.test(pathname))
-  if (mau) return [{ den: mau[1], ten: TEN_TRANG[mau[1]] ?? mau[1] }, { den: pathname, ten: mau[2] }]
+  // Trang theo mã (chi tiết/sửa): tên trang thay cho mã, nối sau chuỗi breadcrumb của trang mở ra nó.
+  for (const [mau, cha, ten] of TEN_TRANG_MAU) {
+    const khop = pathname.match(mau)
+    if (khop && !(pathname in TEN_TRANG)) return [...chuoiBreadcrumb(cha(khop)), { den: pathname, ten }]
+  }
 
   const cacPhan = pathname.split('/').filter(Boolean)
   const ketQua: MatBreadcrumb[] = []
