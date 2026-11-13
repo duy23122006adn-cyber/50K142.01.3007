@@ -5,7 +5,7 @@ import { tien } from '../lib/dinhDang'
 import { GiaLapNganHang, MaQrGiaLap } from './MaQrGiaLap'
 
 interface ThongTinQr {
-  cheDo: 'GiaLap' | 'VietQR'
+  cheDo: 'GiaLap' | 'VietQR' | 'VietQRThuCong'
   maThamChieu: string
   soTien: number
   urlAnh: string | null
@@ -19,6 +19,7 @@ interface ThongTinQr {
  * - Giả lập (mặc định): mã QR minh họa + nút chọn kết quả ngân hàng (Q5).
  * - VietQR: ảnh QR thật của tài khoản cửa hàng; tự hỏi máy chủ mỗi 3 giây (và ngay khi có sự kiện "ngan-hang"),
  *   tiền vào khớp mã tham chiếu thì gọi onKetQua(true, mã) – máy chủ đối chiếu lại khi tạo phiếu thu.
+ * - VietQRThuCong: ảnh QR thật đúng số tiền, chưa có webhook → người bán xem điện thoại rồi tự xác nhận.
  */
 export function KhungQr({
   soTien,
@@ -36,6 +37,7 @@ export function KhungQr({
     gcTime: 0,
   })
   const that = qr?.cheDo === 'VietQR'
+  const thuCong = qr?.cheDo === 'VietQRThuCong'
   const { data: trangThai, refetch } = useQuery({
     queryKey: ['qr', 'trang-thai', qr?.maThamChieu],
     queryFn: () => goiApi<{ daNhan: boolean }>(`/tich-hop/qr/trang-thai?ma=${qr!.maThamChieu}&soTien=${soTien}`),
@@ -54,7 +56,7 @@ export function KhungQr({
   if (error) return <p className="thong-bao thong-bao--do">{(error as Error).message}</p>
   if (!qr) return <p className="ghi-chu">Đang tạo mã QR…</p>
 
-  if (!that)
+  if (!that && !thuCong)
     return (
       <>
         <MaQrGiaLap soTien={soTien} />
@@ -79,12 +81,28 @@ export function KhungQr({
           <strong>{qr.maThamChieu}</strong>
         </dd>
       </dl>
-      <p className="ghi-chu">
-        {trangThai?.daNhan ? 'Đã nhận tiền, đang ghi nhận thanh toán…' : 'Đang chờ ngân hàng xác nhận…'}
-      </p>
-      <button type="button" className="nut nut--nho" disabled={dangXuLy} onClick={() => void refetch()}>
-        Kiểm tra lại
-      </button>
+      {thuCong ? (
+        <>
+          <p className="ghi-chu">Kiểm tra biến động số dư trên điện thoại: đúng số tiền và nội dung thì bấm "Đã nhận tiền".</p>
+          <div className="hang-nut hang-nut--giua">
+            <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => onKetQua(true, qr.maThamChieu)}>
+              Đã nhận tiền
+            </button>
+            <button type="button" className="nut nut--nguy-hiem" disabled={dangXuLy} onClick={() => onKetQua(false, qr.maThamChieu)}>
+              Chưa nhận được tiền
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="ghi-chu">
+            {trangThai?.daNhan ? 'Đã nhận tiền, đang ghi nhận thanh toán…' : 'Đang chờ ngân hàng xác nhận…'}
+          </p>
+          <button type="button" className="nut nut--nho" disabled={dangXuLy} onClick={() => void refetch()}>
+            Kiểm tra lại
+          </button>
+        </>
+      )}
     </div>
   )
 }

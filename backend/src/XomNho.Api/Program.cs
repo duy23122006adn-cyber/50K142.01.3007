@@ -18,6 +18,11 @@ using XomNho.Api.XacThuc;
 var builder = WebApplication.CreateBuilder(args);
 
 // ------------------------------------------------------------------ Cấu hình
+// Thông tin riêng của cửa hàng (tài khoản ngân hàng, khóa dịch vụ…) đặt trong appsettings.{Môi trường}.local.json –
+// tệp này bị .gitignore bỏ qua nên không bị đẩy lên GitHub. Biến môi trường vẫn được ưu tiên hơn.
+builder.Configuration
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.local.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 builder.Services.Configure<TuyChonJwt>(builder.Configuration.GetSection("Jwt"));
 builder.Services.Configure<TuyChonTichHop>(builder.Configuration.GetSection("TichHop"));
 builder.Services.Configure<XomNho.Api.HeThongQL.TuyChonSaoLuu>(builder.Configuration.GetSection("SaoLuu"));

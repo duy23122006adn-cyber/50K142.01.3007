@@ -18,12 +18,15 @@ namespace XomNho.Api.TichHop;
 /// <item>"GiaLap" (mặc định): mã QR minh họa, người dùng tự chọn kết quả (Q5).</item>
 /// <item>"VietQR": ảnh VietQR thật của tài khoản cửa hàng; tiền vào được xác nhận qua webhook của dịch vụ
 /// theo dõi biến động số dư (SePay, Casso, PayOS…). Máy chủ tự đối chiếu, không tin kết quả trình duyệt gửi lên.</item>
+/// <item>"VietQRThuCong": ảnh VietQR thật đúng số tiền của tài khoản cửa hàng, nhưng chưa có webhook –
+/// người bán xem biến động số dư trên điện thoại rồi tự bấm "Đã nhận tiền" / "Chưa nhận được tiền".</item>
 /// </list>
 /// </summary>
 public sealed class TuyChonNganHang
 {
     public const string GiaLap = "GiaLap";
     public const string VietQr = "VietQR";
+    public const string VietQrThuCong = "VietQRThuCong";
 
     public string CheDo { get; set; } = GiaLap;
     /// <summary>Mã BIN hoặc mã viết tắt ngân hàng theo VietQR, ví dụ "970436" hoặc "VCB".</summary>
@@ -35,7 +38,10 @@ public sealed class TuyChonNganHang
     public int PhutHieuLuc { get; set; } = 30;
     public TuyChonWebhook Webhook { get; set; } = new();
 
+    /// <summary>Máy chủ tự xác nhận tiền vào qua webhook.</summary>
     public bool LaThat => CheDo == VietQr;
+    /// <summary>Hiện ảnh VietQR thật (có hoặc không có webhook).</summary>
+    public bool CoAnhQrThat => CheDo is VietQr or VietQrThuCong;
 }
 
 /// <summary>
@@ -74,12 +80,12 @@ public sealed class DichVuQr(XomNhoDbContext db, IOptions<TuyChonNganHang> tuyCh
     {
         if (soTien <= 0) throw LoiNghiepVuException.KhongHopLe("Số tiền chuyển khoản phải lớn hơn 0.");
         var ma = "XN" + string.Concat(RandomNumberGenerator.GetItems<char>(KyTu, 8));
-        if (!Tc.LaThat) return new ThongTinQr(TuyChonNganHang.GiaLap, ma, soTien, null, null, null, null);
+        if (!Tc.CoAnhQrThat) return new ThongTinQr(TuyChonNganHang.GiaLap, ma, soTien, null, null, null, null);
         if (QuyTac.Trong(Tc.MaNganHang) || QuyTac.Trong(Tc.SoTaiKhoan))
             throw new LoiNghiepVuException(StatusCodes.Status500InternalServerError, "Chưa cấu hình tài khoản ngân hàng nhận tiền (TichHop:NganHang).");
         var url = $"https://img.vietqr.io/image/{Uri.EscapeDataString(Tc.MaNganHang!)}-{Uri.EscapeDataString(Tc.SoTaiKhoan!)}-{Uri.EscapeDataString(Tc.MauQr)}.png"
             + $"?amount={soTien.ToString("0", CultureInfo.InvariantCulture)}&addInfo={ma}&accountName={Uri.EscapeDataString(Tc.TenTaiKhoan ?? "")}";
-        return new ThongTinQr(TuyChonNganHang.VietQr, ma, soTien, url, Tc.MaNganHang, Tc.SoTaiKhoan, Tc.TenTaiKhoan);
+        return new ThongTinQr(Tc.CheDo, ma, soTien, url, Tc.MaNganHang, Tc.SoTaiKhoan, Tc.TenTaiKhoan);
     }
 
     /// <summary>Bỏ dấu cách, gạch… vì ngân hàng có thể chèn ký tự vào nội dung chuyển khoản.</summary>
@@ -101,13 +107,19 @@ public sealed class DichVuQr(XomNhoDbContext db, IOptions<TuyChonNganHang> tuyCh
         Tc.LaThat && await TimGiaoDichAsync(maThamChieu, soTien, theoDoi: false, ct) is not null;
 
     /// <summary>
-    /// Dùng khi tạo phiếu thu chuyển khoản. Giả lập: theo kết quả người dùng chọn. Thật: phải có giao dịch khớp;
+    /// Dùng khi tạo phiếu thu chuyển khoản. Giả lập / VietQRThuCong: theo kết quả người bán chọn. Thật: phải có giao dịch khớp;
     /// người gọi gán <c>GiaoDich.MaPTT</c> để giao dịch không dùng được lần hai.
     /// </summary>
     public async Task<KetQuaXacNhanQr> XacNhanAsync(string? ketQuaGiaLap, string? maThamChieu, decimal soTien, CancellationToken ct)
     {
         if (!Tc.LaThat)
-            return new KetQuaXacNhanQr(ketQuaGiaLap == "ThanhCong", $"QR{dongHo.BayGio:yyyyMMddHHmmss}{Random.Shared.Next(100, 999)}", null);
+        {
+            // VietQRThuCong: lưu nội dung chuyển khoản làm mã giao dịch để đối chiếu với sao kê ngân hàng.
+            var maGd = Tc.CoAnhQrThat && !QuyTac.Trong(maThamChieu)
+                ? maThamChieu!.Trim()
+                : $"QR{dongHo.BayGio:yyyyMMddHHmmss}{Random.Shared.Next(100, 999)}";
+            return new KetQuaXacNhanQr(ketQuaGiaLap == "ThanhCong", maGd, null);
+        }
         var gd = await TimGiaoDichAsync(maThamChieu, soTien, theoDoi: true, ct);
         if (gd is null) return new KetQuaXacNhanQr(false, (maThamChieu ?? "QR").Trim(), null);
         return new KetQuaXacNhanQr(true, gd.MaGD.Length <= 50 ? gd.MaGD : gd.MaGD[..50], gd);
