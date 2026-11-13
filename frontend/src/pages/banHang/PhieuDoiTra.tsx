@@ -9,6 +9,7 @@ import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { ngayGio, tien } from '../../lib/dinhDang'
 import { docTien } from '../../lib/docSo'
 import { docDaThu, docTo } from '../../lib/docTo'
+import { useTrang } from '../../lib/useTrang'
 import { ChenhLech, MatHang, NhanTrangThaiPhieu, ThongTinPhieu } from './ThongTinPhieu'
 
 const GOC_DOI_TRA = '/quan-ly-ban-hang/doi-tra'
@@ -335,6 +336,7 @@ export function DuyetDoiTraDanhSach() {
     queryKey: ['duyet-doi-tra', trangThai],
     queryFn: () => duyetDoiTraApi.danhSach(trangThai),
   })
+  const { dsTrang, phanTrang } = useTrang(data, `${trangThai}|${data?.length}`)
   return (
     <>
       <h1>Duyệt phiếu đổi trả</h1>
@@ -376,7 +378,7 @@ export function DuyetDoiTraDanhSach() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((p) => (
+                    {dsTrang.map((p) => (
                       <tr key={p.maPDT}>
                         <td>{p.maPDT}</td>
                         <td>{p.maHD}</td>
@@ -403,6 +405,7 @@ export function DuyetDoiTraDanhSach() {
                 </table>
               </div>
             )}
+            {phanTrang}
           </>
         )}
       </section>

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { tonKhoApi } from '../../api/nghiepVu'
 import { ngay, so } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 
 const CAC_TAB = ['Tất cả', 'Sắp hết hàng', 'Sắp hết hạn', 'Hết hàng', 'Hết hạn'] as const
 
@@ -16,6 +17,7 @@ export function CanhBaoTonKho() {
     queryFn: () => tonKhoApi.canhBao(loai, caDaXuLy),
   })
   const tong = data ? Object.values(data.soLuongTheoLoai).reduce((a, b) => a + b, 0) : 0
+  const { dsTrang, phanTrang } = useTrang(data?.danhSach, `${loai}|${caDaXuLy}|${data?.danhSach.length}`)
 
   return (
     <>
@@ -67,7 +69,7 @@ export function CanhBaoTonKho() {
                 </tr>
               </thead>
               <tbody>
-                {data.danhSach.map((c) => (
+                {dsTrang.map((c) => (
                   <tr key={c.maCB} className={c.trangThai === 'Đã xử lý' ? 'dong-mo' : ''}>
                     <td>{c.maLo}</td>
                     <td>{c.tenHH}</td>
@@ -85,6 +87,7 @@ export function CanhBaoTonKho() {
             </table>
           </div>
         )}
+        {phanTrang}
       </section>
     </>
   )

@@ -7,6 +7,7 @@ import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
 import { ThongBaoKetQua, type KetQua } from '../../components/ThongBaoKetQua'
 import { ngay, tien } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 
 const TRANG_THAI_NO =['Còn hạn', 'Sắp hết hạn', 'Quá hạn', 'Không nợ'] as const
 
@@ -36,6 +37,7 @@ export function TimKiemKhachQuen() {
     retry: false,
   })
   const loi = error instanceof LoiApi ? (error.loi.tuKhoa ?? error.message) : error ? 'Tìm kiếm không thành công' : null
+  const { dsTrang, phanTrang } = useTrang(data, `${tuKhoa}|${trangThai}|${data?.length}`)
 
   return (
     <>
@@ -105,7 +107,7 @@ export function TimKiemKhachQuen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((k) => (
+                    {dsTrang.map((k) => (
                       <tr key={k.maKH}>
                         <td>
                           {k.hoTen}
@@ -127,6 +129,7 @@ export function TimKiemKhachQuen() {
                 </table>
               </div>
             )}
+            {phanTrang}
           </>
         )}
       </section>
@@ -147,6 +150,7 @@ export function ChiTietKhachQuenTrang() {
   const [dangXoa, setDangXoa] = useState(false)
 
   const { data, error } = useQuery({ queryKey: ['khach-quen', 'chi-tiet', maKH], queryFn: () => congNoApi.chiTiet(maKH) })
+  const hdNo = useTrang(data?.hoaDonChuaTra)
   if (error) return <p className="thong-bao thong-bao--do">{(error as Error).message}</p>
   if (!data) return <p className="ghi-chu">Đang tải…</p>
 
@@ -204,7 +208,7 @@ export function ChiTietKhachQuenTrang() {
                 </tr>
               </thead>
               <tbody>
-                {data.hoaDonChuaTra.map((h) => (
+                {hdNo.dsTrang.map((h) => (
                   <tr key={h.maHD}>
                     <td>{h.maHD}</td>
                     <td className="so">{tien(h.soTien)}</td>
@@ -213,6 +217,7 @@ export function ChiTietKhachQuenTrang() {
                 ))}
               </tbody>
             </table>
+            {hdNo.phanTrang}
           </div>
         )}
 

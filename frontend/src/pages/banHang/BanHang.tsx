@@ -11,6 +11,8 @@ import { HopThoai } from '../../components/HopThoai'
 import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { XemHoaDon } from '../../components/XemHoaDon'
 import { NutDocTo } from '../../components/NutDocTo'
+import { PhanTrang } from '../../components/PhanTrang'
+import { useTrang } from '../../lib/useTrang'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
 import { docTien } from '../../lib/docSo'
 import { docDaThu, docTongTien } from '../../lib/docTo'
@@ -68,6 +70,7 @@ export function BanHang() {
   const [oTimNo, setOTimNo] = useState('')
   const [loiTimNo, setLoiTimNo] = useState<string | null>(null)
   const [ketQuaTimNo, setKetQuaTimNo] = useState<KhachHangDong[] | null>(null)
+  const [trangNo, setTrangNo] = useState({ tuKhoa: '', trang: 1, soTrang: 1, tongSo: 0 })
   const [kiemTraNo, setKiemTraNo] = useState<KiemTraGhiNo | null>(null)
   const [thoiDiemXem, setThoiDiemXem] = useState('')
   const [gio, setGio] = useState<DongGio[]>(() => docGio().gio)
@@ -100,6 +103,7 @@ export function BanHang() {
 
   // Màn hình 6.5.1: tab lọc "Tất cả / Đồ uống / Thực phẩm / Hàng khác" – gom 11 danh mục (UC_4.1 BR06) vào 3 nhóm.
   const dsHienThi = (sanPham.data ?? []).filter((p) => !tab || nhomCua(p.tenDM) === tab)
+  const trangSP = useTrang(dsHienThi, `${tab}|${tuKhoa}|${dsHienThi.length}`)
 
   // ------------------------------------------------------------------ Giỏ hàng (bước 3–7)
 
@@ -197,8 +201,15 @@ export function BanHang() {
     setLoiTimNo(null)
     setKiemTraNo(null)
     if (!oTimNo.trim()) return setLoiTimNo('Không được để trống!') // 5.a
+    await taiTrangNo(oTimNo.trim(), 1)
+  }
+
+  /** Kết quả tìm khách ghi nợ lấy theo trang (20 khách/trang) từ máy chủ. */
+  const taiTrangNo = async (tuKhoa: string, trang: number) => {
     try {
-      setKetQuaTimNo((await khachHangApi.timKiem(oTimNo.trim())).danhSach)
+      const kq = await khachHangApi.timKiem(tuKhoa, trang)
+      setKetQuaTimNo(kq.danhSach)
+      setTrangNo({ tuKhoa, trang: kq.trang, soTrang: kq.soTrang, tongSo: kq.tongSo })
     } catch (err) {
       setLoiTimNo(err instanceof LoiApi ? (err.loi.tuKhoa ?? err.message) : 'Tìm kiếm không thành công')
     }
@@ -319,7 +330,7 @@ export function BanHang() {
             {sanPham.data && dsHienThi.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy sản phẩm phù hợp</p>}
             {dsHienThi.length > 0 && (
               <ul className="ds-san-pham">
-                {dsHienThi.map((p) => (
+                {trangSP.dsTrang.map((p) => (
                   <li key={p.maHH}>
                     <button type="button" className="ds-san-pham__dong" onClick={() => them(p)} disabled={p.tonBanDuoc === 0}>
                       <strong>{p.tenHH}</strong>
@@ -331,6 +342,7 @@ export function BanHang() {
                 ))}
               </ul>
             )}
+            {trangSP.phanTrang}
           </section>
 
           <aside className="the pos__gio">
@@ -420,9 +432,11 @@ export function BanHang() {
             <p className="tong-lon">
               Tổng tiền cần thanh toán: <strong>{tien(tong)}</strong>
             </p>
-            <button type="button" className="nut" onClick={() => setBuoc('gio')}>
-              Quay lại giỏ hàng
-            </button>
+            <div className="hang-nut">
+              <button type="button" className="nut" onClick={() => setBuoc('gio')}>
+                Quay lại giỏ hàng
+              </button>
+            </div>
           </section>
           {/* Cùng bố cục với giỏ "Đơn hàng mới": tiêu đề + số sản phẩm, hai nút chọn khách, tổng tiền dưới đường gạch. */}
           <aside className="the pos__gio pos-tt">
@@ -535,7 +549,7 @@ export function BanHang() {
                 {ketQuaTimNo && ketQuaTimNo.length === 0 && <p className="thong-bao thong-bao--do canh-giua">Không tìm thấy khách hàng</p>}
                 {ketQuaTimNo && ketQuaTimNo.length > 0 && (
                   <>
-                    <p className="ghi-chu">Kết quả tìm kiếm: {ketQuaTimNo.length} khách hàng</p>
+                    <p className="ghi-chu">Kết quả tìm kiếm: {trangNo.tongSo} khách hàng</p>
                     <div className="bang-cuon">
                       <table className="bang">
                         <thead>
@@ -562,6 +576,7 @@ export function BanHang() {
                         </tbody>
                       </table>
                     </div>
+                    <PhanTrang trang={trangNo.trang} soTrang={trangNo.soTrang} onDoiTrang={(t) => void taiTrangNo(trangNo.tuKhoa, t)} />
                   </>
                 )}
               </>

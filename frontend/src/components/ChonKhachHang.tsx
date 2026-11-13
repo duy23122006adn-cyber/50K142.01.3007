@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LoiApi } from '../api/client'
 import { khachHangApi, type KhachHangDong } from '../api/nghiepVu'
 import { HopThoai } from './HopThoai'
+import { PhanTrang } from './PhanTrang'
 
 interface Props {
   mo: boolean
@@ -16,6 +17,7 @@ interface Props {
 export function ChonKhachHang({ mo, onChon, onDong }: Props) {
   const [tuKhoa, setTuKhoa] = useState('')
   const [ketQua, setKetQua] = useState<KhachHangDong[] | null>(null)
+  const [trang, setTrang] = useState({ tuKhoa: '', trang: 1, soTrang: 1 })
   const [loi, setLoi] = useState<string | null>(null)
   const [themMoi, setThemMoi] = useState(false)
   const [form, setForm] = useState({ hoTen: '', sdt: '' })
@@ -38,8 +40,15 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
       setLoi('Vui lòng nhập tên hoặc số điện thoại khách hàng.')
       return
     }
+    await taiTrang(tuKhoa.trim(), 1)
+  }
+
+  /** Kết quả lấy theo trang từ máy chủ (20 khách/trang). */
+  const taiTrang = async (tk: string, so: number) => {
     try {
-      setKetQua((await khachHangApi.timKiem(tuKhoa.trim())).danhSach)
+      const kq = await khachHangApi.timKiem(tk, so)
+      setKetQua(kq.danhSach)
+      setTrang({ tuKhoa: tk, trang: kq.trang, soTrang: kq.soTrang })
     } catch (e) {
       setLoi(e instanceof LoiApi ? (e.loi.tuKhoa ?? e.message) : 'Tìm kiếm không thành công')
       setKetQua(null)
@@ -138,6 +147,9 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
                 </li>
               ))}
             </ul>
+          )}
+          {ketQua && ketQua.length > 0 && (
+            <PhanTrang trang={trang.trang} soTrang={trang.soTrang} onDoiTrang={(t) => void taiTrang(trang.tuKhoa, t)} />
           )}
           {ketQua && ketQua.length === 0 && (
             <>

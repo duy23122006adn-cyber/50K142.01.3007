@@ -5,6 +5,7 @@ import { LoiApi } from '../../api/client'
 import { nhanVienApi, type CheDoXoa } from '../../api/nghiepVu'
 import { HopThoai } from '../../components/HopThoai'
 import { ThongBaoKetQua, type KetQua } from '../../components/ThongBaoKetQua'
+import { useTrang } from '../../lib/useTrang'
 
 interface XacNhanXoa {
   maND: string
@@ -26,6 +27,7 @@ export function DanhSachNhanVien() {
     queryKey: ['nhan-vien', tuKhoa],
     queryFn: () => nhanVienApi.danhSach(tuKhoa),
   })
+  const { dsTrang, phanTrang } = useTrang(data, `${tuKhoa}|${data?.length}`)
 
   const batDauXoa = async (maND: string) => {
     try {
@@ -95,7 +97,7 @@ export function DanhSachNhanVien() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((nv) => (
+                {dsTrang.map((nv) => (
                   <tr key={nv.maND}>
                     <td>{nv.hoTen}</td>
                     <td>{nv.maND}</td>
@@ -122,6 +124,7 @@ export function DanhSachNhanVien() {
             </table>
           </div>
         )}
+        {phanTrang}
       </section>
 
       {/* 2.5.1 Xác nhận xóa / 2.5.3 Xác nhận ngừng hoạt động */}

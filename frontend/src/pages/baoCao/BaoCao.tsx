@@ -5,6 +5,7 @@ import { LoiApi } from '../../api/client'
 import { baoCaoApi, type ChiTieuSoSanh, type DongSoLuongBan } from '../../api/nghiepVu'
 import { ChonKy, MoTaKy, type CheDoKy, type Ky } from '../../components/ChonKy'
 import { ngay, so, tien } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 
 const GOC = '/bao-cao'
 const CHE_DO: CheDoKy[] = ['ngay', 'thang', 'quy', 'tuyChon']
@@ -73,6 +74,7 @@ export function BaoCaoLoiNhuanTrang() {
     enabled: !!ky,
     retry: false,
   })
+  const trang = useTrang(data?.dong, `${ky?.tu}|${ky?.den}|${data?.dong.length}`)
   const loi = tachLoi(error)
   return (
     <>
@@ -111,7 +113,7 @@ export function BaoCaoLoiNhuanTrang() {
                 </tr>
               </thead>
               <tbody>
-                {data.dong.map((d) => (
+                {trang.dsTrang.map((d) => (
                   <tr key={d.maHH}>
                     <td>{d.tenHH}</td>
                     <td className="so">{tien(d.doanhThu)}</td>
@@ -122,6 +124,7 @@ export function BaoCaoLoiNhuanTrang() {
               </tbody>
             </table>
           </div>
+          {trang.phanTrang}
         </section>
       )}
     </>
@@ -140,6 +143,7 @@ export function BaoCaoDoanhThuTrang() {
     enabled: !!ky,
     retry: false,
   })
+  const trang = useTrang(data?.dong, `${ky?.tu}|${ky?.den}|${data?.dong.length}`)
   const loi = tachLoi(error)
   return (
     <>
@@ -178,7 +182,7 @@ export function BaoCaoDoanhThuTrang() {
                 </tr>
               </thead>
               <tbody>
-                {data.dong.map((d) => (
+                {trang.dsTrang.map((d) => (
                   <tr key={d.maHH}>
                     <td>{d.tenHH}</td>
                     <td className={`so ${d.doanhThu < 0 ? 'chu-do' : ''}`}>{tien(d.doanhThu)}</td>
@@ -187,6 +191,7 @@ export function BaoCaoDoanhThuTrang() {
               </tbody>
             </table>
           </div>
+          {trang.phanTrang}
         </section>
       )}
     </>
@@ -311,7 +316,9 @@ export function SoSanhTrang({ chiTieu }: { chiTieu: ChiTieuSoSanh }) {
 // ====================================================================== UC_5.3
 
 function BangSoLuong({ dong }: { dong: DongSoLuongBan[] }) {
+  const { dsTrang, phanTrang } = useTrang(dong)
   return (
+    <>
     <div className="bang-cuon">
       <table className="bang bang--xen-ke">
         <thead>
@@ -323,7 +330,7 @@ function BangSoLuong({ dong }: { dong: DongSoLuongBan[] }) {
           </tr>
         </thead>
         <tbody>
-          {dong.map((d) => (
+          {dsTrang.map((d) => (
             <tr key={d.maHH}>
               <td>{d.tenHH}</td>
               <td>{d.nhomHang}</td>
@@ -334,6 +341,8 @@ function BangSoLuong({ dong }: { dong: DongSoLuongBan[] }) {
         </tbody>
       </table>
     </div>
+    {phanTrang}
+    </>
   )
 }
 
@@ -463,6 +472,7 @@ export function BaoCaoTonKhoTrang() {
     retry: false,
   })
   const loi = tachLoi(error)
+  const trang = useTrang(data?.dong, `${daXem}|${data?.dong.length}`)
 
   return (
     <>
@@ -518,7 +528,7 @@ export function BaoCaoTonKhoTrang() {
                 </tr>
               </thead>
               <tbody>
-                {data.dong.map((d) => (
+                {trang.dsTrang.map((d) => (
                   <tr key={d.maLo}>
                     <td>{d.maLo}</td>
                     <td>{d.tenHH}</td>
@@ -531,6 +541,7 @@ export function BaoCaoTonKhoTrang() {
               </tbody>
             </table>
           </div>
+          {trang.phanTrang}
         </section>
       )}
     </>

@@ -16,6 +16,7 @@ import { HopThoai } from '../../components/HopThoai'
 import { TimHoaDon } from '../../components/TimHoaDon'
 import { NhanTrangThaiHoaDon } from '../../components/XemHoaDon'
 import { ngayGio, so, tien } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 import { ChenhLech, MatHang, NhanTrangThaiPhieu } from './ThongTinPhieu'
 
 const GOC_DOI_TRA ='/quan-ly-ban-hang/doi-tra'
@@ -26,6 +27,7 @@ const LOI_NSX = 'Lỗi do nhà sản xuất'
 export function DoiTraDanhSach() {
   const navigate = useNavigate()
   const { data } = useQuery({ queryKey: ['doi-tra', 'dang-xu-ly'], queryFn: doiTraApi.dangXuLy })
+  const { dsTrang, phanTrang } = useTrang(data)
   return (
     <>
       <TimHoaDon
@@ -49,7 +51,7 @@ export function DoiTraDanhSach() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((p) => (
+                {dsTrang.map((p) => (
                   <tr key={p.maPDT}>
                     <td>{p.maPDT}</td>
                     <td>{p.maHD}</td>
@@ -74,6 +76,7 @@ export function DoiTraDanhSach() {
               </tbody>
             </table>
           </div>
+          {phanTrang}
         </section>
       )}
     </>
@@ -648,6 +651,7 @@ function ChonHangMoi({ dangChonCho, onChon }: { dangChonCho: DongDoiTra | null; 
     queryKey: ['ban-hang', 'san-pham', tuKhoa],
     queryFn: () => banHangApi.sanPham(tuKhoa),
   })
+  const trangSP = useTrang(data, `${tuKhoa}|${data?.length}`)
   return (
     <>
       <h2>Tìm và chọn hàng mới{dangChonCho ? ` cho ${dangChonCho.tenHH}` : ''}</h2>
@@ -682,7 +686,7 @@ function ChonHangMoi({ dangChonCho, onChon }: { dangChonCho: DongDoiTra | null; 
               </tr>
             </thead>
             <tbody>
-              {data.map((sp) => (
+              {trangSP.dsTrang.map((sp) => (
                 <tr key={sp.maHH}>
                   <td>
                     {sp.tenHH} · <span className="ghi-chu">{sp.donViTinh}</span>
@@ -705,6 +709,7 @@ function ChonHangMoi({ dangChonCho, onChon }: { dangChonCho: DongDoiTra | null; 
           </table>
         </div>
       )}
+      {trangSP.phanTrang}
     </>
   )
 }

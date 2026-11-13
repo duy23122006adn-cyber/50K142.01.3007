@@ -8,6 +8,7 @@ import { ThongBaoKetQua, type KetQua } from '../../components/ThongBaoKetQua'
 import { TruongNgay } from '../../components/TruongNgay'
 import { TruongNhap } from '../../components/TruongNhap'
 import { ganLoiServer, ngay, ngayGio } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 
 const BAT_BUOC = 'Vui lòng nhập đầy đủ thông tin bắt buộc'
 const batBuoc = { validate: (v?: string) => (v ?? '').trim().length > 0 || BAT_BUOC }
@@ -49,6 +50,7 @@ export function FormNhanVienTrang({ cheDo }: { cheDo: 'them' | 'sua' }) {
     defaultValues: { hoTen: '', ngaySinh: '', sdt: '', email: '', tenDangNhap: '', matKhau: '' },
   })
   const { errors, isSubmitting, isDirty } = form.formState
+  const trangLs = useTrang(chiTiet.data?.lichSu)
 
   useEffect(() => {
     if (chiTiet.data) {
@@ -170,7 +172,7 @@ export function FormNhanVienTrang({ cheDo }: { cheDo: 'them' | 'sua' }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {chiTiet.data.lichSu.map((ls, i) => {
+                    {trangLs.dsTrang.map((ls, i) => {
                       const [ngaySua, gioSua] = ngayGio(ls.thoiDiemSua).split(' ')
                       return (
                         <tr key={i}>
@@ -195,6 +197,7 @@ export function FormNhanVienTrang({ cheDo }: { cheDo: 'them' | 'sua' }) {
                 </table>
               </div>
             )}
+            {trangLs.phanTrang}
           </div>
         )}
       </form>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { LoiApi } from '../api/client'
 import { saoLuuApi } from '../api/nghiepVu'
 import { ngayGio, so } from '../lib/dinhDang'
+import { useTrang } from '../lib/useTrang'
 
 /** Backup NFR-01 (đề xuất màn hình, SUA_BAO_CAO mục 15): xem bản sao lưu và sao lưu ngay. Chỉ Chủ quán. */
 export function SaoLuu() {
@@ -10,6 +11,7 @@ export function SaoLuu() {
   const { data, error, isLoading } = useQuery({ queryKey: ['sao-luu'], queryFn: saoLuuApi.thongTin, retry: false })
   const [dangChay, setDangChay] = useState(false)
   const [thongBao, setThongBao] = useState<{ loai: 'xanh' | 'do'; chu: string } | null>(null)
+  const { dsTrang, phanTrang } = useTrang(data?.cacBan)
 
   const saoLuuNgay = async () => {
     setDangChay(true)
@@ -75,7 +77,7 @@ export function SaoLuu() {
                   </td>
                 </tr>
               )}
-              {data?.cacBan.map((b) => (
+              {dsTrang.map((b) => (
                 <tr key={b.tepTin}>
                   <td>{ngayGio(b.thoiDiem)}</td>
                   <td>{b.tuDong ? 'Tự động' : 'Thủ công'}</td>
@@ -86,6 +88,7 @@ export function SaoLuu() {
             </tbody>
           </table>
         </div>
+        {phanTrang}
       </section>
     </>
   )

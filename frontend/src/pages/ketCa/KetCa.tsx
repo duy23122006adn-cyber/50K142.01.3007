@@ -5,6 +5,7 @@ import { LoiApi } from '../../api/client'
 import { ketCaApi, type BienBan, type DongKiemKe } from '../../api/nghiepVu'
 import { HopThoai } from '../../components/HopThoai'
 import { homNayISO, ngay } from '../../lib/dinhDang'
+import { useTrang } from '../../lib/useTrang'
 
 const DS_BIEN_BAN = '/ket-ca/bien-ban'
 
@@ -302,7 +303,10 @@ interface NhapKiemKe {
 
 /** Bảng mặt hàng: Mã hàng, Tên hàng, ĐVT, Tồn lý thuyết, Tồn thực tế, Chênh lệch, Nguyên nhân. Không hiển thị giá (UC_9.2 BR04). */
 function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
+  // Số liệu nhập lưu theo mã hàng ở component cha nên chuyển trang không mất dữ liệu đã nhập.
+  const { dsTrang, phanTrang } = useTrang(dong)
   return (
+    <>
     <div className="bang-cuon">
       <table className="bang bang--xen-ke">
         <thead>
@@ -317,7 +321,7 @@ function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
           </tr>
         </thead>
         <tbody>
-          {dong.map((d) => {
+          {dsTrang.map((d) => {
             const c = nhap ? nhap.chenh(d) : d.chenhLech
             const loiTT = nhap?.loi[`thucTe.${d.maHH}`]
             const loiNN = nhap?.loi[`nguyenNhan.${d.maHH}`]
@@ -371,6 +375,8 @@ function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
         </tbody>
       </table>
     </div>
+    {phanTrang}
+    </>
   )
 }
 
@@ -417,6 +423,7 @@ export function DanhSachBienBan() {
     queryFn: () => ketCaApi.danhSach(tuNgay, denNgay, coChenhLech),
     retry: false,
   })
+  const { dsTrang, phanTrang } = useTrang(data, `${tuNgay}|${denNgay}|${coChenhLech}|${data?.length}`)
 
   const loc = (e: React.FormEvent) => {
     e.preventDefault()
@@ -501,7 +508,7 @@ export function DanhSachBienBan() {
                   </td>
                 </tr>
               )}
-              {data?.map((b) => (
+              {dsTrang.map((b) => (
                 <tr key={b.maBB}>
                   <td>{b.maBB}</td>
                   <td>{ngay(b.ngayLamViec)}</td>
@@ -524,6 +531,7 @@ export function DanhSachBienBan() {
             </tbody>
           </table>
         </div>
+        {phanTrang}
       </section>
     </>
   )

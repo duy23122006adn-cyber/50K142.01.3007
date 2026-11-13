@@ -7,6 +7,7 @@ import { HopThoai } from '../../components/HopThoai'
 import { KhungQr } from '../../components/KhungQr'
 import { ngay, ngayGio, tien } from '../../lib/dinhDang'
 import { docDaThu } from '../../lib/docTo'
+import { useTrang } from '../../lib/useTrang'
 import { NhanTrangThaiNo } from './CongNo'
 
 type Buoc = 'chon' | 'phuongThuc' | 'tienMat' | 'qr' | 'phieu' | 'gui'
@@ -36,6 +37,7 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
     retry: false,
   })
   const loi = error instanceof LoiApi ? (error.loi.tuKhoa ?? error.message) : error ? 'Tìm kiếm không thành công' : null
+  const { dsTrang, phanTrang } = useTrang(data, `${tuKhoa}|${data?.length}`)
 
   return (
     <>
@@ -80,7 +82,7 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
                 </tr>
               </thead>
               <tbody>
-                {data.map((k: KhachQuenDong) => (
+                {dsTrang.map((k: KhachQuenDong) => (
                   <tr key={k.maKH}>
                     <td>{k.maKH}</td>
                     <td>{k.hoTen}</td>
@@ -100,6 +102,7 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
             </table>
           </div>
         )}
+        {!loi && phanTrang}
       </section>
     </>
   )
@@ -123,6 +126,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
   const [kenh, setKenh] = useState<'SMS' | 'Zalo'>('Zalo')
   const [sdtNhan, setSdtNhan] = useState('')
   const [daGui, setDaGui] = useState(false)
+  const trangHD = useTrang(kq?.hoaDonChuaTra)
 
   if (error) return <p className="thong-bao thong-bao--do">{(error as Error).message}</p>
   if (!kq) return <p className="ghi-chu">Đang tải…</p>
@@ -390,7 +394,9 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                     </tr>
                   </thead>
                   <tbody>
-                    {ds.map((h, i) => (
+                    {trangHD.dsTrang.map((h, j) => {
+                      const i = trangHD.batDau + j // vị trí trong toàn bộ danh sách (chọn theo thứ tự cũ nhất)
+                      return (
                       <tr key={h.maHD}>
                         <td>
                           <input
@@ -409,10 +415,12 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                           <NhanTrangThaiNo trangThai={h.trangThaiNo} />
                         </td>
                       </tr>
-                    ))}
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
+              {trangHD.phanTrang}
             </>
           )}
         </section>
