@@ -31,6 +31,8 @@ public sealed class TuyChonNganHang
     public string CheDo { get; set; } = GiaLap;
     /// <summary>Mã BIN hoặc mã viết tắt ngân hàng theo VietQR, ví dụ "970436" hoặc "VCB".</summary>
     public string? MaNganHang { get; set; }
+    /// <summary>Tên ngân hàng hiển thị trên màn hình QR, ví dụ "Vikki Bank"; bỏ trống thì hiện MaNganHang.</summary>
+    public string? TenNganHang { get; set; }
     public string? SoTaiKhoan { get; set; }
     public string? TenTaiKhoan { get; set; }
     public string MauQr { get; set; } = "compact2";
@@ -85,7 +87,8 @@ public sealed class DichVuQr(XomNhoDbContext db, IOptions<TuyChonNganHang> tuyCh
             throw new LoiNghiepVuException(StatusCodes.Status500InternalServerError, "Chưa cấu hình tài khoản ngân hàng nhận tiền (TichHop:NganHang).");
         var url = $"https://img.vietqr.io/image/{Uri.EscapeDataString(Tc.MaNganHang!)}-{Uri.EscapeDataString(Tc.SoTaiKhoan!)}-{Uri.EscapeDataString(Tc.MauQr)}.png"
             + $"?amount={soTien.ToString("0", CultureInfo.InvariantCulture)}&addInfo={ma}&accountName={Uri.EscapeDataString(Tc.TenTaiKhoan ?? "")}";
-        return new ThongTinQr(Tc.CheDo, ma, soTien, url, Tc.MaNganHang, Tc.SoTaiKhoan, Tc.TenTaiKhoan);
+        var nganHang = QuyTac.Trong(Tc.TenNganHang) ? Tc.MaNganHang : Tc.TenNganHang;
+        return new ThongTinQr(Tc.CheDo, ma, soTien, url, nganHang, Tc.SoTaiKhoan, Tc.TenTaiKhoan);
     }
 
     /// <summary>Bỏ dấu cách, gạch… vì ngân hàng có thể chèn ký tự vào nội dung chuyển khoản.</summary>
