@@ -198,9 +198,9 @@ tc('TC-UC4.4-03', { ...U44, ten: 'Kết quả sắp xếp A→Z và phân trang 
   t.dung(ten.every((x, i) => i === 0 || ten[i - 1].localeCompare(x, 'vi') <= 0), `Thứ tự: ${ten.slice(0, 4).join(', ')}…`)
   return `Tổng ${t1?.tongSo}, ${t1?.soTrang} trang; trang 1: ${t1?.danhSach?.length} dòng, trang 2: ${t2?.danhSach?.length} dòng; đầu: ${ten[0]}, cuối: ${ten.at(-1)}`
 })
-tc('TC-UC4.4-04', { ...U44, ten: 'Xem chi tiết hàng hóa', loai: 'Luồng chính', nguon: 'Main flow 6–7 (SUA_BAO_CAO 3.8: thêm Mã vạch)', tienDieuKien: 'Đã tìm thấy hàng A', buoc: 'Chọn hàng A trong danh sách', duLieu: 'Hàng A', mongDoi: 'Hiển thị Mã, Tên, Danh mục, ĐVT, Giá nhập, Giá bán, Ngưỡng hết hạn, Ngưỡng hết hàng, Mã vạch' }, async (t) => {
+tc('TC-UC4.4-04', { ...U44, ten: 'Xem chi tiết hàng hóa', loai: 'Luồng chính', nguon: 'Main flow 6–7', tienDieuKien: 'Đã tìm thấy hàng A', buoc: 'Chọn hàng A trong danh sách', duLieu: 'Hàng A', mongDoi: 'Hiển thị Mã, Tên, Danh mục, ĐVT, Giá nhập, Giá bán, Ngưỡng hết hạn, Ngưỡng hết hàng' }, async (t) => {
   const ct = (await S.cq.get(`/hang-hoa/${S.hh.A.maHH}`)).data ?? {}
-  const can = ['maHH', 'tenHH', 'tenDM', 'donViTinh', 'giaNhap', 'giaBan', 'nguongCanhBaoHetHan', 'nguongCanhBaoHetHang', 'maVach']
+  const can = ['maHH', 'tenHH', 'tenDM', 'donViTinh', 'giaNhap', 'giaBan', 'nguongCanhBaoHetHan', 'nguongCanhBaoHetHang']
   const thieu = can.filter((k) => !(k in ct))
   t.dung(thieu.length === 0, `Thiếu trường: ${thieu.join(', ')}`)
   return `${ct.maHH} | ${ct.tenHH} | ${ct.tenDM} | ${ct.donViTinh} | nhập ${ct.giaNhap} | bán ${ct.giaBan} | ngưỡng hạn ${ct.nguongCanhBaoHetHan} | ngưỡng hàng ${ct.nguongCanhBaoHetHang}`

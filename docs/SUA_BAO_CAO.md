@@ -115,23 +115,19 @@
 - **Sửa thành:** Description "Là chủ quán, tôi muốn điều chỉnh tồn kho của từng lô hàng"; Actors "Chủ quán"
 - **Lý do:** Q7.
 
-### 3.6. 🟡 UC_4.1 Thêm hàng hóa: mã vạch và thời điểm cấp mã
-- **Hiện tại (Main flow bước 2–3):** "…Mã hàng hóa, tên hàng hóa, danh mục, đơn vị tính, giá nhập, giá bán, ngưỡng cảnh báo hết hạn, ngưỡng cảnh báo hết hàng…"
-- **Sửa thành:** thêm "mã vạch (không bắt buộc)" vào cả bước 2 và bước 3.
+### 3.6. 🟡 UC_4.1 Thêm hàng hóa: thời điểm cấp mã
 - **Hiện tại (BR04):** "Khi hệ thống hiển thị biểu mẫu tại bước 2 thì hệ thống tự cấp mã hóa đơn theo định dạng HH-xxxx…"
 - **Sửa thành:** "Khi hiển thị biểu mẫu tại bước 2, hệ thống hiển thị mã hàng hóa dự kiến theo định dạng HH-xxxx, trong đó xxxx là số thứ tự bắt đầu từ 0001. Mã chỉ được ghi nhận khi lưu thành công. Mã hàng hóa là duy nhất và không cấp lại, kể cả khi hàng đã xóa hoặc ngừng kinh doanh."
-- **Thêm BR07:** "Mã vạch không bắt buộc; nếu nhập thì không được trùng với hàng hóa khác."
-- **Lý do:** Q15, Q16. Sửa luôn lỗi "mã hóa đơn" thành "mã hàng hóa".
+- **Lý do:** Q16. Sửa luôn lỗi "mã hóa đơn" thành "mã hàng hóa".
+- **Ghi chú:** Đề xuất thêm trường "Mã vạch" (Q15) đã **bỏ** theo yêu cầu ngày 13/11/2026: màn hình thêm/sửa/chi tiết hàng hóa không có mã vạch, giữ đúng báo cáo gốc.
 
 ### 3.7. 🟡 UC_4.2 Sửa hàng hóa
 - **Hiện tại (Exception 5f):** "Chủ quán nhập "Ngưỡng cảnh báo hết hàng" là số âm hoặc không phải số"
 - **Sửa thành:** "…nhỏ hơn hoặc bằng 0 hoặc không phải số"
-- **Thêm:** "mã vạch" vào danh sách trường được sửa (bước 3), và BR07 giống UC_4.1.
-- **Lý do:** Mâu thuẫn với BR03 (phải > 0); Q15.
+- **Lý do:** Mâu thuẫn với BR03 (phải > 0).
 
-### 3.8. 🟢 UC_4.4 Tìm kiếm hàng hóa
-- **Sửa thành:** thêm "Mã vạch" vào danh sách thông tin chi tiết ở bước 7.
-- **Lý do:** Q15.
+### 3.8. UC_4.4 Tìm kiếm hàng hóa
+- Không cần sửa (đề xuất thêm "Mã vạch" vào thông tin chi tiết đã bỏ – xem ghi chú 3.6).
 
 ### 3.9. 🔴 UC_5.1 Xem báo cáo lợi nhuận
 - **Hiện tại (BR01):** "Kỳ báo cáo bắt buộc phải có ngày bắt đầu < hoặc = ngày kết thúc"
@@ -287,7 +283,6 @@
 - **Ràng buộc phần mềm:**
   - Trình duyệt Chrome, Edge hoặc Cốc Cốc phiên bản mới.
   - Máy chủ chạy .NET 10 và SQL Server.
-  - Máy quét mã vạch loại giả lập bàn phím (cắm USB là dùng được).
 
 ---
 
@@ -310,7 +305,6 @@
 | 7.1 🔴 | Danh sách màn hình U10 "Điều chỉnh tồn kho" | Chủ quán, Nhân viên | Chủ quán |
 | 7.2 🔴 | U14 "Xem chi tiết hàng hóa", U15 "Tìm kiếm hàng hóa" | Chủ quán, Nhân viên | Chủ quán |
 | 7.3 🟢 | Đặc tả màn hình Kết ca: mã hàng ví dụ | HH-000004, HH-000005 | HH-0004, HH-0005 |
-| 7.4 🟡 | Màn hình Thêm/Sửa hàng hóa | — | Thêm ô "Mã vạch" |
 | 7.5 🟡 | Màn hình Báo cáo tồn kho | Cột theo sản phẩm | Thêm cột "Mã lô" |
 
 ---

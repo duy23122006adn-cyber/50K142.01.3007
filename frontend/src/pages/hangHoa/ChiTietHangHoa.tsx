@@ -51,7 +51,6 @@ export function ChiTietHangHoa() {
     ['Giá bán', tien(h.giaBan)],
     ['Ngưỡng cảnh báo hết hạn', h.nguongCanhBaoHetHan ? `${h.nguongCanhBaoHetHan} ngày` : 'Chưa thiết lập'],
     ['Ngưỡng cảnh báo hết hàng', h.nguongCanhBaoHetHang ? so(h.nguongCanhBaoHetHang) : 'Chưa thiết lập'],
-    ['Mã vạch', h.maVach ?? '—'],
     ['Tổng tồn kho', so(h.tongTon)],
     ['Trạng thái', h.trangThai],
   ]

@@ -107,7 +107,6 @@ export function FormHangHoaTrang({ cheDo }: { cheDo: 'them' | 'sua' }) {
           <TruongNhap nhan="Giá bán (đ)" batBuoc inputMode="numeric" placeholder="Ví dụ: 55000" loi={errors.giaBan?.message} {...form.register('giaBan', batBuoc)} />
           <TruongNhap nhan="Ngưỡng cảnh báo hết hàng" inputMode="numeric" placeholder="Số lượng, ví dụ: 5" loi={errors.nguongCanhBaoHetHang?.message} {...form.register('nguongCanhBaoHetHang')} />
           <TruongNhap nhan="Ngưỡng cảnh báo hết hạn (ngày)" inputMode="numeric" placeholder="Số ngày, ví dụ: 10" loi={errors.nguongCanhBaoHetHan?.message} {...form.register('nguongCanhBaoHetHan')} />
-          <TruongNhap nhan="Mã vạch" placeholder="Quét hoặc nhập mã vạch (không bắt buộc)" loi={errors.maVach?.message} {...form.register('maVach')} />
         </div>
 
         <div className="hang-nut">
