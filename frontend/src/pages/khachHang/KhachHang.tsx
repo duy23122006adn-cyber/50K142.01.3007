@@ -217,7 +217,8 @@ function NoiDungFormKhachHang({ laSua, maKH, banDau }: { laSua: boolean; maKH: s
   return (
     <>
       <h1>{laSua ? 'Sửa thông tin khách hàng' : 'Thêm khách hàng'}</h1>
-      <form className="the the--hep" onSubmit={luu} noValidate>
+      {/* Mẫu màn hình Thêm khách hàng: ô nhập kéo hết khung, nút Hủy (trắng) – Lưu (đỏ) bên phải. */}
+      <form className="the" onSubmit={luu} noValidate>
         <h2>Thông tin khách hàng</h2>
         {laSua && (
           <label className="truong">
@@ -259,7 +260,7 @@ function NoiDungFormKhachHang({ laSua, maKH, banDau }: { laSua: boolean; maKH: s
           <button type="button" className="nut" onClick={() => navigate('/quan-ly-khach-hang')}>
             Hủy
           </button>
-          <button type="submit" className="nut nut--chinh" disabled={dangLuu}>
+          <button type="submit" className="nut nut--do" disabled={dangLuu}>
             Lưu
           </button>
         </div>
