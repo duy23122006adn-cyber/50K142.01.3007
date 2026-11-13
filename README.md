@@ -150,6 +150,15 @@ Khi có tiền vào, màn hình QR tự nhận biết và hoàn tất thanh toá
 
 Mỗi nhà cung cấp có định dạng riêng, nên chỉ cần sửa `MauThan` cho khớp. Gửi hóa đơn điện tử và OTP mở khóa dùng chung cấu hình này. Khi bật `Http` thì đặt `HienOtpGiaLap = false`.
 
+**Gửi OTP qua eSMS.vn** (`TichHop:TinNhan`, `CheDo = "eSMS"`):
+
+1. Đăng ký tài khoản eSMS, lấy `ApiKey` / `SecretKey` ở menu "Quản lý API".
+2. Đặt khóa vào `backend/src/XomNho.Api/appsettings.Development.local.json` (đã có sẵn khung, tệp bị `.gitignore` bỏ qua) – **không** ghi khóa vào `appsettings.json` vì kho mã công khai. Đổi `CheDo` thành `"eSMS"` rồi khởi động lại backend.
+3. Mặc định `Esms:Sandbox = true`: eSMS kiểm tra yêu cầu nhưng không trừ tiền và tin không về máy; nội dung phải đúng mẫu thử `MauOtp = "{ma} la ma xac minh dang ky Baotrixemay cua ban"` với brandname `Baotrixemay`.
+4. Gửi thật: nạp tiền, đăng ký brandname và mẫu tin OTP với eSMS, rồi đặt `Esms:Sandbox = false`, `Esms:Brandname` và `MauOtp` đúng mẫu đã đăng ký (`{ma}` là chỗ mã OTP, `{tenDangNhap}` là tài khoản bị khóa). Mã OTP gửi tới **số điện thoại của Chủ quán** trong hệ thống, nên số này phải là số thật. Nên tắt `HienOtpGiaLap`.
+
+Web tự tạo và tự kiểm tra mã OTP; eSMS chỉ gửi tin (thành công khi eSMS trả `CodeResult = "100"`). Gửi hóa đơn điện tử qua SMS cũng đi qua eSMS và cần mẫu tin riêng đã đăng ký, nếu không eSMS từ chối và màn hình báo gửi không thành công.
+
 ## Lưu ý bảo mật
 
 - `appsettings.Development.json` chứa khóa JWT và mật khẩu mẫu **chỉ dùng cho máy phát triển**.
