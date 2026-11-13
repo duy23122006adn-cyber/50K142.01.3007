@@ -504,7 +504,7 @@ export function DanhSachBienBan() {
             <tbody>
               {data?.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="canh-giua chu-do">
+                  <td colSpan={6} className="chu-do o-bang-trong">
                     {coLoc ? 'Không tìm thấy biên bản phù hợp' : 'Chưa có biên bản kết ca'}
                   </td>
                 </tr>

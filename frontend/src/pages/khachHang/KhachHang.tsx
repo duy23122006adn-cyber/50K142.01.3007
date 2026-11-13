@@ -85,7 +85,7 @@ export function DanhSachKhachHang() {
                   <tbody>
                     {data.tongSo === 0 && (
                       <tr>
-                        <td colSpan={4} className="canh-giua chu-do o-bang-trong">
+                        <td colSpan={4} className="chu-do o-bang-trong">
                           {tuKhoa ? 'Không tìm thấy khách hàng' : 'Hiện không có khách hàng nào'}
                         </td>
                       </tr>

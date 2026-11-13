@@ -933,6 +933,11 @@ a {
   white-space: pre-line;
 }
 
+.bang th.canh-giua,
+.bang td.canh-giua {
+  text-align: center;
+}
+
 .chu-do {
   color: var(--mau-chu-do) !important;
   font-weight: 700;
@@ -2066,7 +2071,8 @@ select.truong__o {
   font-size: 1.1rem;
 }
 
-/* Dòng thông báo khi bảng không có dữ liệu (khung bảng vẫn giữ nguyên). */
+/* Dòng thông báo khi bảng không có dữ liệu (khung bảng vẫn giữ nguyên).
+   Phải ghi rõ text-align vì ".bang td" (căn trái) mạnh hơn ".canh-giua". */
 .bang td.o-bang-trong {
   text-align: center;
   padding: 2.5rem 1rem;

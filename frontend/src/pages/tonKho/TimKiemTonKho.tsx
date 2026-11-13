@@ -50,10 +50,8 @@ export function TimKiemTonKho({ cheDoDieuChinh = false }: { cheDoDieuChinh?: boo
             {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách tồn kho'} · {data.tongSo} lô hàng
           </h2>
         )}
-        {data && data.tongSo === 0 && (
-          <p className="thong-bao thong-bao--do">{tuKhoa ? 'Không tìm thấy hàng hóa!' : 'Chưa có lô hàng nào.'}</p>
-        )}
-        {data && data.tongSo > 0 && (
+        {/* Mẫu 3.1.x / 3.3.x: không có kết quả vẫn giữ khung bảng, thông báo căn giữa trong bảng. */}
+        {data && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
             <table className="bang">
               <thead>
@@ -68,6 +66,13 @@ export function TimKiemTonKho({ cheDoDieuChinh = false }: { cheDoDieuChinh?: boo
                 </tr>
               </thead>
               <tbody>
+                {data.tongSo === 0 && (
+                  <tr>
+                    <td colSpan={cheDoDieuChinh ? 7 : 6} className="chu-do o-bang-trong">
+                      {tuKhoa ? 'Không tìm thấy hàng hóa!' : 'Chưa có lô hàng nào.'}
+                    </td>
+                  </tr>
+                )}
                 {data.danhSach.map((l) => (
                   <tr key={l.maLo}>
                     <td>{l.maLo}</td>

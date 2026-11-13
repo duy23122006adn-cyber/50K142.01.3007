@@ -48,12 +48,8 @@ export function CanhBaoTonKho() {
         </div>
 
         {isLoading && <p className="ghi-chu">Đang tải…</p>}
-        {data && data.danhSach.length === 0 && (
-          <p className="thong-bao thong-bao--do">
-            {tab === 'Tất cả' ? 'Hiện không có cảnh báo tồn kho' : 'Hiện không có cảnh báo trong mục này'}
-          </p>
-        )}
-        {data && data.danhSach.length > 0 && (
+        {/* Mẫu 3.2.x: không có cảnh báo vẫn giữ khung bảng, thông báo căn giữa trong bảng. */}
+        {data && (
           <div className="bang-cuon">
             <table className="bang">
               <thead>
@@ -69,6 +65,13 @@ export function CanhBaoTonKho() {
                 </tr>
               </thead>
               <tbody>
+                {data.danhSach.length === 0 && (
+                  <tr>
+                    <td colSpan={8} className="chu-do o-bang-trong">
+                      {tab === 'Tất cả' ? 'Hiện không có cảnh báo tồn kho' : 'Hiện không có cảnh báo trong mục này'}
+                    </td>
+                  </tr>
+                )}
                 {dsTrang.map((c) => (
                   <tr key={c.maCB} className={c.trangThai === 'Đã xử lý' ? 'dong-mo' : ''}>
                     <td>{c.maLo}</td>
