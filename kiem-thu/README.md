@@ -33,6 +33,7 @@ Bộ test chạy trên **CSDL riêng `XomNho_KiemThu`**, không đụng tới d�
    $env:ASPNETCORE_ENVIRONMENT='Development'; $env:ASPNETCORE_URLS='http://localhost:5104'
    $env:ConnectionStrings__XomNho='Server=localhost;Database=XomNho_KiemThu;Trusted_Connection=True;TrustServerCertificate=True;'
    $env:SaoLuu__BatTuDong='false'
+   $env:TichHop__NganHang__CheDo='GiaLap'   # luôn giả lập QR, kể cả khi appsettings.Development.local.json bật tài khoản thật
    dotnet run --project src/XomNho.Api --no-launch-profile
    ```
 3. Chạy frontend kiểm thử ở cổng 5180, trỏ vào backend 5104:

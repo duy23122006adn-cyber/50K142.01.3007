@@ -174,16 +174,21 @@ tc('TC-UC8.3-07', { uc: 'UC_8.3', nhom: 'Khách hàng', ten: 'Chi tiết khách 
 // ================================================================== UC_6.1 Tìm kiếm lịch sử bán hàng
 const tim = (p, dk) => p.get(`/hoa-don?${new URLSearchParams({ ...dk, trang: '1' })}`)
 tc('TC-UC6.1-01', { ...U61, ten: 'Chưa nhập điều kiện tìm kiếm', loai: 'Ngoại lệ', nguon: 'Exception 4.a, BR01', tienDieuKien: 'Người dùng ở màn hình tìm kiếm lịch sử', buoc: 'Không nhập điều kiện → "Tìm kiếm"', duLieu: '-', mongDoi: '"Vui lòng nhập ít nhất một điều kiện."' }, async (t) => t.loiNV(await tim(S.nv, {}), 400, 'Vui lòng nhập ít nhất một điều kiện.'))
-tc('TC-UC6.1-02', { ...U61, ten: 'Tìm theo mã hóa đơn – khớp chính xác', loai: 'Luồng chính', nguon: 'Main flow 1–6, BR02', tienDieuKien: 'Có hóa đơn TC-UC6.5-03', buoc: 'Nhập đúng mã hóa đơn → "Tìm kiếm"', duLieu: 'Mã HĐ tiền mặt', mongDoi: 'Đúng 1 hóa đơn, gồm mã, ngày giờ, khách, tổng tiền, trạng thái' }, async (t) => {
+tc('TC-UC6.1-02', { ...U61, ten: 'Tìm theo mã hóa đơn – đủ mã hoặc một phần mã', loai: 'Luồng chính', nguon: 'Main flow 1–6, BR02 (SUA_BAO_CAO: mã khớp một phần)', tienDieuKien: 'Có hóa đơn TC-UC6.5-03', buoc: '1. Nhập đủ mã hóa đơn → "Tìm kiếm"\n2. Nhập một phần mã (chữ thường) → "Tìm kiếm"', duLieu: 'Mã HĐ tiền mặt; phần "hd-dd/mm/yyyy" của mã', mongDoi: 'Đủ mã: đúng 1 hóa đơn, gồm mã, ngày giờ, khách, tổng tiền, trạng thái. Một phần mã: mọi hóa đơn có mã chứa chuỗi đó' }, async (t) => {
   const r = await tim(S.nv, { ma: S.hd.tienMat.maHD })
   t.status(r, 200)
   t.bang(r.data?.danhSach?.length, 1, 'số kết quả')
   const d = r.data?.danhSach?.[0] ?? {}
   t.dung(['maHD', 'ngayGioLap', 'tenKhach', 'tongTien', 'trangThai'].every((k) => k in d), 'Đủ cột')
-  return `${d.maHD} | ${d.ngayGioLap} | ${d.tenKhach} | ${d.tongTien} | ${d.trangThai}`
+  const phan = S.hd.tienMat.maHD.split('.')[0]
+  const r2 = await tim(S.nv, { ma: phan.toLowerCase() })
+  t.status(r2, 200)
+  const ds = r2.data?.danhSach ?? []
+  t.dung(ds.length >= 1 && ds.every((h) => h.maHD.includes(phan)), `Mọi kết quả phải chứa "${phan}"`)
+  return `${d.maHD} | ${d.ngayGioLap} | ${d.tenKhach} | ${d.tongTien} | ${d.trangThai}\nMột phần "${phan.toLowerCase()}": ${r2.data?.tongSo} hóa đơn`
 })
-tc('TC-UC6.1-03', { ...U61, ten: 'Mã hóa đơn sai định dạng', loai: 'Ngoại lệ', nguon: 'Exception 4.a, BR02', tienDieuKien: '-', buoc: 'Nhập mã "HD123"', duLieu: 'HD123', mongDoi: 'Thông báo nêu rõ mã hóa đơn sai định dạng' }, async (t) => {
-  const r = await tim(S.nv, { ma: 'HD123' })
+tc('TC-UC6.1-03', { ...U61, ten: 'Mã hóa đơn chứa ký tự không hợp lệ', loai: 'Ngoại lệ', nguon: 'Exception 4.a, BR02 (SUA_BAO_CAO)', tienDieuKien: '-', buoc: 'Nhập mã "HD@123"', duLieu: 'HD@123', mongDoi: 'Thông báo nêu rõ mã hóa đơn chỉ gồm chữ, số và - / .' }, async (t) => {
+  const r = await tim(S.nv, { ma: 'HD@123' })
   t.status(r, 400)
   t.dung(r.data?.loi?.ma, 'Lỗi phải nằm ở trường mã hóa đơn')
   return moTa(r)

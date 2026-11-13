@@ -59,7 +59,7 @@ export function LichSuBanHang() {
         <div className="luoi-loc luoi-loc--3">
           <label className="truong">
             <span className="truong__nhan">Mã hóa đơn</span>
-            <input className={`truong__o ${loi?.loi.ma ? 'truong__o--loi' : ''}`} placeholder="Nhập mã đầy đủ" {...o('ma')} />
+            <input className={`truong__o ${loi?.loi.ma ? 'truong__o--loi' : ''}`} placeholder="Nhập mã hoặc một phần mã" {...o('ma')} />
           </label>
           <label className="truong">
             <span className="truong__nhan">Tên hoặc số điện thoại</span>
@@ -101,7 +101,7 @@ export function LichSuBanHang() {
             {hienTim ? 'Kết quả tìm kiếm' : 'Tất cả hóa đơn'} · {ds.tongSo} hóa đơn
           </h2>
           {ds.tongSo === 0 ? (
-            <p className="chu-do canh-giua">{hienTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}</p>
+            <p className="chu-do canh-giua o-trong-the">{hienTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}</p>
           ) : (
             <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
               <table className="bang">

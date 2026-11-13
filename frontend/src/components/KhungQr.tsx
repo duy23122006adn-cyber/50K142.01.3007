@@ -83,7 +83,6 @@ export function KhungQr({
       </dl>
       {thuCong ? (
         <>
-          <p className="ghi-chu">Kiểm tra biến động số dư trên điện thoại: đúng số tiền và nội dung thì bấm "Đã nhận tiền".</p>
           <div className="hang-nut hang-nut--giua">
             <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => onKetQua(true, qr.maThamChieu)}>
               Đã nhận tiền

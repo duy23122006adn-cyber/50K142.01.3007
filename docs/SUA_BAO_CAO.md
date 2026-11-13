@@ -425,13 +425,20 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 
 | 15.7 | Phần tích hợp "Chuyển khoản QR qua ngân hàng", UC_6.5 bước 11 | Không nói cách hệ thống biết khách đã chuyển khoản | "Mã QR là VietQR của tài khoản cửa hàng, kèm số tiền và nội dung chuyển khoản là mã tham chiếu riêng của giao dịch. Dịch vụ theo dõi biến động số dư báo tiền vào cho hệ thống; hệ thống đối chiếu mã tham chiếu và số tiền rồi mới ghi nhận thanh toán. Mỗi giao dịch ngân hàng chỉ dùng cho một lần thanh toán." Bản hiện tại chạy giả lập cho tới khi cấu hình tài khoản thật (README) | 🟡 |
 
+## 16. Bổ sung phát sinh khi chỉnh giao diện theo yêu cầu chủ dự án
+
+| # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
+|---|---|---|---|---|
+| 16.1 | UC_6.1 BR02 (ô "Mã hóa đơn"); màn hình 6.1-05 | Mã hóa đơn phải khớp chính xác, đúng dạng HD-dd/mm/yyyy.nnn; sai dạng thì báo "Mã hóa đơn phải có dạng HD-dd/mm/yyyy.nnn." | "Mã hóa đơn được tìm theo kiểu khớp một phần, không phân biệt chữ hoa, chữ thường (ví dụ nhập "HD-13/11" ra mọi hóa đơn ngày 13/11). Mã chỉ gồm chữ, số và các ký tự - / . ; có ký tự khác thì báo "Mã hóa đơn chỉ gồm chữ, số và các ký tự - / ."". Màn hình 6.1-05 đổi ví dụ thành mã có ký tự không hợp lệ (ví dụ "HD@123") | 🔴 |
+| 16.2 | Phần tích hợp "Chuyển khoản QR qua ngân hàng" (bổ sung cho 15.7) | Chỉ có cách xác nhận tự động qua dịch vụ theo dõi số dư | Thêm: "Khi chưa đăng ký dịch vụ theo dõi số dư, mã QR vẫn là VietQR thật đúng số tiền; người bán xem biến động số dư trên điện thoại rồi bấm "Đã nhận tiền" hoặc "Chưa nhận được tiền"." | 🟡 |
+
 ## Thống kê
 
 Đếm theo từng mục đánh số. Một số mục có thêm vài lỗi 🟢 nhỏ nằm bên trong, không đếm riêng.
 
 | Mức | Số mục |
 |---|---|
-| 🔴 Mâu thuẫn với code | 19 |
-| 🟡 Chưa rõ hoặc lệch nhỏ | 46 |
+| 🔴 Mâu thuẫn với code | 20 |
+| 🟡 Chưa rõ hoặc lệch nhỏ | 47 |
 | 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

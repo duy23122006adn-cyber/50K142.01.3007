@@ -376,8 +376,9 @@ public sealed partial class DichVuBanHang(
         if (QuyTac.Trong(dk.Ma) && QuyTac.Trong(dk.Khach) && QuyTac.Trong(dk.TuNgay) && QuyTac.Trong(dk.DenNgay) && QuyTac.Trong(dk.TrangThai))
             throw LoiNghiepVuException.KhongHopLe("Vui lòng nhập ít nhất một điều kiện.");
 
-        var ma = dk.Ma?.Trim();
-        if (!QuyTac.Trong(ma)) kt.Kiem("ma", MaHoaDonRegex().IsMatch(ma!), "Mã hóa đơn phải có dạng HD-dd/mm/yyyy.nnn.");
+        // Mã hóa đơn tìm theo kiểu khớp một phần (VD "HD", "HD-13/11") – SUA_BAO_CAO; chỉ chặn ký tự không thể có trong mã.
+        var ma = dk.Ma?.Trim().ToUpperInvariant();
+        if (!QuyTac.Trong(ma)) kt.Kiem("ma", KyTuMaHoaDonRegex().IsMatch(ma!), "Mã hóa đơn chỉ gồm chữ, số và các ký tự - / .");
 
         var homNay = dongHo.HomNay;
         const string NgaySai = "Ngày lập phải là ngày hợp lệ theo dd/mm/yyyy và không ở tương lai.";
@@ -398,7 +399,7 @@ public sealed partial class DichVuBanHang(
             kt.Kiem("trangThai", TrangThaiHoaDon.TatCa.Contains(dk.TrangThai), "Trạng thái không hợp lệ.");
         kt.NemNeuCoLoi();
 
-        if (!QuyTac.Trong(ma)) q = q.Where(h => h.MaHD == ma);
+        if (!QuyTac.Trong(ma)) q = q.Where(h => h.MaHD.Contains(ma!));
         if (!QuyTac.Trong(dk.Khach))
         {
             // Ô tên/SĐT: chỉ gồm chữ số (bỏ khoảng trắng, gạch ngang) → tìm theo SĐT; ngược lại theo tên.
@@ -468,6 +469,6 @@ public sealed partial class DichVuBanHang(
             hd.GhiNo?.HanThanhToan);
     }
 
-    [GeneratedRegex(@"^HD-\d{2}/\d{2}/\d{4}\.\d{3,}$")]
-    private static partial Regex MaHoaDonRegex();
+    [GeneratedRegex(@"^[A-Z0-9/.\-]+$")]
+    private static partial Regex KyTuMaHoaDonRegex();
 }

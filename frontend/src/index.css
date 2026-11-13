@@ -2105,3 +2105,9 @@ select.truong__o {
     grid-template-columns: 1fr;
   }
 }
+
+/* Thông báo "không tìm thấy" căn giữa thẻ danh sách (mẫu 6.1-08). */
+p.o-trong-the {
+  text-align: center;
+  margin: 1.5rem 0 0.5rem;
+}
