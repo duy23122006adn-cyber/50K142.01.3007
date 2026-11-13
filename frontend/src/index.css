@@ -2065,3 +2065,9 @@ select.truong__o {
   font-weight: 700;
   font-size: 1.1rem;
 }
+
+/* Dòng thông báo khi bảng không có dữ liệu (khung bảng vẫn giữ nguyên). */
+.bang td.o-bang-trong {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}

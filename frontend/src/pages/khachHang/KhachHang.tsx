@@ -71,10 +71,8 @@ export function DanhSachKhachHang() {
             <h2 className="tieu-de-bang">
               {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách khách hàng'} · {data.tongSo} khách hàng
             </h2>
-            {data.tongSo === 0 ? (
-              <p className="thong-bao thong-bao--do">{tuKhoa ? 'Không tìm thấy khách hàng' : 'Hiện không có khách hàng nào'}</p>
-            ) : (
-              <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
+            {/* Mẫu 8.3: không có kết quả vẫn giữ nguyên khung bảng, thông báo căn giữa trong bảng. */}
+            <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
                 <table className="bang">
                   <thead>
                     <tr>
@@ -85,6 +83,13 @@ export function DanhSachKhachHang() {
                     </tr>
                   </thead>
                   <tbody>
+                    {data.tongSo === 0 && (
+                      <tr>
+                        <td colSpan={4} className="canh-giua chu-do o-bang-trong">
+                          {tuKhoa ? 'Không tìm thấy khách hàng' : 'Hiện không có khách hàng nào'}
+                        </td>
+                      </tr>
+                    )}
                     {data.danhSach.map((kh) => (
                       <tr key={kh.maKH}>
                         <td>{kh.maKH}</td>
@@ -104,8 +109,7 @@ export function DanhSachKhachHang() {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            )}
+            </div>
             <PhanTrang trang={data.trang} soTrang={data.soTrang} onDoiTrang={setTrang} />
           </>
         )}
