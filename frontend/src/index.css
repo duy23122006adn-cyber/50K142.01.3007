@@ -669,8 +669,13 @@ a {
 
 /* ------------------------------------------------------------------ Thẻ nội dung */
 /* Thẻ theo mẫu: nền trắng, viền mảnh, bo góc, gần như không đổ bóng. */
+/* Mọi khung nội dung cùng một độ rộng (kéo hết vùng nội dung, tối đa --rong-noi-dung) để các màn hình đều nhau. */
+:root {
+  --rong-noi-dung: 1400px;
+}
+
 .the {
-  max-width: 820px;
+  max-width: var(--rong-noi-dung);
   padding: 1.5rem;
   border: 1px solid var(--mau-vien);
   border-radius: 12px;
@@ -678,8 +683,17 @@ a {
   box-shadow: var(--bong);
 }
 
-.the--hep {
-  max-width: 520px;
+/* Khung nội dung ít (đổi mật khẩu, kết ca, tiền mặt…): khung vẫn rộng như mọi màn hình,
+   nội dung gom thành một cột vừa đọc và căn giữa. */
+.the.the--hep {
+  display: grid;
+  grid-template-columns: minmax(0, 560px);
+  justify-content: center;
+}
+
+/* Nút đứng riêng trong khung hẹp giữ độ rộng tự nhiên, không kéo hết cột. */
+.the.the--hep > .nut {
+  justify-self: start;
 }
 
 .thong-tin {
@@ -800,12 +814,10 @@ a {
   margin-top: 1.25rem;
 }
 
-.the--rong {
-  max-width: 1200px;
-}
-
+/* the--rong / the--vua giữ tên lớp cho các màn hình cũ; độ rộng nay thống nhất theo .the. */
+.the--rong,
 .the--vua {
-  max-width: 860px;
+  max-width: var(--rong-noi-dung);
 }
 
 .thanh-cong-cu {
@@ -1087,7 +1099,7 @@ select.truong__o {
   grid-template-columns: minmax(0, 1fr) clamp(320px, 38%, 380px);
   align-items: start;
   gap: 1.25rem;
-  max-width: 1300px;
+  max-width: var(--rong-noi-dung);
 }
 
 .pos .the {
@@ -1095,7 +1107,8 @@ select.truong__o {
 }
 
 /* Hai khung nằm cạnh nhau trong lưới: bỏ lề trên của quy tắc .the + .the để thẳng hàng. */
-.pos > .the + .the {
+.pos > .the + .the,
+.luoi-form > .the + .the {
   margin-top: 0;
 }
 

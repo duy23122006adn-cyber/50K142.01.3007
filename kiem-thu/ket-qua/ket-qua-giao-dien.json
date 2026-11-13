@@ -1,5 +1,5 @@
 {
-  "thoiDiem": "2026-11-13T04:32:37.721Z",
+  "thoiDiem": "2026-11-13T08:50:47.275Z",
   "web": "http://localhost:5180",
   "ketQua": [
     {
@@ -14,10 +14,10 @@
       "duLieu": "-",
       "mongDoi": "Tạo đủ",
       "cachChay": "Tự động (giao diện – trình duyệt Edge)",
-      "thucTe": "Hàng HH-0209; nhân viên kt_gd113211; hóa đơn để hủy HD-13/11/2026.088",
+      "thucTe": "Hàng HH-0210; nhân viên kt_gd155021; hóa đơn để hủy HD-13/11/2026.090",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1204
+      "thoiGianMs": 1461
     },
     {
       "ma": "TC-GD-01",
@@ -34,7 +34,7 @@
       "thucTe": "Thông báo: Không được bỏ trống! | Không được bỏ trống!\nẢnh: kiem-thu/ket-qua/anh/TC-GD-01.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1073
+      "thoiGianMs": 1447
     },
     {
       "ma": "TC-GD-02",
@@ -51,7 +51,7 @@
       "thucTe": "Hiện \"Đăng nhập không thành công!\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-02.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1345
+      "thoiGianMs": 1371
     },
     {
       "ma": "TC-GD-03",
@@ -68,7 +68,7 @@
       "thucTe": "9 thẻ: Quản lý tài khoản, Quản lý tồn kho, Quản lý hàng hóa, Xem báo cáo và thống kê, Quản lý bán hàng, Quản lý công nợ, Quản lý khách hàng, Kết ca, Quản lý lô hàng\nẢnh: kiem-thu/ket-qua/anh/TC-GD-03.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1323
+      "thoiGianMs": 1334
     },
     {
       "ma": "TC-GD-04",
@@ -85,7 +85,7 @@
       "thucTe": "Thẻ (5): Quản lý tồn kho, Quản lý bán hàng, Quản lý công nợ, Quản lý khách hàng, Kết ca\nMở /bao-cao/doanh-thu → /bao-cao/doanh-thu | Không có quyền truy cập\nẢnh: kiem-thu/ket-qua/anh/TC-GD-04.png, kiem-thu/ket-qua/anh/TC-GD-04b.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 2338
+      "thoiGianMs": 2157
     },
     {
       "ma": "TC-GD-05",
@@ -94,15 +94,15 @@
       "ten": "Giao diện: sai 10 lần → màn hình Nhập OTP (mẫu 1.4) → nhập mã mở khóa",
       "loai": "Ngoại lệ",
       "nguon": "Exception 5.c, BR02, BR03; màn hình 1.4",
-      "tienDieuKien": "Nhân viên kt_gd113211 đang hoạt động",
+      "tienDieuKien": "Nhân viên kt_gd155021 đang hoạt động",
       "buoc": "1. Đăng nhập sai mật khẩu đến lần 10\n2. Đọc mã trong tin nhắn giả lập gửi điện thoại Chủ quán\n3. Nhập mã → \"Xác nhận\"",
-      "duLieu": "kt_gd113211",
+      "duLieu": "kt_gd155021",
       "mongDoi": "Màn hình \"Nhập OTP\" có dòng \"Tài khoản đang bị khóa tạm thời!\"; tin nhắn giả lập gửi tới điện thoại Chủ quán; nhập đúng mã thì \"Mở khóa tài khoản thành công\"",
       "cachChay": "Tự động (giao diện – trình duyệt Edge)",
-      "thucTe": "Tin nhắn giả lập: 📱 Giả lập SMS tới Chủ quán · Nguyễn Văn An · 090****456 Mở khóa kt_gd113211 (Nhân viên): 190037\nNhập mã 190037 → \"Mở khóa tài khoản thành công\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-05a.png, kiem-thu/ket-qua/anh/TC-GD-05b.png",
+      "thucTe": "Tin nhắn giả lập: 📱 Giả lập SMS tới Chủ quán · Nguyễn Văn An · 090****456 Mở khóa kt_gd155021 (Nhân viên): 610436\nNhập mã 610436 → \"Mở khóa tài khoản thành công\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-05a.png, kiem-thu/ket-qua/anh/TC-GD-05b.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3609
+      "thoiGianMs": 2821
     },
     {
       "ma": "TC-GD-06",
@@ -116,10 +116,10 @@
       "duLieu": "GD Nước ×1; 50.000 đ",
       "mongDoi": "Hiện \"Thanh toán thành công\", sang màn hình \"Hóa đơn bán hàng\" có mã HD-dd/mm/yyyy.nnn, trạng thái Đã thanh toán",
       "cachChay": "Tự động (giao diện – trình duyệt Edge)",
-      "thucTe": "Hóa đơn HD-13/11/2026.089, trạng thái Đã thanh toán\nẢnh: kiem-thu/ket-qua/anh/TC-GD-06a.png, kiem-thu/ket-qua/anh/TC-GD-06b.png, kiem-thu/ket-qua/anh/TC-GD-06c.png",
+      "thucTe": "Hóa đơn HD-13/11/2026.091, trạng thái Đã thanh toán\nẢnh: kiem-thu/ket-qua/anh/TC-GD-06a.png, kiem-thu/ket-qua/anh/TC-GD-06b.png, kiem-thu/ket-qua/anh/TC-GD-06c.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3239
+      "thoiGianMs": 3053
     },
     {
       "ma": "TC-GD-07",
@@ -136,7 +136,7 @@
       "thucTe": "Hiện \"Hủy hóa đơn thành công.\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-07a.png, kiem-thu/ket-qua/anh/TC-GD-07b.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 2775
+      "thoiGianMs": 2600
     },
     {
       "ma": "TC-GD-08",
@@ -153,7 +153,7 @@
       "thucTe": "5 trường hiện \"Không được để trống!\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-08.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1019
+      "thoiGianMs": 1044
     },
     {
       "ma": "TC-GD-09",
@@ -170,7 +170,7 @@
       "thucTe": "Hiện \"Không tìm thấy hàng hóa\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-09.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1187
+      "thoiGianMs": 1175
     },
     {
       "ma": "TC-GD-10",
@@ -184,10 +184,10 @@
       "duLieu": "Hôm nay",
       "mongDoi": "Hiện tổng doanh thu, số đơn, theo phương thức; số tiền dạng 1.234.000 đ",
       "cachChay": "Tự động (giao diện – trình duyệt Edge)",
-      "thucTe": "Tổng doanh thu | 2.579.000 đ | Số đơn hàng | 63 đơn | Tiền mặt | 2.259.000 đ | Chuyển khoản | 120.000 đ | Ghi nợ | 200.000 đ\nẢnh: kiem-thu/ket-qua/anh/TC-GD-10.png",
+      "thucTe": "Tổng doanh thu | 2.591.000 đ | Số đơn hàng | 64 đơn | Tiền mặt | 2.271.000 đ | Chuyển khoản | 120.000 đ | Ghi nợ | 200.000 đ\nẢnh: kiem-thu/ket-qua/anh/TC-GD-10.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1253
+      "thoiGianMs": 1193
     },
     {
       "ma": "TC-GD-11",
@@ -204,7 +204,7 @@
       "thucTe": "Hiện \"Không tìm thấy khách hàng\"\nẢnh: kiem-thu/ket-qua/anh/TC-GD-11.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1198
+      "thoiGianMs": 1181
     },
     {
       "ma": "TC-GD-12",
@@ -221,7 +221,7 @@
       "thucTe": "Hiện cảnh báo chưa lưu; chọn Hủy → vẫn ở /quan-ly-hang-hoa/them\nẢnh: kiem-thu/ket-qua/anh/TC-GD-12.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1822
+      "thoiGianMs": 1797
     },
     {
       "ma": "TC-GD-13",
@@ -238,7 +238,7 @@
       "thucTe": "Hỏi xác nhận → về /dang-nhap; mở lại \"/\" → /dang-nhap\nẢnh: kiem-thu/ket-qua/anh/TC-GD-13.png",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 2152
+      "thoiGianMs": 2190
     }
   ]
 }
