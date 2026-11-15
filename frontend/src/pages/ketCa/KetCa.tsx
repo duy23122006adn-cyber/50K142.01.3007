@@ -116,7 +116,7 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
               Hủy
             </button>
             <button type="button" className="nut nut--chinh" onClick={batDau}>
-              Kết ca
+              Lưu biên bản
             </button>
           </>
         }
