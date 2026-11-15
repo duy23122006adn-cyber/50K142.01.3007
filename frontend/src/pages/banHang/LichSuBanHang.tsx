@@ -176,11 +176,6 @@ export function ChiTietHoaDonTrang() {
         {/* UC_6.3 BR12: hóa đơn đã hủy vẫn xem được cùng thông tin hủy. */}
         {data?.trangThai === 'Đã hủy' && <NhatKyHuy maHD={data.maHD} coBanSao={false} />}
         <div className="hang-nut khong-in">
-          {data && (
-            <button type="button" className="nut" onClick={() => window.print()}>
-              In hóa đơn
-            </button>
-          )}
           <button type="button" className="nut nut--chinh" onClick={() => navigate(-1)}>
             Quay lại danh sách
           </button>

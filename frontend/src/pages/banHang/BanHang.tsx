@@ -693,9 +693,6 @@ export function BanHang() {
         <div className="pos">
           <section className="the pos__hang">
             <XemHoaDon hd={hoaDon} />
-            <button type="button" className="nut khong-in" onClick={() => window.print()}>
-              In hóa đơn
-            </button>
           </section>
           <aside className="the pos__gio khong-in">
             <h2>Gửi hóa đơn điện tử</h2>
