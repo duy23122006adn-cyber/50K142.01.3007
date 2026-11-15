@@ -2104,3 +2104,21 @@ p.o-trong-the {
   color: var(--mau-chu-xanh);
   font-weight: 600;
 }
+
+/* Bộ chọn kỳ đã thu gọn: dòng tóm tắt kỳ đang chọn, bấm để mở lại lịch. */
+.chon-ky__tom-tat {
+  display: block;
+  margin-top: 0.9rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--mau-chu);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chon-ky__tom-tat:hover .ghi-chu {
+  color: var(--mau-chinh);
+  text-decoration: underline;
+}

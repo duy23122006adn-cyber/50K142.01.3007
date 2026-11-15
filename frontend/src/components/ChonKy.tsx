@@ -137,7 +137,32 @@ export function ChonKy({
   const [lichDen, setLichDen] = useState<ThangXem>(tachNgay(denNgay || homNay))
   const [loi, setLoi] = useState<Record<string, string>>({})
   // Phần lịch / chọn tháng / quý / khoảng ngày: ấn lại tab đang chọn để thu gọn, giống menu trái.
+  // Chọn xong (ngày / tháng / quý, hoặc đủ hai đầu của khoảng tùy chọn) thì tự thu gọn.
   const [moLich, setMoLich] = useState(true)
+  const [daChonTuyChon, setDaChonTuyChon] = useState({ tu: false, den: false })
+  const moLai = () => {
+    setMoLich(true)
+    setDaChonTuyChon({ tu: false, den: false })
+  }
+  const chonTuyChon = (dau: 'tu' | 'den', giaTri: string) => {
+    if (dau === 'tu') setTuNgay(giaTri)
+    else setDenNgay(giaTri)
+    const daChon = { ...daChonTuyChon, [dau]: true }
+    setDaChonTuyChon(daChon)
+    const tu = dau === 'tu' ? giaTri : tuNgay
+    const den = dau === 'den' ? giaTri : denNgay
+    if (daChon.tu && daChon.den && tu && den && tu <= den) setMoLich(false)
+  }
+  const tomTat =
+    cheDo === 'ngay'
+      ? `Ngày ${ngay(ngayChon)}`
+      : cheDo === 'thang'
+        ? `Tháng ${thang}/${nam}`
+        : cheDo === 'quy'
+          ? `Quý ${quy}/${nam}`
+          : tuNgay && denNgay
+            ? `Từ ${ngay(tuNgay)} đến ${ngay(denNgay)}`
+            : 'Chưa chọn đủ khoảng thời gian'
 
   const loiHienThi = { ...(loiServer ?? {}), ...loi }
 
@@ -155,16 +180,16 @@ export function ChonKy({
     if (!denNgay) l.denNgay = KHONG_DE_TRONG
     if (tuNgay && denNgay && tuNgay > denNgay) l.tuNgay = 'Ngày bắt đầu không được lớn hơn ngày kết thúc!'
     if (Object.keys(l).length) {
-      setMoLich(true) // lỗi nằm trong phần lịch → mở ra cho thấy
+      moLai() // lỗi nằm trong phần lịch → mở ra cho thấy
       return setLoi(l)
     }
     onXacNhan({ cheDo, tu: tuNgay, den: denNgay })
   }
 
   const doiTab = (c: CheDoKy) => {
-    if (c === cheDo) return setMoLich((v) => !v)
+    if (c === cheDo) return moLich ? setMoLich(false) : moLai()
     setCheDo(c)
-    setMoLich(true)
+    moLai()
     setLoi({})
   }
 
@@ -199,11 +224,26 @@ export function ChonKy({
         </div>
       </div>
 
+      {!moLich && (
+        <button type="button" className="chon-ky__tom-tat" onClick={moLai} title="Bấm để chọn lại">
+          Đã chọn: <strong>{tomTat}</strong> <span className="ghi-chu">· Chọn lại</span>
+        </button>
+      )}
+
       <div className={`xo ${moLich ? 'xo--mo' : ''}`} inert={!moLich}>
         <div className="xo__boc">
           <div className="chon-ky__than">
             {cheDo === 'ngay' && (
-              <Lich xem={lichNgay} setXem={setLichNgay} chon={ngayChon} onChon={setNgayChon} nhan="Chọn ngày" />
+              <Lich
+                xem={lichNgay}
+                setXem={setLichNgay}
+                chon={ngayChon}
+                onChon={(d) => {
+                  setNgayChon(d)
+                  setMoLich(false)
+                }}
+                nhan="Chọn ngày"
+              />
             )}
 
             {cheDo === 'thang' && (
@@ -217,7 +257,10 @@ export function ChonKy({
                       className={`nut nut--nho ${t === thang ? 'nut--chon' : ''}`}
                       disabled={iso(nam, t, 1) > homNay}
                       aria-pressed={t === thang}
-                      onClick={() => setThang(t)}
+                      onClick={() => {
+                        setThang(t)
+                        setMoLich(false)
+                      }}
                     >
                       Tháng {t}
                     </button>
@@ -237,7 +280,10 @@ export function ChonKy({
                       className={`nut nut--nho ${q === quy ? 'nut--chon' : ''}`}
                       disabled={iso(nam, q * 3 - 2, 1) > homNay}
                       aria-pressed={q === quy}
-                      onClick={() => setQuy(q)}
+                      onClick={() => {
+                        setQuy(q)
+                        setMoLich(false)
+                      }}
                     >
                       Quý {q}
                     </button>
@@ -257,13 +303,15 @@ export function ChonKy({
                       max={homNay}
                       value={tuNgay}
                       onChange={(e) => {
-                        setTuNgay(e.target.value)
-                        if (e.target.value) setLichTu(tachNgay(e.target.value))
+                        if (e.target.value) {
+                          setLichTu(tachNgay(e.target.value))
+                          chonTuyChon('tu', e.target.value)
+                        } else setTuNgay('')
                       }}
                     />
                     {loiHienThi.tuNgay && <span className="truong__loi">{loiHienThi.tuNgay}</span>}
                   </label>
-                  <Lich xem={lichTu} setXem={setLichTu} chon={tuNgay} onChon={setTuNgay} nhan="Chọn từ ngày" />
+                  <Lich xem={lichTu} setXem={setLichTu} chon={tuNgay} onChon={(d) => chonTuyChon('tu', d)} nhan="Chọn từ ngày" />
                 </div>
                 <div>
                   <label className="truong">
@@ -274,13 +322,15 @@ export function ChonKy({
                       max={homNay}
                       value={denNgay}
                       onChange={(e) => {
-                        setDenNgay(e.target.value)
-                        if (e.target.value) setLichDen(tachNgay(e.target.value))
+                        if (e.target.value) {
+                          setLichDen(tachNgay(e.target.value))
+                          chonTuyChon('den', e.target.value)
+                        } else setDenNgay('')
                       }}
                     />
                     {loiHienThi.denNgay && <span className="truong__loi">{loiHienThi.denNgay}</span>}
                   </label>
-                  <Lich xem={lichDen} setXem={setLichDen} chon={denNgay} onChon={setDenNgay} nhan="Chọn đến ngày" />
+                  <Lich xem={lichDen} setXem={setLichDen} chon={denNgay} onChon={(d) => chonTuyChon('den', d)} nhan="Chọn đến ngày" />
                 </div>
               </div>
             )}
