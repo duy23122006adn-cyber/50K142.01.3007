@@ -309,9 +309,6 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                 <dd>{tien(phieu.duNoConLai)}</dd>
               </dl>
             </article>
-            <button type="button" className="nut khong-in" onClick={() => window.print()}>
-              In phiếu
-            </button>
           </section>
 
           <aside className="the pos__gio khong-in">
