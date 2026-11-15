@@ -2167,3 +2167,17 @@ p.o-trong-the {
 .pos__gio > .khung-nhat-ky:first-child {
   margin-top: 0;
 }
+
+/* Màn hình đăng nhập: dòng giới thiệu dưới logo. */
+.trang-dang-nhap__trai .loi-gioi-thieu {
+  max-width: 420px;
+  color: #fff;
+  font-size: 1.45rem;
+  line-height: 1.45;
+}
+
+/* Không còn đèn "Trực tuyến": chuông thông báo tự đẩy sang phải, sát khung tài khoản. */
+.bo-cuc__dau .chuong,
+header .chuong {
+  margin-left: auto;
+}

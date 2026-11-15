@@ -96,6 +96,7 @@ export function DangNhap() {
     <div className="trang-dang-nhap">
       <section className="trang-dang-nhap__trai" aria-hidden>
         <img className="logo-lon" src={logoXomNho} alt="Xóm nhỏ" />
+        <p className="loi-gioi-thieu">Đây là website bán hàng của tiệm tạp hóa Xóm Nhỏ</p>
       </section>
 
       <section className="trang-dang-nhap__phai">

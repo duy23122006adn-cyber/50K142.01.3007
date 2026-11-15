@@ -31,7 +31,8 @@ export function BoCuc() {
   const { pathname } = useLocation()
   const [moMenu, setMoMenu] = useState(false)
   const [moMenuChucNang, setMoMenuChucNang] = useState(false) // điện thoại: menu dạng ngăn kéo
-  const ketNoi = useKetNoiTucThoi(nguoiDung?.maND)
+  // Giữ kết nối đồng bộ thời gian thực; không hiện đèn "Trực tuyến" trên thanh đầu trang (chủ dự án bỏ).
+  useKetNoiTucThoi(nguoiDung?.maND)
   const [hoiDangXuat, setHoiDangXuat] = useState<null | 'thuong' | 'chuaLuu'>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   // Nhóm menu bị người dùng thu gọn; chỉ có hiệu lực khi còn ở đúng trang lúc thu gọn
@@ -74,13 +75,6 @@ export function BoCuc() {
           <img className="thuong-hieu__logo" src={logoXomNho} alt="Xóm nhỏ" />
         </Link>
 
-        <span
-          className={`den-ket-noi den-ket-noi--${ketNoi}`}
-          title={ketNoi === 'truc-tuyen' ? 'Đang đồng bộ thời gian thực' : ketNoi === 'mat-ket-noi' ? 'Mất kết nối máy chủ – đang thử kết nối lại' : 'Đang kết nối…'}
-        >
-          <span className="den-ket-noi__cham" aria-hidden />
-          <span className="den-ket-noi__chu">{ketNoi === 'truc-tuyen' ? 'Trực tuyến' : ketNoi === 'mat-ket-noi' ? 'Mất kết nối' : 'Đang kết nối'}</span>
-        </span>
         <ChuongThongBao />
 
         <div className="tai-khoan" ref={menuRef}>
