@@ -135,9 +135,11 @@ function LapPhieu({ hd }: { hd: HoaDonDoiTra }) {
           </p>
           <p className="thong-bao thong-bao--do">{hd.thongBaoLoi}</p>
           <p className="ghi-chu">Không tạo phiếu và không thay đổi dữ liệu.</p>
-          <button type="button" className="nut nut--chinh" onClick={() => navigate(GOC_DOI_TRA)}>
-            Về danh sách
-          </button>
+          <div className="hang-nut">
+            <button type="button" className="nut nut--chinh" onClick={() => navigate(GOC_DOI_TRA)}>
+              Về danh sách
+            </button>
+          </div>
         </section>
       </>
     )
