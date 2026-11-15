@@ -255,7 +255,8 @@ function LapPhieu({ hd }: { hd: HoaDonDoiTra }) {
                 if (!dangChonCho) return
                 const d = hd.dong.find((x) => x.maHH === dangChonCho)!
                 setHangMoi({ ...hangMoi, [dangChonCho]: { sp, soLuong: String(sl(d)) } })
-                setDangChonCho(daChon.find((x) => x.maHH !== dangChonCho && !hangMoi[x.maHH])?.maHH ?? null)
+                // Còn món chưa chọn hàng mới → chuyển sang món đó; hết thì giữ nguyên để bấm "Chọn" khác là chọn lại.
+                setDangChonCho(daChon.find((x) => x.maHH !== dangChonCho && !hangMoi[x.maHH])?.maHH ?? dangChonCho)
               }}
             />
           ) : (
@@ -444,7 +445,12 @@ function LapPhieu({ hd }: { hd: HoaDonDoiTra }) {
                 const slMoi = Number(m?.soLuong) || 0
                 const thieu = m && slMoi > m.sp.tonBanDuoc
                 return (
-                  <div key={d.maHH} className={`khung-dong-doi-tra ${dangChonCho === d.maHH ? 'khung-dong-doi-tra--chon' : ''}`}>
+                  // Mẫu 6.2.22: hàng mới chọn bằng nút "Chọn" ở bảng bên trái; trả nhiều món thì bấm vào khung để chọn món đang đổi.
+                  <div
+                    key={d.maHH}
+                    className={`khung-dong-doi-tra ${dangChonCho === d.maHH ? 'khung-dong-doi-tra--chon' : ''} ${daChon.length > 1 ? 'khung-dong-doi-tra--bam' : ''}`}
+                    onClick={daChon.length > 1 ? () => setDangChonCho(d.maHH) : undefined}
+                  >
                     <strong>
                       {d.tenHH} × {sl(d)}
                     </strong>
@@ -472,11 +478,8 @@ function LapPhieu({ hd }: { hd: HoaDonDoiTra }) {
                         </p>
                       </>
                     ) : (
-                      <p className="ghi-chu">Chưa chọn hàng mới.</p>
+                      <p className="ghi-chu">Chưa chọn hàng mới – bấm "Chọn" ở bảng bên trái.</p>
                     )}
-                    <button type="button" className="nut nut--nho" onClick={() => setDangChonCho(d.maHH)}>
-                      {m ? 'Chọn lại hàng mới' : 'Chọn hàng mới'}
-                    </button>
                   </div>
                 )
               })}

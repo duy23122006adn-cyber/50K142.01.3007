@@ -2157,3 +2157,8 @@ p.o-trong-the {
 .hop-thoai--loi .hop-thoai__tieu-de {
   color: var(--mau-chu-do);
 }
+
+/* Đổi nhiều món: bấm vào khung món để chọn hàng mới cho món đó. */
+.khung-dong-doi-tra--bam {
+  cursor: pointer;
+}
