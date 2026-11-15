@@ -71,7 +71,7 @@ export function LuuBienBan() {
   )
 }
 
-/** Ca đang hoạt động – người dùng chọn "Kết ca" để bắt đầu kiểm kê (SUA_BAO_CAO 3.22, BR11). */
+/** Ca đang hoạt động – người dùng chọn "Lưu biên bản" để bắt đầu kiểm kê (SUA_BAO_CAO 3.22, 13.1, BR11). */
 function BatDauKetCa({ bb }: { bb: BienBan }) {
   const queryClient = useQueryClient()
   const [hoi, setHoi] = useState(false)
@@ -102,7 +102,7 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
           <dd>{bb.trangThaiCa}</dd>
         </dl>
         <button type="button" className="nut nut--chinh" disabled={dangXuLy} onClick={() => setHoi(true)}>
-          Kết ca
+          Lưu biên bản
         </button>
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
       </section>

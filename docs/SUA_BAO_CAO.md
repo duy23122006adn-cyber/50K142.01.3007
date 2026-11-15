@@ -386,7 +386,7 @@
 
 | # | Vị trí | Hiện tại | Sửa thành / cách đã làm | Mức |
 |---|---|---|---|---|
-| 13.1 | Màn hình 9.1.1 | Không có nút đưa ca sang "Đang kết ca"; cột "Tồn thực tế" ghi "Dữ liệu từ hệ thống" | Thêm màn hình ca "Đang hoạt động" có nút "Kết ca" (hỏi xác nhận vì sẽ khóa giao dịch toàn quán, mục 3.22). Cột "Tồn thực tế" là ô nhập, mặc định bằng tồn lý thuyết | 🟡 |
+| 13.1 | Màn hình 9.1.1 | Không có nút đưa ca sang "Đang kết ca"; cột "Tồn thực tế" ghi "Dữ liệu từ hệ thống" | Thêm màn hình ca "Đang hoạt động" có nút "Lưu biên bản" (hỏi xác nhận vì sẽ khóa giao dịch toàn quán, mục 3.22). Cột "Tồn thực tế" là ô nhập, mặc định bằng tồn lý thuyết | 🟡 |
 | 13.2 | UC_9.1 BR09 | Không nói biên bản gồm những mặt hàng nào | Gồm mọi mặt hàng đã từng có lô: đang kinh doanh, hoặc ngừng kinh doanh nhưng còn tồn. Mặt hàng chưa nhập lô nào không có trong biên bản | 🟡 |
 | 13.3 | UC_9.1 BR08 | Không nói tồn có tính lô đã hết hạn không | Tồn lý thuyết là tổng tồn mọi lô, kể cả lô đã hết hạn (hàng vẫn nằm trong quán, cần đếm khi kiểm kê) | 🟡 |
 | 13.4 | Màn hình 9.1.1, 9.2.4 | Mã hàng ví dụ `HH-000004` | `HH-0004` (theo UC_4.1 BR04, Q16) | 🟢 |
