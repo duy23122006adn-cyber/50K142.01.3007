@@ -376,9 +376,10 @@ public sealed partial class DichVuBanHang(
         if (QuyTac.Trong(dk.Ma) && QuyTac.Trong(dk.Khach) && QuyTac.Trong(dk.TuNgay) && QuyTac.Trong(dk.DenNgay) && QuyTac.Trong(dk.TrangThai))
             throw LoiNghiepVuException.KhongHopLe("Vui lòng nhập ít nhất một điều kiện.");
 
-        // Mã hóa đơn tìm theo kiểu khớp một phần (VD "HD", "HD-13/11") – SUA_BAO_CAO; chỉ chặn ký tự không thể có trong mã.
+        // Mã hóa đơn tìm theo kiểu khớp một phần (VD "HD", "HD-13/11", "13/11") – SUA_BAO_CAO 16.1.
+        // Phần sau "HD-" chỉ gồm chữ số và / . (mã có dạng HD-dd/mm/yyyy.nnn) → "HD-abc", "HD@123" không hợp lệ (màn hình 6.2.3).
         var ma = dk.Ma?.Trim().ToUpperInvariant();
-        if (!QuyTac.Trong(ma)) kt.Kiem("ma", KyTuMaHoaDonRegex().IsMatch(ma!), "Mã hóa đơn chỉ gồm chữ, số và các ký tự - / .");
+        if (!QuyTac.Trong(ma)) kt.Kiem("ma", KyTuMaHoaDonRegex().IsMatch(ma!), "Mã hóa đơn không hợp lệ: chỉ gồm “HD-”, chữ số và các ký tự / .");
 
         var homNay = dongHo.HomNay;
         const string NgaySai = "Ngày lập phải là ngày hợp lệ theo dd/mm/yyyy và không ở tương lai.";
@@ -469,6 +470,6 @@ public sealed partial class DichVuBanHang(
             hd.GhiNo?.HanThanhToan);
     }
 
-    [GeneratedRegex(@"^[A-Z0-9/.\-]+$")]
+    [GeneratedRegex(@"^(H|HD|HD-[0-9/.]*|[0-9/.\-]+)$")]
     private static partial Regex KyTuMaHoaDonRegex();
 }

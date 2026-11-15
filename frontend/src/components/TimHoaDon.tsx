@@ -70,8 +70,11 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
         </form>
         {loi && (
           <>
-            <p className="thong-bao thong-bao--do">{loi}</p>
-            <p className="ghi-chu">Kiểm tra lại điều kiện tìm kiếm.</p>
+            {/* Mẫu 6.2.3: dòng lỗi đỏ dưới ô tìm kiếm + khung "Kiểm tra lại điều kiện tìm kiếm". */}
+            <p className="truong__loi loi-tim">{loi}</p>
+            <div className="khung-kiem-tra">
+              <strong>Kiểm tra lại điều kiện tìm kiếm</strong>
+            </div>
           </>
         )}
 
