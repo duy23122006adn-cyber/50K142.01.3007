@@ -66,8 +66,8 @@ export function DanhSachNhanVien() {
 
         {isLoading && <p className="ghi-chu">Đang tải…</p>}
         {error && <p className="thong-bao thong-bao--do">{(error as Error).message}</p>}
-        {data && data.length === 0 && <p className="thong-bao thong-bao--do">Chưa có nhân viên nào</p>}
-        {data && data.length > 0 && (
+        {/* Không có dữ liệu vẫn giữ khung bảng, thông báo căn giữa trong bảng (như mẫu 8.3). */}
+        {data && (
           <div className="bang-cuon">
             <table className="bang bang--xen-ke bang--gon">
               <thead>
@@ -80,6 +80,13 @@ export function DanhSachNhanVien() {
                 </tr>
               </thead>
               <tbody>
+                {data.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="chu-do o-bang-trong">
+                      Chưa có nhân viên nào
+                    </td>
+                  </tr>
+                )}
                 {dsTrang.map((nv) => (
                   <tr key={nv.maND}>
                     <td>{nv.hoTen}</td>

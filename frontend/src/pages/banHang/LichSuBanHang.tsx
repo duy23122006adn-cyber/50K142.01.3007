@@ -100,9 +100,7 @@ export function LichSuBanHang() {
           <h2>
             {hienTim ? 'Kết quả tìm kiếm' : 'Tất cả hóa đơn'} · {ds.tongSo} hóa đơn
           </h2>
-          {ds.tongSo === 0 ? (
-            <p className="chu-do canh-giua o-trong-the">{hienTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}</p>
-          ) : (
+          {/* Mẫu khách hàng 8.3: không có kết quả vẫn giữ khung bảng, thông báo căn giữa trong bảng. */}
             <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
               <table className="bang">
                 <thead>
@@ -116,6 +114,13 @@ export function LichSuBanHang() {
                   </tr>
                 </thead>
                 <tbody>
+                  {ds.tongSo === 0 && (
+                    <tr>
+                      <td colSpan={6} className="chu-do o-bang-trong">
+                        {hienTim ? 'Không tìm thấy hóa đơn phù hợp.' : 'Chưa có hóa đơn nào.'}
+                      </td>
+                    </tr>
+                  )}
                   {ds.danhSach.map((h) => (
                     <tr key={h.maHD}>
                       <td>{h.maHD}</td>
@@ -139,7 +144,6 @@ export function LichSuBanHang() {
                 </tbody>
               </table>
             </div>
-          )}
           <PhanTrang
             trang={ds.trang}
             soTrang={ds.soTrang}

@@ -65,13 +65,8 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
           </form>
         </div>
         {loi && <p className="thong-bao thong-bao--do">{loi}</p>}
-        {data && !loi && data.length === 0 && (
-          <p className="thong-bao thong-bao--do canh-giua">
-            {tuKhoa ? 'Không tìm thấy khách hàng có công nợ!' : 'Hiện không có khách hàng nào còn công nợ.'}
-          </p>
-        )}
         {data && !loi && <h2 className="tieu-de-bang">{tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách khách có công nợ'} · {data.length} khách hàng</h2>}
-        {data && !loi && data.length > 0 && (
+        {data && !loi && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
             <table className="bang">
               <thead>
@@ -85,6 +80,13 @@ function TimKhachCoNo({ onChon }: { onChon: (maKH: string) => void }) {
                 </tr>
               </thead>
               <tbody>
+                {data.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="chu-do o-bang-trong">
+                      {tuKhoa ? 'Không tìm thấy khách hàng có công nợ!' : 'Hiện không có khách hàng nào còn công nợ.'}
+                    </td>
+                  </tr>
+                )}
                 {dsTrang.map((k: KhachQuenDong) => (
                   <tr key={k.maKH}>
                     <td>{k.maKH}</td>
@@ -380,9 +382,6 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
       <div className="pos">
         <section className="the pos__hang">
           <h2>Hóa đơn nợ chưa thanh toán</h2>
-          {ds.length === 0 ? (
-            <p className="thong-bao thong-bao--do">Khách hàng không còn hóa đơn nợ chưa thanh toán.</p>
-          ) : (
             <>
               <p className="ghi-chu">Thanh toán nguyên hóa đơn, theo thứ tự từ hóa đơn nợ cũ nhất.</p>
               <div className="bang-cuon">
@@ -397,6 +396,13 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
                     </tr>
                   </thead>
                   <tbody>
+                    {ds.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="chu-do o-bang-trong">
+                          Khách hàng không còn hóa đơn nợ chưa thanh toán.
+                        </td>
+                      </tr>
+                    )}
                     {trangHD.dsTrang.map((h, j) => {
                       const i = trangHD.batDau + j // vị trí trong toàn bộ danh sách (chọn theo thứ tự cũ nhất)
                       return (
@@ -425,7 +431,6 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
               </div>
               {trangHD.phanTrang}
             </>
-          )}
         </section>
 
         <aside className="the pos__gio">

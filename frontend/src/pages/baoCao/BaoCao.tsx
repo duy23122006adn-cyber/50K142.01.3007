@@ -509,12 +509,8 @@ export function BaoCaoTonKhoTrang() {
         </div>
       </section>
       {(loi.chung ?? loi.truong.trangThai) && <KhongCoDuLieu thongBao={loi.chung ?? loi.truong.trangThai} />}
-      {data && data.dong.length === 0 && (
-        <section className="the the--rong">
-          <p className="thong-bao thong-bao--do khung-do">Không có sản phẩm phù hợp!</p>
-        </section>
-      )}
-      {data && data.dong.length > 0 && (
+      {/* Không có dữ liệu vẫn giữ khung bảng, thông báo căn giữa trong bảng (như mẫu 8.3). */}
+      {data && (
         <section className="the the--rong">
           <div className="bang-cuon">
             <table className="bang bang--xen-ke">
@@ -529,6 +525,13 @@ export function BaoCaoTonKhoTrang() {
                 </tr>
               </thead>
               <tbody>
+                {data.dong.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="chu-do o-bang-trong">
+                      Không có sản phẩm phù hợp!
+                    </td>
+                  </tr>
+                )}
                 {trang.dsTrang.map((d) => (
                   <tr key={d.maLo}>
                     <td>{d.maLo}</td>

@@ -91,11 +91,6 @@ export function TimKiemKhachQuen() {
             <h2 className="tieu-de-bang">
               {tuKhoa || trangThai ? 'Kết quả tìm kiếm' : 'Danh sách khách quen'} · {data.length} khách quen{trangThai ? ` · ${trangThai}` : ''}
             </h2>
-            {data.length === 0 ? (
-              <p className="thong-bao thong-bao--do">
-                {tuKhoa || trangThai ? 'Không tìm thấy thông tin khách quen phù hợp!' : 'Hiện chưa có khách quen nào.'}
-              </p>
-            ) : (
               <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
                 <table className="bang">
                   <thead>
@@ -107,6 +102,13 @@ export function TimKiemKhachQuen() {
                     </tr>
                   </thead>
                   <tbody>
+                    {data.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="chu-do o-bang-trong">
+                          {tuKhoa || trangThai ? 'Không tìm thấy thông tin khách quen phù hợp!' : 'Hiện chưa có khách quen nào.'}
+                        </td>
+                      </tr>
+                    )}
                     {dsTrang.map((k) => (
                       <tr key={k.maKH}>
                         <td>
@@ -128,7 +130,6 @@ export function TimKiemKhachQuen() {
                   </tbody>
                 </table>
               </div>
-            )}
             {phanTrang}
           </>
         )}
@@ -195,9 +196,6 @@ export function ChiTietKhachQuenTrang() {
         </dl>
 
         <h2>Hóa đơn nợ chưa thanh toán</h2>
-        {data.hoaDonChuaTra.length === 0 ? (
-          <p className="ghi-chu">Khách quen không có hóa đơn nợ chưa thanh toán.</p>
-        ) : (
           <div className="bang-cuon">
             <table className="bang">
               <thead>
@@ -208,6 +206,13 @@ export function ChiTietKhachQuenTrang() {
                 </tr>
               </thead>
               <tbody>
+                {data.hoaDonChuaTra.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="chu-do o-bang-trong">
+                      Khách quen không có hóa đơn nợ chưa thanh toán.
+                    </td>
+                  </tr>
+                )}
                 {hdNo.dsTrang.map((h) => (
                   <tr key={h.maHD}>
                     <td>{h.maHD}</td>
@@ -219,7 +224,6 @@ export function ChiTietKhachQuenTrang() {
             </table>
             {hdNo.phanTrang}
           </div>
-        )}
 
         <div className="hang-nut">
           <button type="button" className="nut" onClick={() => navigate('/quan-ly-cong-no/tim-kiem')}>

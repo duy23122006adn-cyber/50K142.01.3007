@@ -80,9 +80,7 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
             <h2 className="tieu-de-bang">
               {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách hóa đơn'} · {data.tongSo} hóa đơn
             </h2>
-            {data.tongSo === 0 ? (
-              <p className="thong-bao thong-bao--do">{tuKhoa ? thongBaoRong : 'Chưa có hóa đơn nào.'}</p>
-            ) : (
+            {/* Mẫu khách hàng 8.3: không có kết quả vẫn giữ khung bảng, thông báo căn giữa trong bảng. */}
               <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
                 <table className="bang">
                   <thead>
@@ -96,6 +94,13 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
                     </tr>
                   </thead>
                   <tbody>
+                    {data.tongSo === 0 && (
+                      <tr>
+                        <td colSpan={6} className="chu-do o-bang-trong">
+                          {tuKhoa ? thongBaoRong : 'Chưa có hóa đơn nào.'}
+                        </td>
+                      </tr>
+                    )}
                     {data.danhSach.map((h) => (
                       <tr key={h.maHD}>
                         <td>{h.maHD}</td>
@@ -115,7 +120,6 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
                   </tbody>
                 </table>
               </div>
-            )}
             <PhanTrang
               trang={data.trang}
               soTrang={data.soTrang}

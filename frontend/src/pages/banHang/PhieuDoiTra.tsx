@@ -361,9 +361,6 @@ export function DuyetDoiTraDanhSach() {
             <h2 className="tieu-de-bang">
               Danh sách phiếu {trangThai.toLowerCase()} · {data.length} phiếu
             </h2>
-            {data.length === 0 ? (
-              <p className="ghi-chu">Không có phiếu nào.</p>
-            ) : (
               <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
                 <table className="bang">
                   <thead>
@@ -378,6 +375,13 @@ export function DuyetDoiTraDanhSach() {
                     </tr>
                   </thead>
                   <tbody>
+                    {data.length === 0 && (
+                      <tr>
+                        <td colSpan={7} className="chu-do o-bang-trong">
+                          Không có phiếu nào.
+                        </td>
+                      </tr>
+                    )}
                     {dsTrang.map((p) => (
                       <tr key={p.maPDT}>
                         <td>{p.maPDT}</td>
@@ -404,7 +408,6 @@ export function DuyetDoiTraDanhSach() {
                   </tbody>
                 </table>
               </div>
-            )}
             {phanTrang}
           </>
         )}

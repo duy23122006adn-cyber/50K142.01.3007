@@ -29,8 +29,8 @@ export function DanhSachLoHang() {
           </Link>
         </div>
         {data && <h2 className="tieu-de-bang">Danh sách lô hàng · {data.tongSo} lô hàng</h2>}
-        {data && data.tongSo === 0 && <p className="ghi-chu">Chưa có lô hàng nào.</p>}
-        {data && data.tongSo > 0 && (
+        {/* Không có dữ liệu vẫn giữ khung bảng, thông báo căn giữa trong bảng (như mẫu 8.3). */}
+        {data && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
             <table className="bang">
               <thead>
@@ -42,6 +42,13 @@ export function DanhSachLoHang() {
                 </tr>
               </thead>
               <tbody>
+                {data.tongSo === 0 && (
+                  <tr>
+                    <td colSpan={4} className="chu-do o-bang-trong">
+                      Chưa có lô hàng nào.
+                    </td>
+                  </tr>
+                )}
                 {data.danhSach.map((l) => (
                   <tr key={l.maLo}>
                     <td>{l.maLo}</td>

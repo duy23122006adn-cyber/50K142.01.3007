@@ -47,10 +47,8 @@ export function TimKiemHangHoa() {
             {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách hàng hóa'} · {data.tongSo} hàng hóa
           </h2>
         )}
-        {data && data.tongSo === 0 && (
-          <p className="khung-loi">{tuKhoa ? 'Không tìm thấy hàng hóa' : 'Chưa có hàng hóa nào.'}</p>
-        )}
-        {data && data.tongSo > 0 && (
+        {/* Không có dữ liệu vẫn giữ khung bảng, thông báo căn giữa trong bảng (như mẫu 8.3). */}
+        {data && (
           <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
             <table className="bang">
               <thead>
@@ -63,6 +61,13 @@ export function TimKiemHangHoa() {
                 </tr>
               </thead>
               <tbody>
+                {data.tongSo === 0 && (
+                  <tr>
+                    <td colSpan={5} className="chu-do o-bang-trong">
+                      {tuKhoa ? 'Không tìm thấy hàng hóa' : 'Chưa có hàng hóa nào.'}
+                    </td>
+                  </tr>
+                )}
                 {data.danhSach.map((h) => (
                   <tr key={h.maHH}>
                     <td>{h.maHH}</td>
