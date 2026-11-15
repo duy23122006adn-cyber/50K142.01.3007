@@ -4,12 +4,14 @@ import { ngayGio, tien } from '../lib/dinhDang'
 import { XemHoaDon } from './XemHoaDon'
 
 /** Màn hình 6.3.17 / 6.3.25 – nhật ký hủy kèm bản sao hóa đơn tại thời điểm hủy (UC_6.3 BR11, BR12). */
-export function NhatKyHuy({ maHD, coBanSao = true }: { maHD: string; coBanSao?: boolean }) {
+/** coKhung: khung thông tin hủy; coBanSao: bản sao hóa đơn lúc hủy – tách được để đặt ở hai cột khác nhau. */
+export function NhatKyHuy({ maHD, coBanSao = true, coKhung = true }: { maHD: string; coBanSao?: boolean; coKhung?: boolean }) {
   const { data, error } = useQuery({ queryKey: ['hoa-don', 'nhat-ky-huy', maHD], queryFn: () => huyHoaDonApi.nhatKy(maHD) })
   if (error) return <p className="thong-bao thong-bao--do">{(error as Error).message}</p>
   if (!data) return <p className="ghi-chu">Đang tải nhật ký hủy…</p>
   return (
     <>
+      {coKhung && (
       <div className="khung-nhat-ky">
         <h2>Nhật ký hủy</h2>
         <p className="ghi-chu">Bản sao chi tiết hóa đơn tại thời điểm hủy, được lưu cố định.</p>
@@ -26,6 +28,7 @@ export function NhatKyHuy({ maHD, coBanSao = true }: { maHD: string; coBanSao?: 
           <dd className="so-lon">{tien(data.soTienCanHoan)}</dd>
         </dl>
       </div>
+      )}
       {coBanSao && <XemHoaDon hd={data.banSao} />}
     </>
   )

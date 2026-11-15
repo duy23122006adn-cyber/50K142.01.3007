@@ -105,7 +105,8 @@ export function HuyHoaDonChiTiet() {
       </h1>
       <div className="pos">
         <section className="the pos__hang">
-          {buoc === 'nhatKy' ? <NhatKyHuy maHD={hd.maHD} /> : <XemHoaDon hd={hd} />}
+          {/* Bản sao hóa đơn lúc hủy bên trái, khung nhật ký hủy bên phải. */}
+          {buoc === 'nhatKy' ? <NhatKyHuy maHD={hd.maHD} coKhung={false} /> : <XemHoaDon hd={hd} />}
           {buoc === 'xem' && hd.trangThai === 'Đã hủy' && (
             <button type="button" className="nut" onClick={() => setBuoc('nhatKy')}>
               Xem nhật ký hủy
@@ -262,9 +263,12 @@ export function HuyHoaDonChiTiet() {
           )}
 
           {buoc === 'nhatKy' && (
-            <button type="button" className="nut nut--chinh nut--rong" onClick={veDanhSach}>
-              Về danh sách
-            </button>
+            <>
+              <NhatKyHuy maHD={hd.maHD} coBanSao={false} />
+              <button type="button" className="nut nut--chinh nut--rong" onClick={veDanhSach}>
+                Về danh sách
+              </button>
+            </>
           )}
         </aside>
       </div>

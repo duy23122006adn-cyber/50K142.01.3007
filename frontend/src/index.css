@@ -2162,3 +2162,8 @@ p.o-trong-the {
 .khung-dong-doi-tra--bam {
   cursor: pointer;
 }
+
+/* Khung nhật ký hủy đặt ở cột phải: bỏ khoảng trống phía trên. */
+.pos__gio > .khung-nhat-ky:first-child {
+  margin-top: 0;
+}
