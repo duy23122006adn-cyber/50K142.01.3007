@@ -326,40 +326,26 @@ export function PhieuDoiTraTrang() {
 
 // ====================================================================== UC_6.4 Duyệt phiếu đổi trả
 
-const TAB_DUYET = ['Chờ duyệt', 'Đã duyệt', 'Từ chối', 'Không hoàn tất'] as const
-
-/** Màn hình 6.4.1 – danh sách phiếu chờ duyệt, mới nhất trước (BR09). */
+/**
+ * Màn hình 6.4.1 – mọi phiếu trong một danh sách (không còn bộ lọc theo trạng thái),
+ * xếp theo nhóm Chờ duyệt → Đã duyệt → Từ chối → Không hoàn tất, mỗi nhóm mới nhất trước (BR09).
+ */
 export function DuyetDoiTraDanhSach() {
   const navigate = useNavigate()
-  const [trangThai, setTrangThai] = useState<string>('Chờ duyệt')
   const { data, error, isFetching } = useQuery({
-    queryKey: ['duyet-doi-tra', trangThai],
-    queryFn: () => duyetDoiTraApi.danhSach(trangThai),
+    queryKey: ['duyet-doi-tra', 'TatCa'],
+    queryFn: () => duyetDoiTraApi.danhSach('TatCa'),
   })
-  const { dsTrang, phanTrang } = useTrang(data, `${trangThai}|${data?.length}`)
+  const { dsTrang, phanTrang } = useTrang(data, `${data?.length}`)
   return (
     <>
       <h1>Duyệt phiếu đổi trả</h1>
       <section className="the the--rong">
-        <div className="tab" role="tablist" aria-label="Lọc theo trạng thái phiếu">
-          {TAB_DUYET.map((t) => (
-            <button
-              key={t}
-              type="button"
-              role="tab"
-              aria-selected={trangThai === t}
-              className={`nut nut--nho ${trangThai === t ? 'nut--chon' : ''}`}
-              onClick={() => setTrangThai(t)}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
         {error && <p className="thong-bao thong-bao--do">Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.</p>}
         {data && (
           <>
             <h2 className="tieu-de-bang">
-              Danh sách phiếu {trangThai.toLowerCase()} · {data.length} phiếu
+              Danh sách phiếu đổi trả · {data.length} phiếu{data.some((p) => p.trangThai === 'Chờ duyệt') ? ` · ${data.filter((p) => p.trangThai === 'Chờ duyệt').length} chờ duyệt` : ''}
             </h2>
               <div className={`bang-cuon ${isFetching ? 'dang-tai-mo' : ''}`}>
                 <table className="bang">

@@ -347,6 +347,7 @@ public sealed class DichVuDoiTra(
                 || (p.TrangThai == TrangThaiPhieuDoiTra.DaDuyet && p.NgayGioHoanTat == null)
                 || (p.TrangThai == TrangThaiPhieuDoiTra.TuChoi && p.NgayGioDuyet >= tuNgayTuChoi));
         }
+        else if (trangThai == "TatCa") { } // Màn hình duyệt: mọi trạng thái trong một danh sách.
         else if (!QuyTac.Trong(trangThai))
         {
             if (!TrangThaiPhieuDoiTra.TatCa.Contains(trangThai)) throw LoiNghiepVuException.KhongHopLe("Trạng thái không hợp lệ.");
@@ -355,8 +356,10 @@ public sealed class DichVuDoiTra(
         else q = q.Where(p => p.TrangThai == TrangThaiPhieuDoiTra.ChoDuyet);
         if (chiCuaToi) q = q.Where(p => p.MaND == hienTai.MaND);
 
-        // "Xử lý đổi trả": phiếu còn việc phải làm (đã duyệt / chờ duyệt) lên trên, phiếu bị từ chối xuống dưới; mỗi nhóm mới nhất trước.
-        var ds = await q.OrderBy(p => p.TrangThai == TrangThaiPhieuDoiTra.TuChoi ? 1 : 0)
+        // Thứ tự nhóm: Chờ duyệt → Đã duyệt → Từ chối → Không hoàn tất; mỗi nhóm mới nhất trước.
+        var ds = await q.OrderBy(p => p.TrangThai == TrangThaiPhieuDoiTra.ChoDuyet ? 0
+                : p.TrangThai == TrangThaiPhieuDoiTra.DaDuyet ? 1
+                : p.TrangThai == TrangThaiPhieuDoiTra.TuChoi ? 2 : 3)
             .ThenByDescending(p => p.NgayGioLap).ThenByDescending(p => p.MaPDT).Take(200)
             .Select(p => new
             {
