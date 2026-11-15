@@ -81,7 +81,7 @@ public sealed class DichVuKetCa(
     public async Task<BienBanDto> BatDauAsync(YeuCauMaCa yc, CancellationToken ct)
     {
         var ca = await LayCaAsync(yc.MaCa, ct);
-        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
+        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa ?? "", ct);
         if (ca.TrangThai == TrangThaiCa.DangHoatDong)
         {
             ca.TrangThai = TrangThaiCa.DangKetCa;
@@ -94,7 +94,7 @@ public sealed class DichVuKetCa(
     public async Task HuyAsync(YeuCauMaCa yc, CancellationToken ct)
     {
         var ca = await LayCaAsync(yc.MaCa, ct);
-        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
+        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa ?? "", ct);
         if (ca.TrangThai != TrangThaiCa.DangKetCa) return;
         ca.TrangThai = TrangThaiCa.DangHoatDong;
         await LuuCaAsync(ct);
@@ -127,7 +127,7 @@ public sealed class DichVuKetCa(
             var ca = await LayCaAsync(yc.MaCa, ct);
             // 8a: ca đã có biên bản do người khác lưu trước.
             if (ca.TrangThai == TrangThaiCa.DaKetThuc || await db.BienBanKetCa.AnyAsync(b => b.MaCa == ca.MaCa, ct))
-                throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
+                throw await LoiCaDaKetThucAsync(yc.MaCa ?? "", ct);
             if (ca.TrangThai != TrangThaiCa.DangKetCa)
                 throw new LoiNghiepVuException(StatusCodes.Status409Conflict, "Ca chưa ở trạng thái “Đang kết ca”. Vui lòng chọn Kết ca trước khi lưu biên bản.");
 
@@ -190,12 +190,12 @@ public sealed class DichVuKetCa(
         catch (DbUpdateConcurrencyException)
         {
             db.ChangeTracker.Clear();
-            throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
+            throw await LoiCaDaKetThucAsync(yc.MaCa ?? "", ct);
         }
         catch (DbUpdateException ex) when (LoiTrungKhoa.TenChiMuc(ex) == "UX_BienBanKetCa_MaCa")
         {
             db.ChangeTracker.Clear();
-            throw await LoiCaDaKetThucAsync(yc.MaCa, ct); // 8a
+            throw await LoiCaDaKetThucAsync(yc.MaCa ?? "", ct); // 8a
         }
         catch (DbUpdateException)
         {

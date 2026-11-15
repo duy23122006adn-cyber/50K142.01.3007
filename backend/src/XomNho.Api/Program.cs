@@ -151,10 +151,21 @@ else
     app.UseHttpsRedirection();
 }
 
+// Bản triển khai (Somee): giao diện React đã build nằm trong wwwroot, máy chủ phục vụ luôn cùng địa chỉ.
+// Khi phát triển trên máy không có wwwroot nên các dòng này không ảnh hưởng (Vite chạy riêng ở cổng 5173).
+var coGiaoDien = Directory.Exists(Path.Combine(app.Environment.ContentRootPath, "wwwroot"));
+if (coGiaoDien)
+{
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<XomNho.Api.HeThongQL.SuKienHub>(XomNho.Api.HeThongQL.SuKienHub.DuongDan);
+// Đường dẫn của giao diện (VD /quan-ly-ban-hang/lich-su) mở thẳng hoặc tải lại trang → trả index.html.
+if (coGiaoDien) app.MapFallbackToFile("index.html").AllowAnonymous(); // trang giao diện không cần đăng nhập; API vẫn bảo vệ
 
 await KhoiTaoDuLieu.ChayAsync(app.Services);
 
