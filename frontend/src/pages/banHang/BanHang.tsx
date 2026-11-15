@@ -827,7 +827,7 @@ export function BanHang() {
           </>
         }
       >
-        <p>Vui lòng thanh toán lại hoặc hủy giao dịch.</p>
+        <p className="chu-do-thuong">Vui lòng thanh toán lại hoặc hủy giao dịch.</p>
       </HopThoai>
 
       {/* 6.5.17 Chưa thể tạo hóa đơn */}
