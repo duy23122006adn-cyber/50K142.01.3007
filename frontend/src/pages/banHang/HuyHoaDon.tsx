@@ -141,7 +141,6 @@ export function HuyHoaDonChiTiet() {
           {buoc === 'nhanHang' && (
             <>
               <h2>Khách đã nhận hàng chưa?</h2>
-              <p className="ghi-chu">Chỉ hủy hóa đơn khi khách chưa nhận hàng. Khách đã nhận hàng thì xử lý theo đổi trả.</p>
               <button type="button" className="nut nut--chinh nut--rong" onClick={() => setBuoc('lyDo')}>
                 Khách chưa nhận hàng
               </button>
