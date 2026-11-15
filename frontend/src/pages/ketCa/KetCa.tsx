@@ -51,8 +51,19 @@ function ThongTinChung({ bb, coMaBB }: { bb: BienBan; coMaBB?: boolean }) {
 export function LuuBienBan() {
   const { data, error, isLoading } = useQuery({ queryKey: ['ket-ca', 'hien-tai'], queryFn: ketCaApi.hienTai })
   const [daLuu, setDaLuu] = useState<BienBan | null>(null)
+  const queryClient = useQueryClient()
 
-  if (daLuu) return <BienBanDaLuu bb={daLuu} />
+  // Đóng popup "Lưu biên bản thành công" → quay về màn hình Lưu biên bản của ca hiện tại (ca vừa kết thúc không còn hiện).
+  if (daLuu)
+    return (
+      <BienBanDaLuu
+        bb={daLuu}
+        onDong={() => {
+          setDaLuu(null)
+          void queryClient.invalidateQueries({ queryKey: ['ket-ca', 'hien-tai'] })
+        }}
+      />
+    )
   if (isLoading) return <p className="ghi-chu">Đang tải…</p>
   if (error) return <p className="thong-bao thong-bao--do">{(error as Error).message}</p>
   if (!data)
@@ -362,9 +373,8 @@ function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
 }
 
 /** Màn hình 9.1.3 – biên bản sau khi lưu (chỉ đọc, BR03); 9.1.2 – popup "Lưu biên bản thành công" hiện đè lên. */
-function BienBanDaLuu({ bb }: { bb: BienBan }) {
+function BienBanDaLuu({ bb, onDong }: { bb: BienBan; onDong: () => void }) {
   const navigate = useNavigate()
-  const [moPopup, setMoPopup] = useState(true)
   return (
     <>
       <h1>Biên bản kết ca</h1>
@@ -386,11 +396,11 @@ function BienBanDaLuu({ bb }: { bb: BienBan }) {
 
       {/* 9.1.2 */}
       <HopThoai
-        mo={moPopup}
+        mo
         kieu="thanhCong"
-        onDong={() => setMoPopup(false)}
+        onDong={onDong}
         nut={
-          <button type="button" className="nut nut--chinh nut--rong" onClick={() => setMoPopup(false)}>
+          <button type="button" className="nut nut--chinh nut--rong" onClick={onDong}>
             Đóng
           </button>
         }
