@@ -431,6 +431,7 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 |---|---|---|---|---|
 | 16.1 | UC_6.1 BR02 (ô "Mã hóa đơn"); màn hình 6.1-05 | Mã hóa đơn phải khớp chính xác, đúng dạng HD-dd/mm/yyyy.nnn; sai dạng thì báo "Mã hóa đơn phải có dạng HD-dd/mm/yyyy.nnn." | "Mã hóa đơn được tìm theo kiểu khớp một phần, không phân biệt chữ hoa, chữ thường (ví dụ nhập "HD-13/11" ra mọi hóa đơn ngày 13/11). Mã chỉ gồm chữ, số và các ký tự - / . ; có ký tự khác thì báo "Mã hóa đơn chỉ gồm chữ, số và các ký tự - / ."". Màn hình 6.1-05 đổi ví dụ thành mã có ký tự không hợp lệ (ví dụ "HD@123") | 🔴 |
 | 16.2 | Phần tích hợp "Chuyển khoản QR qua ngân hàng" (bổ sung cho 15.7) | Chỉ có cách xác nhận tự động qua dịch vụ theo dõi số dư | Thêm: "Khi chưa đăng ký dịch vụ theo dõi số dư, mã QR vẫn là VietQR thật đúng số tiền; người bán xem biến động số dư trên điện thoại rồi bấm "Đã nhận tiền" hoặc "Chưa nhận được tiền"." | 🟡 |
+| 16.3 | Màn hình 2.1 "Danh sách nhân viên", mục 17 (ô "Tìm theo tên / số điện thoại") và mục 18 (nút "Tìm kiếm") | Màn hình có ô tìm kiếm nhân viên, nhưng sơ đồ use case và danh sách UC không có use case tìm kiếm nhân viên | Bỏ mục 17, 18 khỏi bảng mô tả và xóa ô tìm kiếm trong hình mẫu 2.1; đánh lại số thứ tự các mục sau. Web đã bỏ ô tìm kiếm, chỉ còn tiêu đề "Danh sách nhân viên" và nút "Thêm tài khoản" | 🔴 |
 
 ## Thống kê
 
@@ -438,7 +439,7 @@ Bổ sung cho các mục 3.9–3.12 (đã chốt từ Giai đoạn 0).
 
 | Mức | Số mục |
 |---|---|
-| 🔴 Mâu thuẫn với code | 20 |
+| 🔴 Mâu thuẫn với code | 21 |
 | 🟡 Chưa rõ hoặc lệch nhỏ | 47 |
 | 🟢 Chính tả, đánh số | 35 |
 | Chương Kiến trúc (điền mới) | 1 |

@@ -17,17 +17,15 @@ interface XacNhanXoa {
 export function DanhSachNhanVien() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [oTim, setOTim] = useState('')
-  const [tuKhoa, setTuKhoa] = useState('')
   const [xacNhan, setXacNhan] = useState<XacNhanXoa | null>(null)
   const [ketQua, setKetQua] = useState<KetQua | null>(null)
   const [dangXoa, setDangXoa] = useState(false)
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['nhan-vien', tuKhoa],
-    queryFn: () => nhanVienApi.danhSach(tuKhoa),
+    queryKey: ['nhan-vien', ''],
+    queryFn: () => nhanVienApi.danhSach(''),
   })
-  const { dsTrang, phanTrang } = useTrang(data, `${tuKhoa}|${data?.length}`)
+  const { dsTrang, phanTrang } = useTrang(data, `${data?.length}`)
 
   const batDauXoa = async (maND: string) => {
     try {
@@ -58,36 +56,17 @@ export function DanhSachNhanVien() {
     <div className="trang-tai-khoan">
       <h1>Quản lý tài khoản</h1>
       <section className="the the--rong">
+        {/* UCD không có use case tìm kiếm nhân viên → không có ô tìm kiếm (SUA_BAO_CAO 16.3). */}
         <div className="thanh-cong-cu">
-          <form
-            className="o-tim"
-            onSubmit={(e) => {
-              e.preventDefault()
-              setTuKhoa(oTim.trim())
-            }}
-          >
-            <input
-              className="truong__o"
-              placeholder="Tìm theo tên / số điện thoại"
-              value={oTim}
-              onChange={(e) => setOTim(e.target.value)}
-              aria-label="Tìm theo tên hoặc số điện thoại"
-            />
-            <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
-          </form>
+          <h2>Danh sách nhân viên{data && ` · ${data.length} nhân viên`}</h2>
           <Link to="/quan-ly-tai-khoan/them" className="nut nut--chinh">
             Thêm tài khoản
           </Link>
         </div>
 
-        {data && (
-          <h2 className="tieu-de-bang">
-            {tuKhoa ? 'Kết quả tìm kiếm' : 'Danh sách nhân viên'} · {data.length} nhân viên
-          </h2>
-        )}
         {isLoading && <p className="ghi-chu">Đang tải…</p>}
         {error && <p className="thong-bao thong-bao--do">{(error as Error).message}</p>}
-        {data && data.length === 0 && <p className="thong-bao thong-bao--do">Không tìm thấy nhân viên phù hợp</p>}
+        {data && data.length === 0 && <p className="thong-bao thong-bao--do">Chưa có nhân viên nào</p>}
         {data && data.length > 0 && (
           <div className="bang-cuon">
             <table className="bang bang--xen-ke bang--gon">
