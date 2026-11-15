@@ -208,7 +208,7 @@ const TEN_CHI_TIEU: Record<ChiTieuSoSanh, { tieuDe: string; quayLai: string }> =
 const dinhDangTyLe = new Intl.NumberFormat('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 const coDau = (so: number, chuoi: string) => (so > 0 ? `+${chuoi}` : chuoi)
 
-/** Màn hình 5.1.11–5.1.21, 5.2.11–5.2.21. Kỳ báo cáo ở ?tu&den, kỳ so sánh ở ?ssTu&ssDen. */
+/** Màn hình 5.1.11–5.1.21, 5.2.11–5.2.21. Kỳ báo cáo ở ?tu&den&che, kỳ so sánh ở ?sstu&ssden&ssche (khớp docKy(params, 'ss')). */
 export function SoSanhTrang({ chiTieu }: { chiTieu: ChiTieuSoSanh }) {
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
@@ -244,8 +244,8 @@ export function SoSanhTrang({ chiTieu }: { chiTieu: ChiTieuSoSanh }) {
     if (k.tu <= ky.den && ky.tu <= k.den) return setLoiTrung(true)
     setLoiTrung(false)
     const p = thamSoKy(ky)
-    p.set('ssTu', k.tu)
-    p.set('ssDen', k.den)
+    p.set('sstu', k.tu)
+    p.set('ssden', k.den)
     p.set('ssche', k.cheDo)
     setParams(p)
   }
