@@ -2157,11 +2157,3 @@ p.o-trong-the {
 .hop-thoai--loi .hop-thoai__tieu-de {
   color: var(--mau-chu-do);
 }
-
-/* Khung nhắc "Kiểm tra lại điều kiện tìm kiếm" (mẫu 6.2.3). */
-.khung-kiem-tra {
-  margin-top: 1rem;
-  padding: 1rem 1.1rem 2.5rem;
-  border: 1px solid var(--mau-vien);
-  border-radius: var(--bo-goc);
-}

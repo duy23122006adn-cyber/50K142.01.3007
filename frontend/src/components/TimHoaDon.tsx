@@ -70,10 +70,28 @@ export function TimHoaDon({ tieuDe, thongBaoRong, onXem }: Props) {
         </form>
         {loi && (
           <>
-            {/* Mẫu 6.2.3: dòng lỗi đỏ dưới ô tìm kiếm + khung "Kiểm tra lại điều kiện tìm kiếm". */}
+            {/* Mẫu 6.2.3: dòng lỗi đỏ dưới ô tìm kiếm; bảng giữ khung, "Kiểm tra lại điều kiện tìm kiếm" căn giữa trong bảng. */}
             <p className="truong__loi loi-tim">{loi}</p>
-            <div className="khung-kiem-tra">
-              <strong>Kiểm tra lại điều kiện tìm kiếm</strong>
+            <div className="bang-cuon">
+              <table className="bang">
+                <thead>
+                  <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Ngày giờ lập</th>
+                    <th>Khách hàng</th>
+                    <th className="so">Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colSpan={6} className="chu-do o-bang-trong">
+                      Kiểm tra lại điều kiện tìm kiếm
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </>
         )}
