@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { hangHoaApi } from '../../api/nghiepVu'
 import { PhanTrang } from '../../components/PhanTrang'
 
@@ -39,9 +39,7 @@ export function TimKiemHangHoa() {
             />
             <button type="submit" className="nut nut--chinh">Tìm kiếm</button>
           </form>
-          <Link to="/quan-ly-hang-hoa/them" className="nut nut--chinh">
-            Thêm hàng hóa
-          </Link>
+          {/* Không có nút "Thêm hàng hóa" ở danh sách – thêm qua menu trái "Thêm hàng hóa". */}
         </div>
 
         {data && (
