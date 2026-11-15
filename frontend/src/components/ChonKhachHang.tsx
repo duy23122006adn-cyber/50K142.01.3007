@@ -55,6 +55,12 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
     }
   }
 
+  const khongThay = ketQua !== null && ketQua.length === 0
+  const batDauThem = () => {
+    setThemMoi(true)
+    setForm({ hoTen: /\d/.test(tuKhoa) ? '' : tuKhoa.trim(), sdt: /^\d+$/.test(tuKhoa.trim()) ? tuKhoa.trim() : '' })
+  }
+
   const luuKhachMoi = async () => {
     setLoiForm({})
     setKhachTrung(null)
@@ -73,6 +79,7 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
   return (
     <HopThoai
       mo={mo}
+      className="hop-thoai--chon-khach"
       tieuDe={themMoi ? 'Thêm khách hàng' : 'Chọn khách hàng'}
       onDong={() => {
         datLai()
@@ -88,6 +95,23 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
               Lưu và chọn
             </button>
           </>
+        ) : khongThay ? (
+          // Mẫu 6.5.8: không tìm thấy → hai lựa chọn ngang hàng thay cho nút "Đóng".
+          <div className="hai-nut-deu">
+            <button
+              type="button"
+              className="nut"
+              onClick={() => {
+                datLai()
+                onChon(null)
+              }}
+            >
+              Tiếp tục với khách vãng lai
+            </button>
+            <button type="button" className="nut nut--chinh" onClick={batDauThem}>
+              Thêm khách hàng
+            </button>
+          </div>
         ) : (
           <button
             type="button"
@@ -151,33 +175,7 @@ export function ChonKhachHang({ mo, onChon, onDong }: Props) {
           {ketQua && ketQua.length > 0 && (
             <PhanTrang trang={trang.trang} soTrang={trang.soTrang} onDoiTrang={(t) => void taiTrang(trang.tuKhoa, t)} />
           )}
-          {ketQua && ketQua.length === 0 && (
-            <>
-              <p className="thong-bao thong-bao--do">Không tìm thấy khách hàng phù hợp</p>
-              <div className="hang-nut hang-nut--trai">
-                <button
-                  type="button"
-                  className="nut"
-                  onClick={() => {
-                    datLai()
-                    onChon(null)
-                  }}
-                >
-                  Tiếp tục với khách vãng lai
-                </button>
-                <button
-                  type="button"
-                  className="nut nut--chinh"
-                  onClick={() => {
-                    setThemMoi(true)
-                    setForm({ hoTen: /\d/.test(tuKhoa) ? '' : tuKhoa.trim(), sdt: /^\d+$/.test(tuKhoa.trim()) ? tuKhoa.trim() : '' })
-                  }}
-                >
-                  Thêm khách hàng
-                </button>
-              </div>
-            </>
-          )}
+          {khongThay && <p className="khung-khong-thay">Không tìm thấy khách hàng phù hợp</p>}
         </>
       ) : (
         <div>
