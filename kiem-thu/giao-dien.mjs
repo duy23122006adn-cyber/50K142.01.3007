@@ -183,7 +183,7 @@ tc('TC-GD-05', G('UC_1', 'Giao diện: sai 10 lần → màn hình Nhập OTP (m
 })
 
 // ================================================================== UC_6.5 / UC_6.3
-tc('TC-GD-06', G('UC_6.5', 'Giao diện: bán hàng tiền mặt từ giỏ hàng đến hóa đơn', { loai: 'Luồng chính', nguon: 'Main flow 1–16', tienDieuKien: 'Nhân viên đăng nhập; hàng "GD Nước" còn hàng', buoc: '1. Tìm "GD Nước", chọn vào giỏ\n2. "Tiếp tục thanh toán" → "Tiền mặt"\n3. Nhập tiền khách đưa 50.000 → xác nhận\n4. "Tiếp tục"', duLieu: 'GD Nước ×1; 50.000 đ', mongDoi: 'Hiện "Thanh toán thành công", sang màn hình "Hóa đơn bán hàng" có mã HD-dd/mm/yyyy.nnn, trạng thái Đã thanh toán' }), async (t) => {
+tc('TC-GD-06', G('UC_6.5', 'Giao diện: bán hàng tiền mặt từ giỏ hàng đến hóa đơn', { loai: 'Luồng chính', nguon: 'Main flow 1–16', tienDieuKien: 'Nhân viên đăng nhập; hàng "GD Nước" còn hàng', buoc: '1. Tìm "GD Nước", chọn vào giỏ\n2. "Tiếp tục thanh toán" → "Tiền mặt"\n3. Nhập tiền khách đưa 50.000 → xác nhận\n4. "Tiếp tục"', duLieu: 'GD Nước ×1; 50.000 đ', mongDoi: 'Hiện "Thanh toán thành công" ở màn hình thanh toán; "Tiếp tục" → sang màn hình "Hóa đơn bán hàng" và hiện "Tạo hóa đơn thành công" kèm mã HD-dd/mm/yyyy.nnn, trạng thái Đã thanh toán' }), async (t) => {
   await dangNhapUI(NV1.ten, NV1.mk)
   await b.den('/quan-ly-ban-hang/ban-hang')
   await b.js(`go(document.querySelector('input[placeholder="Tìm tên sản phẩm"]'),${JSON.stringify(S.gd.ten)}); nut('Tìm kiếm').click()`)
@@ -202,6 +202,7 @@ tc('TC-GD-06', G('UC_6.5', 'Giao diện: bán hàng tiền mặt từ giỏ hàn
   const anh2 = await b.chup('TC-GD-06b')
   await b.js(`nut('Tiếp tục').click()`)
   await b.doi(`document.querySelector('h1')?.textContent.includes('Hóa đơn bán hàng')`, 'màn hình hóa đơn')
+  await b.doi(`coChu('Tạo hóa đơn thành công')`, 'popup tạo hóa đơn thành công')
   const txt = await b.js(`return document.body.innerText`)
   const ma = txt.match(/HD-\d{2}\/\d{2}\/\d{4}\.\d{3,}/)?.[0]
   t.dung(ma && /Đã thanh toán/.test(txt), 'Hóa đơn phải có mã và trạng thái Đã thanh toán')

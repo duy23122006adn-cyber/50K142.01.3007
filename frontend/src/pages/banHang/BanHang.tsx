@@ -41,7 +41,8 @@ type Popup =
   | { loai: 'khongDuHang'; thongBao: string }
   | { loai: 'qrThatBai' }
   | { loai: 'chuaTaoHoaDon'; maPTT: string }
-  | { loai: 'thanhToanXong' }
+  | { loai: 'thanhToanXong'; maPTT: string }
+  | { loai: 'hoaDonXong' }
   | { loai: 'guiLoi'; thongBao: string }
   | { loai: 'guiXong' }
   | { loai: 'loi'; thongBao: string }
@@ -149,7 +150,11 @@ export function BanHang() {
       const hd = await banHangApi.taoHoaDon({ maPTT, maKH: khach?.maKH ?? null, dong: dongGui })
       setHoaDon(hd)
       setSdtNhan(hd.sdtKhach ?? '')
-      setPopup({ loai: 'thanhToanXong' })
+      // 6.5.18: sang màn hình hóa đơn rồi mới báo "Tạo hóa đơn thành công" kèm mã hóa đơn.
+      setBuoc('hoaDon')
+      setGio([])
+      setKhach(null)
+      setPopup({ loai: 'hoaDonXong' })
       void queryClient.invalidateQueries({ queryKey: ['ca-hien-tai'] })
     } catch (e) {
       // 14.a: khoản thanh toán đã ghi nhận – cho thử lại.
@@ -171,7 +176,8 @@ export function BanHang() {
         maThamChieuQr,
       })
       docDaThu(tt.phuongThuc, tt.soTien, tt.tienTraLai) // Usability NFR-02
-      await taoHoaDon(tt.maPTT)
+      // 6.5.13: báo "Thanh toán thành công" ngay ở màn hình thanh toán; "Tiếp tục" mới tạo hóa đơn.
+      setPopup({ loai: 'thanhToanXong', maPTT: tt.maPTT })
     } catch (e) {
       if (!(e instanceof LoiApi)) return setPopup({ loai: 'loi', thongBao: 'Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.' })
       if (e.status === 402) return setPopup({ loai: 'qrThatBai' })
@@ -864,11 +870,14 @@ export function BanHang() {
           <button
             type="button"
             className="nut nut--chinh"
-            onClick={() => {
+            disabled={dangXuLy}
+            onClick={async () => {
+              if (popup?.loai !== 'thanhToanXong') return
+              const maPTT = popup.maPTT
               setPopup(null)
-              setBuoc('hoaDon')
-              setGio([])
-              setKhach(null)
+              setDangXuLy(true)
+              await taoHoaDon(maPTT) // lỗi → popup "Chưa thể tạo hóa đơn" vẫn ở màn hình thanh toán (14.a)
+              setDangXuLy(false)
             }}
           >
             Tiếp tục
@@ -876,7 +885,21 @@ export function BanHang() {
         }
       >
         <p className="thong-bao thong-bao--xanh">Thanh toán thành công</p>
-        <p>Tạo hóa đơn thành công: {hoaDon?.maHD}</p>
+      </HopThoai>
+
+      {/* 6.5.18 Tạo hóa đơn thành công – hiện trên màn hình hóa đơn */}
+      <HopThoai
+        mo={popup?.loai === 'hoaDonXong'}
+        kieu="thanhCong"
+        onDong={() => setPopup(null)}
+        nut={
+          <button type="button" className="nut nut--chinh" onClick={() => setPopup(null)}>
+            Tiếp tục
+          </button>
+        }
+      >
+        <p className="thong-bao thong-bao--xanh">Tạo hóa đơn thành công</p>
+        <p className="chu-xanh">Mã hóa đơn: {hoaDon?.maHD}</p>
       </HopThoai>
 
       {/* 6.5.22 Gửi không thành công */}
