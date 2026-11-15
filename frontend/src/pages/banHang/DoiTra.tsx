@@ -37,7 +37,7 @@ export function DoiTraDanhSach() {
       />
       {data && data.length > 0 && (
         <section className="the the--rong">
-          <h2>Phiếu đổi trả đang xử lý · {data.length} phiếu</h2>
+          <h2>Phiếu đổi trả đang xử lý và kết quả duyệt · {data.length} phiếu</h2>
           <div className="bang-cuon">
             <table className="bang">
               <thead>

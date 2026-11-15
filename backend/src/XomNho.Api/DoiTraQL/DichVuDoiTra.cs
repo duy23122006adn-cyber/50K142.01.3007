@@ -340,8 +340,13 @@ public sealed class DichVuDoiTra(
     {
         var q = db.PhieuDoiTra.AsNoTracking();
         if (dangXuLy)
+        {
+            // UC_6.4 BR08: người lập phải thấy kết quả duyệt → phiếu bị từ chối trong 7 ngày gần đây vẫn hiện ở "Xử lý đổi trả".
+            var tuNgayTuChoi = dongHo.BayGio.Date.AddDays(-(SoNgayDoiTra - 1));
             q = q.Where(p => p.TrangThai == TrangThaiPhieuDoiTra.ChoDuyet
-                || (p.TrangThai == TrangThaiPhieuDoiTra.DaDuyet && p.NgayGioHoanTat == null));
+                || (p.TrangThai == TrangThaiPhieuDoiTra.DaDuyet && p.NgayGioHoanTat == null)
+                || (p.TrangThai == TrangThaiPhieuDoiTra.TuChoi && p.NgayGioDuyet >= tuNgayTuChoi));
+        }
         else if (!QuyTac.Trong(trangThai))
         {
             if (!TrangThaiPhieuDoiTra.TatCa.Contains(trangThai)) throw LoiNghiepVuException.KhongHopLe("Trạng thái không hợp lệ.");

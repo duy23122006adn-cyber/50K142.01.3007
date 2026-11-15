@@ -33,7 +33,7 @@ public sealed class DoiTraController(DichVuDoiTra dichVu, INguoiDungHienTai hien
         return await dichVu.PhieuAsync(ma, ct);
     }
 
-    /// <summary>Phiếu chờ duyệt hoặc đã duyệt chưa hoàn tất. Nhân viên chỉ thấy phiếu mình lập, trong giờ làm việc.</summary>
+    /// <summary>Phiếu chờ duyệt, đã duyệt chưa hoàn tất, hoặc bị từ chối trong 7 ngày. Nhân viên chỉ thấy phiếu mình lập, trong giờ làm việc.</summary>
     [HttpGet("dang-xu-ly")]
     public async Task<List<PhieuDoiTraDong>> DangXuLy(CancellationToken ct)
     {
