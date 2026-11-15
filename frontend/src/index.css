@@ -2152,3 +2152,8 @@ p.o-trong-the {
 .hop-thoai.hop-thoai--chon-khach {
   width: min(540px, calc(100vw - 32px));
 }
+
+/* Popup lỗi: tiêu đề đỏ như mọi thông báo lỗi khác (VD "Thanh toán chưa thành công"). */
+.hop-thoai--loi .hop-thoai__tieu-de {
+  color: var(--mau-chu-do);
+}
