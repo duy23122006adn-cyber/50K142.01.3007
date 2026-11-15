@@ -184,6 +184,10 @@ export function ChiTietHoaDonTrang() {
           <button type="button" className="nut nut--chinh" onClick={() => navigate(-1)}>
             Quay lại danh sách
           </button>
+          {/* Màn hình 6.1.9–6.1.12 mục "Thoát": đóng chức năng, về Trang chủ (UC_6.1 7.a). */}
+          <button type="button" className="nut" onClick={() => navigate('/')}>
+            Thoát
+          </button>
         </div>
       </section>
     </>
