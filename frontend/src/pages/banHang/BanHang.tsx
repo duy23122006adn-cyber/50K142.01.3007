@@ -13,7 +13,6 @@ import { XemHoaDon } from '../../components/XemHoaDon'
 import { PhanTrang } from '../../components/PhanTrang'
 import { useTrang } from '../../lib/useTrang'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
-import { docDaThu, docTongTien } from '../../lib/docTo'
 
 interface DongGio {
   maHH: string
@@ -175,7 +174,6 @@ export function BanHang() {
         ketQuaQrGiaLap: ketQuaQr,
         maThamChieuQr,
       })
-      docDaThu(tt.phuongThuc, tt.soTien, tt.tienTraLai) // Usability NFR-02
       // 6.5.13: báo "Thanh toán thành công" ngay ở màn hình thanh toán; "Tiếp tục" mới tạo hóa đơn.
       setPopup({ loai: 'thanhToanXong', maPTT: tt.maPTT })
     } catch (e) {
@@ -394,10 +392,7 @@ export function BanHang() {
               type="button"
               className="nut nut--chinh nut--rong"
               disabled={gio.length === 0}
-              onClick={() => {
-                setBuoc('thanhToan')
-                docTongTien(tong)
-              }}
+              onClick={() => setBuoc('thanhToan')}
             >
               Tiếp tục thanh toán
             </button>

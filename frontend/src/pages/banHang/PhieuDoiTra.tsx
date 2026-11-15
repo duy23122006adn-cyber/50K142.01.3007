@@ -7,8 +7,6 @@ import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
 import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { ngayGio, tien } from '../../lib/dinhDang'
-import { docTien } from '../../lib/docSo'
-import { docDaThu, docTo } from '../../lib/docTo'
 import { useTrang } from '../../lib/useTrang'
 import { ChenhLech, MatHang, NhanTrangThaiPhieu, ThongTinPhieu } from './ThongTinPhieu'
 
@@ -58,9 +56,6 @@ export function PhieuDoiTraTrang() {
     setDangXuLy(true)
     try {
       const moi = await doiTraApi.xuLy({ maPDT: p.maPDT, phuongThuc, ketQuaQrGiaLap, maThamChieuQr })
-      // Usability NFR-02: đọc số tiền thu thêm / hoàn lại.
-      if (phuongThuc && moi.chenhLech > 0) docDaThu(phuongThuc, moi.chenhLech)
-      else if (moi.tienHoanKhach > 0) docTo(`Hoàn lại khách ${docTien(moi.tienHoanKhach)}`)
       capNhat(moi)
       setBuocThu('chon')
     } catch (e) {
