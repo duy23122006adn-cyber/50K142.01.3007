@@ -237,8 +237,8 @@ public sealed class DichVuKetCa(
             kt.Kiem("tuNgay", tu <= den, "Từ ngày không được lớn hơn đến ngày"); // 3a
         kt.NemNeuCoLoi();
 
+        // Bước 1, 6, 6a (màn hình 9.2): mọi người thấy cả danh sách; quyền xem (BR01) chỉ kiểm tra khi mở chi tiết.
         var q = db.BienBanKetCa.AsNoTracking();
-        if (hienTai.VaiTro != VaiTroNguoiDung.ChuQuan) q = q.Where(b => b.MaND == hienTai.MaND); // BR01
         if (tu is not null) q = q.Where(b => b.CaLamViec.NgayLamViec >= tu);
         if (den is not null) q = q.Where(b => b.CaLamViec.NgayLamViec <= den);
         if (chiCoChenhLech) q = q.Where(b => b.CoChenhLech);

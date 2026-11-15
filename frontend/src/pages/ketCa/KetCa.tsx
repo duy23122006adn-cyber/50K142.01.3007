@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LoiApi } from '../../api/client'
 import { ketCaApi, type BienBan, type DongKiemKe } from '../../api/nghiepVu'
+import { useXacThuc } from '../../auth/AuthContext'
 import { HopThoai } from '../../components/HopThoai'
 import { homNayISO, ngay } from '../../lib/dinhDang'
 import { useTrang } from '../../lib/useTrang'
@@ -417,6 +418,13 @@ export function DanhSachBienBan() {
   const [form, setForm] = useState({ tuNgay, denNgay, coChenhLech })
   const [loiLoc, setLoiLoc] = useState<string | null>(null)
   const coLoc = !!(tuNgay || denNgay || coChenhLech)
+  const { nguoiDung } = useXacThuc()
+  // UC_9.2 bước 6, 6a: nhân viên thấy cả danh sách nhưng chỉ mở được biên bản ca do mình kết.
+  const [khongCoQuyen, setKhongCoQuyen] = useState(false)
+  const xem = (maBB: string, maNguoiKetCa: string) => {
+    if (nguoiDung?.vaiTro !== 'ChuQuan' && maNguoiKetCa !== nguoiDung?.maND) return setKhongCoQuyen(true)
+    navigate(`${DS_BIEN_BAN}/chi-tiet?ma=${encodeURIComponent(maBB)}`)
+  }
 
   const { data, error, isFetching } = useQuery({
     queryKey: ['ket-ca', 'bien-ban', tuNgay, denNgay, coChenhLech],
@@ -522,7 +530,7 @@ export function DanhSachBienBan() {
                     <button
                       type="button"
                       className="nut nut--nho"
-                      onClick={() => navigate(`${DS_BIEN_BAN}/chi-tiet?ma=${encodeURIComponent(b.maBB)}`)}
+                      onClick={() => xem(b.maBB, b.maNguoiKetCa)}
                     >
                       Xem
                     </button>
@@ -534,6 +542,20 @@ export function DanhSachBienBan() {
         </div>
         {phanTrang}
       </section>
+
+      {/* Màn hình 9.2 – 6a */}
+      <HopThoai
+        mo={khongCoQuyen}
+        kieu="loi"
+        onDong={() => setKhongCoQuyen(false)}
+        nut={
+          <button type="button" className="nut nut--chinh nut--rong" onClick={() => setKhongCoQuyen(false)}>
+            Đóng
+          </button>
+        }
+      >
+        <p className="thong-bao thong-bao--do">Bạn không có quyền xem biên bản này</p>
+      </HopThoai>
     </>
   )
 }

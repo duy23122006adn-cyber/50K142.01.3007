@@ -156,9 +156,9 @@ tc('TC-UC9.2-06', { ...U('UC_9.2'), ten: 'Biên bản không có chênh lệch',
   t.bang(r.data?.dong?.length, 0, 'số dòng chênh lệch')
   return `${r.data?.maBB}: ${r.data?.dong?.length} dòng chênh lệch`
 })
-tc('TC-UC9.2-07', { ...U('UC_9.2'), ten: 'Nhân viên chỉ xem biên bản của ca do mình kết', loai: 'Ngoại lệ', nguon: 'Exception 6a, BR01', tienDieuKien: 'Biên bản thứ nhất do nhanvien1 kết; biên bản thứ hai do kt_ca kết', buoc: '1. kt_ca xem danh sách\n2. kt_ca mở biên bản thứ nhất', duLieu: 'kt_ca', mongDoi: 'Danh sách chỉ có biên bản của kt_ca; mở biên bản của người khác báo "Bạn không có quyền xem biên bản này"' }, async (t) => {
+tc('TC-UC9.2-07', { ...U('UC_9.2'), ten: 'Nhân viên chỉ mở được biên bản của ca do mình kết', loai: 'Ngoại lệ', nguon: 'Main flow 1, 6; Exception 6a, BR01', tienDieuKien: 'Biên bản thứ nhất do nhanvien1 kết; biên bản thứ hai do kt_ca kết', buoc: '1. kt_ca xem danh sách\n2. kt_ca mở biên bản thứ nhất', duLieu: 'kt_ca', mongDoi: 'Danh sách hiện cả biên bản của người khác (màn hình 9.2); mở biên bản của người khác báo "Bạn không có quyền xem biên bản này"' }, async (t) => {
   const d = (await ds(S.pCa)).data ?? []
-  t.dung(d.length > 0 && d.every((x) => x.maNguoiKetCa === S.pCa.nguoiDung.maND), `Danh sách của kt_ca: ${d.map((x) => x.maBB).join(', ')}`)
+  t.dung(d.some((x) => x.maNguoiKetCa === S.pCa.nguoiDung.maND) && d.some((x) => x.maNguoiKetCa !== S.pCa.nguoiDung.maND), `Danh sách kt_ca thấy: ${d.map((x) => x.maBB).join(', ')}`)
   const r = await S.pCa.get(`/ket-ca/bien-ban/chi-tiet?ma=${encodeURIComponent(S.bbLuu.maBB)}`)
   const kq = t.loiNV(r, 403, 'Bạn không có quyền xem biên bản này')
   return `Danh sách kt_ca: ${d.length} biên bản; mở biên bản người khác: ${kq}`
