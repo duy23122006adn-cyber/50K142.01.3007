@@ -238,7 +238,7 @@ function ThanhToanNo({ maKH, onDoiKhach }: { maKH: string; onDoiKhach: () => voi
         >
           <p className="thong-bao thong-bao--do">Gửi phiếu thanh toán điện tử không thành công</p>
           {popup?.loai === 'guiLoi' && popup.thongBao !== 'Gửi phiếu thanh toán điện tử không thành công!' && (
-            <p className="ghi-chu">{popup.thongBao}</p>
+            <p className="chu-do-thuong">{popup.thongBao}</p>
           )}
         </HopThoai>
       </>

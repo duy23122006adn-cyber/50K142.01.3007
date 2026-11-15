@@ -318,7 +318,7 @@ export function PhieuDoiTraTrang() {
         }
       >
         <p className="thong-bao thong-bao--do">Cập nhật không thành công</p>
-        {popup?.loai === 'loi' && popup.thongBao !== 'Cập nhật không thành công' && <p className="ghi-chu">{popup.thongBao}</p>}
+        {popup?.loai === 'loi' && popup.thongBao !== 'Cập nhật không thành công' && <p className="chu-do-thuong">{popup.thongBao}</p>}
       </HopThoai>
     </>
   )
@@ -443,7 +443,7 @@ export function DuyetDoiTraChiTiet() {
         }
       >
         <p className="thong-bao thong-bao--do">Đã xảy ra lỗi</p>
-        <p>Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.</p>
+        <p className="chu-do-thuong">Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.</p>
       </HopThoai>
     )
   if (!p) return <p className="ghi-chu">Đang tải…</p>

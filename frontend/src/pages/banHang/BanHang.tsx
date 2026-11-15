@@ -853,7 +853,7 @@ export function BanHang() {
           </button>
         }
       >
-        <p>Khoản thanh toán đã được ghi nhận, vui lòng thử lại.</p>
+        <p className="chu-do-thuong">Khoản thanh toán đã được ghi nhận, vui lòng thử lại.</p>
       </HopThoai>
 
       {/* 6.5.13 Thanh toán thành công */}
