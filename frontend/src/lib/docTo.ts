@@ -3,33 +3,15 @@ import { docTien } from './docSo'
 /**
  * Đọc to bằng giọng đọc có sẵn của trình duyệt (Web Speech API) – Usability NFR-02 và
  * phần tích hợp "Bộ phát âm thanh (loa): đọc to số tiền khách đã chuyển khoản".
- * Bật/tắt lưu riêng trên từng máy (localStorage).
+ * Luôn bật, không có nút trên giao diện (chủ dự án bỏ nút "Đọc số tiền" / "Đọc to").
  */
-const KHOA = 'xomnho.docTo'
 
 export const coHoTroDocTo = () => typeof window !== 'undefined' && 'speechSynthesis' in window
 
-export function docToDangBat(): boolean {
-  try {
-    return localStorage.getItem(KHOA) !== '0'
-  } catch {
-    return true
-  }
-}
-
-export function datDocTo(bat: boolean) {
-  try {
-    localStorage.setItem(KHOA, bat ? '1' : '0')
-  } catch {
-    // Trình duyệt chặn lưu trữ – chỉ áp dụng trong phiên hiện tại.
-  }
-}
-
 const giongViet = () => (coHoTroDocTo() ? speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith('vi')) : undefined)
-export const coGiongViet = () => !!giongViet()
 
 export function docTo(cau: string) {
-  if (!coHoTroDocTo() || !docToDangBat()) return
+  if (!coHoTroDocTo()) return
   const u = new SpeechSynthesisUtterance(cau)
   u.lang = 'vi-VN'
   const g = giongViet()

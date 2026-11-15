@@ -10,11 +10,9 @@ import { ChonKhachHang } from '../../components/ChonKhachHang'
 import { HopThoai } from '../../components/HopThoai'
 import { ManChuyenKhoan } from '../../components/ManChuyenKhoan'
 import { XemHoaDon } from '../../components/XemHoaDon'
-import { NutDocTo } from '../../components/NutDocTo'
 import { PhanTrang } from '../../components/PhanTrang'
 import { useTrang } from '../../lib/useTrang'
 import { bayGioISO, ngay, ngayGio, so, tien } from '../../lib/dinhDang'
-import { docTien } from '../../lib/docSo'
 import { docDaThu, docTongTien } from '../../lib/docTo'
 
 interface DongGio {
@@ -448,12 +446,6 @@ export function BanHang() {
             <div className="pos-tt__tong">
               <span className="ghi-chu">Cần thanh toán</span>
               <p className="so-rat-lon">{tien(tong)}</p>
-              <div className="pos-tt__doc">
-                <button type="button" className="nut nut--nho" onClick={() => docTongTien(tong)} title="Đọc lại số tiền">
-                  🔊 Đọc số tiền
-                </button>
-                <NutDocTo cauThu={`Tổng tiền cần thanh toán ${docTien(tong)}`} />
-              </div>
             </div>
             <h3 className="tieu-de-nhom">Hình thức thanh toán</h3>
             <p className="ghi-chu nhan-nhom">Thanh toán trực tiếp</p>

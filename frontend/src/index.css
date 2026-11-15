@@ -1822,19 +1822,6 @@ select.truong__o {
   line-height: 1.15;
 }
 
-.pos-tt__doc {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.nhac-giong {
-  flex-basis: 100%;
-  font-size: 0.85rem;
-  line-height: 1.35;
-}
-
 /* Dùng chung: bán hàng (6.5.3), thu thêm chênh lệch đổi hàng (6.2.26). */
 .tieu-de-nhom {
   margin: 1.1rem 0 0;
