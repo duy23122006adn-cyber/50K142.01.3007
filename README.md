@@ -47,7 +47,7 @@ npm install
 npm run dev
 ```
 
-Mở trình duyệt tại **http://localhost:5173**.
+Mở trình duyệt tại [https://xomnho50k142.somee.com](https://xomnho50k142.somee.com).
 
 ## Tài khoản mẫu (chỉ ở môi trường Development)
 
