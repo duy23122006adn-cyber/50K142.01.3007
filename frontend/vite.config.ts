@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+    // Cho phép mở web qua link công khai của ngrok / Cloudflare Tunnel (Vite mặc định chặn tên miền lạ).
+    allowedHosts: ['.ngrok-free.app', '.ngrok-free.dev', '.ngrok.app', '.trycloudflare.com'],
     // Gọi API qua cùng origin để cookie refresh token (HttpOnly, SameSite=Strict) hoạt động.
     proxy: {
       // ws: true – cho kết nối SignalR (/api/hub/...) đi qua WebSocket.
