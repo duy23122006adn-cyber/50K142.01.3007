@@ -9,15 +9,15 @@ const CAC_TAB = ['Tất cả', 'Sắp hết hàng', 'Sắp hết hạn', 'Hết 
 /** Màn hình 3.2 – Xem cảnh báo tồn kho (UC_3.2). */
 export function CanhBaoTonKho() {
   const [tab, setTab] = useState<(typeof CAC_TAB)[number]>('Tất cả')
-  const [caDaXuLy, setCaDaXuLy] = useState(false)
   const loai = tab === 'Tất cả' ? '' : tab
 
+  // Mẫu 3.2: luôn hiện cả cảnh báo "Chưa xử lý" và "Đã xử lý" (cột Trạng thái); chưa xử lý xếp trước.
   const { data, isLoading } = useQuery({
-    queryKey: ['canh-bao', loai, caDaXuLy],
-    queryFn: () => tonKhoApi.canhBao(loai, caDaXuLy),
+    queryKey: ['canh-bao', loai, true],
+    queryFn: () => tonKhoApi.canhBao(loai, true),
   })
   const tong = data ? Object.values(data.soLuongTheoLoai).reduce((a, b) => a + b, 0) : 0
-  const { dsTrang, phanTrang } = useTrang(data?.danhSach, `${loai}|${caDaXuLy}|${data?.danhSach.length}`)
+  const { dsTrang, phanTrang } = useTrang(data?.danhSach, `${loai}|${data?.danhSach.length}`)
 
   return (
     <>
@@ -41,10 +41,6 @@ export function CanhBaoTonKho() {
               )
             })}
           </div>
-          <label className="o-chon">
-            <input type="checkbox" checked={caDaXuLy} onChange={(e) => setCaDaXuLy(e.target.checked)} />
-            Hiện cả cảnh báo đã xử lý
-          </label>
         </div>
 
         {isLoading && <p className="ghi-chu">Đang tải…</p>}
@@ -83,7 +79,7 @@ export function CanhBaoTonKho() {
                     <td>
                       <span className={`nhan nhan--${c.loaiCanhBao.startsWith('Hết') ? 'do' : 'cam'}`}>{c.loaiCanhBao}</span>
                     </td>
-                    <td>{c.trangThai}</td>
+                    <td className={c.trangThai === 'Đã xử lý' ? 'chu-xanh' : undefined}>{c.trangThai}</td>
                   </tr>
                 ))}
               </tbody>

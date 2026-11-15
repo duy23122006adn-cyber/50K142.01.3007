@@ -2098,3 +2098,9 @@ p.o-trong-the {
   text-align: center;
   margin: 1.5rem 0 0.5rem;
 }
+
+/* Cảnh báo "Đã xử lý": dòng mờ nhưng chữ trạng thái vẫn xanh để dễ phân biệt. */
+.dong-mo td.chu-xanh {
+  color: var(--mau-chu-xanh);
+  font-weight: 600;
+}
