@@ -129,7 +129,7 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
   )
 }
 
-type Popup = { loai: 'thanhCong'; bb: BienBan } | { loai: 'daKetThuc' } | { loai: 'thatBai' } | { loai: 'loi'; thongBao: string }
+type Popup = { loai: 'daKetThuc' } | { loai: 'thatBai' } | { loai: 'loi'; thongBao: string }
 
 /** Màn hình 9.1.1, 9.1.4, 9.1.5 – bảng đối chiếu tồn kho, nhập tồn thực tế và nguyên nhân. */
 function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }) {
@@ -165,7 +165,8 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
         bb.maCa,
         bb.dong.map((d) => ({ maHH: d.maHH, soLuongThucTe: soThucTe(d)!, nguyenNhan: chenh(d) !== 0 ? nguyenNhan[d.maHH] : null })),
       )
-      setPopup({ loai: 'thanhCong', bb: kq })
+      // Mẫu 9.1-03: chuyển ngay sang biên bản đã lưu (trạng thái "Đã kết thúc"), popup thành công hiện đè lên.
+      onDaLuu(kq)
       void queryClient.invalidateQueries({ queryKey: ['ca-hien-tai'] })
       void queryClient.invalidateQueries({ queryKey: ['ket-ca'] })
     } catch (e) {
@@ -215,27 +216,6 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
           </button>
         </div>
       </section>
-
-      {/* 9.1.2 */}
-      <HopThoai
-        mo={popup?.loai === 'thanhCong'}
-        kieu="thanhCong"
-        nut={
-          <button
-            type="button"
-            className="nut nut--chinh"
-            onClick={() => {
-              if (popup?.loai === 'thanhCong') onDaLuu(popup.bb)
-              setPopup(null)
-            }}
-          >
-            Đóng
-          </button>
-        }
-      >
-        <p className="thong-bao thong-bao--xanh">Lưu biên bản thành công</p>
-        <p className="chu-xanh">Mã biên bản là: {popup?.loai === 'thanhCong' ? popup.bb.maBB : ''}</p>
-      </HopThoai>
 
       {/* 9.1.6 */}
       <HopThoai
@@ -381,9 +361,10 @@ function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
   )
 }
 
-/** Màn hình 9.1.3 – biên bản sau khi lưu (chỉ đọc, BR03). */
+/** Màn hình 9.1.3 – biên bản sau khi lưu (chỉ đọc, BR03); 9.1.2 – popup "Lưu biên bản thành công" hiện đè lên. */
 function BienBanDaLuu({ bb }: { bb: BienBan }) {
   const navigate = useNavigate()
+  const [moPopup, setMoPopup] = useState(true)
   return (
     <>
       <h1>Biên bản kết ca</h1>
@@ -402,6 +383,21 @@ function BienBanDaLuu({ bb }: { bb: BienBan }) {
           </button>
         </div>
       </section>
+
+      {/* 9.1.2 */}
+      <HopThoai
+        mo={moPopup}
+        kieu="thanhCong"
+        onDong={() => setMoPopup(false)}
+        nut={
+          <button type="button" className="nut nut--chinh nut--rong" onClick={() => setMoPopup(false)}>
+            Đóng
+          </button>
+        }
+      >
+        <p className="thong-bao thong-bao--xanh">Lưu biên bản thành công</p>
+        <p className="chu-xanh">Mã biên bản là: {bb.maBB}</p>
+      </HopThoai>
     </>
   )
 }
