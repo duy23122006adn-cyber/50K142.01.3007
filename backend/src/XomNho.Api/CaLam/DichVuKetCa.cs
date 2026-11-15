@@ -65,11 +65,23 @@ public sealed class DichVuKetCa(
             .ToListAsync(ct))
         .Select(h => new DongKiemKe(h.MaHH, h.TenHH, h.DonViTinh, h.Ton, h.Ton, 0, null)).ToList();
 
+    /// <summary>
+    /// 9.1.6 (mở nhiều tab): ca đã kết thúc ở tab khác → lỗi kèm biên bản đã lưu (đủ các dòng) để tab này
+    /// hiện biên bản phía sau popup. Không ghi thêm hay ghi đè dữ liệu.
+    /// </summary>
+    private async Task<LoiNghiepVuException> LoiCaDaKetThucAsync(string maCa, CancellationToken ct)
+    {
+        var maBB = await db.BienBanKetCa.AsNoTracking().Where(b => b.MaCa == maCa).Select(b => b.MaBB).FirstOrDefaultAsync(ct);
+        var bienBan = maBB is null ? null : await ChiTietAsync(maBB, chiDongChenhLech: false, ct, kiemTraQuyen: false);
+        return new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc,
+            duLieuThem: new Dictionary<string, object?> { ["bienBan"] = bienBan });
+    }
+
     /// <summary>Người dùng chọn "Kết ca": ca chuyển sang "Đang kết ca" (BR07 – khóa giao dịch toàn quán).</summary>
     public async Task<BienBanDto> BatDauAsync(YeuCauMaCa yc, CancellationToken ct)
     {
         var ca = await LayCaAsync(yc.MaCa, ct);
-        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc);
+        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
         if (ca.TrangThai == TrangThaiCa.DangHoatDong)
         {
             ca.TrangThai = TrangThaiCa.DangKetCa;
@@ -82,7 +94,7 @@ public sealed class DichVuKetCa(
     public async Task HuyAsync(YeuCauMaCa yc, CancellationToken ct)
     {
         var ca = await LayCaAsync(yc.MaCa, ct);
-        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc);
+        if (ca.TrangThai == TrangThaiCa.DaKetThuc) throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
         if (ca.TrangThai != TrangThaiCa.DangKetCa) return;
         ca.TrangThai = TrangThaiCa.DangHoatDong;
         await LuuCaAsync(ct);
@@ -115,7 +127,7 @@ public sealed class DichVuKetCa(
             var ca = await LayCaAsync(yc.MaCa, ct);
             // 8a: ca đã có biên bản do người khác lưu trước.
             if (ca.TrangThai == TrangThaiCa.DaKetThuc || await db.BienBanKetCa.AnyAsync(b => b.MaCa == ca.MaCa, ct))
-                throw new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc);
+                throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
             if (ca.TrangThai != TrangThaiCa.DangKetCa)
                 throw new LoiNghiepVuException(StatusCodes.Status409Conflict, "Ca chưa ở trạng thái “Đang kết ca”. Vui lòng chọn Kết ca trước khi lưu biên bản.");
 
@@ -178,12 +190,12 @@ public sealed class DichVuKetCa(
         catch (DbUpdateConcurrencyException)
         {
             db.ChangeTracker.Clear();
-            throw new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc);
+            throw await LoiCaDaKetThucAsync(yc.MaCa, ct);
         }
         catch (DbUpdateException ex) when (LoiTrungKhoa.TenChiMuc(ex) == "UX_BienBanKetCa_MaCa")
         {
             db.ChangeTracker.Clear();
-            throw new LoiNghiepVuException(StatusCodes.Status409Conflict, CaDaKetThuc); // 8a
+            throw await LoiCaDaKetThucAsync(yc.MaCa, ct); // 8a
         }
         catch (DbUpdateException)
         {
@@ -248,12 +260,12 @@ public sealed class DichVuKetCa(
     }
 
     /// <summary>BR08: chi tiết chỉ gồm dòng chênh lệch ≠ 0. Ngay sau khi lưu (màn hình 9.1.3) trả về đủ các dòng.</summary>
-    public async Task<BienBanDto> ChiTietAsync(string? maBB, bool chiDongChenhLech, CancellationToken ct)
+    public async Task<BienBanDto> ChiTietAsync(string? maBB, bool chiDongChenhLech, CancellationToken ct, bool kiemTraQuyen = true)
     {
         var bb = await db.BienBanKetCa.AsNoTracking().Include(b => b.CaLamViec).Include(b => b.NguoiDung)
             .FirstOrDefaultAsync(b => b.MaBB == maBB, ct)
             ?? throw new LoiNghiepVuException(StatusCodes.Status404NotFound, "Không tìm thấy biên bản kết ca.");
-        if (hienTai.VaiTro != VaiTroNguoiDung.ChuQuan && bb.MaND != hienTai.MaND) // 6a
+        if (kiemTraQuyen && hienTai.VaiTro != VaiTroNguoiDung.ChuQuan && bb.MaND != hienTai.MaND) // 6a
             throw new LoiNghiepVuException(StatusCodes.Status403Forbidden, "Bạn không có quyền xem biên bản này");
 
         var q = db.ChiTietBienBan.AsNoTracking().Where(c => c.MaBB == bb.MaBB);

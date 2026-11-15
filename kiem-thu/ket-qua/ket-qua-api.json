@@ -1,5 +1,5 @@
 {
-  "thoiDiem": "2026-11-15T09:16:29.341Z",
+  "thoiDiem": "2026-11-15T11:04:24.788Z",
   "api": "http://localhost:5104/api",
   "ketQua": [
     {
@@ -17,7 +17,7 @@
       "thucTe": "CQ: CQ001, NV: NV001",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 2280
+      "thoiGianMs": 317
     },
     {
       "ma": "TC-UC1-01",
@@ -34,7 +34,7 @@
       "thucTe": "HTTP 200, vai trò ChuQuan; truy cập báo cáo: HTTP 200",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 733
+      "thoiGianMs": 162
     },
     {
       "ma": "TC-UC1-02",
@@ -51,7 +51,7 @@
       "thucTe": "HTTP 200, vai trò NhanVien; /nhan-vien: 403; /bao-cao: 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 440
+      "thoiGianMs": 127
     },
     {
       "ma": "TC-UC1-03",
@@ -68,7 +68,7 @@
       "thucTe": "HTTP 400 – \"Không được bỏ trống!\" | \"Không được bỏ trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 22
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC1-04",
@@ -85,7 +85,7 @@
       "thucTe": "HTTP 400 – \"Không được bỏ trống!\" | \"Không được bỏ trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC1-05",
@@ -102,7 +102,7 @@
       "thucTe": "HTTP 400 – \"Không được bỏ trống!\" | \"Không được bỏ trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC1-CB",
@@ -113,13 +113,13 @@
       "nguon": "-",
       "tienDieuKien": "Đã đăng nhập Chủ quán",
       "buoc": "Thêm nhân viên kt_khoa",
-      "duLieu": "kt_khoa161546",
+      "duLieu": "kt_khoa180406",
       "mongDoi": "Tạo thành công",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 – \"Thêm tài khoản thành công (mã NV090)\"",
+      "thucTe": "HTTP 200 – \"Thêm tài khoản thành công (mã NV097)\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 548
+      "thoiGianMs": 166
     },
     {
       "ma": "TC-UC1-06",
@@ -136,7 +136,7 @@
       "thucTe": "HTTP 401 – \"Đăng nhập không thành công!\"; CSDL: Hoạt động|1",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 543
+      "thoiGianMs": 224
     },
     {
       "ma": "TC-UC1-07",
@@ -153,7 +153,7 @@
       "thucTe": "HTTP 401 – \"Đăng nhập không thành công!\" (sau 12 lần)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 154
+      "thoiGianMs": 65
     },
     {
       "ma": "TC-UC1-08",
@@ -170,7 +170,7 @@
       "thucTe": "Trước khi đăng nhập đúng: 3 lần sai; sau: 0",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1304
+      "thoiGianMs": 487
     },
     {
       "ma": "TC-UC1-09",
@@ -187,7 +187,7 @@
       "thucTe": "HTTP 423 – \"Tài khoản đang bị khóa tạm thời!\"; gửi tới 090****456; CSDL: Khóa tạm",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3278
+      "thoiGianMs": 1531
     },
     {
       "ma": "TC-UC1-10",
@@ -204,7 +204,7 @@
       "thucTe": "HTTP 423 – \"Tài khoản đang bị khóa tạm thời!\"; mã cũ dùng lại: HTTP 400 – \"Mã xác nhận không đúng!\" | \"Mã xác nhận không đúng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 78
+      "thoiGianMs": 58
     },
     {
       "ma": "TC-UC1-11",
@@ -221,7 +221,7 @@
       "thucTe": "HTTP 400 – \"Mã xác nhận không đúng!\" | \"Mã xác nhận không đúng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 74
+      "thoiGianMs": 90
     },
     {
       "ma": "TC-UC1-12",
@@ -238,7 +238,7 @@
       "thucTe": "HTTP 200 – \"Mở khóa tài khoản thành công. Vui lòng đăng nhập lại.\" \"Mở khóa tài khoản thành công. Vui lòng đăng nhập lại.\"; CSDL: Hoạt động|0; đăng nhập lại: HTTP 200",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 371
+      "thoiGianMs": 271
     },
     {
       "ma": "TC-UC1-13",
@@ -255,7 +255,7 @@
       "thucTe": "HTTP 400 – \"Mã xác nhận đã hết hạn hoặc không còn hiệu lực. Vui lòng đăng nhập lại để nhận mã mới.\" | \"Mã xác nhận đã hết hạn hoặc không còn hiệu lực. Vui lòng đăng nhập lại để nhận mã mới.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 2365
+      "thoiGianMs": 1797
     },
     {
       "ma": "TC-UC2.1-01",
@@ -266,13 +266,13 @@
       "nguon": "Main flow 1–9, BR05, BR06, NFR mã hóa mật khẩu",
       "tienDieuKien": "Chủ quán đã đăng nhập",
       "buoc": "1. Chọn \"Thêm tài khoản\"\n2. Nhập đủ thông tin hợp lệ\n3. Chọn \"Lưu\"",
-      "duLieu": "Họ tên: Nguyễn Kiểm Thử; 15/05/2000; SĐT mới; kt_nv161546@xomnho.vn; kt_nv161546; MatKhau123",
+      "duLieu": "Họ tên: Nguyễn Kiểm Thử; 15/05/2000; SĐT mới; kt_nv180406@xomnho.vn; kt_nv180406; MatKhau123",
       "mongDoi": "Thông báo thêm thành công; mã NV dạng NV###; vai trò Nhân viên; trạng thái Hoạt động; mật khẩu được mã hóa",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 – \"Thêm tài khoản thành công (mã NV091)\" \"Thêm tài khoản thành công (mã NV091)\"; mã NV091; trạng thái Hoạt động; vai trò NhanVien; mật khẩu lưu dạng băm ($2a$…)",
+      "thucTe": "HTTP 200 – \"Thêm tài khoản thành công (mã NV098)\" \"Thêm tài khoản thành công (mã NV098)\"; mã NV098; trạng thái Hoạt động; vai trò NhanVien; mật khẩu lưu dạng băm ($2a$…)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1105
+      "thoiGianMs": 748
     },
     {
       "ma": "TC-UC2.1-02",
@@ -289,7 +289,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập đầy đủ thông tin bắt buộc\" | \"Vui lòng nhập đầy đủ thông tin bắt buộc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.1-03",
@@ -306,7 +306,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập đầy đủ thông tin bắt buộc\" | \"Vui lòng nhập đầy đủ thông tin bắt buộc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC2.1-04",
@@ -323,7 +323,7 @@
       "thucTe": "HTTP 400 – \"Tên đăng nhập không hợp lệ\" | \"Tên đăng nhập không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC2.1-05",
@@ -340,7 +340,7 @@
       "thucTe": "HTTP 400 – \"Tên đăng nhập không hợp lệ\" | \"Tên đăng nhập không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC2.1-06",
@@ -357,7 +357,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại không hợp lệ\" | \"Số điện thoại không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.1-07",
@@ -374,7 +374,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại không hợp lệ\" | \"Số điện thoại không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.1-08",
@@ -391,7 +391,7 @@
       "thucTe": "HTTP 400 – \"Email không hợp lệ\" | \"Email không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC2.1-09",
@@ -408,7 +408,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu không đúng quy tắc\" | \"Mật khẩu không đúng quy tắc\"",
       "ketQua": "Không đạt",
       "chiTietLoi": "Thông báo mong đợi \"Mật khẩu không đủ mạnh\" ở trường matKhau, thực tế HTTP 400 – \"Mật khẩu không đúng quy tắc\" | \"Mật khẩu không đúng quy tắc\"",
-      "thoiGianMs": 8
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC2.1-10",
@@ -425,7 +425,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu không đúng quy tắc\" | \"Mật khẩu không đúng quy tắc\"",
       "ketQua": "Không đạt",
       "chiTietLoi": "Thông báo mong đợi \"Mật khẩu không đủ mạnh\" ở trường matKhau, thực tế HTTP 400 – \"Mật khẩu không đúng quy tắc\" | \"Mật khẩu không đúng quy tắc\"",
-      "thoiGianMs": 6
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.1-11",
@@ -442,7 +442,7 @@
       "thucTe": "HTTP 400 – \"Tên đăng nhập đã tồn tại\" | \"Tên đăng nhập đã tồn tại\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC2.1-12",
@@ -459,7 +459,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại đã được sử dụng\" | \"Số điện thoại đã được sử dụng\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC2.1-13",
@@ -476,7 +476,7 @@
       "thucTe": "HTTP 400 – \"Email đã được sử dụng\" | \"Email đã được sử dụng\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC2.1-14",
@@ -490,10 +490,10 @@
       "duLieu": "kt_xa / kt_xb",
       "mongDoi": "Mã của B = mã của A + 1 (mã A không được dùng lại)",
       "cachChay": "Tự động (API)",
-      "thucTe": "A = NV092 (đã xóa hẳn), B = NV093",
+      "thucTe": "A = NV099 (đã xóa hẳn), B = NV100",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1592
+      "thoiGianMs": 1181
     },
     {
       "ma": "TC-UC2.1-15",
@@ -510,7 +510,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.2-01",
@@ -524,10 +524,10 @@
       "duLieu": "Họ tên mới: \"Trần Kiểm Thử\"",
       "mongDoi": "\"Sửa thông tin nhân viên thành công\"; thông tin mới được lưu; lịch sử ghi người sửa, thời điểm, nội dung trước/sau",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 – \"Sửa thông tin nhân viên thành công\" \"Sửa thông tin nhân viên thành công\"; lịch sử: CQ001 2026-11-15T16:16:01 | trước: Họ và tên: Nguyễn Kiểm Thử | sau: Họ và tên: Trần Kiểm Thử",
+      "thucTe": "HTTP 200 – \"Sửa thông tin nhân viên thành công\" \"Sửa thông tin nhân viên thành công\"; lịch sử: CQ001 2026-11-15T18:04:13 | trước: Họ và tên: Nguyễn Kiểm Thử | sau: Họ và tên: Trần Kiểm Thử",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 199
+      "thoiGianMs": 102
     },
     {
       "ma": "TC-UC2.2-02",
@@ -544,7 +544,7 @@
       "thucTe": "HTTP 400 – \"Không có thông tin thay đổi\"; lịch sử: 1 → 1",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 36
+      "thoiGianMs": 14
     },
     {
       "ma": "TC-UC2.2-03",
@@ -561,7 +561,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập đầy đủ thông tin bắt buộc\" | \"Vui lòng nhập đầy đủ thông tin bắt buộc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 23
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC2.2-04",
@@ -578,7 +578,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại không hợp lệ\" | \"Số điện thoại không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 19
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC2.2-05",
@@ -595,7 +595,7 @@
       "thucTe": "HTTP 400 – \"Email không hợp lệ\" | \"Email không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 20
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC2.2-06",
@@ -612,7 +612,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại đã được sử dụng\" | \"Số điện thoại đã được sử dụng\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 19
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC2.2-07",
@@ -629,7 +629,7 @@
       "thucTe": "HTTP 400 – \"Email đã được sử dụng\" | \"Email đã được sử dụng\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 27
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC2.2-08",
@@ -643,10 +643,10 @@
       "duLieu": "tenDangNhap = \"doi_ten_dang_nhap\"",
       "mongDoi": "Tên đăng nhập và mã NV giữ nguyên",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tên đăng nhập: kt_nv161546; mã: NV091",
+      "thucTe": "Tên đăng nhập: kt_nv180406; mã: NV098",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 43
+      "thoiGianMs": 19
     },
     {
       "ma": "TC-UC2.2-09",
@@ -663,7 +663,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC2.3-CB",
@@ -674,13 +674,13 @@
       "nguon": "-",
       "tienDieuKien": "-",
       "buoc": "Thêm nhân viên kt_mk, đăng nhập 2 phiên",
-      "duLieu": "kt_mk161546 / DoiMatKhau1",
+      "duLieu": "kt_mk180406 / DoiMatKhau1",
       "mongDoi": "Có 2 phiên đăng nhập",
       "cachChay": "Tự động (API)",
       "thucTe": "Đúng như mong đợi",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 909
+      "thoiGianMs": 400
     },
     {
       "ma": "TC-UC2.3-01",
@@ -697,7 +697,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập đầy đủ thông tin\" | \"Vui lòng nhập đầy đủ thông tin\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 60
+      "thoiGianMs": 18
     },
     {
       "ma": "TC-UC2.3-02",
@@ -714,7 +714,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu không đúng quy tắc\" | \"Mật khẩu không đúng quy tắc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 328
+      "thoiGianMs": 118
     },
     {
       "ma": "TC-UC2.3-03",
@@ -731,7 +731,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu xác nhận không khớp\" | \"Mật khẩu xác nhận không khớp\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 193
+      "thoiGianMs": 129
     },
     {
       "ma": "TC-UC2.3-04",
@@ -748,7 +748,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu mới phải khác mật khẩu hiện tại\" | \"Mật khẩu mới phải khác mật khẩu hiện tại\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 164
+      "thoiGianMs": 121
     },
     {
       "ma": "TC-UC2.3-05",
@@ -765,7 +765,7 @@
       "thucTe": "HTTP 400 – \"Mật khẩu hiện tại không chính xác\" | \"Mật khẩu hiện tại không chính xác\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 172
+      "thoiGianMs": 142
     },
     {
       "ma": "TC-UC2.3-06",
@@ -782,7 +782,7 @@
       "thucTe": "HTTP 200 – \"Đổi mật khẩu thành công\" \"Đổi mật khẩu thành công\"; phiên 1: HTTP 401, phiên 2: HTTP 401; mật khẩu mới: HTTP 200; mật khẩu cũ: HTTP 401",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 731
+      "thoiGianMs": 530
     },
     {
       "ma": "TC-UC2.3-07",
@@ -799,7 +799,7 @@
       "thucTe": "Lần 5: HTTP 423 – \"Bạn đã nhập sai mật khẩu 5 lần liên tiếp. Chức năng đổi mật khẩu bị khóa trong 15 phút\"; nhập đúng ngay sau đó: HTTP 423 – \"Chức năng đổi mật khẩu đang bị khóa trong 15 phút.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 1401
+      "thoiGianMs": 912
     },
     {
       "ma": "TC-UC2.4-01",
@@ -816,7 +816,7 @@
       "thucTe": "Kiểm tra: XoaHan; xóa: HTTP 200 – \"Xóa tài khoản thành công\" \"Xóa tài khoản thành công\"; xem lại: HTTP 404; đăng nhập: HTTP 401",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 42
+      "thoiGianMs": 108
     },
     {
       "ma": "TC-UC2.4-02",
@@ -833,7 +833,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC11-01",
@@ -850,7 +850,7 @@
       "thucTe": "Đăng xuất: HTTP 200; gọi lại bằng phiên cũ: HTTP 401; làm mới phiên: HTTP 401",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 390
+      "thoiGianMs": 190
     },
     {
       "ma": "TC-UC11-02",
@@ -867,7 +867,7 @@
       "thucTe": "HTTP 401",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3
+      "thoiGianMs": 1
     },
     {
       "ma": "TC-UC11-03",
@@ -881,10 +881,10 @@
       "duLieu": "Khách \"Đăng Xuất Thử\"",
       "mongDoi": "Khách hàng vẫn còn sau khi đăng nhập lại",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tìm lại theo SĐT 0955318662: 1 kết quả",
+      "thucTe": "Tìm lại theo SĐT 0901518307: 1 kết quả",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 727
+      "thoiGianMs": 319
     },
     {
       "ma": "TC-CB-02",
@@ -901,7 +901,7 @@
       "thucTe": "11 danh mục",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 31
+      "thoiGianMs": 17
     },
     {
       "ma": "TC-UC4.1-01",
@@ -918,7 +918,7 @@
       "thucTe": "ĐVT: gói, cái, chai, lon, hộp, lốc, thùng\nDanh mục (11): Gia vị, Bánh kẹo & Đồ ăn vặt, Mì tôm, Bún & Phở khô, Bột giặt / Nước giặt, Nước xả, Sữa tắm, Dầu gội, Nước giải khát, Sữa & Sản phẩm từ sữa, Gạo & Nông sản khô",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC4.1-02",
@@ -929,13 +929,13 @@
       "nguon": "Main flow 1–7, BR04 (SUA_BAO_CAO 3.6)",
       "tienDieuKien": "Chủ quán ở màn hình Quản lý hàng hóa",
       "buoc": "1. Chọn \"Thêm hàng hóa\" (xem mã dự kiến)\n2. Nhập đủ thông tin\n3. Nhấn \"Lưu\"",
-      "duLieu": "Tên \"KT161546 Nước ngọt A\", chai, nhập 8.000, bán 10.000, ngưỡng hết hàng 5, hết hạn 10",
+      "duLieu": "Tên \"KT180406 Nước ngọt A\", chai, nhập 8.000, bán 10.000, ngưỡng hết hàng 5, hết hạn 10",
       "mongDoi": "Lưu thành công; mã hàng dạng HH-xxxx, đúng mã dự kiến hiển thị trên form",
       "cachChay": "Tự động (API)",
-      "thucTe": "Mã dự kiến HH-0417; HTTP 200; mã HH-0417; trạng thái Đang kinh doanh",
+      "thucTe": "Mã dự kiến HH-0451; HTTP 200; mã HH-0451; trạng thái Đang kinh doanh",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 167
+      "thoiGianMs": 124
     },
     {
       "ma": "TC-UC4.1-03",
@@ -952,7 +952,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC4.1-04",
@@ -969,7 +969,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC4.1-05",
@@ -986,7 +986,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC4.1-06",
@@ -1003,7 +1003,7 @@
       "thucTe": "HTTP 400 – \"Tên hàng hóa đã tồn tại!\" | \"Tên hàng hóa đã tồn tại!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC4.1-07",
@@ -1020,7 +1020,7 @@
       "thucTe": "HTTP 400 – \"Giá nhập không hợp lệ!\" | \"Giá nhập không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC4.1-08",
@@ -1054,7 +1054,7 @@
       "thucTe": "HTTP 400 – \"Giá bán không hợp lệ!\" | \"Giá bán không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC4.1-10",
@@ -1071,7 +1071,7 @@
       "thucTe": "HTTP 400 – \"Ngưỡng cảnh báo hết hạn không hợp lệ!\" | \"Ngưỡng cảnh báo hết hạn không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC4.1-11",
@@ -1088,7 +1088,7 @@
       "thucTe": "HTTP 400 – \"Ngưỡng cảnh báo hết hàng không hợp lệ!\" | \"Ngưỡng cảnh báo hết hàng không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC4.1-12",
@@ -1122,7 +1122,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-CB-03",
@@ -1136,10 +1136,10 @@
       "duLieu": "B (2 lô cho FEFO), C (ít hàng), D (cận hạn), E (không tồn), F (còn tồn), G (bán chậm), H (2 cái), I/J (đổi trả)",
       "mongDoi": "Tạo đủ dữ liệu",
       "cachChay": "Tự động (API)",
-      "thucTe": "A=HH-0417 (LO-000178); B=HH-0418 (LO-000179, LO-000180); C=HH-0419 (LO-000181); D=HH-0420 (LO-000182); E=HH-0421; F=HH-0422 (LO-000183); G=HH-0423 (LO-000184); H=HH-0424 (LO-000185); I=HH-0425 (LO-000186); J=HH-0426 (LO-000187); K=HH-0427 (LO-000188)",
+      "thucTe": "A=HH-0451 (LO-000192); B=HH-0452 (LO-000193, LO-000194); C=HH-0453 (LO-000195); D=HH-0454 (LO-000196); E=HH-0455; F=HH-0456 (LO-000197); G=HH-0457 (LO-000198); H=HH-0458 (LO-000199); I=HH-0459 (LO-000200); J=HH-0460 (LO-000201); K=HH-0461 (LO-000202)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 357
+      "thoiGianMs": 377
     },
     {
       "ma": "TC-UC4.2-01",
@@ -1156,7 +1156,7 @@
       "thucTe": "HTTP 200 – \"Cập nhật hàng hóa thành công\" \"Cập nhật hàng hóa thành công\"; giá bán sau sửa 11000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 44
+      "thoiGianMs": 36
     },
     {
       "ma": "TC-UC4.2-02",
@@ -1173,7 +1173,7 @@
       "thucTe": "HTTP 400 – \"Tên hàng hóa đã tồn tại!\" | \"Tên hàng hóa đã tồn tại!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC4.2-03",
@@ -1207,7 +1207,7 @@
       "thucTe": "HTTP 400 – \"Giá nhập không hợp lệ!\" | \"Giá nhập không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC4.2-05",
@@ -1224,7 +1224,7 @@
       "thucTe": "HTTP 400 – \"Ngưỡng cảnh báo hết hàng không hợp lệ!\" | \"Ngưỡng cảnh báo hết hàng không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC4.2-06",
@@ -1258,7 +1258,7 @@
       "thucTe": "HTTP 409 – \"Hàng hóa còn tồn kho, vui lòng điều chỉnh số lượng về 0\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 33
+      "thoiGianMs": 22
     },
     {
       "ma": "TC-UC4.3-02",
@@ -1275,7 +1275,7 @@
       "thucTe": "XoaHan; HTTP 200 – \"Xóa hàng hóa thành công\" \"Xóa hàng hóa thành công\"",
       "ketQua": "Không đạt",
       "chiTietLoi": "Thông báo mong đợi \"Đã xoá thông tin hàng hóa này\", thực tế HTTP 200 – \"Xóa hàng hóa thành công\"",
-      "thoiGianMs": 66
+      "thoiGianMs": 67
     },
     {
       "ma": "TC-UC4.3-03",
@@ -1286,13 +1286,13 @@
       "nguon": "UC_4.1 BR04",
       "tienDieuKien": "Hàng E vừa bị xóa hẳn",
       "buoc": "Thêm hàng hóa mới",
-      "duLieu": "KT161546 Sau xoa",
+      "duLieu": "KT180406 Sau xoa",
       "mongDoi": "Mã mới lớn hơn mã của mọi hàng đã cấp (không dùng lại mã E)",
       "cachChay": "Tự động (API)",
-      "thucTe": "Mã E đã xóa: HH-0421; mã mới: HH-0428",
+      "thucTe": "Mã E đã xóa: HH-0455; mã mới: HH-0462",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC4.3-04",
@@ -1320,13 +1320,13 @@
       "nguon": "Main flow 1–5, BR01",
       "tienDieuKien": "Có hàng \"KT… Bánh B\"",
       "buoc": "Nhập \"bánh b\" (chữ thường, một phần) → \"Tìm kiếm\"",
-      "duLieu": "kt161546 bánh b",
+      "duLieu": "kt180406 bánh b",
       "mongDoi": "Hiển thị hàng B với Mã hàng, Tên hàng, ĐVT, Trạng thái",
       "cachChay": "Tự động (API)",
-      "thucTe": "1 kết quả: HH-0418 KT161546 Bánh B gói Đang kinh doanh",
+      "thucTe": "1 kết quả: HH-0452 KT180406 Bánh B gói Đang kinh doanh",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 41
+      "thoiGianMs": 35
     },
     {
       "ma": "TC-UC4.4-02",
@@ -1343,7 +1343,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy hàng hóa\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC4.4-03",
@@ -1357,10 +1357,10 @@
       "duLieu": "22 hàng hóa",
       "mongDoi": "Trang 1 có 20 dòng, trang 2 có 2 dòng, tên tăng dần A→Z",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tổng 22, 2 trang; trang 1: 20 dòng, trang 2: 2 dòng; đầu: KT161546 Trang 01, cuối: KT161546 Trang 22",
+      "thucTe": "Tổng 22, 2 trang; trang 1: 20 dòng, trang 2: 2 dòng; đầu: KT180406 Trang 01, cuối: KT180406 Trang 22",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 364
+      "thoiGianMs": 248
     },
     {
       "ma": "TC-UC4.4-04",
@@ -1374,10 +1374,10 @@
       "duLieu": "Hàng A",
       "mongDoi": "Hiển thị Mã, Tên, Danh mục, ĐVT, Giá nhập, Giá bán, Ngưỡng hết hạn, Ngưỡng hết hàng",
       "cachChay": "Tự động (API)",
-      "thucTe": "HH-0417 | KT161546 Nước ngọt A | Gia vị | chai | nhập 8000 | bán 11000 | ngưỡng hạn 10 | ngưỡng hàng 5",
+      "thucTe": "HH-0451 | KT180406 Nước ngọt A | Gia vị | chai | nhập 8000 | bán 11000 | ngưỡng hạn 10 | ngưỡng hàng 5",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC10.1-01",
@@ -1391,10 +1391,10 @@
       "duLieu": "Tên hàng A, 20, 2027-02-13",
       "mongDoi": "Lưu thành công; mã lô dạng LO-xxxxxx đúng mã dự kiến; tổng tồn A = 70",
       "cachChay": "Tự động (API)",
-      "thucTe": "Mã dự kiến LO-000189; HTTP 200; mã LO-000189; tổng tồn A = 70",
+      "thucTe": "Mã dự kiến LO-000203; HTTP 200; mã LO-000203; tổng tồn A = 70",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 50
+      "thoiGianMs": 35
     },
     {
       "ma": "TC-UC10.1-02",
@@ -1408,10 +1408,10 @@
       "duLieu": "Tên hàng G (in hoa), 5, +200 ngày",
       "mongDoi": "Thêm lô thành công cho hàng G",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; mã LO-000190",
+      "thucTe": "HTTP 200; mã LO-000204",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 16
+      "thoiGianMs": 15
     },
     {
       "ma": "TC-UC10.1-03",
@@ -1428,7 +1428,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC10.1-04",
@@ -1445,7 +1445,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC10.1-05",
@@ -1462,7 +1462,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng chọn hàng hóa đang kinh doanh có tên trùng khớp.\" | \"Vui lòng chọn hàng hóa đang kinh doanh có tên trùng khớp.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC10.1-06",
@@ -1479,7 +1479,7 @@
       "thucTe": "HTTP 400 – \"Số lượng không hợp lệ!\" | \"Số lượng không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 17
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC10.1-07",
@@ -1496,7 +1496,7 @@
       "thucTe": "HTTP 400 – \"Số lượng không hợp lệ!\" | \"Số lượng không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC10.1-08",
@@ -1513,7 +1513,7 @@
       "thucTe": "HTTP 400 – \"Hạn sử dụng phải từ ngày hiện tại trở đi!\" | \"Hạn sử dụng phải từ ngày hiện tại trở đi!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC10.1-09",
@@ -1530,7 +1530,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 3
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC3.1-01",
@@ -1541,13 +1541,13 @@
       "nguon": "Main flow 1–5, BR01",
       "tienDieuKien": "Hàng B có 2 lô",
       "buoc": "Nhập \"bánh b\" (thường) → \"Tìm kiếm\"",
-      "duLieu": "kt161546 bánh b",
+      "duLieu": "kt180406 bánh b",
       "mongDoi": "Hiển thị 2 lô của B gồm Mã lô, Mã hàng, Tên hàng, ĐVT, Số lượng tồn, HSD",
       "cachChay": "Tự động (API)",
-      "thucTe": "LO-000180 HH-0418 KT161546 Bánh B gói tồn 10 HSD 2026-12-05\nLO-000179 HH-0418 KT161546 Bánh B gói tồn 10 HSD 2027-02-13",
+      "thucTe": "LO-000194 HH-0452 KT180406 Bánh B gói tồn 10 HSD 2026-12-05\nLO-000193 HH-0452 KT180406 Bánh B gói tồn 10 HSD 2027-02-13",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 94
+      "thoiGianMs": 57
     },
     {
       "ma": "TC-UC3.1-02",
@@ -1561,10 +1561,10 @@
       "duLieu": "Mã hàng A",
       "mongDoi": "Hiển thị các lô của hàng A",
       "cachChay": "Tự động (API)",
-      "thucTe": "2 lô của HH-0417",
+      "thucTe": "2 lô của HH-0451",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 22
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC3.1-03",
@@ -1581,7 +1581,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy hàng hóa!\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 21
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC3.1-04",
@@ -1595,10 +1595,10 @@
       "duLieu": "-",
       "mongDoi": "Tối đa 20 dòng/trang, tên tăng dần",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tổng 179 lô, 9 trang; trang 1: 20 dòng",
+      "thucTe": "Tổng 192 lô, 10 trang; trang 1: 20 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 49
+      "thoiGianMs": 33
     },
     {
       "ma": "TC-UC3.2-01",
@@ -1612,10 +1612,10 @@
       "duLieu": "Lô của C",
       "mongDoi": "Có 1 cảnh báo \"Sắp hết hàng\" trạng thái \"Chưa xử lý\" cho lô của C, đủ các cột",
       "cachChay": "Tự động (API)",
-      "thucTe": "LO-000181 KT161546 Mì C tồn 3 còn 120 ngày – Sắp hết hàng – Chưa xử lý",
+      "thucTe": "LO-000195 KT180406 Mì C tồn 3 còn 120 ngày – Sắp hết hàng – Chưa xử lý",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 229
+      "thoiGianMs": 85
     },
     {
       "ma": "TC-UC3.2-02",
@@ -1629,10 +1629,10 @@
       "duLieu": "Lô của D",
       "mongDoi": "Có cảnh báo \"Sắp hết hạn\", số ngày còn lại = 3",
       "cachChay": "Tự động (API)",
-      "thucTe": "LO-000182 HSD 2026-11-18 còn 3 ngày – Sắp hết hạn",
+      "thucTe": "LO-000196 HSD 2026-11-18 còn 3 ngày – Sắp hết hạn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 27
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC3.2-03",
@@ -1646,10 +1646,10 @@
       "duLieu": "-",
       "mongDoi": "Mọi dòng đều là \"Sắp hết hạn\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "13 dòng, loại: Sắp hết hạn",
+      "thucTe": "14 dòng, loại: Sắp hết hạn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 20
+      "thoiGianMs": 9
     },
     {
       "ma": "TC-UC3.2-04",
@@ -1663,10 +1663,10 @@
       "duLieu": "Hàng C, 20, +150 ngày",
       "mongDoi": "Cảnh báo \"Sắp hết hàng\" của lô C chuyển \"Đã xử lý\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "Thêm lô LO-000191; cảnh báo lô LO-000181: Đã xử lý",
+      "thucTe": "Thêm lô LO-000205; cảnh báo lô LO-000195: Đã xử lý",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 155
+      "thoiGianMs": 68
     },
     {
       "ma": "TC-UC3.2-05",
@@ -1683,7 +1683,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC3.3-01",
@@ -1700,7 +1700,7 @@
       "thucTe": "Tồn trước 50; HTTP 200 – \"Điều chỉnh tồn kho thành công\" \"Điều chỉnh tồn kho thành công\"; tồn sau 45",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10276
+      "thoiGianMs": 118
     },
     {
       "ma": "TC-UC3.3-02",
@@ -1717,7 +1717,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống\" | \"Không được để trống\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC3.3-03",
@@ -1734,7 +1734,7 @@
       "thucTe": "HTTP 400 – \"Giá trị không hợp lệ!\" | \"Giá trị không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC3.3-04",
@@ -1751,7 +1751,7 @@
       "thucTe": "HTTP 400 – \"Giá trị không hợp lệ!\" | \"Giá trị không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 20
+      "thoiGianMs": 9
     },
     {
       "ma": "TC-UC3.3-05",
@@ -1768,7 +1768,7 @@
       "thucTe": "HTTP 400 – \"Hạn sử dụng phải từ ngày hiện tại trở đi!\" | \"Hạn sử dụng phải từ ngày hiện tại trở đi!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 16
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC3.3-06",
@@ -1785,7 +1785,7 @@
       "thucTe": "khoaHanSuDung = true; gửi đổi HSD: HTTP 400 – \"Lô hàng đã có cảnh báo sắp hết hạn, không được sửa hạn sử dụng.\" | \"Lô hàng đã có cảnh báo sắp hết hạn, không được sửa hạn sử dụng.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 17
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC3.3-07",
@@ -1802,7 +1802,7 @@
       "thucTe": "Điều chỉnh lần 1 (kích hoạt kiểm tra): HTTP 200 – \"Điều chỉnh tồn kho thành công\"; cảnh báo Hết hạn: 1; khoaToanBo = true; điều chỉnh lần 2: HTTP 400 – \"Lô hàng đã có cảnh báo hết hạn, không được điều chỉnh.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 141
+      "thoiGianMs": 163
     },
     {
       "ma": "TC-UC3.3-08",
@@ -1819,7 +1819,7 @@
       "thucTe": "HTTP 200 – \"Điều chỉnh tồn kho thành công\"; cảnh báo Hết hàng lô K: 1",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 46
+      "thoiGianMs": 41
     },
     {
       "ma": "TC-UC3.3-09",
@@ -1850,10 +1850,10 @@
       "duLieu": "\"  Khách Thử An  \", SĐT mới",
       "mongDoi": "Lưu thành công; mã KH-xxxxxx; họ tên được bỏ khoảng trắng đầu/cuối; SĐT giữ số 0 đầu",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; KH-000102 | \"Khách Thử An bhbgeh\" | 0955319632",
+      "thucTe": "HTTP 200; KH-000111 | \"Khách Thử An bkaeah\" | 0901519335",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC8.1-02",
@@ -1887,7 +1887,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống thông tin bắt buộc\" | \"Không được để trống thông tin bắt buộc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC8.1-04",
@@ -1904,7 +1904,7 @@
       "thucTe": "HTTP 400 – \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\" | \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC8.1-05",
@@ -1921,7 +1921,7 @@
       "thucTe": "HTTP 400 – \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\" | \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC8.1-06",
@@ -1938,7 +1938,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại gồm 10 chữ số và bắt đầu bằng 0\" | \"Số điện thoại gồm 10 chữ số và bắt đầu bằng 0\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC8.1-07",
@@ -1952,10 +1952,10 @@
       "duLieu": "SĐT của An",
       "mongDoi": "\"Số điện thoại đã được đăng ký\" kèm họ tên, SĐT khách đang dùng số đó; không tạo khách mới",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 400 – \"Số điện thoại đã được đăng ký\" | \"Số điện thoại đã được đăng ký\"; dữ liệu kèm: {\"thongBao\":\"Số điện thoại đã được đăng ký\",\"loi\":{\"sdt\":\"Số điện thoại đã được đăng ký\"},\"khachTrung\":{\"maKH\":\"KH-000102\",\"hoTen\":\"Khách Thử An bhbgeh\",\"sdt\":\"0955319632\"}}",
+      "thucTe": "HTTP 400 – \"Số điện thoại đã được đăng ký\" | \"Số điện thoại đã được đăng ký\"; dữ liệu kèm: {\"thongBao\":\"Số điện thoại đã được đăng ký\",\"loi\":{\"sdt\":\"Số điện thoại đã được đăng ký\"},\"khachTrung\":{\"maKH\":\"KH-000111\",\"hoTen\":\"Khách Thử An bkaeah\",\"sdt\":\"0901519335\"}}",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC8.1-08",
@@ -1966,13 +1966,13 @@
       "nguon": "BR06",
       "tienDieuKien": "Khách \"Khách Thử An\" đã tồn tại",
       "buoc": "Thêm khách cùng họ tên, SĐT khác",
-      "duLieu": "\"Khách Thử An bhbgeh\", SĐT mới",
+      "duLieu": "\"Khách Thử An bkaeah\", SĐT mới",
       "mongDoi": "Thêm thành công khách thứ hai",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; KH-000103",
+      "thucTe": "HTTP 200; KH-000112",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 13
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-CB-04",
@@ -1983,13 +1983,13 @@
       "nguon": "UC_8.1",
       "tienDieuKien": "-",
       "buoc": "Thêm khách",
-      "duLieu": "Khách Thử Bình  bhbgeh",
+      "duLieu": "Khách Thử Bình  bkaeah",
       "mongDoi": "Tạo thành công",
       "cachChay": "Tự động (API)",
-      "thucTe": "KH-000104 0955324689",
+      "thucTe": "KH-000113 0901524373",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC8.2-01",
@@ -2000,13 +2000,13 @@
       "nguon": "Main flow 1–8, BR04 (loại trừ chính khách), BR05, BR06",
       "tienDieuKien": "Khách An2 tồn tại",
       "buoc": "1. Chọn \"Sửa\" khách An2\n2. Đổi họ tên (giữ SĐT)\n3. \"Lưu\"",
-      "duLieu": "\"Khách Thử Cường bhbgeh\"",
+      "duLieu": "\"Khách Thử Cường bkaeah\"",
       "mongDoi": "\"Cập nhật thông tin khách hàng thành công!\"; mã KH không đổi",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 – \"Cập nhật thông tin khách hàng thành công!\" \"Cập nhật thông tin khách hàng thành công!\"; sau sửa: KH-000103 Khách Thử Cường bhbgeh",
+      "thucTe": "HTTP 200 – \"Cập nhật thông tin khách hàng thành công!\" \"Cập nhật thông tin khách hàng thành công!\"; sau sửa: KH-000112 Khách Thử Cường bkaeah",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 143
+      "thoiGianMs": 255
     },
     {
       "ma": "TC-UC8.2-02",
@@ -2040,7 +2040,7 @@
       "thucTe": "HTTP 400 – \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\" | \"Họ tên chỉ gồm chữ cái và khoảng trắng, tối đa 50 ký tự\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC8.2-04",
@@ -2057,7 +2057,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống thông tin bắt buộc\" | \"Không được để trống thông tin bắt buộc\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC8.3-01",
@@ -2074,7 +2074,7 @@
       "thucTe": "1 kết quả",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC8.3-02",
@@ -2091,7 +2091,7 @@
       "thucTe": "1 kết quả",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 15
     },
     {
       "ma": "TC-UC8.3-03",
@@ -2108,7 +2108,7 @@
       "thucTe": "HTTP 200; 1 kết quả",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC8.3-04",
@@ -2125,7 +2125,7 @@
       "thucTe": "HTTP 400 – \"Thông tin chứa ký tự không hợp lệ\" | \"Thông tin chứa ký tự không hợp lệ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC8.3-05",
@@ -2136,7 +2136,7 @@
       "nguon": "Exception 5d",
       "tienDieuKien": "-",
       "buoc": "Nhập tên không tồn tại",
-      "duLieu": "Không Có Ai 161546",
+      "duLieu": "Không Có Ai 180406",
       "mongDoi": "\"Không tìm thấy khách hàng\"",
       "cachChay": "Tự động (API)",
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy khách hàng\")",
@@ -2156,10 +2156,10 @@
       "duLieu": "\"\"",
       "mongDoi": "Hiển thị toàn bộ khách hàng (có phân trang)",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tổng 104 khách, trang 1: 20 dòng",
+      "thucTe": "Tổng 113 khách, trang 1: 20 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 19
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC6.5-01",
@@ -2173,10 +2173,10 @@
       "duLieu": "Tên hàng B",
       "mongDoi": "Hiển thị hàng B với giá bán và tồn bán được",
       "cachChay": "Tự động (API)",
-      "thucTe": "HH-0418 KT161546 Bánh B giá 20000 tồn 20",
+      "thucTe": "HH-0452 KT180406 Bánh B giá 20000 tồn 20",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 59
+      "thoiGianMs": 43
     },
     {
       "ma": "TC-UC6.5-02",
@@ -2193,7 +2193,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy sản phẩm phù hợp\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC6.5-03",
@@ -2207,10 +2207,10 @@
       "duLieu": "A ×2, J ×1; khách Bình; tiền khách đưa 100.000",
       "mongDoi": "Thanh toán thành công; hóa đơn mã HD-dd/mm/yyyy.nnn, \"Thanh toán ngay\", \"Đã thanh toán\", người bán = nhân viên, gắn khách Bình; tồn A giảm 2, J giảm 1; trả lại tiền thừa",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.071 | Thanh toán ngay | Đã thanh toán | người bán NV001 Trần Thị Mai | khách Khách Thử Bình bhbgeh 0955324689 | tổng 54000 | trả lại 46000; tồn A 65 → 63",
+      "thucTe": "HD-15/11/2026.093 | Thanh toán ngay | Đã thanh toán | người bán NV001 Trần Thị Mai | khách Khách Thử Bình bkaeah 0901524373 | tổng 54000 | trả lại 46000; tồn A 65 → 63",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 649
+      "thoiGianMs": 502
     },
     {
       "ma": "TC-UC6.5-04",
@@ -2224,7 +2224,7 @@
       "duLieu": "-",
       "mongDoi": "Có mã HĐ, tên cửa hàng, ngày giờ lập, người bán, khách (họ tên, SĐT), loại, trạng thái, dòng sản phẩm (tên, ĐVT, SL, đơn giá, thành tiền), tổng tiền hàng, tổng thanh toán, số tiền đã trả, phương thức",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tạp hóa Xóm Nhỏ | HD-15/11/2026.071 | 2026-11-15T16:16:20 | Tiền mặt | đã trả 54000 | 2 dòng",
+      "thucTe": "Tạp hóa Xóm Nhỏ | HD-15/11/2026.093 | 2026-11-15T18:04:19 | Tiền mặt | đã trả 54000 | 2 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
       "thoiGianMs": 0
@@ -2241,10 +2241,10 @@
       "duLieu": "B ×3",
       "mongDoi": "Lô HSD +20 ngày giảm còn 7; lô HSD +90 ngày giữ 10",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.072; lô LO-000180 (HSD gần) còn 7, lô LO-000179 (HSD xa) còn 10",
+      "thucTe": "HD-15/11/2026.094; lô LO-000194 (HSD gần) còn 7, lô LO-000193 (HSD xa) còn 10",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 82
+      "thoiGianMs": 64
     },
     {
       "ma": "TC-UC6.5-06",
@@ -2261,7 +2261,7 @@
       "thucTe": "maKH=null, tenKhach=null, sdtKhach=null",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 0
+      "thoiGianMs": 1
     },
     {
       "ma": "TC-UC6.5-07",
@@ -2275,7 +2275,7 @@
       "duLieu": "-",
       "mongDoi": "Số thứ tự hóa đơn sau = trước + 1",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.071 → HD-15/11/2026.072",
+      "thucTe": "HD-15/11/2026.093 → HD-15/11/2026.094",
       "ketQua": "Đạt",
       "chiTietLoi": "",
       "thoiGianMs": 0
@@ -2292,10 +2292,10 @@
       "duLieu": "H ×3",
       "mongDoi": "\"Sản phẩm (tên) không đủ hàng. Số lượng tồn hiện có: 2.\"; không tạo hóa đơn, không trừ tồn",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 409 – \"Sản phẩm KT161546 Nước mắm H không đủ hàng. Số lượng tồn hiện có: 2.\"",
+      "thucTe": "HTTP 409 – \"Sản phẩm KT180406 Nước mắm H không đủ hàng. Số lượng tồn hiện có: 2.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 18
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC6.5-09",
@@ -2309,10 +2309,10 @@
       "duLieu": "H ×1 + H ×2",
       "mongDoi": "Báo không đủ hàng (tổng 3 > 2)",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 409 – \"Sản phẩm KT161546 Nước mắm H không đủ hàng. Số lượng tồn hiện có: 2.\"",
+      "thucTe": "HTTP 409 – \"Sản phẩm KT180406 Nước mắm H không đủ hàng. Số lượng tồn hiện có: 2.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC6.5-10",
@@ -2326,10 +2326,10 @@
       "duLieu": "F ×1",
       "mongDoi": "Tồn bán được của F = 0; báo không đủ hàng",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tồn bán được F = 0; bán thử: HTTP 409 – \"Sản phẩm KT161546 Dầu gội F không đủ hàng. Số lượng tồn hiện có: 0.\"",
+      "thucTe": "Tồn bán được F = 0; bán thử: HTTP 409 – \"Sản phẩm KT180406 Dầu gội F không đủ hàng. Số lượng tồn hiện có: 0.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 19
+      "thoiGianMs": 9
     },
     {
       "ma": "TC-UC6.5-11",
@@ -2343,10 +2343,10 @@
       "duLieu": "G ×2",
       "mongDoi": "Tạo hóa đơn \"Đã thanh toán\", phương thức Chuyển khoản QR",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.073 | Chuyển khoản QR | Đã thanh toán",
+      "thucTe": "HD-15/11/2026.095 | Chuyển khoản QR | Đã thanh toán",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 83
+      "thoiGianMs": 38
     },
     {
       "ma": "TC-UC6.5-12",
@@ -2360,10 +2360,10 @@
       "duLieu": "G ×1",
       "mongDoi": "\"Thanh toán chưa thành công. Vui lòng thanh toán lại hoặc hủy giao dịch.\"; không trừ tồn; hóa đơn tiếp theo nhận số thứ tự liền sau hóa đơn trước",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 402 – \"Thanh toán chưa thành công. Vui lòng thanh toán lại hoặc hủy giao dịch.\"; hóa đơn kế tiếp: HD-15/11/2026.073 → HD-15/11/2026.074",
+      "thucTe": "HTTP 402 – \"Thanh toán chưa thành công. Vui lòng thanh toán lại hoặc hủy giao dịch.\"; hóa đơn kế tiếp: HD-15/11/2026.095 → HD-15/11/2026.096",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 91
+      "thoiGianMs": 41
     },
     {
       "ma": "TC-UC6.5-13",
@@ -2380,7 +2380,7 @@
       "thucTe": "HTTP 400 – \"Số tiền khách đưa chưa đủ.\" | \"Số tiền khách đưa chưa đủ.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC6.5-14",
@@ -2397,7 +2397,7 @@
       "thucTe": "HTTP 400 – \"Giỏ hàng chưa có sản phẩm\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC6.5-15",
@@ -2414,7 +2414,7 @@
       "thucTe": "HTTP 200 – \"Gửi hóa đơn thành công\" \"Gửi hóa đơn thành công\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 89
+      "thoiGianMs": 35
     },
     {
       "ma": "TC-UC6.5-16",
@@ -2431,7 +2431,7 @@
       "thucTe": "HTTP 400 – \"Khách hàng chưa có số điện thoại. Vui lòng nhập số điện thoại.\" | \"Khách hàng chưa có số điện thoại. Vui lòng nhập số điện thoại.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC4.3-05",
@@ -2448,7 +2448,7 @@
       "thucTe": "Kiểm tra: NgungKinhDoanh; HTTP 200 – \"Đã chuyển hàng hóa sang trạng thái “Ngừng kinh doanh”\" \"Đã chuyển hàng hóa sang trạng thái “Ngừng kinh doanh”\"; trạng thái Ngừng kinh doanh; hiện ở bán hàng: false, tồn kho: false, tìm kiếm hàng hóa: false",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 146
+      "thoiGianMs": 98
     },
     {
       "ma": "TC-UC10.1-10",
@@ -2465,7 +2465,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng chọn hàng hóa đang kinh doanh có tên trùng khớp.\" | \"Vui lòng chọn hàng hóa đang kinh doanh có tên trùng khớp.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC8.3-07",
@@ -2479,10 +2479,10 @@
       "duLieu": "Khách Bình, Cường",
       "mongDoi": "Bình: A (5) đứng trước J (1), tối đa 5 mặt hàng; Cường: danh sách trống",
       "cachChay": "Tự động (API)",
-      "thucTe": "Bình: KT161546 Nước ngọt A (5), KT161546 Bánh quy J (1); Cường: 0 mặt hàng",
+      "thucTe": "Bình: KT180406 Nước ngọt A (5), KT180406 Bánh quy J (1); Cường: 0 mặt hàng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 89
+      "thoiGianMs": 53
     },
     {
       "ma": "TC-UC6.1-01",
@@ -2499,7 +2499,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập ít nhất một điều kiện.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 21
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC6.1-02",
@@ -2513,10 +2513,10 @@
       "duLieu": "Mã HĐ tiền mặt; phần \"hd-dd/mm/yyyy\" của mã",
       "mongDoi": "Đủ mã: đúng 1 hóa đơn, gồm mã, ngày giờ, khách, tổng tiền, trạng thái. Một phần mã: mọi hóa đơn có mã chứa chuỗi đó",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.071 | 2026-11-15T16:16:20 | Khách Thử Bình bhbgeh | 54000 | Đã thanh toán\nMột phần \"hd-15/11/2026\": 76 hóa đơn",
+      "thucTe": "HD-15/11/2026.093 | 2026-11-15T18:04:19 | Khách Thử Bình bkaeah | 54000 | Đã thanh toán\nMột phần \"hd-15/11/2026\": 98 hóa đơn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 90
+      "thoiGianMs": 58
     },
     {
       "ma": "TC-UC6.1-03",
@@ -2533,7 +2533,7 @@
       "thucTe": "HTTP 400 – \"Mã hóa đơn không hợp lệ: chỉ gồm “HD-”, chữ số và các ký tự / .\" | \"Mã hóa đơn không hợp lệ: chỉ gồm “HD-”, chữ số và các ký tự / .\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC6.1-04",
@@ -2550,7 +2550,7 @@
       "thucTe": "HTTP 200; 2 hóa đơn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 67
+      "thoiGianMs": 48
     },
     {
       "ma": "TC-UC6.1-05",
@@ -2567,7 +2567,7 @@
       "thucTe": "2 hóa đơn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 69
+      "thoiGianMs": 48
     },
     {
       "ma": "TC-UC6.1-06",
@@ -2584,7 +2584,7 @@
       "thucTe": "HTTP 400 – \"Ngày lập phải là ngày hợp lệ theo dd/mm/yyyy và không ở tương lai.\" | \"Ngày lập phải là ngày hợp lệ theo dd/mm/yyyy và không ở tương lai.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.1-07",
@@ -2601,7 +2601,7 @@
       "thucTe": "HTTP 400 – \"Ngày bắt đầu không được sau ngày kết thúc.\" | \"Ngày bắt đầu không được sau ngày kết thúc.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.1-08",
@@ -2615,10 +2615,10 @@
       "duLieu": "2026-11-15, Đã thanh toán",
       "mongDoi": "Mọi dòng \"Đã thanh toán\", sắp xếp thời gian lập giảm dần",
       "cachChay": "Tự động (API)",
-      "thucTe": "20 hóa đơn, đầu HD-15/11/2026.076 (2026-11-15T16:16:21), cuối HD-15/11/2026.049",
+      "thucTe": "20 hóa đơn, đầu HD-15/11/2026.098 (2026-11-15T18:04:19), cuối HD-15/11/2026.071",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 49
+      "thoiGianMs": 32
     },
     {
       "ma": "TC-UC6.1-09",
@@ -2635,7 +2635,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy hóa đơn phù hợp.\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 59
+      "thoiGianMs": 48
     },
     {
       "ma": "TC-UC6.1-10",
@@ -2649,10 +2649,10 @@
       "duLieu": "Mã HĐ tiền mặt",
       "mongDoi": "Chi tiết đầy đủ theo BR04, giống nhau cho 2 vai trò",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.071: 2 dòng, tổng 54000, Tiền mặt",
+      "thucTe": "HD-15/11/2026.093: 2 dòng, tổng 54000, Tiền mặt",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 32
+      "thoiGianMs": 18
     },
     {
       "ma": "TC-UC7.5-01",
@@ -2666,10 +2666,10 @@
       "duLieu": "Quen An, SĐT, CCCD 12 số, địa chỉ",
       "mongDoi": "Lưu thành công; mã KH-xxxxxx; dư nợ 0; được mua nợ; trạng thái \"Không nợ\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; KH-000105 | dư nợ 0 | quyền mua nợ true | Không nợ",
+      "thucTe": "HTTP 200; KH-000114 | dư nợ 0 | quyền mua nợ true | Không nợ",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 184
+      "thoiGianMs": 87
     },
     {
       "ma": "TC-UC7.5-02",
@@ -2686,7 +2686,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC7.5-03",
@@ -2703,7 +2703,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại không hợp lệ!\" | \"Số điện thoại không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC7.5-04",
@@ -2720,7 +2720,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại đã trùng!\" | \"Số điện thoại đã trùng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 22
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC7.5-05",
@@ -2737,7 +2737,7 @@
       "thucTe": "HTTP 400 – \"CCCD không hợp lệ!\" | \"CCCD không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC7.5-06",
@@ -2754,7 +2754,7 @@
       "thucTe": "HTTP 400 – \"CCCD đã trùng!\" | \"CCCD đã trùng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC7.5-07",
@@ -2771,7 +2771,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-CB-05",
@@ -2785,10 +2785,10 @@
       "duLieu": "-",
       "mongDoi": "Tạo đủ",
       "cachChay": "Tự động (API)",
-      "thucTe": "An=KH-000105; Bao=KH-000106; Cuc=KH-000107; Dung=KH-000108; Em=KH-000109",
+      "thucTe": "An=KH-000114; Bao=KH-000115; Cuc=KH-000116; Dung=KH-000117; Em=KH-000118",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 110
+      "thoiGianMs": 53
     },
     {
       "ma": "TC-UC7.4-01",
@@ -2805,7 +2805,7 @@
       "thucTe": "HTTP 200 – \"Cập nhật thông tin khách quen thành công!\" \"Cập nhật thông tin khách quen thành công!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 62
+      "thoiGianMs": 27
     },
     {
       "ma": "TC-UC7.4-02",
@@ -2822,7 +2822,7 @@
       "thucTe": "HTTP 400 – \"Số điện thoại đã trùng!\" | \"Số điện thoại đã trùng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC7.4-03",
@@ -2839,7 +2839,7 @@
       "thucTe": "HTTP 400 – \"CCCD không hợp lệ!\" | \"CCCD không hợp lệ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC7.4-04",
@@ -2856,7 +2856,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC7.4-05",
@@ -2873,7 +2873,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC7.1-01",
@@ -2887,10 +2887,10 @@
       "duLieu": "A ×2, G ×1 (34.000 đ)",
       "mongDoi": "Hiển thị nợ trước 0, tổng nợ sau đơn, hạn mức 1.000.000, hạn thanh toán = hôm nay + 30; tạo hóa đơn \"Còn nợ\" mã HD-dd/mm/yyyy.nnn; dư nợ khách tăng; tồn kho giảm",
       "cachChay": "Tự động (API)",
-      "thucTe": "Kiểm tra: nợ trước 0, đơn 34000, tổng sau 34000, hạn mức 1000000, hạn TT 2026-12-15\nHóa đơn: HD-15/11/2026.077 | Ghi nợ | Còn nợ | còn nợ 34000; dư nợ khách 34000; trạng thái Còn hạn",
+      "thucTe": "Kiểm tra: nợ trước 0, đơn 34000, tổng sau 34000, hạn mức 1000000, hạn TT 2026-12-15\nHóa đơn: HD-15/11/2026.099 | Ghi nợ | Còn nợ | còn nợ 34000; dư nợ khách 34000; trạng thái Còn hạn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 232
+      "thoiGianMs": 121
     },
     {
       "ma": "TC-UC7.1-02",
@@ -2907,7 +2907,7 @@
       "thucTe": "HTTP 409 – \"Khách hàng chưa là khách quen, không thể ghi nợ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC7.1-03",
@@ -2924,7 +2924,7 @@
       "thucTe": "HTTP 409 – \"Tổng nợ vượt quá hạn mức cho phép!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 16
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC7.1-04",
@@ -2941,7 +2941,7 @@
       "thucTe": "HTTP 409 – \"Tổng nợ vượt quá hạn mức cho phép!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC7.1-05",
@@ -2958,7 +2958,7 @@
       "thucTe": "HTTP 409 – \"Khách hàng có khoản nợ quá hạn!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 166
+      "thoiGianMs": 107
     },
     {
       "ma": "TC-UC7.1-06",
@@ -2975,7 +2975,7 @@
       "thucTe": "HTTP 200 – \"Gửi hóa đơn thành công\" \"Gửi hóa đơn thành công\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC7.2-01",
@@ -2989,10 +2989,10 @@
       "duLieu": "quen thử an",
       "mongDoi": "Hiển thị Quen An với tên, SĐT, trạng thái",
       "cachChay": "Tự động (API)",
-      "thucTe": "Quen Thử An 0910125445 Còn hạn\nQuen Thử An 0937525319 Không nợ\nQuen Thử An 0916525481 Không nợ\nQuen Thử An 0970025851 Không nợ\nQuen Thử An 0959925224 Không nợ\nQuen Thử An 0950325094 Không nợ\nQuen Thử An 0984725886 Không nợ\nQuen Thử An 0947425963 Không nợ\nQuen Thử An 0925325920 Không nợ\nQuen Thử An 0964325941 Không nợ\nQuen Thử An 0955325709 Còn hạn",
+      "thucTe": "Quen Thử An 0910125445 Còn hạn\nQuen Thử An 0937525319 Không nợ\nQuen Thử An 0916525481 Không nợ\nQuen Thử An 0970025851 Không nợ\nQuen Thử An 0959925224 Không nợ\nQuen Thử An 0950325094 Không nợ\nQuen Thử An 0984725886 Không nợ\nQuen Thử An 0947425963 Không nợ\nQuen Thử An 0925325920 Không nợ\nQuen Thử An 0964325941 Không nợ\nQuen Thử An 0955325709 Không nợ\nQuen Thử An 0901525892 Còn hạn",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 49
+      "thoiGianMs": 26
     },
     {
       "ma": "TC-UC7.2-02",
@@ -3009,7 +3009,7 @@
       "thucTe": "1 kết quả",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 15
     },
     {
       "ma": "TC-UC7.2-03",
@@ -3026,7 +3026,7 @@
       "thucTe": "Quen Thử An: lọc \"Còn hạn\" → có\nQuen Thử Bảo: lọc \"Quá hạn\" → có\nQuen Thử Cúc: lọc \"Không nợ\" → có\nQuen Thử Dung: lọc \"Sắp hết hạn\" → có",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 161
+      "thoiGianMs": 101
     },
     {
       "ma": "TC-UC7.2-04",
@@ -3043,7 +3043,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy thông tin khách quen phù hợp!\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 12
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC7.2-05",
@@ -3057,10 +3057,10 @@
       "duLieu": "Quen An",
       "mongDoi": "Hiển thị tên, SĐT, CCCD, địa chỉ, trạng thái, tổng dư nợ, hóa đơn nợ chưa thanh toán, hạn thanh toán khoản cũ nhất",
       "cachChay": "Tự động (API)",
-      "thucTe": "Quen Thử An | 0955325709 | 079055326709 | 99 Trần Phú | Còn hạn | dư nợ 34000 | 1 HĐ chưa trả | hạn cũ nhất 2026-12-15",
+      "thucTe": "Quen Thử An | 0901525892 | 079001526892 | 99 Trần Phú | Còn hạn | dư nợ 34000 | 1 HĐ chưa trả | hạn cũ nhất 2026-12-15",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC7.3-01",
@@ -3077,7 +3077,7 @@
       "thucTe": "HTTP 200",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 26
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC7.3-02",
@@ -3094,7 +3094,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy khách hàng có công nợ!\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC7.3-03",
@@ -3111,7 +3111,7 @@
       "thucTe": "HTTP 400 – \"Phải thanh toán theo thứ tự từ hóa đơn nợ cũ nhất, mỗi hóa đơn thanh toán đủ.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 128
+      "thoiGianMs": 71
     },
     {
       "ma": "TC-UC7.3-04",
@@ -3128,7 +3128,7 @@
       "thucTe": "HTTP 402 – \"Thanh toán không thành công!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 39
+      "thoiGianMs": 31
     },
     {
       "ma": "TC-UC7.3-05",
@@ -3142,10 +3142,10 @@
       "duLieu": "HĐ nợ cũ nhất (34.000 đ)",
       "mongDoi": "\"Tạo phiếu thanh toán thành công!\"; mã PTTN-dd/mm/yyyy.nnn; hóa đơn chuyển \"Đã thanh toán\"; dư nợ giảm 34.000",
       "cachChay": "Tự động (API)",
-      "thucTe": "PTTN-15/11/2026.010 | Tiền mặt | 34000 | người thu Trần Thị Mai; dư nợ 46000 → 12000; HĐ HD-15/11/2026.077: Đã thanh toán",
+      "thucTe": "PTTN-15/11/2026.013 | Tiền mặt | 34000 | người thu Trần Thị Mai; dư nợ 46000 → 12000; HĐ HD-15/11/2026.099: Đã thanh toán",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 225
+      "thoiGianMs": 132
     },
     {
       "ma": "TC-UC7.3-06",
@@ -3159,10 +3159,10 @@
       "duLieu": "HĐ nợ của Quen Bảo",
       "mongDoi": "Thanh toán thành công; sau đó Quen Bảo được ghi nợ trở lại",
       "cachChay": "Tự động (API)",
-      "thucTe": "Thanh toán: HTTP 200 PTTN-15/11/2026.011; ghi nợ lại: HTTP 200",
+      "thucTe": "Thanh toán: HTTP 200 PTTN-15/11/2026.014; ghi nợ lại: HTTP 200",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 42
+      "thoiGianMs": 25
     },
     {
       "ma": "TC-UC7.3-07",
@@ -3179,7 +3179,7 @@
       "thucTe": "HTTP 200 – \"Gửi phiếu thanh toán điện tử thành công!\" \"Gửi phiếu thanh toán điện tử thành công!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 29
+      "thoiGianMs": 15
     },
     {
       "ma": "TC-UC7.6-01",
@@ -3196,7 +3196,7 @@
       "thucTe": "HTTP 409 – \"Không thể xóa khách quen còn dư nợ!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 43
+      "thoiGianMs": 21
     },
     {
       "ma": "TC-UC7.6-02",
@@ -3210,10 +3210,10 @@
       "duLieu": "Quen Em",
       "mongDoi": "\"Xóa khách quen thành công!\"; không còn trong danh sách khách quen; ghi nợ bị từ chối; hóa đơn nợ cũ vẫn tra cứu được",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 – \"Xóa khách quen thành công\" \"Xóa khách quen thành công\"; ghi nợ lại: HTTP 409 – \"Khách hàng chưa là khách quen, không thể ghi nợ!\"; hóa đơn nợ cũ HD-15/11/2026.081: HTTP 200",
+      "thucTe": "HTTP 200 – \"Xóa khách quen thành công\" \"Xóa khách quen thành công\"; ghi nợ lại: HTTP 409 – \"Khách hàng chưa là khách quen, không thể ghi nợ!\"; hóa đơn nợ cũ HD-15/11/2026.103: HTTP 200",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 101
+      "thoiGianMs": 58
     },
     {
       "ma": "TC-UC7.6-03",
@@ -3230,7 +3230,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-CB-06",
@@ -3244,10 +3244,10 @@
       "duLieu": "Huy1 (C ×6 cho Bình), Huy2 (G ×1), DT1 (I ×3, J ×2 cho Bình), DT2 (J ×2), DT3 (I ×2), Qua7 (G ×1), Ngay7 (G ×1)",
       "mongDoi": "Tạo đủ",
       "cachChay": "Tự động (API)",
-      "thucTe": "Huy1=HD-15/11/2026.082; Huy2=HD-15/11/2026.083; DT1=HD-15/11/2026.084; DT2=HD-15/11/2026.085; DT3=HD-15/11/2026.086; Qua7=HD-15/11/2026.087; Ngay7=HD-15/11/2026.088",
+      "thucTe": "Huy1=HD-15/11/2026.104; Huy2=HD-15/11/2026.105; DT1=HD-15/11/2026.106; DT2=HD-15/11/2026.107; DT3=HD-15/11/2026.108; Qua7=HD-15/11/2026.109; Ngay7=HD-15/11/2026.110",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 398
+      "thoiGianMs": 258
     },
     {
       "ma": "TC-UC6.3-01",
@@ -3264,7 +3264,7 @@
       "thucTe": "duocHuy=true, hoàn kho 6, cần hoàn 24000, giảm doanh thu 24000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 73
+      "thoiGianMs": 34
     },
     {
       "ma": "TC-UC6.3-02",
@@ -3281,7 +3281,7 @@
       "thucTe": "HTTP 409 – \"Khách đã nhận hàng, không thể hủy hóa đơn.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 30
+      "thoiGianMs": 11
     },
     {
       "ma": "TC-UC6.3-03",
@@ -3298,7 +3298,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập lý do hủy.\" | \"Vui lòng nhập lý do hủy.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.3-04",
@@ -3312,10 +3312,10 @@
       "duLieu": "Huy1",
       "mongDoi": "\"Hủy hóa đơn thành công.\"; hóa đơn \"Đã hủy\"; tồn C tăng 6; nhật ký hủy có người hủy, thời gian, lý do, số tiền cần hoàn và bản sao hóa đơn",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200 \"\"; tồn C 13 → 19; nhật ký: Nguyễn Văn An | 2026-11-15T16:16:24 | Khách đổi ý | cần hoàn 24000 | bản sao HD-15/11/2026.082 (Đã thanh toán)",
+      "thucTe": "HTTP 200 \"\"; tồn C 13 → 19; nhật ký: Nguyễn Văn An | 2026-11-15T18:04:21 | Khách đổi ý | cần hoàn 24000 | bản sao HD-15/11/2026.104 (Đã thanh toán)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 243
+      "thoiGianMs": 128
     },
     {
       "ma": "TC-UC6.3-05",
@@ -3332,7 +3332,7 @@
       "thucTe": "duocHuy=false; \"Hóa đơn không đủ điều kiện hủy: đã bị hủy.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.3-06",
@@ -3349,7 +3349,7 @@
       "thucTe": "duocHuy=false; \"Hóa đơn không đủ điều kiện hủy: đã có thanh toán công nợ.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 24
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC6.3-07",
@@ -3366,7 +3366,7 @@
       "thucTe": "Cần hoàn 0, giảm công nợ 12000; dư nợ 12000 → 0",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 61
+      "thoiGianMs": 45
     },
     {
       "ma": "TC-UC6.3-08",
@@ -3383,7 +3383,7 @@
       "thucTe": "HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC6.3-09",
@@ -3397,10 +3397,10 @@
       "duLieu": "Huy1",
       "mongDoi": "Huy1 có trong kết quả \"Đã hủy\"; mặt hàng thường mua của Bình không có C",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tìm \"Đã hủy\": 1 kết quả; mặt hàng thường mua của Bình: KT161546 Nước ngọt A (5), KT161546 Bánh quy J (3), KT161546 Bột giặt I (3)",
+      "thucTe": "Tìm \"Đã hủy\": 1 kết quả; mặt hàng thường mua của Bình: KT180406 Nước ngọt A (5), KT180406 Bánh quy J (3), KT180406 Bột giặt I (3)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 73
+      "thoiGianMs": 51
     },
     {
       "ma": "TC-UC6.2-01",
@@ -3414,10 +3414,10 @@
       "duLieu": "DT1 (I ×3, J ×2)",
       "mongDoi": "Được đổi trả; mỗi dòng hiện số lượng còn được đổi trả = đã mua",
       "cachChay": "Tự động (API)",
-      "thucTe": "Hạn đổi trả Còn trong hạn 7 ngày (đến hết 21/11/2026).; KT161546 Bánh quy J: mua 2, còn 2; KT161546 Bột giặt I: mua 3, còn 3",
+      "thucTe": "Hạn đổi trả Còn trong hạn 7 ngày (đến hết 21/11/2026).; KT180406 Bánh quy J: mua 2, còn 2; KT180406 Bột giặt I: mua 3, còn 3",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 141
+      "thoiGianMs": 72
     },
     {
       "ma": "TC-UC6.2-02",
@@ -3434,7 +3434,7 @@
       "thucTe": "duocDoiTra=true; hạn Còn trong hạn 7 ngày (đến hết 15/11/2026).",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC6.2-03",
@@ -3451,7 +3451,7 @@
       "thucTe": "duocDoiTra=false \"Hóa đơn hết thời hạn 7 ngày Hóa đơn đã hết hạn\"; lập phiếu: HTTP 409 – \"Hóa đơn đã hết hạn\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 69
+      "thoiGianMs": 30
     },
     {
       "ma": "TC-UC6.2-04",
@@ -3465,10 +3465,10 @@
       "duLieu": "HĐ nợ mới của Quen Bảo",
       "mongDoi": "Không được đổi trả",
       "cachChay": "Tự động (API)",
-      "thucTe": "HD-15/11/2026.089 (Còn nợ): duocDoiTra=false \"Hóa đơn nợ.\"",
+      "thucTe": "HD-15/11/2026.111 (Còn nợ): duocDoiTra=false \"Hóa đơn nợ.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 35
+      "thoiGianMs": 28
     },
     {
       "ma": "TC-UC6.2-05",
@@ -3485,7 +3485,7 @@
       "thucTe": "duocDoiTra=false \"Hóa đơn đã bị hủy.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC6.2-06",
@@ -3502,7 +3502,7 @@
       "thucTe": "HTTP 400 – \"Số lượng trả không hợp lệ. Số lượng còn được đổi trả: 3.\" | \"Số lượng trả không hợp lệ. Số lượng còn được đổi trả: 3.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 12
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC6.2-07",
@@ -3519,7 +3519,7 @@
       "thucTe": "HTTP 400 – \"Số lượng trả không hợp lệ. Số lượng còn được đổi trả: 3.\" | \"Số lượng trả không hợp lệ. Số lượng còn được đổi trả: 3.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 9
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC6.2-08",
@@ -3536,7 +3536,7 @@
       "thucTe": "HTTP 409 – \"Hàng không đủ điều kiện đổi trả.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.2-09",
@@ -3553,7 +3553,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng ghi rõ mô tả lỗi do nhà sản xuất.\" | \"Vui lòng ghi rõ mô tả lỗi do nhà sản xuất.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC6.2-10",
@@ -3567,10 +3567,10 @@
       "duLieu": "I ×1",
       "mongDoi": "Phiếu \"Chờ duyệt\", mã PDT-…; số tiền hoàn = 52.000 (giá trên hóa đơn gốc); tồn I chưa thay đổi",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.019 | Trả hàng | Chờ duyệt | hoàn 52000; tồn I 35 (không đổi)",
+      "thucTe": "PDT-15/11/2026.025 | Trả hàng | Chờ duyệt | hoàn 52000; tồn I 35 (không đổi)",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 445
+      "thoiGianMs": 138
     },
     {
       "ma": "TC-UC6.2-11",
@@ -3587,7 +3587,7 @@
       "thucTe": "I: mua 3, đã đổi trả 0, đang chờ 1, còn 2",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 10
     },
     {
       "ma": "TC-UC6.2-12",
@@ -3604,7 +3604,7 @@
       "thucTe": "HTTP 409 – \"Hàng mới không đủ tồn kho. Yêu cầu 1 gói, tồn hiện có 0 gói.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 39
+      "thoiGianMs": 17
     },
     {
       "ma": "TC-UC6.2-13",
@@ -3618,10 +3618,10 @@
       "duLieu": "J → I",
       "mongDoi": "Phiếu \"Chờ duyệt\"; chênh lệch = 52.000 − 32.000 = +20.000 (thu thêm)",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.020: hoàn hàng cũ 32000, hàng mới 52000, chênh lệch 20000",
+      "thucTe": "PDT-15/11/2026.026: hoàn hàng cũ 32000, hàng mới 52000, chênh lệch 20000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 55
+      "thoiGianMs": 40
     },
     {
       "ma": "TC-UC6.2-14",
@@ -3635,10 +3635,10 @@
       "duLieu": "I → J",
       "mongDoi": "Lập phiếu thành công, có mô tả lỗi; chênh lệch âm (hoàn lại 20.000)",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.021: Lỗi do nhà sản xuất | mô tả: Bao bì rách, bột vón cục | chênh lệch -20000, hoàn khách 20000",
+      "thucTe": "PDT-15/11/2026.027: Lỗi do nhà sản xuất | mô tả: Bao bì rách, bột vón cục | chênh lệch -20000, hoàn khách 20000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 41
+      "thoiGianMs": 42
     },
     {
       "ma": "TC-UC6.2-15",
@@ -3655,7 +3655,7 @@
       "thucTe": "HTTP 409 – \"Phiếu chưa được Chủ quán duyệt.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 32
+      "thoiGianMs": 17
     },
     {
       "ma": "TC-UC6.4-01",
@@ -3669,10 +3669,10 @@
       "duLieu": "-",
       "mongDoi": "Danh sách gồm mã phiếu, mã HĐ gốc, khách, loại, thời gian lập, trạng thái; mới nhất trước",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.021 | HD-15/11/2026.086 | Khách vãng lai | Đổi hàng | 2026-11-15T16:16:25 | Chờ duyệt\nPDT-15/11/2026.020 | HD-15/11/2026.085 | Khách vãng lai | Đổi hàng | 2026-11-15T16:16:25 | Chờ duyệt\nPDT-15/11/2026.019 | HD-15/11/2026.084 | Khách Thử Bình bhbgeh | Trả hàng | 2026-11-15T16:16:24 | Chờ duyệt",
+      "thucTe": "PDT-15/11/2026.027 | HD-15/11/2026.108 | Khách vãng lai | Đổi hàng | 2026-11-15T18:04:21 | Chờ duyệt\nPDT-15/11/2026.026 | HD-15/11/2026.107 | Khách vãng lai | Đổi hàng | 2026-11-15T18:04:21 | Chờ duyệt\nPDT-15/11/2026.025 | HD-15/11/2026.106 | Khách Thử Bình bkaeah | Trả hàng | 2026-11-15T18:04:21 | Chờ duyệt",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 103
+      "thoiGianMs": 89
     },
     {
       "ma": "TC-UC6.4-02",
@@ -3689,7 +3689,7 @@
       "thucTe": "Danh sách: HTTP 403; duyệt: HTTP 403",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC6.4-03",
@@ -3703,10 +3703,10 @@
       "duLieu": "Phiếu trả",
       "mongDoi": "Phiếu \"Đã duyệt\", ghi người duyệt và thời gian; nhân viên lập phiếu nhận thông báo kết quả",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.019: Đã duyệt bởi Nguyễn Văn An lúc 2026-11-15T16:16:25; thông báo NV: Phiếu PDT-15/11/2026.019 đã được duyệt. Vui lòng hoàn tất xử lý với khách.",
+      "thucTe": "PDT-15/11/2026.025: Đã duyệt bởi Nguyễn Văn An lúc 2026-11-15T18:04:21; thông báo NV: Phiếu PDT-15/11/2026.025 đã được duyệt. Vui lòng hoàn tất xử lý với khách.",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 129
+      "thoiGianMs": 59
     },
     {
       "ma": "TC-UC6.4-04",
@@ -3723,7 +3723,7 @@
       "thucTe": "Duyệt lại: HTTP 409 – \"Phiếu đã ở trạng thái \"Đã duyệt\", không thể duyệt hoặc từ chối lại.\"; từ chối: HTTP 409 – \"Phiếu đã ở trạng thái \"Đã duyệt\", không thể duyệt hoặc từ chối lại.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 25
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC6.4-05",
@@ -3740,7 +3740,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập lý do từ chối.\" | \"Vui lòng nhập lý do từ chối.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC6.4-06",
@@ -3754,10 +3754,10 @@
       "duLieu": "Lý do \"Không có hóa đơn gốc\"",
       "mongDoi": "Phiếu \"Từ chối\" kèm lý do; tồn I, J không đổi; nhân viên nhận thông báo kèm lý do",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.021: Từ chối – Không có hóa đơn gốc; thông báo NV: Phiếu đổi trả bị từ chối. Lý do: Không có hóa đơn gốc.",
+      "thucTe": "PDT-15/11/2026.027: Từ chối – Không có hóa đơn gốc; thông báo NV: Phiếu đổi trả bị từ chối. Lý do: Không có hóa đơn gốc.",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 52
+      "thoiGianMs": 34
     },
     {
       "ma": "TC-UC6.4-07",
@@ -3771,10 +3771,10 @@
       "duLieu": "Ngay7",
       "mongDoi": "Duyệt thành công",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.022: lập bởi Nguyễn Văn An (Chủ quán) → Đã duyệt",
+      "thucTe": "PDT-15/11/2026.028: lập bởi Nguyễn Văn An (Chủ quán) → Đã duyệt",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 27
+      "thoiGianMs": 20
     },
     {
       "ma": "TC-UC6.2-16",
@@ -3788,10 +3788,10 @@
       "duLieu": "Phiếu trả",
       "mongDoi": "Phiếu hoàn tất; tồn I tăng 1",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.019: xử lý \"Hoàn tất\", hoàn tất 2026-11-15T16:16:25; tồn I 35 → 36",
+      "thucTe": "PDT-15/11/2026.025: xử lý \"Hoàn tất\", hoàn tất 2026-11-15T18:04:22; tồn I 35 → 36",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 157
+      "thoiGianMs": 103
     },
     {
       "ma": "TC-UC6.2-17",
@@ -3808,7 +3808,7 @@
       "thucTe": "HTTP 409 – \"Phiếu đã được xử lý hoàn tất.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC6.2-18",
@@ -3825,7 +3825,7 @@
       "thucTe": "QR: HTTP 402 – \"Thanh toán chưa thành công\"; không thanh toán lại: Không hoàn tất",
       "ketQua": "Không đạt",
       "chiTietLoi": "Thông báo mong đợi \"không thành công\", thực tế HTTP 402 – \"Thanh toán chưa thành công\"",
-      "thoiGianMs": 87
+      "thoiGianMs": 47
     },
     {
       "ma": "TC-UC6.2-19",
@@ -3839,10 +3839,10 @@
       "duLieu": "J → I",
       "mongDoi": "Hoàn tất; tồn J +1, tồn I −1",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.023: Đã duyệt/Hoàn tất; tồn I 36 → 35, J 35 → 36",
+      "thucTe": "PDT-15/11/2026.029: Đã duyệt/Hoàn tất; tồn I 36 → 35, J 35 → 36",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 150
+      "thoiGianMs": 88
     },
     {
       "ma": "TC-UC6.2-20",
@@ -3856,10 +3856,10 @@
       "duLieu": "I → J",
       "mongDoi": "Hoàn tất; tiền hoàn khách 20.000",
       "cachChay": "Tự động (API)",
-      "thucTe": "PDT-15/11/2026.024: chênh lệch -20000, hoàn khách 20000; Hoàn tất",
+      "thucTe": "PDT-15/11/2026.030: chênh lệch -20000, hoàn khách 20000; Hoàn tất",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 104
+      "thoiGianMs": 71
     },
     {
       "ma": "TC-UC6.3-10",
@@ -3876,7 +3876,7 @@
       "thucTe": "duocHuy=false; \"Hóa đơn không đủ điều kiện hủy: đã có phiếu đổi trả.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC5.1-01",
@@ -3893,7 +3893,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 17
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC5.1-02",
@@ -3910,7 +3910,7 @@
       "thucTe": "HTTP 400 – \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\" | \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC5.1-03",
@@ -3927,7 +3927,7 @@
       "thucTe": "HTTP 404 – \"Không tìm thấy dữ liệu bán hàng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 40
+      "thoiGianMs": 15
     },
     {
       "ma": "TC-UC5.1-04",
@@ -3944,7 +3944,7 @@
       "thucTe": "HTTP 400 – \"Kỳ báo cáo không được vượt quá ngày hiện tại!\" | \"Kỳ báo cáo không được vượt quá ngày hiện tại!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.1-05",
@@ -3958,10 +3958,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Hiển thị báo cáo",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; 30 dòng",
+      "thucTe": "HTTP 200; 37 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 192
+      "thoiGianMs": 118
     },
     {
       "ma": "TC-UC5.2-01",
@@ -3978,7 +3978,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 20
+      "thoiGianMs": 7
     },
     {
       "ma": "TC-UC5.2-02",
@@ -3995,7 +3995,7 @@
       "thucTe": "HTTP 400 – \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\" | \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.2-03",
@@ -4012,7 +4012,7 @@
       "thucTe": "HTTP 404 – \"Không tìm thấy dữ liệu bán hàng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 8
+      "thoiGianMs": 5
     },
     {
       "ma": "TC-UC5.2-04",
@@ -4029,7 +4029,7 @@
       "thucTe": "HTTP 400 – \"Kỳ báo cáo không được vượt quá ngày hiện tại!\" | \"Kỳ báo cáo không được vượt quá ngày hiện tại!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.2-05",
@@ -4043,10 +4043,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Hiển thị báo cáo",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; 30 dòng",
+      "thucTe": "HTTP 200; 37 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 45
+      "thoiGianMs": 39
     },
     {
       "ma": "TC-UC5.3-01",
@@ -4063,7 +4063,7 @@
       "thucTe": "HTTP 400 – \"Không được để trống!\" | \"Không được để trống!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 22
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC5.3-02",
@@ -4080,7 +4080,7 @@
       "thucTe": "HTTP 400 – \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\" | \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.3-03",
@@ -4097,7 +4097,7 @@
       "thucTe": "HTTP 404 – \"Không tìm thấy dữ liệu bán hàng!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 6
+      "thoiGianMs": 4
     },
     {
       "ma": "TC-UC5.3-04",
@@ -4114,7 +4114,7 @@
       "thucTe": "HTTP 400 – \"Kỳ báo cáo không được vượt quá ngày hiện tại!\" | \"Kỳ báo cáo không được vượt quá ngày hiện tại!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.3-05",
@@ -4128,10 +4128,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Hiển thị báo cáo",
       "cachChay": "Tự động (API)",
-      "thucTe": "HTTP 200; 30 dòng",
+      "thucTe": "HTTP 200; 37 dòng",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 43
+      "thoiGianMs": 31
     },
     {
       "ma": "TC-UC5.1-06",
@@ -4145,10 +4145,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Hiển thị tổng doanh thu, tổng giá vốn, tổng lợi nhuận và lợi nhuận từng sản phẩm; lợi nhuận = doanh thu − giá vốn (tổng và từng dòng)",
       "cachChay": "Tự động (API)",
-      "thucTe": "Doanh thu 2660000, giá vốn 2124000, lợi nhuận 536000; 30 sản phẩm; ví dụ KT161546 Nước ngọt A: 77000 − 56000 = 21000",
+      "thucTe": "Doanh thu 3325000, giá vốn 2655000, lợi nhuận 670000; 37 sản phẩm; ví dụ KT180406 Nước ngọt A: 77000 − 56000 = 21000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 43
+      "thoiGianMs": 30
     },
     {
       "ma": "TC-UC5.1-07",
@@ -4162,10 +4162,10 @@
       "duLieu": "2026-11-15 so với 2026-11-08",
       "mongDoi": "Hiển thị lợi nhuận 2 kỳ; chênh lệch = kỳ báo cáo − kỳ so sánh; tỷ lệ = chênh lệch / kỳ so sánh × 100",
       "cachChay": "Tự động (API)",
-      "thucTe": "Kỳ báo cáo 536000, kỳ so sánh 12000, chênh lệch 524000, tỷ lệ 4366.7%",
+      "thucTe": "Kỳ báo cáo 670000, kỳ so sánh 15000, chênh lệch 655000, tỷ lệ 4366.7%",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 67
+      "thoiGianMs": 50
     },
     {
       "ma": "TC-UC5.1-08",
@@ -4182,7 +4182,7 @@
       "thucTe": "HTTP 400 – \"Kỳ so sánh không được trùng kỳ báo cáo!\" | \"Kỳ so sánh không được trùng kỳ báo cáo!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC5.1-09",
@@ -4199,7 +4199,7 @@
       "thucTe": "HTTP 404 – \"Không tìm thấy dữ liệu của kỳ so sánh!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 34
+      "thoiGianMs": 31
     },
     {
       "ma": "TC-UC5.1-10",
@@ -4216,7 +4216,7 @@
       "thucTe": "HTTP 400 – \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\" | \"Ngày bắt đầu không được lớn hơn ngày kết thúc!\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.2-06",
@@ -4230,10 +4230,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Hiển thị tổng doanh thu, số đơn hàng, doanh thu từng sản phẩm, doanh thu tiền mặt / chuyển khoản / ghi nợ (đều > 0)",
       "cachChay": "Tự động (API)",
-      "thucTe": "Tổng 2660000; 60 đơn; tiền mặt 2364000, chuyển khoản 96000, ghi nợ 200000; 30 sản phẩm",
+      "thucTe": "Tổng 3325000; 75 đơn; tiền mặt 2955000, chuyển khoản 120000, ghi nợ 250000; 37 sản phẩm",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 47
+      "thoiGianMs": 33
     },
     {
       "ma": "TC-UC5.2-07",
@@ -4247,10 +4247,10 @@
       "duLieu": "G ×5",
       "mongDoi": "Doanh thu tăng 60.000 sau khi bán, rồi giảm đúng 60.000 sau khi hủy",
       "cachChay": "Tự động (API)",
-      "thucTe": "Doanh thu 2660000 → bán HD-15/11/2026.090 → 2720000 → hủy → 2660000",
+      "thucTe": "Doanh thu 3325000 → bán HD-15/11/2026.112 → 3385000 → hủy → 3325000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 191
+      "thoiGianMs": 140
     },
     {
       "ma": "TC-UC5.2-08",
@@ -4264,10 +4264,10 @@
       "duLieu": "2026-11-15 so với 2026-11-09",
       "mongDoi": "Chênh lệch = kỳ báo cáo − kỳ so sánh; tỷ lệ = chênh lệch / kỳ so sánh × 100",
       "cachChay": "Tự động (API)",
-      "thucTe": "Kỳ báo cáo 2660000, kỳ so sánh 48000, chênh lệch 2612000, tỷ lệ 5441.7%",
+      "thucTe": "Kỳ báo cáo 3325000, kỳ so sánh 60000, chênh lệch 3265000, tỷ lệ 5441.7%",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 29
+      "thoiGianMs": 34
     },
     {
       "ma": "TC-UC5.2-09",
@@ -4281,10 +4281,10 @@
       "duLieu": "2026-10-15",
       "mongDoi": "Ngày −31 có doanh thu ghi nợ (dù khách trả hôm nay)",
       "cachChay": "Tự động (API)",
-      "thucTe": "Ngày 2026-10-15: tổng 32000, ghi nợ 32000",
+      "thucTe": "Ngày 2026-10-15: tổng 40000, ghi nợ 40000",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 13
     },
     {
       "ma": "TC-UC5.2-10",
@@ -4315,10 +4315,10 @@
       "duLieu": "2026-11-15",
       "mongDoi": "Danh sách gồm tên sản phẩm, nhóm hàng, ĐVT, số lượng bán",
       "cachChay": "Tự động (API)",
-      "thucTe": "KT084947 Gia vị G | Gia vị | gói | 8\nKT154114 Gia vị G | Gia vị | gói | 8\nKT160929 Gia vị G | Gia vị | gói | 8\nKT084947 Nước ngọt A | Gia vị | chai | 7\nKT154114 Nước ngọt A | Gia vị | chai | 7",
+      "thucTe": "KT084947 Gia vị G | Gia vị | gói | 8\nKT154114 Gia vị G | Gia vị | gói | 8\nKT160929 Gia vị G | Gia vị | gói | 8\nKT161546 Gia vị G | Gia vị | gói | 8\nKT084947 Nước ngọt A | Gia vị | chai | 7",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 27
+      "thoiGianMs": 35
     },
     {
       "ma": "TC-UC5.3-07",
@@ -4352,7 +4352,7 @@
       "thucTe": "KT084947 Dầu gội F: 0; KT084947 Kẹo K: 0; KT084947 Sau xoa: 0; KT084947 Sữa D: 0; KT084947 Trang 01: 0",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 35
+      "thoiGianMs": 29
     },
     {
       "ma": "TC-UC5.3-09",
@@ -4369,7 +4369,7 @@
       "thucTe": "HTTP 400 – \"Số lượng sản phẩm mong muốn phải là số nguyên lớn hơn 0.\" | \"Số lượng sản phẩm mong muốn phải là số nguyên lớn hơn 0.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 4
+      "thoiGianMs": 2
     },
     {
       "ma": "TC-UC5.4-01",
@@ -4383,10 +4383,10 @@
       "duLieu": "Tất cả",
       "mongDoi": "Danh sách theo lô gồm mã lô, tên, ĐVT, số lượng tồn, HSD, trạng thái",
       "cachChay": "Tự động (API)",
-      "thucTe": "168 lô; ví dụ: LO-000136 KT084947 Bánh B tồn 7 HSD 2026-12-05 [Còn hàng] | LO-000135 KT084947 Bánh B tồn 11 HSD 2027-02-13 [Còn hàng] | LO-000143 KT084947 Bánh quy J tồn 35 HSD 2027-09-11 [Còn hàng]",
+      "thucTe": "180 lô; ví dụ: LO-000136 KT084947 Bánh B tồn 7 HSD 2026-12-05 [Còn hàng] | LO-000135 KT084947 Bánh B tồn 11 HSD 2027-02-13 [Còn hàng] | LO-000143 KT084947 Bánh quy J tồn 35 HSD 2027-09-11 [Còn hàng]",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC5.4-02",
@@ -4400,7 +4400,7 @@
       "duLieu": "Hết hàng",
       "mongDoi": "Có lô của hàng K; mọi dòng đều có trạng thái \"Hết hàng\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "13 lô: LO-000144 KT084947 Kẹo K tồn 0 HSD 2027-09-11 | LO-000011 KT104506 Kẹo K tồn 0 HSD 2027-09-09 | LO-000026 KT104845 Kẹo K tồn 0 HSD 2027-09-09 | LO-000040 KT105111 Kẹo K tồn 0 HSD 2027-09-09",
+      "thucTe": "14 lô: LO-000144 KT084947 Kẹo K tồn 0 HSD 2027-09-11 | LO-000011 KT104506 Kẹo K tồn 0 HSD 2027-09-09 | LO-000026 KT104845 Kẹo K tồn 0 HSD 2027-09-09 | LO-000040 KT105111 Kẹo K tồn 0 HSD 2027-09-09",
       "ketQua": "Đạt",
       "chiTietLoi": "",
       "thoiGianMs": 7
@@ -4417,10 +4417,10 @@
       "duLieu": "Sắp hết hạn",
       "mongDoi": "Có lô của hàng D; mọi dòng đều có trạng thái \"Sắp hết hạn\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "13 lô: LO-000138 KT084947 Sữa D tồn 8 HSD 2026-11-18 | LO-000005 KT104506 Sữa D tồn 8 HSD 2026-11-16 | LO-000020 KT104845 Sữa D tồn 8 HSD 2026-11-16 | LO-000034 KT105111 Sữa D tồn 8 HSD 2026-11-16",
+      "thucTe": "14 lô: LO-000138 KT084947 Sữa D tồn 8 HSD 2026-11-18 | LO-000005 KT104506 Sữa D tồn 8 HSD 2026-11-16 | LO-000020 KT104845 Sữa D tồn 8 HSD 2026-11-16 | LO-000034 KT105111 Sữa D tồn 8 HSD 2026-11-16",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC5.4-04",
@@ -4434,10 +4434,10 @@
       "duLieu": "Hết hạn",
       "mongDoi": "Có lô của hàng F; mọi dòng đều có trạng thái \"Hết hạn\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "13 lô: LO-000139 KT084947 Dầu gội F tồn 3 HSD 2026-11-14 | LO-000006 KT104506 Dầu gội F tồn 3 HSD 2026-11-12 | LO-000021 KT104845 Dầu gội F tồn 3 HSD 2026-11-12 | LO-000035 KT105111 Dầu gội F tồn 3 HSD 2026-11-12",
+      "thucTe": "14 lô: LO-000139 KT084947 Dầu gội F tồn 3 HSD 2026-11-14 | LO-000006 KT104506 Dầu gội F tồn 3 HSD 2026-11-12 | LO-000021 KT104845 Dầu gội F tồn 3 HSD 2026-11-12 | LO-000035 KT105111 Dầu gội F tồn 3 HSD 2026-11-12",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 6
     },
     {
       "ma": "TC-UC5.4-05",
@@ -4451,10 +4451,10 @@
       "duLieu": "-",
       "mongDoi": "Số lượng và trạng thái cảnh báo không đổi",
       "cachChay": "Tự động (API)",
-      "thucTe": "Trước: {\"Hết hạn\":13,\"Hết hàng\":24,\"Sắp hết hạn\":13,\"Sắp hết hàng\":66}; sau: {\"Hết hạn\":13,\"Hết hàng\":24,\"Sắp hết hạn\":13,\"Sắp hết hàng\":66}",
+      "thucTe": "Trước: {\"Hết hạn\":14,\"Hết hàng\":26,\"Sắp hết hạn\":14,\"Sắp hết hàng\":71}; sau: {\"Hết hạn\":14,\"Hết hàng\":26,\"Sắp hết hạn\":14,\"Sắp hết hàng\":71}",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 62
+      "thoiGianMs": 56
     },
     {
       "ma": "TC-UC2.4-03",
@@ -4468,10 +4468,10 @@
       "duLieu": "kt_nv",
       "mongDoi": "Hệ thống chuyển \"Ngừng hoạt động\" (không xóa hẳn); kt_nv không đăng nhập được; hóa đơn của kt_nv vẫn tra cứu được",
       "cachChay": "Tự động (API)",
-      "thucTe": "Kiểm tra: NgungHoatDong; HTTP 200 – \"Ngừng hoạt động tài khoản thành công\" \"Ngừng hoạt động tài khoản thành công\"; trạng thái Ngừng hoạt động; đăng nhập: HTTP 401 – \"Đăng nhập không thành công!\"; hóa đơn HD-15/11/2026.091 vẫn ghi người bán NV091",
+      "thucTe": "Kiểm tra: NgungHoatDong; HTTP 200 – \"Ngừng hoạt động tài khoản thành công\" \"Ngừng hoạt động tài khoản thành công\"; trạng thái Ngừng hoạt động; đăng nhập: HTTP 401 – \"Đăng nhập không thành công!\"; hóa đơn HD-15/11/2026.113 vẫn ghi người bán NV098",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 301
+      "thoiGianMs": 318
     },
     {
       "ma": "TC-UC9.1-01",
@@ -4485,10 +4485,10 @@
       "duLieu": "Ca hiện tại",
       "mongDoi": "Ca chuyển \"Đang kết ca\"; biên bản có mã ca, ngày, giờ bắt đầu, người kết ca và bảng mặt hàng (tồn lý thuyết); tồn lý thuyết G = tồn hiện tại",
       "cachChay": "Tự động (API)",
-      "thucTe": "Ca CA-15112026-009 (2026-11-15 16:15:47) – Đang kết ca; người kết ca Trần Thị Mai; 126 mặt hàng; G lý thuyết 26",
+      "thucTe": "Ca CA-15112026-014 (2026-11-15 18:04:06) – Đang kết ca; người kết ca Trần Thị Mai; 135 mặt hàng; G lý thuyết 26",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 191
+      "thoiGianMs": 67
     },
     {
       "ma": "TC-UC9.1-02",
@@ -4505,7 +4505,7 @@
       "thucTe": "Bán: HTTP 409 – \"Ca làm việc đang kết ca. Tạm dừng giao dịch nhập, xuất, bán, hủy cho đến khi lưu biên bản.\"\nThêm lô: HTTP 409 – \"Ca làm việc đang kết ca. Tạm dừng giao dịch nhập, xuất, bán, hủy cho đến khi lưu biên bản.\"\nHủy: HTTP 409 – \"Ca làm việc đang kết ca. Tạm dừng giao dịch nhập, xuất, bán, hủy cho đến khi lưu biên bản.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 19
+      "thoiGianMs": 12
     },
     {
       "ma": "TC-UC9.1-03",
@@ -4519,10 +4519,10 @@
       "duLieu": "-",
       "mongDoi": "Không lưu biên bản; ca \"Đang hoạt động\"; bán hàng lại được",
       "cachChay": "Tự động (API)",
-      "thucTe": "Hủy: HTTP 204; ca Đang hoạt động; bán thử HD-15/11/2026.092",
+      "thucTe": "Hủy: HTTP 204; ca Đang hoạt động; bán thử HD-15/11/2026.114",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 71
+      "thoiGianMs": 56
     },
     {
       "ma": "TC-UC9.1-04",
@@ -4539,7 +4539,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập nguyên nhân chênh lệch\" | \"Vui lòng nhập nguyên nhân chênh lệch\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 67
+      "thoiGianMs": 25
     },
     {
       "ma": "TC-UC9.1-05",
@@ -4556,7 +4556,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập nguyên nhân chênh lệch\" | \"Vui lòng nhập nguyên nhân chênh lệch\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 12
+      "thoiGianMs": 21
     },
     {
       "ma": "TC-UC9.1-06",
@@ -4573,7 +4573,7 @@
       "thucTe": "HTTP 400 – \"Vui lòng nhập nguyên nhân chênh lệch\" | \"Nguyên nhân tối đa 255 ký tự.\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 11
+      "thoiGianMs": 8
     },
     {
       "ma": "TC-UC9.1-07",
@@ -4587,10 +4587,10 @@
       "duLieu": "G −2, B +1",
       "mongDoi": "Lưu thành công kèm mã BB-ddmmyyyy-nnn; ca \"Đã kết thúc\"; tồn G giảm 2, tồn B tăng 1",
       "cachChay": "Tự động (API)",
-      "thucTe": "BB-15112026-009 | ca CA-15112026-009 Đã kết thúc | kết thúc 16:16:27 | có chênh lệch true",
+      "thucTe": "BB-15112026-014 | ca CA-15112026-014 Đã kết thúc | kết thúc 18:04:23 | có chênh lệch true",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 533
+      "thoiGianMs": 321
     },
     {
       "ma": "TC-UC9.1-08",
@@ -4607,7 +4607,7 @@
       "thucTe": "HTTP 409 – \"Ca này đã được kết thúc, không thể lưu thêm biên bản\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 7
+      "thoiGianMs": 21
     },
     {
       "ma": "TC-UC2.4-04",
@@ -4618,13 +4618,13 @@
       "nguon": "Exception 5b, BR02",
       "tienDieuKien": "Cửa hàng chưa có ca mở; nhân viên kt_ca đăng nhập → mở ca mới do kt_ca phụ trách",
       "buoc": "1. kt_ca đăng nhập (mở ca)\n2. Chủ quán chọn kt_ca → \"Xóa tài khoản\"",
-      "duLieu": "kt_ca161546",
+      "duLieu": "kt_ca180406",
       "mongDoi": "\"Không thể xử lý tài khoản nhân viên đang trong ca\"; tài khoản không đổi",
       "cachChay": "Tự động (API)",
-      "thucTe": "Ca CA-15112026-010 phụ trách NV096; HTTP 409 – \"Không thể xử lý tài khoản nhân viên đang trong ca\"",
+      "thucTe": "Ca CA-15112026-015 phụ trách NV103; HTTP 409 – \"Không thể xử lý tài khoản nhân viên đang trong ca\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 448
+      "thoiGianMs": 413
     },
     {
       "ma": "TC-UC2.4-05",
@@ -4635,13 +4635,13 @@
       "nguon": "Exception 5c, BR03 (SUA_BAO_CAO 3.3)",
       "tienDieuKien": "Ca của kt_ca đang \"Đang kết ca\"",
       "buoc": "1. kt_ca bắt đầu kết ca\n2. Chủ quán xóa kt_ca",
-      "duLieu": "kt_ca161546",
+      "duLieu": "kt_ca180406",
       "mongDoi": "Bị từ chối (\"Nhân viên còn ca chưa đối soát\" / đang trong ca); tài khoản không đổi",
       "cachChay": "Tự động (API)",
       "thucTe": "HTTP 409 – \"Nhân viên còn ca chưa đối soát\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 15
+      "thoiGianMs": 20
     },
     {
       "ma": "TC-UC9.1-09",
@@ -4655,10 +4655,10 @@
       "duLieu": "-",
       "mongDoi": "Lưu thành công, biên bản \"không chênh lệch\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "BB-15112026-010: có chênh lệch = false",
+      "thucTe": "BB-15112026-015: có chênh lệch = false",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 222
+      "thoiGianMs": 191
     },
     {
       "ma": "TC-UC9.2-01",
@@ -4672,10 +4672,10 @@
       "duLieu": "-",
       "mongDoi": "Danh sách gồm mã BB, ngày làm việc, mã ca, người kết ca, có chênh lệch; biên bản mới nhất ở đầu",
       "cachChay": "Tự động (API)",
-      "thucTe": "BB-15112026-010 | 2026-11-15 | CA-15112026-010 | Phạm Ca Thử | chênh lệch: Không\nBB-15112026-009 | 2026-11-15 | CA-15112026-009 | Trần Thị Mai | chênh lệch: Có\nBB-15112026-008 | 2026-11-15 | CA-15112026-008 | Phạm Ca Thử | chênh lệch: Không",
+      "thucTe": "BB-15112026-015 | 2026-11-15 | CA-15112026-015 | Phạm Ca Thử | chênh lệch: Không\nBB-15112026-014 | 2026-11-15 | CA-15112026-014 | Trần Thị Mai | chênh lệch: Có\nBB-15112026-013 | 2026-11-15 | CA-15112026-013 | Nguyễn Văn An | chênh lệch: Không",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 77
+      "thoiGianMs": 39
     },
     {
       "ma": "TC-UC9.2-02",
@@ -4692,7 +4692,7 @@
       "thucTe": "HTTP 400 – \"Từ ngày không được lớn hơn đến ngày\" | \"Từ ngày không được lớn hơn đến ngày\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 5
+      "thoiGianMs": 3
     },
     {
       "ma": "TC-UC9.2-03",
@@ -4706,10 +4706,10 @@
       "duLieu": "-",
       "mongDoi": "Mọi dòng có chênh lệch; có biên bản BB thứ nhất, không có biên bản thứ hai",
       "cachChay": "Tự động (API)",
-      "thucTe": "9 biên bản có chênh lệch",
+      "thucTe": "10 biên bản có chênh lệch",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 21
+      "thoiGianMs": 16
     },
     {
       "ma": "TC-UC9.2-04",
@@ -4726,7 +4726,7 @@
       "thucTe": "HTTP 200, danh sách rỗng (giao diện hiển thị \"Không tìm thấy biên bản phù hợp\")",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 21
+      "thoiGianMs": 16
     },
     {
       "ma": "TC-UC9.2-05",
@@ -4740,10 +4740,10 @@
       "duLieu": "BB thứ nhất",
       "mongDoi": "Thông tin chung + đúng 2 dòng chênh lệch (G −2 \"Hàng vỡ\", B +1 \"Đếm sót\"); không có trường tiền/giá",
       "cachChay": "Tự động (API)",
-      "thucTe": "BB-15112026-009 | ca CA-15112026-009 | 2026-11-15 16:15:47–16:16:27 | Trần Thị Mai\nKT161546 Bánh B: lý thuyết 17, thực tế 18, chênh 1, \"Đếm sót\"\nKT161546 Gia vị G: lý thuyết 25, thực tế 23, chênh -2, \"Hàng vỡ\"",
+      "thucTe": "BB-15112026-014 | ca CA-15112026-014 | 2026-11-15 18:04:06–18:04:23 | Trần Thị Mai\nKT180406 Bánh B: lý thuyết 17, thực tế 18, chênh 1, \"Đếm sót\"\nKT180406 Gia vị G: lý thuyết 25, thực tế 23, chênh -2, \"Hàng vỡ\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 36
+      "thoiGianMs": 30
     },
     {
       "ma": "TC-UC9.2-06",
@@ -4757,10 +4757,10 @@
       "duLieu": "BB thứ hai",
       "mongDoi": "Hiển thị thông tin chung, bảng trống (giao diện báo \"Ca này không có chênh lệch\")",
       "cachChay": "Tự động (API)",
-      "thucTe": "BB-15112026-010: 0 dòng chênh lệch",
+      "thucTe": "BB-15112026-015: 0 dòng chênh lệch",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 10
+      "thoiGianMs": 9
     },
     {
       "ma": "TC-UC9.2-07",
@@ -4774,10 +4774,10 @@
       "duLieu": "kt_ca",
       "mongDoi": "Danh sách hiện cả biên bản của người khác (màn hình 9.2); mở biên bản của người khác báo \"Bạn không có quyền xem biên bản này\"",
       "cachChay": "Tự động (API)",
-      "thucTe": "Danh sách kt_ca: 20 biên bản; mở biên bản người khác: HTTP 403 – \"Bạn không có quyền xem biên bản này\"",
+      "thucTe": "Danh sách kt_ca: 25 biên bản; mở biên bản người khác: HTTP 403 – \"Bạn không có quyền xem biên bản này\"",
       "ketQua": "Đạt",
       "chiTietLoi": "",
-      "thoiGianMs": 14
+      "thoiGianMs": 10
     }
   ]
 }

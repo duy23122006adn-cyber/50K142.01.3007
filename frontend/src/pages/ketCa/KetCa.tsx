@@ -47,17 +47,27 @@ function ThongTinChung({ bb, coMaBB }: { bb: BienBan; coMaBB?: boolean }) {
 
 // ====================================================================== UC_9.1 Lưu biên bản
 
+/** Lỗi "Ca này đã được kết thúc…" từ máy chủ kèm biên bản đã lưu ở tab khác (9.1.6). */
+function bienBanDaLuuTuLoi(e: unknown): BienBan | null {
+  if (!(e instanceof LoiApi) || e.status !== 409) return null
+  const bb = e.duLieu.bienBan as BienBan | null | undefined
+  return bb ?? null
+}
+
 /** Màn hình 9.1.1–9.1.7 – kiểm kê cuối ca và lưu biên bản. */
 export function LuuBienBan() {
   const { data, error, isLoading } = useQuery({ queryKey: ['ket-ca', 'hien-tai'], queryFn: ketCaApi.hienTai })
-  const [daLuu, setDaLuu] = useState<BienBan | null>(null)
+  // daLuu: biên bản vừa lưu ở tab này (popup thành công) hoặc đã được lưu ở tab khác (9.1.6 – popup "Ca này đã được kết thúc").
+  const [daLuu, setDaLuu] = useState<{ bb: BienBan; daKetThucTruoc: boolean } | null>(null)
   const queryClient = useQueryClient()
+  const daKetThucO = (bb: BienBan) => setDaLuu({ bb, daKetThucTruoc: true })
 
   // Đóng popup "Lưu biên bản thành công" → quay về màn hình Lưu biên bản của ca hiện tại (ca vừa kết thúc không còn hiện).
   if (daLuu)
     return (
       <BienBanDaLuu
-        bb={daLuu}
+        bb={daLuu.bb}
+        daKetThucTruoc={daLuu.daKetThucTruoc}
         onDong={() => {
           setDaLuu(null)
           void queryClient.invalidateQueries({ queryKey: ['ket-ca', 'hien-tai'] })
@@ -76,14 +86,14 @@ export function LuuBienBan() {
       </>
     )
   return data.trangThaiCa === 'Đang kết ca' ? (
-    <KiemKe key={data.maCa} bb={data} onDaLuu={setDaLuu} />
+    <KiemKe key={data.maCa} bb={data} onDaLuu={(bb) => setDaLuu({ bb, daKetThucTruoc: false })} onDaKetThuc={daKetThucO} />
   ) : (
-    <BatDauKetCa bb={data} />
+    <BatDauKetCa bb={data} onDaKetThuc={daKetThucO} />
   )
 }
 
 /** Ca đang hoạt động – người dùng chọn "Lưu biên bản" để bắt đầu kiểm kê (SUA_BAO_CAO 3.22, 13.1, BR11). */
-function BatDauKetCa({ bb }: { bb: BienBan }) {
+function BatDauKetCa({ bb, onDaKetThuc }: { bb: BienBan; onDaKetThuc: (bb: BienBan) => void }) {
   const queryClient = useQueryClient()
   const [hoi, setHoi] = useState(false)
   const [loi, setLoi] = useState<string | null>(null)
@@ -97,6 +107,8 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
       queryClient.setQueryData(['ket-ca', 'hien-tai'], moi)
       void queryClient.invalidateQueries({ queryKey: ['ca-hien-tai'] })
     } catch (e) {
+      const daLuu = bienBanDaLuuTuLoi(e)
+      if (daLuu) return onDaKetThuc(daLuu) // 9.1.6: ca đã được kết thúc ở tab khác
       setLoi(e instanceof LoiApi ? e.message : 'Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.')
     } finally {
       setDangXuLy(false)
@@ -143,7 +155,7 @@ function BatDauKetCa({ bb }: { bb: BienBan }) {
 type Popup = { loai: 'daKetThuc' } | { loai: 'thatBai' } | { loai: 'loi'; thongBao: string }
 
 /** Màn hình 9.1.1, 9.1.4, 9.1.5 – bảng đối chiếu tồn kho, nhập tồn thực tế và nguyên nhân. */
-function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }) {
+function KiemKe({ bb, onDaLuu, onDaKetThuc }: { bb: BienBan; onDaLuu: (bb: BienBan) => void; onDaKetThuc: (bb: BienBan) => void }) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [thucTe, setThucTe] = useState<Record<string, string>>(() =>
@@ -181,7 +193,9 @@ function KiemKe({ bb, onDaLuu }: { bb: BienBan; onDaLuu: (bb: BienBan) => void }
       void queryClient.invalidateQueries({ queryKey: ['ca-hien-tai'] })
       void queryClient.invalidateQueries({ queryKey: ['ket-ca'] })
     } catch (e) {
-      if (e instanceof LoiApi && Object.keys(e.loi).length) setLoi(e.loi)
+      const daLuu = bienBanDaLuuTuLoi(e)
+      if (daLuu) onDaKetThuc(daLuu) // 9.1.6: ca đã được kết thúc ở tab khác
+      else if (e instanceof LoiApi && Object.keys(e.loi).length) setLoi(e.loi)
       else if (e instanceof LoiApi && e.message.startsWith('Ca này đã được kết thúc')) setPopup({ loai: 'daKetThuc' })
       else if (e instanceof LoiApi && e.status === 500) setPopup({ loai: 'thatBai' })
       else setPopup({ loai: 'loi', thongBao: e instanceof LoiApi ? e.message : 'Lưu biên bản thất bại, vui lòng thử lại' })
@@ -373,7 +387,7 @@ function BangKiemKe({ dong, nhap }: { dong: DongKiemKe[]; nhap?: NhapKiemKe }) {
 }
 
 /** Màn hình 9.1.3 – biên bản sau khi lưu (chỉ đọc, BR03); 9.1.2 – popup "Lưu biên bản thành công" hiện đè lên. */
-function BienBanDaLuu({ bb, onDong }: { bb: BienBan; onDong: () => void }) {
+function BienBanDaLuu({ bb, daKetThucTruoc, onDong }: { bb: BienBan; daKetThucTruoc: boolean; onDong: () => void }) {
   const navigate = useNavigate()
   return (
     <>
@@ -397,7 +411,7 @@ function BienBanDaLuu({ bb, onDong }: { bb: BienBan; onDong: () => void }) {
       {/* 9.1.2 */}
       <HopThoai
         mo
-        kieu="thanhCong"
+        kieu={daKetThucTruoc ? 'loi' : 'thanhCong'}
         onDong={onDong}
         nut={
           <button type="button" className="nut nut--chinh nut--rong" onClick={onDong}>
@@ -405,8 +419,15 @@ function BienBanDaLuu({ bb, onDong }: { bb: BienBan; onDong: () => void }) {
           </button>
         }
       >
-        <p className="thong-bao thong-bao--xanh">Lưu biên bản thành công</p>
-        <p className="chu-xanh">Mã biên bản là: {bb.maBB}</p>
+        {daKetThucTruoc ? (
+          // 9.1.6: không lưu thêm, không ghi đè – chỉ hiện biên bản đã lưu ở tab khác.
+          <p className="thong-bao thong-bao--do">Ca này đã được kết thúc, không thể lưu thêm biên bản</p>
+        ) : (
+          <>
+            <p className="thong-bao thong-bao--xanh">Lưu biên bản thành công</p>
+            <p className="chu-xanh">Mã biên bản là: {bb.maBB}</p>
+          </>
+        )}
       </HopThoai>
     </>
   )
