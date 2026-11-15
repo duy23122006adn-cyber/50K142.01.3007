@@ -355,7 +355,9 @@ public sealed class DichVuDoiTra(
         else q = q.Where(p => p.TrangThai == TrangThaiPhieuDoiTra.ChoDuyet);
         if (chiCuaToi) q = q.Where(p => p.MaND == hienTai.MaND);
 
-        var ds = await q.OrderByDescending(p => p.NgayGioLap).ThenByDescending(p => p.MaPDT).Take(200)
+        // "Xử lý đổi trả": phiếu còn việc phải làm (đã duyệt / chờ duyệt) lên trên, phiếu bị từ chối xuống dưới; mỗi nhóm mới nhất trước.
+        var ds = await q.OrderBy(p => p.TrangThai == TrangThaiPhieuDoiTra.TuChoi ? 1 : 0)
+            .ThenByDescending(p => p.NgayGioLap).ThenByDescending(p => p.MaPDT).Take(200)
             .Select(p => new
             {
                 Phieu = p,
